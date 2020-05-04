@@ -1,0 +1,99 @@
+
+# Execution through Module Load
+
+## Description
+
+### MITRE Description
+
+> The Windows module loader can be instructed to load DLLs from arbitrary local paths and arbitrary Universal Naming Convention (UNC) network paths. This functionality resides in NTDLL.dll and is part of the Windows Native API which is called from functions like CreateProcess(), LoadLibrary(), etc. of the Win32 API. (Citation: Wikipedia Windows Library Files)
+
+The module loader can load DLLs:
+
+* via specification of the (fully-qualified or relative) DLL pathname in the IMPORT directory;
+    
+* via EXPORT forwarded to another DLL, specified with (fully-qualified or relative) pathname (but without extension);
+    
+* via an NTFS junction or symlink program.exe.local with the fully-qualified or relative pathname of a directory containing the DLLs specified in the IMPORT directory or forwarded EXPORTs;
+    
+* via <code>&#x3c;file name="filename.extension" loadFrom="fully-qualified or relative pathname"&#x3e;</code> in an embedded or external "application manifest". The file name refers to an entry in the IMPORT directory or a forwarded EXPORT.
+
+Adversaries can use this functionality as a way to execute arbitrary code on a system.
+
+## Additional Attributes
+
+* Bypass: None
+* Effective Permissions: None
+* Network: intentionally left blank
+* Permissions: ['User']
+* Platforms: ['Windows']
+* Remote: intentionally left blank
+* Type: attack-pattern
+* Wiki: https://attack.mitre.org/techniques/T1129
+
+## Potential Commands
+
+```
+control.exe
+malware.dll
+rundll32.exe
+```
+
+## Commands Dataset
+
+```
+[{'command': 'control.exe',
+  'name': 'parent_process',
+  'source': 'Threat Hunting Tables'},
+ {'command': 'malware.dll',
+  'name': 'loaded_dll',
+  'source': 'Threat Hunting Tables'},
+ {'command': 'rundll32.exe',
+  'name': 'sub_process_1',
+  'source': 'Threat Hunting Tables'}]
+```
+
+## Potential Detections
+
+```json
+
+```
+
+## Potential Queries
+
+```json
+
+```
+
+## Raw Dataset
+
+```json
+[{'Threat Hunting Tables': {'chain_id': '100015',
+                            'commandline_string': '',
+                            'file_path': '',
+                            'file_value': '',
+                            'frequency': 'low',
+                            'itw_sample': '',
+                            'loaded_dll': 'malware.dll',
+                            'mitre_attack': 'T1129',
+                            'mitre_caption': 'module_load',
+                            'os': 'windows',
+                            'parent_process': 'control.exe',
+                            'registry_path': '',
+                            'registry_value': '',
+                            'sub_process_1': 'rundll32.exe',
+                            'sub_process_2': ''}}]
+```
+
+# Tactics
+
+
+* [Execution](../tactics/Execution.md)
+
+
+# Mitigations
+
+None
+
+# Actors
+
+None
