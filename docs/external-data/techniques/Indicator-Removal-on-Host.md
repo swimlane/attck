@@ -75,6 +75,9 @@ powershell/management/restart
 python/persistence/osx/RemoveDaemon
 python/persistence/osx/RemoveDaemon
 ```
+rm -rf /var/log/*
+```
+```
 
 ## Commands Dataset
 
@@ -164,13 +167,19 @@ python/persistence/osx/RemoveDaemon
   'source': 'https://github.com/dstepanic/attck_empire/blob/master/Empire_modules.xlsx?raw=true'},
  {'command': 'python/persistence/osx/RemoveDaemon',
   'name': 'Empire Module Command',
-  'source': 'https://github.com/dstepanic/attck_empire/blob/master/Empire_modules.xlsx?raw=true'}]
+  'source': 'https://github.com/dstepanic/attck_empire/blob/master/Empire_modules.xlsx?raw=true'},
+ {'command': '```', 'name': None, 'source': 'Kirtar22/Litmus_Test'},
+ {'command': 'rm -rf /var/log/*',
+  'name': None,
+  'source': 'Kirtar22/Litmus_Test'},
+ {'command': '```', 'name': None, 'source': 'Kirtar22/Litmus_Test'}]
 ```
 
 ## Potential Detections
 
 ```json
-
+[{'data_source': 'auditlogs (audit.rules)'},
+ {'data_source': 'bash_history logs'}]
 ```
 
 ## Potential Queries
@@ -178,7 +187,31 @@ python/persistence/osx/RemoveDaemon
 ```json
 [{'name': 'Indicator Removal On Host',
   'product': 'Azure Sentinel',
-  'query': 'Sysmon| where process_path contains "wevtutil"'}]
+  'query': 'Sysmon| where process_path contains "wevtutil"'},
+ {'name': None, 'product': 'Splunk', 'query': '```'},
+ {'name': None,
+  'product': 'Splunk',
+  'query': 'index=linux sourcetype=linux_audit syscall=263 | table '
+           'host,auid,uid,euid,exe,key'},
+ {'name': None, 'product': 'Splunk', 'query': '```'},
+ {'name': None, 'product': 'Splunk', 'query': '```'},
+ {'name': None,
+  'product': 'Splunk',
+  'query': 'index=linux sourcetype=linux_audit type=PATH name=*.log '
+           'nametype=delete'},
+ {'name': None, 'product': 'Splunk', 'query': '```'},
+ {'name': None, 'product': 'Splunk', 'query': '```'},
+ {'name': None,
+  'product': 'Splunk',
+  'query': '-a always,exit -F arch=b64 -F PATH=/var/log -S unlinkat -F '
+           'auid>=1000 -F auid!=4294967295 -F key=delete_logs'},
+ {'name': None, 'product': 'Splunk', 'query': '```'},
+ {'name': None, 'product': 'Splunk', 'query': '```'},
+ {'name': None,
+  'product': 'Splunk',
+  'query': 'index=linux sourcetype="bash_history" rm * .log | table host, '
+           'user_name, bash_command'},
+ {'name': None, 'product': 'Splunk', 'query': '```'}]
 ```
 
 ## Raw Dataset

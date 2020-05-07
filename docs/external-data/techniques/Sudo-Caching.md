@@ -31,6 +31,8 @@ sudo visudo -c -f /etc/sudoers
 sudo sh -c "echo Defaults "'!'"tty_tickets >> /etc/sudoers"
 sudo visudo -c -f /etc/sudoers
 
+sudo sed -i 's/env_reset.*$/env_reset,timestamp_timeout=-1/' /etc/sudoers
+sudo sh -c "echo Defaults "'!'"tty_tickets >> /etc/sudoers"
 ```
 
 ## Commands Dataset
@@ -44,19 +46,32 @@ sudo visudo -c -f /etc/sudoers
  {'command': 'sudo sh -c "echo Defaults "\'!\'"tty_tickets >> /etc/sudoers"\n'
              'sudo visudo -c -f /etc/sudoers\n',
   'name': None,
-  'source': 'atomics/T1206/T1206.yaml'}]
+  'source': 'atomics/T1206/T1206.yaml'},
+ {'command': "sudo sed -i 's/env_reset.*$/env_reset,timestamp_timeout=-1/' "
+             '/etc/sudoers',
+  'name': None,
+  'source': 'Kirtar22/Litmus_Test'},
+ {'command': 'sudo sh -c "echo Defaults "\'!\'"tty_tickets >> /etc/sudoers"',
+  'name': None,
+  'source': 'Kirtar22/Litmus_Test'}]
 ```
 
 ## Potential Detections
 
 ```json
-
+[{'data_source': 'auditlogs (audit.rules)'},
+ {'data_source': 'bash_history logs'}]
 ```
 
 ## Potential Queries
 
 ```json
-
+[{'name': None,
+  'product': 'Splunk',
+  'query': 'index=linux sourcetype="linux_audit" sudoers_change'},
+ {'name': None,
+  'product': 'Splunk',
+  'query': 'Audit Rule : -w /etc/sudoers -p wa -k sudoers_change'}]
 ```
 
 ## Raw Dataset

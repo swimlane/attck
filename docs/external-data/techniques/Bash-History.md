@@ -34,6 +34,8 @@ python/collection/linux/pillage_user
 python/collection/linux/pillage_user
 python/collection/osx/pillage_user
 python/collection/osx/pillage_user
+cat #{bash_history_filename} | grep #{bash_history_grep_args} > #{output_file}
+cat .bash_history | grep password > bash.txt
 ```
 
 ## Commands Dataset
@@ -77,19 +79,35 @@ python/collection/osx/pillage_user
   'source': 'https://github.com/dstepanic/attck_empire/blob/master/Empire_modules.xlsx?raw=true'},
  {'command': 'python/collection/osx/pillage_user',
   'name': 'Empire Module Command',
-  'source': 'https://github.com/dstepanic/attck_empire/blob/master/Empire_modules.xlsx?raw=true'}]
+  'source': 'https://github.com/dstepanic/attck_empire/blob/master/Empire_modules.xlsx?raw=true'},
+ {'command': 'cat #{bash_history_filename} | grep #{bash_history_grep_args} > '
+             '#{output_file}',
+  'name': None,
+  'source': 'Kirtar22/Litmus_Test'},
+ {'command': 'cat .bash_history | grep password > bash.txt',
+  'name': None,
+  'source': 'Kirtar22/Litmus_Test'}]
 ```
 
 ## Potential Detections
 
 ```json
-
+[{'data_source': 'auditlogs (audit.rules)'},
+ {'data_source': 'bash_history logs'}]
 ```
 
 ## Potential Queries
 
 ```json
-
+[{'name': None,
+  'product': 'Splunk',
+  'query': 'index=linux sourcetype="linux_audit" syscall=257 '
+           'key=bash_history_changes | table '
+           'host,auid,syscall,syscall_name,exe'},
+ {'name': None,
+  'product': 'Splunk',
+  'query': 'index=linux sourcetype=bash_history cat bash_history | table '
+           '_time,host,user_name,bash_command'}]
 ```
 
 ## Raw Dataset

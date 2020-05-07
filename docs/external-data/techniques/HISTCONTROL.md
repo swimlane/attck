@@ -26,6 +26,9 @@ ls whoami
 
 bash sudo spctl --master-disable
 ```
+export HISTCONTROL=ignoreboth
+```
+```
 
 ## Commands Dataset
 
@@ -35,19 +38,29 @@ bash sudo spctl --master-disable
   'source': 'atomics/T1148/T1148.yaml'},
  {'command': 'bash sudo spctl --master-disable',
   'name': None,
-  'source': 'Threat Hunting Tables'}]
+  'source': 'Threat Hunting Tables'},
+ {'command': '```', 'name': None, 'source': 'Kirtar22/Litmus_Test'},
+ {'command': 'export HISTCONTROL=ignoreboth',
+  'name': None,
+  'source': 'Kirtar22/Litmus_Test'},
+ {'command': '```', 'name': None, 'source': 'Kirtar22/Litmus_Test'}]
 ```
 
 ## Potential Detections
 
 ```json
-
+[{'data_source': 'bash_history logs'}]
 ```
 
 ## Potential Queries
 
 ```json
-
+[{'name': None, 'product': 'Splunk', 'query': '```'},
+ {'name': None,
+  'product': 'Splunk',
+  'query': 'index=linux sourcetype="bash_history" export HISTCONTROL | table '
+           'host, user_name, bash_command'},
+ {'name': None, 'product': 'Splunk', 'query': '```'}]
 ```
 
 ## Raw Dataset

@@ -38,6 +38,9 @@ sudo touch /tmp/evilBinary
 sudo chown root /tmp/evilBinary
 sudo chmod g+s /tmp/evilBinary
 
+sudo chmod u+s hello
+sudo chmod u+s #{file_to_setuid}
+sudo chmod g+s #{file_to_setuid}
 ```
 
 ## Commands Dataset
@@ -60,19 +63,43 @@ sudo chmod g+s /tmp/evilBinary
              'sudo chown root /tmp/evilBinary\n'
              'sudo chmod g+s /tmp/evilBinary\n',
   'name': None,
-  'source': 'atomics/T1166/T1166.yaml'}]
+  'source': 'atomics/T1166/T1166.yaml'},
+ {'command': 'sudo chmod u+s hello',
+  'name': None,
+  'source': 'Kirtar22/Litmus_Test'},
+ {'command': 'sudo chmod u+s #{file_to_setuid}',
+  'name': None,
+  'source': 'Kirtar22/Litmus_Test'},
+ {'command': 'sudo chmod g+s #{file_to_setuid}',
+  'name': None,
+  'source': 'Kirtar22/Litmus_Test'}]
 ```
 
 ## Potential Detections
 
 ```json
-
+[{'data_source': 'bash_history'}, {'data_source': 'scripted_input'}]
 ```
 
 ## Potential Queries
 
 ```json
-
+[{'name': None,
+  'product': 'Splunk',
+  'query': 'index=linux sourcetype=bash_history "chmod 4***" OR "chmod 2***" '
+           'OR "chmod u+s" OR "chmod g+s" | table host,user_name,bash_command'},
+ {'name': None,
+  'product': 'Splunk',
+  'query': 'find Setuid: find / -type f -perm /4000 OR find / -type f -perm '
+           '/u+s'},
+ {'name': None,
+  'product': 'Splunk',
+  'query': 'find Setgid: find / -type f -perm /2000 OR find / -type f -perm '
+           '/g+s'},
+ {'name': None,
+  'product': 'Splunk',
+  'query': 'Create a scripted input to ingest the files with Setuid and Setgid '
+           'bits set and compare it with the expectde whitelist.'}]
 ```
 
 ## Raw Dataset

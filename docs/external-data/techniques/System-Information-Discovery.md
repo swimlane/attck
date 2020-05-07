@@ -58,24 +58,24 @@ sysinfo, run winenum, get_env.rb
 systeminfo
 reg query HKLM\SYSTEM\CurrentControlSet\Services\Disk\Enum
 
-systemsetup
 system_profiler
 ls -al /Applications
 
-uname -a >> /tmp/loot.txt
-cat /etc/lsb-release >> /tmp/loot.txt
-cat /etc/redhat-release >> /tmp/loot.txt
-uptime >> /tmp/loot.txt
-cat /etc/issue >> /tmp/loot.txt
+uname -a >> /tmp/T1082.txt
+if [ -f /etc/lsb-release ]; then cat /etc/lsb-release >> /tmp/T1082.txt; fi;
+if [ -f /etc/redhat-release ]; then cat /etc/redhat-release >> /tmp/T1082.txt; fi;      
+if [ -f /etc/issue ]; then cat /etc/issue >> /tmp/T1082.txt; fi;
+uptime >> /tmp/T1082.txt
+cat /tmp/T1082.txt 2>/dev/null
 
-cat /sys/class/dmi/id/bios_version | grep -i amazon
-cat /sys/class/dmi/id/product_name | grep -i "Droplet\|HVM\|VirtualBox\|VMware"
-cat /sys/class/dmi/id/chassis_vendor | grep -i "Xen\|Bochs\|QEMU"
-sudo dmidecode | grep -i "microsoft\|vmware\|virtualbox\|quemu\|domu"
-cat /proc/scsi/scsi | grep -i "vmware\|vbox"
-cat /proc/ide/hd0/model | grep -i "vmware\|vbox\|qemu\|virtual"
-sudo lspci | grep -i "vmware\|virtualbox"
-sudo lscpu | grep -i "Xen\|KVM\|Microsoft"
+if [ -f /sys/class/dmi/id/bios_version ]; then cat /sys/class/dmi/id/bios_version | grep -i amazon; fi;
+if [ -f /sys/class/dmi/id/product_name ]; then cat /sys/class/dmi/id/product_name | grep -i "Droplet\|HVM\|VirtualBox\|VMware"; fi;
+if [ -f /sys/class/dmi/id/product_name ]; then cat /sys/class/dmi/id/chassis_vendor | grep -i "Xen\|Bochs\|QEMU"; fi;
+if [ -x "$(command -v dmidecode)" ]; then sudo dmidecode | grep -i "microsoft\|vmware\|virtualbox\|quemu\|domu"; fi;
+if [ -f /proc/scsi/scsi ]; then cat /proc/scsi/scsi | grep -i "vmware\|vbox"; fi;
+if [ -f /proc/ide/hd0/model ]; then cat /proc/ide/hd0/model | grep -i "vmware\|vbox\|qemu\|virtual"; fi;
+if [ -x "$(command -v lspci)" ]; then sudo lspci | grep -i "vmware\|virtualbox"
+if [ -x "$(command -v lscpu)" ]; then sudo lscpu | grep -i "Xen\|KVM\|Microsoft"
 
 sudo lsmod | grep -i "vboxsf\|vboxguest"
 sudo lsmod | grep -i "vmw_baloon\|vmxnet"
@@ -142,28 +142,38 @@ powershell/situational_awareness/network/powerview/get_computer
              'HKLM\\SYSTEM\\CurrentControlSet\\Services\\Disk\\Enum\n',
   'name': None,
   'source': 'atomics/T1082/T1082.yaml'},
- {'command': 'systemsetup\nsystem_profiler\nls -al /Applications\n',
+ {'command': 'system_profiler\nls -al /Applications\n',
   'name': None,
   'source': 'atomics/T1082/T1082.yaml'},
- {'command': 'uname -a >> /tmp/loot.txt\n'
-             'cat /etc/lsb-release >> /tmp/loot.txt\n'
-             'cat /etc/redhat-release >> /tmp/loot.txt\n'
-             'uptime >> /tmp/loot.txt\n'
-             'cat /etc/issue >> /tmp/loot.txt\n',
+ {'command': 'uname -a >> /tmp/T1082.txt\n'
+             'if [ -f /etc/lsb-release ]; then cat /etc/lsb-release >> '
+             '/tmp/T1082.txt; fi;\n'
+             'if [ -f /etc/redhat-release ]; then cat /etc/redhat-release >> '
+             '/tmp/T1082.txt; fi;      \n'
+             'if [ -f /etc/issue ]; then cat /etc/issue >> /tmp/T1082.txt; '
+             'fi;\n'
+             'uptime >> /tmp/T1082.txt\n'
+             'cat /tmp/T1082.txt 2>/dev/null\n',
   'name': None,
   'source': 'atomics/T1082/T1082.yaml'},
- {'command': 'cat /sys/class/dmi/id/bios_version | grep -i amazon\n'
-             'cat /sys/class/dmi/id/product_name | grep -i '
-             '"Droplet\\|HVM\\|VirtualBox\\|VMware"\n'
-             'cat /sys/class/dmi/id/chassis_vendor | grep -i '
-             '"Xen\\|Bochs\\|QEMU"\n'
-             'sudo dmidecode | grep -i '
-             '"microsoft\\|vmware\\|virtualbox\\|quemu\\|domu"\n'
-             'cat /proc/scsi/scsi | grep -i "vmware\\|vbox"\n'
-             'cat /proc/ide/hd0/model | grep -i '
-             '"vmware\\|vbox\\|qemu\\|virtual"\n'
-             'sudo lspci | grep -i "vmware\\|virtualbox"\n'
-             'sudo lscpu | grep -i "Xen\\|KVM\\|Microsoft"\n',
+ {'command': 'if [ -f /sys/class/dmi/id/bios_version ]; then cat '
+             '/sys/class/dmi/id/bios_version | grep -i amazon; fi;\n'
+             'if [ -f /sys/class/dmi/id/product_name ]; then cat '
+             '/sys/class/dmi/id/product_name | grep -i '
+             '"Droplet\\|HVM\\|VirtualBox\\|VMware"; fi;\n'
+             'if [ -f /sys/class/dmi/id/product_name ]; then cat '
+             '/sys/class/dmi/id/chassis_vendor | grep -i "Xen\\|Bochs\\|QEMU"; '
+             'fi;\n'
+             'if [ -x "$(command -v dmidecode)" ]; then sudo dmidecode | grep '
+             '-i "microsoft\\|vmware\\|virtualbox\\|quemu\\|domu"; fi;\n'
+             'if [ -f /proc/scsi/scsi ]; then cat /proc/scsi/scsi | grep -i '
+             '"vmware\\|vbox"; fi;\n'
+             'if [ -f /proc/ide/hd0/model ]; then cat /proc/ide/hd0/model | '
+             'grep -i "vmware\\|vbox\\|qemu\\|virtual"; fi;\n'
+             'if [ -x "$(command -v lspci)" ]; then sudo lspci | grep -i '
+             '"vmware\\|virtualbox"\n'
+             'if [ -x "$(command -v lscpu)" ]; then sudo lscpu | grep -i '
+             '"Xen\\|KVM\\|Microsoft"\n',
   'name': None,
   'source': 'atomics/T1082/T1082.yaml'},
  {'command': 'sudo lsmod | grep -i "vboxsf\\|vboxguest"\n'
@@ -384,8 +394,7 @@ powershell/situational_awareness/network/powerview/get_computer
                                                                            {'description': 'Identify '
                                                                                            'System '
                                                                                            'Info\n',
-                                                                            'executor': {'command': 'systemsetup\n'
-                                                                                                    'system_profiler\n'
+                                                                            'executor': {'command': 'system_profiler\n'
                                                                                                     'ls '
                                                                                                     '-al '
                                                                                                     '/Applications\n',
@@ -393,31 +402,66 @@ powershell/situational_awareness/network/powerview/get_computer
                                                                             'name': 'System '
                                                                                     'Information '
                                                                                     'Discovery',
-                                                                            'supported_platforms': ['linux',
-                                                                                                    'macos']},
+                                                                            'supported_platforms': ['macos']},
                                                                            {'description': 'Identify '
                                                                                            'System '
                                                                                            'Info\n',
-                                                                            'executor': {'command': 'uname '
+                                                                            'executor': {'cleanup_command': 'rm '
+                                                                                                            '#{output_file} '
+                                                                                                            '2>/dev/null\n',
+                                                                                         'command': 'uname '
                                                                                                     '-a '
                                                                                                     '>> '
-                                                                                                    '/tmp/loot.txt\n'
+                                                                                                    '#{output_file}\n'
+                                                                                                    'if '
+                                                                                                    '[ '
+                                                                                                    '-f '
+                                                                                                    '/etc/lsb-release '
+                                                                                                    ']; '
+                                                                                                    'then '
                                                                                                     'cat '
                                                                                                     '/etc/lsb-release '
                                                                                                     '>> '
-                                                                                                    '/tmp/loot.txt\n'
+                                                                                                    '#{output_file}; '
+                                                                                                    'fi;\n'
+                                                                                                    'if '
+                                                                                                    '[ '
+                                                                                                    '-f '
+                                                                                                    '/etc/redhat-release '
+                                                                                                    ']; '
+                                                                                                    'then '
                                                                                                     'cat '
                                                                                                     '/etc/redhat-release '
                                                                                                     '>> '
-                                                                                                    '/tmp/loot.txt\n'
-                                                                                                    'uptime '
-                                                                                                    '>> '
-                                                                                                    '/tmp/loot.txt\n'
+                                                                                                    '#{output_file}; '
+                                                                                                    'fi;      \n'
+                                                                                                    'if '
+                                                                                                    '[ '
+                                                                                                    '-f '
+                                                                                                    '/etc/issue '
+                                                                                                    ']; '
+                                                                                                    'then '
                                                                                                     'cat '
                                                                                                     '/etc/issue '
                                                                                                     '>> '
-                                                                                                    '/tmp/loot.txt\n',
+                                                                                                    '#{output_file}; '
+                                                                                                    'fi;\n'
+                                                                                                    'uptime '
+                                                                                                    '>> '
+                                                                                                    '#{output_file}\n'
+                                                                                                    'cat '
+                                                                                                    '#{output_file} '
+                                                                                                    '2>/dev/null\n',
                                                                                          'name': 'sh'},
+                                                                            'input_arguments': {'output_file': {'default': '/tmp/T1082.txt',
+                                                                                                                'description': 'Output '
+                                                                                                                               'file '
+                                                                                                                               'used '
+                                                                                                                               'to '
+                                                                                                                               'store '
+                                                                                                                               'the '
+                                                                                                                               'results.',
+                                                                                                                'type': 'path'}},
                                                                             'name': 'List '
                                                                                     'OS '
                                                                                     'Information',
@@ -438,48 +482,108 @@ powershell/situational_awareness/network/powerview/get_computer
                                                                                            'and '
                                                                                            'other '
                                                                                            'malware.\n',
-                                                                            'executor': {'command': 'cat '
+                                                                            'executor': {'command': 'if '
+                                                                                                    '[ '
+                                                                                                    '-f '
+                                                                                                    '/sys/class/dmi/id/bios_version '
+                                                                                                    ']; '
+                                                                                                    'then '
+                                                                                                    'cat '
                                                                                                     '/sys/class/dmi/id/bios_version '
                                                                                                     '| '
                                                                                                     'grep '
                                                                                                     '-i '
-                                                                                                    'amazon\n'
+                                                                                                    'amazon; '
+                                                                                                    'fi;\n'
+                                                                                                    'if '
+                                                                                                    '[ '
+                                                                                                    '-f '
+                                                                                                    '/sys/class/dmi/id/product_name '
+                                                                                                    ']; '
+                                                                                                    'then '
                                                                                                     'cat '
                                                                                                     '/sys/class/dmi/id/product_name '
                                                                                                     '| '
                                                                                                     'grep '
                                                                                                     '-i '
-                                                                                                    '"Droplet\\|HVM\\|VirtualBox\\|VMware"\n'
+                                                                                                    '"Droplet\\|HVM\\|VirtualBox\\|VMware"; '
+                                                                                                    'fi;\n'
+                                                                                                    'if '
+                                                                                                    '[ '
+                                                                                                    '-f '
+                                                                                                    '/sys/class/dmi/id/product_name '
+                                                                                                    ']; '
+                                                                                                    'then '
                                                                                                     'cat '
                                                                                                     '/sys/class/dmi/id/chassis_vendor '
                                                                                                     '| '
                                                                                                     'grep '
                                                                                                     '-i '
-                                                                                                    '"Xen\\|Bochs\\|QEMU"\n'
+                                                                                                    '"Xen\\|Bochs\\|QEMU"; '
+                                                                                                    'fi;\n'
+                                                                                                    'if '
+                                                                                                    '[ '
+                                                                                                    '-x '
+                                                                                                    '"$(command '
+                                                                                                    '-v '
+                                                                                                    'dmidecode)" '
+                                                                                                    ']; '
+                                                                                                    'then '
                                                                                                     'sudo '
                                                                                                     'dmidecode '
                                                                                                     '| '
                                                                                                     'grep '
                                                                                                     '-i '
-                                                                                                    '"microsoft\\|vmware\\|virtualbox\\|quemu\\|domu"\n'
+                                                                                                    '"microsoft\\|vmware\\|virtualbox\\|quemu\\|domu"; '
+                                                                                                    'fi;\n'
+                                                                                                    'if '
+                                                                                                    '[ '
+                                                                                                    '-f '
+                                                                                                    '/proc/scsi/scsi '
+                                                                                                    ']; '
+                                                                                                    'then '
                                                                                                     'cat '
                                                                                                     '/proc/scsi/scsi '
                                                                                                     '| '
                                                                                                     'grep '
                                                                                                     '-i '
-                                                                                                    '"vmware\\|vbox"\n'
+                                                                                                    '"vmware\\|vbox"; '
+                                                                                                    'fi;\n'
+                                                                                                    'if '
+                                                                                                    '[ '
+                                                                                                    '-f '
+                                                                                                    '/proc/ide/hd0/model '
+                                                                                                    ']; '
+                                                                                                    'then '
                                                                                                     'cat '
                                                                                                     '/proc/ide/hd0/model '
                                                                                                     '| '
                                                                                                     'grep '
                                                                                                     '-i '
-                                                                                                    '"vmware\\|vbox\\|qemu\\|virtual"\n'
+                                                                                                    '"vmware\\|vbox\\|qemu\\|virtual"; '
+                                                                                                    'fi;\n'
+                                                                                                    'if '
+                                                                                                    '[ '
+                                                                                                    '-x '
+                                                                                                    '"$(command '
+                                                                                                    '-v '
+                                                                                                    'lspci)" '
+                                                                                                    ']; '
+                                                                                                    'then '
                                                                                                     'sudo '
                                                                                                     'lspci '
                                                                                                     '| '
                                                                                                     'grep '
                                                                                                     '-i '
                                                                                                     '"vmware\\|virtualbox"\n'
+                                                                                                    'if '
+                                                                                                    '[ '
+                                                                                                    '-x '
+                                                                                                    '"$(command '
+                                                                                                    '-v '
+                                                                                                    'lscpu)" '
+                                                                                                    ']; '
+                                                                                                    'then '
                                                                                                     'sudo '
                                                                                                     'lscpu '
                                                                                                     '| '

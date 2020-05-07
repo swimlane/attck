@@ -57,15 +57,19 @@ shell dsquery user "dc=domain,dc=com"
 shell dsquery * OU="Domain Admins",dc=domain,dc=com -scope base -attr SAMAccountName userPrincipleName Description
 shell dsquery * -filter "(&(objectCategory=contact)(objectCategory=person)(mail=*)(objectClass=user))" -Attr samAccountName mail -Limit 0
 shell dsquery * -filter "(&(objectCategory=group)(name=*Admin*))" -Attr name description members
-cat /etc/passwd > ~/loot.txt
+cat /etc/passwd > /tmp/T1087.txt
+cat /tmp/T1087.txt
 
-cat /etc/sudoers > ~/loot.txt
+cat /etc/sudoers > /tmp/T1087.txt
+cat /tmp/T1087.txt
 
-grep 'x:0:' /etc/passwd > ~/loot.txt
+grep 'x:0:' /etc/passwd > /tmp/T1087.txt
+cat /tmp/T1087.txt 2>/dev/null
 
 username=$(echo $HOME | awk -F'/' '{print $3}') && lsof -u $username
 
-lastlog > ~/loot.txt
+lastlog > /tmp/T1087.txt
+cat /tmp/T1087.txt
 
 groups
 id
@@ -168,6 +172,18 @@ python/situational_awareness/network/active_directory/get_userinformation
 python/situational_awareness/network/active_directory/get_userinformation
 python/situational_awareness/network/active_directory/get_users
 python/situational_awareness/network/active_directory/get_users
+Atomic Test #1 - Enumerate all accounts
+cat /etc/passwd > #{output_file}
+Atomic Test #2 - View sudoers access
+cat /etc/sudoers > #{output_file}
+Atomic Test #3 - View accounts with UID 0
+username=$(echo $HOME | awk -F'/' '{print $3}') && lsof -u $username
+lsof $USER
+Atomic Test #4 - Show if a user account has ever logger in remotely
+lastlog > #{output_file}
+Atomic Test #5 - Enumerate users and groups
+groups
+id
 ```
 
 ## Commands Dataset
@@ -206,20 +222,21 @@ python/situational_awareness/network/active_directory/get_users
              'members',
   'name': 'Cobalt Strike',
   'source': 'https://attack.mitre.org/docs/APT3_Adversary_Emulation_Field_Manual.xlsx'},
- {'command': 'cat /etc/passwd > ~/loot.txt\n',
+ {'command': 'cat /etc/passwd > /tmp/T1087.txt\ncat /tmp/T1087.txt\n',
   'name': None,
   'source': 'atomics/T1087/T1087.yaml'},
- {'command': 'cat /etc/sudoers > ~/loot.txt\n',
+ {'command': 'cat /etc/sudoers > /tmp/T1087.txt\ncat /tmp/T1087.txt\n',
   'name': None,
   'source': 'atomics/T1087/T1087.yaml'},
- {'command': "grep 'x:0:' /etc/passwd > ~/loot.txt\n",
+ {'command': "grep 'x:0:' /etc/passwd > /tmp/T1087.txt\n"
+             'cat /tmp/T1087.txt 2>/dev/null\n',
   'name': None,
   'source': 'atomics/T1087/T1087.yaml'},
  {'command': "username=$(echo $HOME | awk -F'/' '{print $3}') && lsof -u "
              '$username\n',
   'name': None,
   'source': 'atomics/T1087/T1087.yaml'},
- {'command': 'lastlog > ~/loot.txt\n',
+ {'command': 'lastlog > /tmp/T1087.txt\ncat /tmp/T1087.txt\n',
   'name': None,
   'source': 'atomics/T1087/T1087.yaml'},
  {'command': 'groups\nid\n',
@@ -475,13 +492,45 @@ python/situational_awareness/network/active_directory/get_users
   'source': 'https://github.com/dstepanic/attck_empire/blob/master/Empire_modules.xlsx?raw=true'},
  {'command': 'python/situational_awareness/network/active_directory/get_users',
   'name': 'Empire Module Command',
-  'source': 'https://github.com/dstepanic/attck_empire/blob/master/Empire_modules.xlsx?raw=true'}]
+  'source': 'https://github.com/dstepanic/attck_empire/blob/master/Empire_modules.xlsx?raw=true'},
+ {'command': 'Atomic Test #1 - Enumerate all accounts',
+  'name': None,
+  'source': 'Kirtar22/Litmus_Test'},
+ {'command': 'cat /etc/passwd > #{output_file}',
+  'name': None,
+  'source': 'Kirtar22/Litmus_Test'},
+ {'command': 'Atomic Test #2 - View sudoers access',
+  'name': None,
+  'source': 'Kirtar22/Litmus_Test'},
+ {'command': 'cat /etc/sudoers > #{output_file}',
+  'name': None,
+  'source': 'Kirtar22/Litmus_Test'},
+ {'command': 'Atomic Test #3 - View accounts with UID 0',
+  'name': None,
+  'source': 'Kirtar22/Litmus_Test'},
+ {'command': "username=$(echo $HOME | awk -F'/' '{print $3}') && lsof -u "
+             '$username',
+  'name': None,
+  'source': 'Kirtar22/Litmus_Test'},
+ {'command': 'lsof $USER', 'name': None, 'source': 'Kirtar22/Litmus_Test'},
+ {'command': 'Atomic Test #4 - Show if a user account has ever logger in '
+             'remotely',
+  'name': None,
+  'source': 'Kirtar22/Litmus_Test'},
+ {'command': 'lastlog > #{output_file}',
+  'name': None,
+  'source': 'Kirtar22/Litmus_Test'},
+ {'command': 'Atomic Test #5 - Enumerate users and groups',
+  'name': None,
+  'source': 'Kirtar22/Litmus_Test'},
+ {'command': 'groups', 'name': None, 'source': 'Kirtar22/Litmus_Test'},
+ {'command': 'id', 'name': None, 'source': 'Kirtar22/Litmus_Test'}]
 ```
 
 ## Potential Detections
 
 ```json
-
+[{'data_source': 'bash_history logs'}]
 ```
 
 ## Potential Queries
@@ -497,7 +546,27 @@ python/situational_awareness/network/active_directory/get_users
            'process_command_line contains "*get-localuser*"or '
            'process_command_line contains "*get-localgroupmembers*"or '
            'process_command_line contains "*get-aduser*"or '
-           'process_command_line contains "query*user*")'}]
+           'process_command_line contains "query*user*")'},
+ {'name': None,
+  'product': 'Splunk',
+  'query': 'index=linux sourcetype=bash_history cat /etc/passwd | table '
+           'host,user_name,bash_command'},
+ {'name': None,
+  'product': 'Splunk',
+  'query': 'index=linux sourcetype=bash_history cat /etc/sudoers | table '
+           'host,user_name,bash_command'},
+ {'name': None,
+  'product': 'Splunk',
+  'query': 'index=linux sourcetype=bash_history "lsof -u *" | table '
+           'host,user_name,bash_command'},
+ {'name': None,
+  'product': 'Splunk',
+  'query': 'index=linux sourcetype=bash_history lastlog | table '
+           'host,user_name,bash_command'},
+ {'name': None,
+  'product': 'Splunk',
+  'query': 'index=linux sourcetype=bash_history group OR id | table '
+           'host,user_name,bash_command'}]
 ```
 
 ## Raw Dataset
@@ -633,12 +702,17 @@ python/situational_awareness/network/active_directory/get_users
                                                                                 'to '
                                                                                 'another '
                                                                                 'file\n',
-                                                                 'executor': {'command': 'cat '
+                                                                 'executor': {'cleanup_command': 'rm '
+                                                                                                 '-f '
+                                                                                                 '#{output_file}\n',
+                                                                              'command': 'cat '
                                                                                          '/etc/passwd '
                                                                                          '> '
+                                                                                         '#{output_file}\n'
+                                                                                         'cat '
                                                                                          '#{output_file}\n',
                                                                               'name': 'sh'},
-                                                                 'input_arguments': {'output_file': {'default': '~/loot.txt',
+                                                                 'input_arguments': {'output_file': {'default': '/tmp/T1087.txt',
                                                                                                      'description': 'Path '
                                                                                                                     'where '
                                                                                                                     'captured '
@@ -654,12 +728,18 @@ python/situational_awareness/network/active_directory/get_users
                                                                                          'macos']},
                                                                 {'description': '(requires '
                                                                                 'root)\n',
-                                                                 'executor': {'command': 'cat '
+                                                                 'executor': {'cleanup_command': 'rm '
+                                                                                                 '-f '
+                                                                                                 '#{output_file}\n',
+                                                                              'command': 'cat '
                                                                                          '/etc/sudoers '
                                                                                          '> '
+                                                                                         '#{output_file}\n'
+                                                                                         'cat '
                                                                                          '#{output_file}\n',
+                                                                              'elevation_required': True,
                                                                               'name': 'sh'},
-                                                                 'input_arguments': {'output_file': {'default': '~/loot.txt',
+                                                                 'input_arguments': {'output_file': {'default': '/tmp/T1087.txt',
                                                                                                      'description': 'Path '
                                                                                                                     'where '
                                                                                                                     'captured '
@@ -678,13 +758,20 @@ python/situational_awareness/network/active_directory/get_users
                                                                                 'wtih '
                                                                                 'UID '
                                                                                 '0\n',
-                                                                 'executor': {'command': 'grep '
+                                                                 'executor': {'cleanup_command': 'rm '
+                                                                                                 '-f '
+                                                                                                 '#{output_file} '
+                                                                                                 '2>/dev/null\n',
+                                                                              'command': 'grep '
                                                                                          "'x:0:' "
                                                                                          '/etc/passwd '
                                                                                          '> '
-                                                                                         '#{output_file}\n',
+                                                                                         '#{output_file}\n'
+                                                                                         'cat '
+                                                                                         '#{output_file} '
+                                                                                         '2>/dev/null\n',
                                                                               'name': 'sh'},
-                                                                 'input_arguments': {'output_file': {'default': '~/loot.txt',
+                                                                 'input_arguments': {'output_file': {'default': '/tmp/T1087.txt',
                                                                                                      'description': 'Path '
                                                                                                                     'where '
                                                                                                                     'captured '
@@ -724,7 +811,41 @@ python/situational_awareness/network/active_directory/get_users
                                                                          'user',
                                                                  'supported_platforms': ['linux',
                                                                                          'macos']},
-                                                                {'description': 'Show '
+                                                                {'dependencies': [{'description': 'Check '
+                                                                                                  'if '
+                                                                                                  'lastlog '
+                                                                                                  'command '
+                                                                                                  'exists '
+                                                                                                  'on '
+                                                                                                  'the '
+                                                                                                  'machine\n',
+                                                                                   'get_prereq_command': 'echo '
+                                                                                                         '"Install '
+                                                                                                         'lastlog '
+                                                                                                         'on '
+                                                                                                         'the '
+                                                                                                         'machine '
+                                                                                                         'to '
+                                                                                                         'run '
+                                                                                                         'the '
+                                                                                                         'test."; '
+                                                                                                         'exit '
+                                                                                                         '1;   \n',
+                                                                                   'prereq_command': 'if '
+                                                                                                     '[ '
+                                                                                                     '-x '
+                                                                                                     '"$(command '
+                                                                                                     '-v '
+                                                                                                     'lastlog)" '
+                                                                                                     ']; '
+                                                                                                     'then '
+                                                                                                     'exit '
+                                                                                                     '0; '
+                                                                                                     'else '
+                                                                                                     'exit '
+                                                                                                     '1;\n'}],
+                                                                 'dependency_executor_name': 'sh',
+                                                                 'description': 'Show '
                                                                                 'if '
                                                                                 'a '
                                                                                 'user '
@@ -734,11 +855,16 @@ python/situational_awareness/network/active_directory/get_users
                                                                                 'logged '
                                                                                 'in '
                                                                                 'remotely\n',
-                                                                 'executor': {'command': 'lastlog '
+                                                                 'executor': {'cleanup_command': 'rm '
+                                                                                                 '-f '
+                                                                                                 '#{output_file}\n',
+                                                                              'command': 'lastlog '
                                                                                          '> '
+                                                                                         '#{output_file}\n'
+                                                                                         'cat '
                                                                                          '#{output_file}\n',
                                                                               'name': 'sh'},
-                                                                 'input_arguments': {'output_file': {'default': '~/loot.txt',
+                                                                 'input_arguments': {'output_file': {'default': '/tmp/T1087.txt',
                                                                                                      'description': 'Path '
                                                                                                                     'where '
                                                                                                                     'captured '

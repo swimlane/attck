@@ -47,6 +47,11 @@ bash crontab
 shell crontab
 python/persistence/multi/crontab
 python/persistence/multi/crontab
+echo "* * * * * #{command}" > #{tmp_cron} && crontab #{tmp_cron}
+echo "#{command}" > /etc/cron.daily/#{cron_script_name}
+at now + 1 minute -f script.sh
+echo "shutdown -h now" | at -m 23:5
+at now + 1 minute | ping -c 4 google.com > /home/ec2-user/google6.txt
 ```
 
 ## Commands Dataset
@@ -74,19 +79,60 @@ python/persistence/multi/crontab
   'source': 'https://github.com/dstepanic/attck_empire/blob/master/Empire_modules.xlsx?raw=true'},
  {'command': 'python/persistence/multi/crontab',
   'name': 'Empire Module Command',
-  'source': 'https://github.com/dstepanic/attck_empire/blob/master/Empire_modules.xlsx?raw=true'}]
+  'source': 'https://github.com/dstepanic/attck_empire/blob/master/Empire_modules.xlsx?raw=true'},
+ {'command': 'echo "* * * * * #{command}" > #{tmp_cron} && crontab #{tmp_cron}',
+  'name': None,
+  'source': 'Kirtar22/Litmus_Test'},
+ {'command': 'echo "#{command}" > /etc/cron.daily/#{cron_script_name}',
+  'name': None,
+  'source': 'Kirtar22/Litmus_Test'},
+ {'command': 'at now + 1 minute -f script.sh',
+  'name': None,
+  'source': 'Kirtar22/Litmus_Test'},
+ {'command': 'echo "shutdown -h now" | at -m 23:5',
+  'name': None,
+  'source': 'Kirtar22/Litmus_Test'},
+ {'command': 'at now + 1 minute | ping -c 4 google.com > '
+             '/home/ec2-user/google6.txt',
+  'name': None,
+  'source': 'Kirtar22/Litmus_Test'}]
 ```
 
 ## Potential Detections
 
 ```json
-
+[{'data_source': '/var/log/cron'}, {'data_source': 'bash_history'}]
 ```
 
 ## Potential Queries
 
 ```json
-
+[{'name': None,
+  'product': 'Splunk',
+  'query': '1. bash_history : track the command "crontab" - you may need to '
+           'look for the commands crontab <file>'},
+ {'name': None, 'product': 'Splunk', 'query': ''},
+ {'name': None,
+  'product': 'Splunk',
+  'query': 'index=linux sourcetype=bash_history bash_command="crontab *" | '
+           'table host, user_name, bash_command'},
+ {'name': None,
+  'product': 'Splunk',
+  'query': '2. /var/log/cron :  look for "crontab" & "REPLACE" in the cron '
+           'logs'},
+ {'name': None, 'product': 'Splunk', 'query': 'index=linux crontab replace'},
+ {'name': None,
+  'product': 'Splunk',
+  'query': '3. /var.log/cron - track CMD command'},
+ {'name': None,
+  'product': 'Splunk',
+  'query': 'cat /var/log/cron | grep CMD | cut -d " " -f 9 |sort | uniq -c  | '
+           'sort -rn will give you all the jobs which run in the environment '
+           'with its number starting from high to low. You can look for a '
+           'suspecious job/s which are not a part of a whitelisted jobs.'},
+ {'name': None,
+  'product': 'Splunk',
+  'query': '4. index=linux sourcetype=bash_history at'}]
 ```
 
 ## Raw Dataset

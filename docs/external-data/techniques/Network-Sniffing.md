@@ -44,6 +44,8 @@ python/collection/linux/sniffer
 python/collection/linux/sniffer
 python/collection/osx/sniffer
 python/collection/osx/sniffer
+tcpdump -c 5 -nnni #{interface}
+tshark -c 5 -i #{interface}
 ```
 
 ## Commands Dataset
@@ -104,13 +106,19 @@ python/collection/osx/sniffer
   'source': 'https://github.com/dstepanic/attck_empire/blob/master/Empire_modules.xlsx?raw=true'},
  {'command': 'python/collection/osx/sniffer',
   'name': 'Empire Module Command',
-  'source': 'https://github.com/dstepanic/attck_empire/blob/master/Empire_modules.xlsx?raw=true'}]
+  'source': 'https://github.com/dstepanic/attck_empire/blob/master/Empire_modules.xlsx?raw=true'},
+ {'command': 'tcpdump -c 5 -nnni #{interface}',
+  'name': None,
+  'source': 'Kirtar22/Litmus_Test'},
+ {'command': 'tshark -c 5 -i #{interface}',
+  'name': None,
+  'source': 'Kirtar22/Litmus_Test'}]
 ```
 
 ## Potential Detections
 
 ```json
-
+[{'data_source': '/var/log/messages'}]
 ```
 
 ## Potential Queries
@@ -122,7 +130,15 @@ python/collection/osx/sniffer
            '"tshark.exe"or process_path contains "windump.exe"or process_path '
            'contains "logman.exe"or process_path contains "tcpdump.exe"or '
            'process_path contains "wprui.exe"or process_path contains '
-           '"wpr.exe")'}]
+           '"wpr.exe")'},
+ {'name': None,
+  'product': 'Splunk',
+  'query': 'index=linux sourcetype=syslog entered promiscuous mode | table '
+           'host,message'},
+ {'name': None,
+  'product': 'Splunk',
+  'query': 'index=linux sourcetype=syslog left promiscuous mode | table '
+           'host,message'}]
 ```
 
 ## Raw Dataset

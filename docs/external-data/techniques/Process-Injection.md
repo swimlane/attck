@@ -85,6 +85,12 @@ powershell/management/shinject
 python/management/osx/shellcodeinject64
 python/management/osx/shellcodeinject64
 ```
+echo #{path_to_shared_library} > /etc/ld.so.preload
+```
+```
+echo /home/$USER/random.so > /etc/ld.so.preload
+```
+```
 
 ## Commands Dataset
 
@@ -281,13 +287,24 @@ python/management/osx/shellcodeinject64
   'source': 'https://github.com/dstepanic/attck_empire/blob/master/Empire_modules.xlsx?raw=true'},
  {'command': 'python/management/osx/shellcodeinject64',
   'name': 'Empire Module Command',
-  'source': 'https://github.com/dstepanic/attck_empire/blob/master/Empire_modules.xlsx?raw=true'}]
+  'source': 'https://github.com/dstepanic/attck_empire/blob/master/Empire_modules.xlsx?raw=true'},
+ {'command': '```', 'name': None, 'source': 'Kirtar22/Litmus_Test'},
+ {'command': 'echo #{path_to_shared_library} > /etc/ld.so.preload',
+  'name': None,
+  'source': 'Kirtar22/Litmus_Test'},
+ {'command': '```', 'name': None, 'source': 'Kirtar22/Litmus_Test'},
+ {'command': '```', 'name': None, 'source': 'Kirtar22/Litmus_Test'},
+ {'command': 'echo /home/$USER/random.so > /etc/ld.so.preload',
+  'name': None,
+  'source': 'Kirtar22/Litmus_Test'},
+ {'command': '```', 'name': None, 'source': 'Kirtar22/Litmus_Test'}]
 ```
 
 ## Potential Detections
 
 ```json
-
+[{'data_source': 'auditlogs (audit.rules)'},
+ {'data_source': 'bash_history logs'}]
 ```
 
 ## Potential Queries
@@ -297,7 +314,23 @@ python/management/osx/shellcodeinject64
   'product': 'Azure Sentinel',
   'query': 'Sysmon| where EventID == 1 and process_command_line contains '
            '"*Invoke-DllInjection*"or process_command_line contains '
-           '"C:\\\\windows\\\\sysnative\\\\"'}]
+           '"C:\\\\windows\\\\sysnative\\\\"'},
+ {'name': None, 'product': 'Splunk', 'query': '```'},
+ {'name': None,
+  'product': 'Splunk',
+  'query': 'index=linux sourcetype=linux_audit preload_lib'},
+ {'name': None, 'product': 'Splunk', 'query': '```'},
+ {'name': None, 'product': 'Splunk', 'query': '```'},
+ {'name': None,
+  'product': 'Splunk',
+  'query': '-w /etc/ld.so.preload -p wa -k preload_lib'},
+ {'name': None, 'product': 'Splunk', 'query': '```'},
+ {'name': None, 'product': 'Splunk', 'query': '```'},
+ {'name': None,
+  'product': 'Splunk',
+  'query': 'index=linux sourcetype="bash_history" ld.so.preload | table '
+           'host,user_name,bash_command'},
+ {'name': None, 'product': 'Splunk', 'query': '```'}]
 ```
 
 ## Raw Dataset

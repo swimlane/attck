@@ -26,6 +26,19 @@ Binary padding effectively changes the checksum of the file and can also be used
 ```
 dd if=/dev/zero bs=1 count=1 >> /tmp/evil-binary
 
+dd if=/dev/zero bs=1 count=1 >> #{file_to_pad}
+```
+sha1sum welcome.sh >before
+dd if=/dev/zero bs=1 count=1 >> welcome.sh
+<<
+1+0 records in
+1+0 records out
+1 byte (1 B) copied, 0.000221464 s, 4.5 kB/s
+>>
+sha1sum welcome.sh >after
+cmp before after
+<<before after differ: byte 1, line 1>>
+```
 ```
 
 ## Commands Dataset
@@ -33,19 +46,49 @@ dd if=/dev/zero bs=1 count=1 >> /tmp/evil-binary
 ```
 [{'command': 'dd if=/dev/zero bs=1 count=1 >> /tmp/evil-binary\n',
   'name': None,
-  'source': 'atomics/T1009/T1009.yaml'}]
+  'source': 'atomics/T1009/T1009.yaml'},
+ {'command': 'dd if=/dev/zero bs=1 count=1 >> #{file_to_pad}',
+  'name': None,
+  'source': 'Kirtar22/Litmus_Test'},
+ {'command': '```', 'name': None, 'source': 'Kirtar22/Litmus_Test'},
+ {'command': 'sha1sum welcome.sh >before',
+  'name': None,
+  'source': 'Kirtar22/Litmus_Test'},
+ {'command': 'dd if=/dev/zero bs=1 count=1 >> welcome.sh',
+  'name': None,
+  'source': 'Kirtar22/Litmus_Test'},
+ {'command': '<<', 'name': None, 'source': 'Kirtar22/Litmus_Test'},
+ {'command': '1+0 records in', 'name': None, 'source': 'Kirtar22/Litmus_Test'},
+ {'command': '1+0 records out', 'name': None, 'source': 'Kirtar22/Litmus_Test'},
+ {'command': '1 byte (1 B) copied, 0.000221464 s, 4.5 kB/s',
+  'name': None,
+  'source': 'Kirtar22/Litmus_Test'},
+ {'command': '>>', 'name': None, 'source': 'Kirtar22/Litmus_Test'},
+ {'command': 'sha1sum welcome.sh >after',
+  'name': None,
+  'source': 'Kirtar22/Litmus_Test'},
+ {'command': 'cmp before after',
+  'name': None,
+  'source': 'Kirtar22/Litmus_Test'},
+ {'command': '<<before after differ: byte 1, line 1>>',
+  'name': None,
+  'source': 'Kirtar22/Litmus_Test'},
+ {'command': '```', 'name': None, 'source': 'Kirtar22/Litmus_Test'}]
 ```
 
 ## Potential Detections
 
 ```json
-
+[{'data_source': '```bash_history logs```'}]
 ```
 
 ## Potential Queries
 
 ```json
-
+[{'name': None,
+  'product': 'Splunk',
+  'query': '```index=linux sourcetype="bash_history" bash_command="dd *"```'},
+ {'name': None, 'product': 'Splunk', 'query': ''}]
 ```
 
 ## Raw Dataset
