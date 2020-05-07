@@ -105,6 +105,7 @@ powershell/code_execution/invoke_metasploitpayload
 powershell/code_execution/invoke_metasploitpayload
 powershell/management/invoke_script
 powershell/management/invoke_script
+Creates and executes a simple bash script.
 ```
 
 ## Commands Dataset
@@ -359,19 +360,28 @@ powershell/management/invoke_script
   'source': 'https://github.com/dstepanic/attck_empire/blob/master/Empire_modules.xlsx?raw=true'},
  {'command': 'powershell/management/invoke_script',
   'name': 'Empire Module Command',
-  'source': 'https://github.com/dstepanic/attck_empire/blob/master/Empire_modules.xlsx?raw=true'}]
+  'source': 'https://github.com/dstepanic/attck_empire/blob/master/Empire_modules.xlsx?raw=true'},
+ {'command': 'Creates and executes a simple bash script.',
+  'name': None,
+  'source': 'Kirtar22/Litmus_Test'}]
 ```
 
 ## Potential Detections
 
 ```json
-
+[{'data_source': 'auditlogs (audit.rules)'}]
 ```
 
 ## Potential Queries
 
 ```json
-
+[{'name': None,
+  'product': 'Splunk',
+  'query': 'index=linux sourcetype=linux_audit syscall=59 OR syscall=322  | '
+           'table host,syscall,syscall_name,exe,auid'},
+ {'name': None,
+  'product': 'Splunk',
+  'query': 'This could be very overwhelming if whitelisting is not done.'}]
 ```
 
 ## Raw Dataset

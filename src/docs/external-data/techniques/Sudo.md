@@ -31,6 +31,8 @@ vim /etc/sudoers
 History
 Oct 18 11:09:54 icbc sudo: test321: TTY = pts / 1; PWD = /; USER = # - 1; COMMAND = / usr / bin / id
 Oct 18 11:11:59 icbc sudo: test321: TTY = pts / 1; PWD = /; USER = # 4294967295; COMMAND = / usr / bin / id
+cat /etc/sudoers
+vim /etc/sudoers
 ```
 
 ## Commands Dataset
@@ -45,13 +47,20 @@ Oct 18 11:11:59 icbc sudo: test321: TTY = pts / 1; PWD = /; USER = # 4294967295;
              'Oct 18 11:11:59 icbc sudo: test321: TTY = pts / 1; PWD = /; USER '
              '= # 4294967295; COMMAND = / usr / bin / id',
   'name': 'History',
-  'source': 'https://raw.githubusercontent.com/12306Bro/Threathunting-book/master/{}'}]
+  'source': 'https://raw.githubusercontent.com/12306Bro/Threathunting-book/master/{}'},
+ {'command': 'cat /etc/sudoers',
+  'name': None,
+  'source': 'Kirtar22/Litmus_Test'},
+ {'command': 'vim /etc/sudoers',
+  'name': None,
+  'source': 'Kirtar22/Litmus_Test'}]
 ```
 
 ## Potential Detections
 
 ```json
-
+[{'data_source': 'auditlogs (audit.rules)'},
+ {'data_source': 'bash_history logs'}]
 ```
 
 ## Potential Queries
@@ -82,7 +91,13 @@ Oct 18 11:11:59 icbc sudo: test321: TTY = pts / 1; PWD = /; USER = # 4294967295;
            "\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0- '#-1'\n"
            "\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0- '# 4294967295'\n"
            '\xa0\xa0\xa0\xa0condition: selection\n'
-           'level: medium'}]
+           'level: medium'},
+ {'name': None,
+  'product': 'Splunk',
+  'query': 'index=linux sourcetype="linux_audit" sudoers_change'},
+ {'name': None,
+  'product': 'Splunk',
+  'query': 'Audit Rule : -w /etc/sudoers -p wa -k sudoers_change'}]
 ```
 
 ## Raw Dataset

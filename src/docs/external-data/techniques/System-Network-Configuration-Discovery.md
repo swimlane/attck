@@ -41,9 +41,10 @@ net config
 
 netsh advfirewall firewall show rule name=all
 
-arp -a
-netstat -ant | awk '{print $NF}' | grep -v '[a-z]' | sort | uniq -c
-ifconfig
+if [ -x "$(command -v arp)" ]; then arp -a; else echo "arp is missing from the machine. skipping..."; fi;
+if [ -x "$(command -v ifconfig)" ]; then ifconfig; else echo "ifconfig is missing from the machine. skipping..."; fi;
+if [ -x "$(command -v ip)" ]; then ip addr; else echo "ip is missing from the machine. skipping..."; fi;
+if [ -x "$(command -v netstat)" ]; then netstat -ant | awk '{print $NF}' | grep -v '[a-z]' | sort | uniq -c; else echo "netstat is missing from the machine. skipping..."; fi;
 
 ipconfig /all
 net config workstation
@@ -183,10 +184,15 @@ powershell/situational_awareness/network/powerview/get_subnet
  {'command': 'netsh advfirewall firewall show rule name=all\n',
   'name': None,
   'source': 'atomics/T1016/T1016.yaml'},
- {'command': 'arp -a\n'
-             "netstat -ant | awk '{print $NF}' | grep -v '[a-z]' | sort | uniq "
-             '-c\n'
-             'ifconfig\n',
+ {'command': 'if [ -x "$(command -v arp)" ]; then arp -a; else echo "arp is '
+             'missing from the machine. skipping..."; fi;\n'
+             'if [ -x "$(command -v ifconfig)" ]; then ifconfig; else echo '
+             '"ifconfig is missing from the machine. skipping..."; fi;\n'
+             'if [ -x "$(command -v ip)" ]; then ip addr; else echo "ip is '
+             'missing from the machine. skipping..."; fi;\n'
+             'if [ -x "$(command -v netstat)" ]; then netstat -ant | awk '
+             "'{print $NF}' | grep -v '[a-z]' | sort | uniq -c; else echo "
+             '"netstat is missing from the machine. skipping..."; fi;\n',
   'name': None,
   'source': 'atomics/T1016/T1016.yaml'},
  {'command': 'ipconfig /all\n'
@@ -509,7 +515,9 @@ powershell/situational_awareness/network/powerview/get_subnet
                                                                                       'name': 'System '
                                                                                               'Network '
                                                                                               'Configuration '
-                                                                                              'Discovery',
+                                                                                              'Discovery '
+                                                                                              'on '
+                                                                                              'Windows',
                                                                                       'supported_platforms': ['windows']},
                                                                                      {'description': 'Enumerates '
                                                                                                      'Windows '
@@ -566,8 +574,73 @@ powershell/situational_awareness/network/powerview/get_subnet
                                                                                                      'be '
                                                                                                      'via '
                                                                                                      'stdout.\n',
-                                                                                      'executor': {'command': 'arp '
-                                                                                                              '-a\n'
+                                                                                      'executor': {'command': 'if '
+                                                                                                              '[ '
+                                                                                                              '-x '
+                                                                                                              '"$(command '
+                                                                                                              '-v '
+                                                                                                              'arp)" '
+                                                                                                              ']; '
+                                                                                                              'then '
+                                                                                                              'arp '
+                                                                                                              '-a; '
+                                                                                                              'else '
+                                                                                                              'echo '
+                                                                                                              '"arp '
+                                                                                                              'is '
+                                                                                                              'missing '
+                                                                                                              'from '
+                                                                                                              'the '
+                                                                                                              'machine. '
+                                                                                                              'skipping..."; '
+                                                                                                              'fi;\n'
+                                                                                                              'if '
+                                                                                                              '[ '
+                                                                                                              '-x '
+                                                                                                              '"$(command '
+                                                                                                              '-v '
+                                                                                                              'ifconfig)" '
+                                                                                                              ']; '
+                                                                                                              'then '
+                                                                                                              'ifconfig; '
+                                                                                                              'else '
+                                                                                                              'echo '
+                                                                                                              '"ifconfig '
+                                                                                                              'is '
+                                                                                                              'missing '
+                                                                                                              'from '
+                                                                                                              'the '
+                                                                                                              'machine. '
+                                                                                                              'skipping..."; '
+                                                                                                              'fi;\n'
+                                                                                                              'if '
+                                                                                                              '[ '
+                                                                                                              '-x '
+                                                                                                              '"$(command '
+                                                                                                              '-v '
+                                                                                                              'ip)" '
+                                                                                                              ']; '
+                                                                                                              'then '
+                                                                                                              'ip '
+                                                                                                              'addr; '
+                                                                                                              'else '
+                                                                                                              'echo '
+                                                                                                              '"ip '
+                                                                                                              'is '
+                                                                                                              'missing '
+                                                                                                              'from '
+                                                                                                              'the '
+                                                                                                              'machine. '
+                                                                                                              'skipping..."; '
+                                                                                                              'fi;\n'
+                                                                                                              'if '
+                                                                                                              '[ '
+                                                                                                              '-x '
+                                                                                                              '"$(command '
+                                                                                                              '-v '
+                                                                                                              'netstat)" '
+                                                                                                              ']; '
+                                                                                                              'then '
                                                                                                               'netstat '
                                                                                                               '-ant '
                                                                                                               '| '
@@ -582,8 +655,17 @@ powershell/situational_awareness/network/powerview/get_subnet
                                                                                                               'sort '
                                                                                                               '| '
                                                                                                               'uniq '
-                                                                                                              '-c\n'
-                                                                                                              'ifconfig\n',
+                                                                                                              '-c; '
+                                                                                                              'else '
+                                                                                                              'echo '
+                                                                                                              '"netstat '
+                                                                                                              'is '
+                                                                                                              'missing '
+                                                                                                              'from '
+                                                                                                              'the '
+                                                                                                              'machine. '
+                                                                                                              'skipping..."; '
+                                                                                                              'fi;\n',
                                                                                                    'elevation_required': False,
                                                                                                    'name': 'sh'},
                                                                                       'name': 'System '

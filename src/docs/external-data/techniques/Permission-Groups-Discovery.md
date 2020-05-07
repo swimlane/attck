@@ -46,9 +46,9 @@ net group ["Domain Admins"] /domain[:DOMAIN]
 net group ["Domain Admins"] /domain
 domain_list_gen.rb
 post/windows/gather/enum_domain_group_users
-dscacheutil -q group
-dscl . -list /Groups
-groups
+if [ -x "$(command -v dscacheutil)" ]; then dscacheutil -q group; else echo "dscacheutil is missing from the machine. skipping..."; fi; fi;
+if [ -x "$(command -v dscl)" ]; then dscl . -list /Groups; else echo "dscl is missing from the machine. skipping..."; fi;
+if [ -x "$(command -v groups)" ]; then groups; else echo "groups is missing from the machine. skipping..."; fi;
 
 net localgroup
 net group /domain
@@ -95,7 +95,13 @@ powershell/situational_awareness/host/get_uaclevel
  {'command': 'domain_list_gen.rb\npost/windows/gather/enum_domain_group_users',
   'name': 'Metasploit',
   'source': 'https://attack.mitre.org/docs/APT3_Adversary_Emulation_Field_Manual.xlsx'},
- {'command': 'dscacheutil -q group\ndscl . -list /Groups\ngroups\n',
+ {'command': 'if [ -x "$(command -v dscacheutil)" ]; then dscacheutil -q '
+             'group; else echo "dscacheutil is missing from the machine. '
+             'skipping..."; fi; fi;\n'
+             'if [ -x "$(command -v dscl)" ]; then dscl . -list /Groups; else '
+             'echo "dscl is missing from the machine. skipping..."; fi;\n'
+             'if [ -x "$(command -v groups)" ]; then groups; else echo "groups '
+             'is missing from the machine. skipping..."; fi;\n',
   'name': None,
   'source': 'atomics/T1069/T1069.yaml'},
  {'command': 'net localgroup\n'
@@ -213,14 +219,69 @@ powershell/situational_awareness/host/get_uaclevel
  {'Atomic Red Team Test - Permission Groups Discovery': {'atomic_tests': [{'description': 'Permission '
                                                                                           'Groups '
                                                                                           'Discovery\n',
-                                                                           'executor': {'command': 'dscacheutil '
+                                                                           'executor': {'command': 'if '
+                                                                                                   '[ '
+                                                                                                   '-x '
+                                                                                                   '"$(command '
+                                                                                                   '-v '
+                                                                                                   'dscacheutil)" '
+                                                                                                   ']; '
+                                                                                                   'then '
+                                                                                                   'dscacheutil '
                                                                                                    '-q '
-                                                                                                   'group\n'
+                                                                                                   'group; '
+                                                                                                   'else '
+                                                                                                   'echo '
+                                                                                                   '"dscacheutil '
+                                                                                                   'is '
+                                                                                                   'missing '
+                                                                                                   'from '
+                                                                                                   'the '
+                                                                                                   'machine. '
+                                                                                                   'skipping..."; '
+                                                                                                   'fi; '
+                                                                                                   'fi;\n'
+                                                                                                   'if '
+                                                                                                   '[ '
+                                                                                                   '-x '
+                                                                                                   '"$(command '
+                                                                                                   '-v '
+                                                                                                   'dscl)" '
+                                                                                                   ']; '
+                                                                                                   'then '
                                                                                                    'dscl '
                                                                                                    '. '
                                                                                                    '-list '
-                                                                                                   '/Groups\n'
-                                                                                                   'groups\n',
+                                                                                                   '/Groups; '
+                                                                                                   'else '
+                                                                                                   'echo '
+                                                                                                   '"dscl '
+                                                                                                   'is '
+                                                                                                   'missing '
+                                                                                                   'from '
+                                                                                                   'the '
+                                                                                                   'machine. '
+                                                                                                   'skipping..."; '
+                                                                                                   'fi;\n'
+                                                                                                   'if '
+                                                                                                   '[ '
+                                                                                                   '-x '
+                                                                                                   '"$(command '
+                                                                                                   '-v '
+                                                                                                   'groups)" '
+                                                                                                   ']; '
+                                                                                                   'then '
+                                                                                                   'groups; '
+                                                                                                   'else '
+                                                                                                   'echo '
+                                                                                                   '"groups '
+                                                                                                   'is '
+                                                                                                   'missing '
+                                                                                                   'from '
+                                                                                                   'the '
+                                                                                                   'machine. '
+                                                                                                   'skipping..."; '
+                                                                                                   'fi;\n',
                                                                                         'name': 'sh'},
                                                                            'name': 'Permission '
                                                                                    'Groups '

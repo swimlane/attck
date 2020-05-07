@@ -45,6 +45,15 @@ Remove-Item $env:TEMP\TeamViewer_54.log
 
 {'darwin': {'sh': {'command': '> $HOME/.bash_history && unset HISTFILE\n'}}, 'linux': {'sh': {'command': '> $HOME/.bash_history && unset HISTFILE\n'}}, 'windows': {'psh': {'command': 'Clear-History;Clear'}}}
 ```
+rm -rf test1.text
+```
+```
+rm -f test1.txt
+```
+```
+shred -u test1.txt
+```
+```
 
 ## Commands Dataset
 
@@ -87,13 +96,27 @@ Remove-Item $env:TEMP\TeamViewer_54.log
                                           'HISTFILE\n'}},
               'windows': {'psh': {'command': 'Clear-History;Clear'}}},
   'name': 'Stop terminal from logging history',
-  'source': 'data/abilities/defense-evasion/43b3754c-def4-4699-a673-1d85648fda6a.yml'}]
+  'source': 'data/abilities/defense-evasion/43b3754c-def4-4699-a673-1d85648fda6a.yml'},
+ {'command': '```', 'name': None, 'source': 'Kirtar22/Litmus_Test'},
+ {'command': 'rm -rf test1.text',
+  'name': None,
+  'source': 'Kirtar22/Litmus_Test'},
+ {'command': '```', 'name': None, 'source': 'Kirtar22/Litmus_Test'},
+ {'command': '```', 'name': None, 'source': 'Kirtar22/Litmus_Test'},
+ {'command': 'rm -f test1.txt', 'name': None, 'source': 'Kirtar22/Litmus_Test'},
+ {'command': '```', 'name': None, 'source': 'Kirtar22/Litmus_Test'},
+ {'command': '```', 'name': None, 'source': 'Kirtar22/Litmus_Test'},
+ {'command': 'shred -u test1.txt',
+  'name': None,
+  'source': 'Kirtar22/Litmus_Test'},
+ {'command': '```', 'name': None, 'source': 'Kirtar22/Litmus_Test'}]
 ```
 
 ## Potential Detections
 
 ```json
-
+[{'data_source': 'auditlogs (audit.rules)'},
+ {'data_source': 'bash_history logs'}]
 ```
 
 ## Potential Queries
@@ -107,7 +130,50 @@ Remove-Item $env:TEMP\TeamViewer_54.log
            '"*wmic*shadowcopy delete*"or process_command_line contains '
            '"*wbdadmin* delete catalog -q*"or process_command_line contains '
            '"*bcdedit*bootstatuspolicy ignoreallfailures*"or '
-           'process_command_line contains "*bcdedit*recoveryenabled no*")'}]
+           'process_command_line contains "*bcdedit*recoveryenabled no*")'},
+ {'name': None, 'product': 'Splunk', 'query': '```'},
+ {'name': None,
+  'product': 'Splunk',
+  'query': 'index=linux sourcetype=linux_audit syscall=59 comm=shred | table '
+           'host,auid,msg'},
+ {'name': None, 'product': 'Splunk', 'query': '```'},
+ {'name': None, 'product': 'Splunk', 'query': '```'},
+ {'name': None,
+  'product': 'Splunk',
+  'query': 'index=linux sourcetype=linux_audit type=execve shred .bash_history '
+           '| table host,msg,a0,a2'},
+ {'name': None, 'product': 'Splunk', 'query': '```'},
+ {'name': None, 'product': 'Splunk', 'query': '```'},
+ {'name': None,
+  'product': 'Splunk',
+  'query': 'index=linux sourcetype=linux_audit syscall=263 | table '
+           'host,auid,uid,eid,exe'},
+ {'name': None, 'product': 'Splunk', 'query': '```'},
+ {'name': None, 'product': 'Splunk', 'query': '```'},
+ {'name': None,
+  'product': 'Splunk',
+  'query': 'index=linux sourcetype=linux_audit syscall=82 exe=/usr/bin/shred | '
+           'table host,auid,uid,eid,exe'},
+ {'name': None, 'product': 'Splunk', 'query': '```'},
+ {'name': None, 'product': 'Splunk', 'query': '```'},
+ {'name': None,
+  'product': 'Splunk',
+  'query': '-a always,exit -F arch=b64 -S execve,execveat -F auid>=1000 -F '
+           'auid!=-1 -F key=program_execution'},
+ {'name': None,
+  'product': 'Splunk',
+  'query': '-w /home/ec2-user/.bash_history -p rwa -k bash_history_changes'},
+ {'name': None, 'product': 'Splunk', 'query': '```'},
+ {'name': None, 'product': 'Splunk', 'query': '```'},
+ {'name': None,
+  'product': 'Splunk',
+  'query': 'index=linux sourcetype="bash_history" bash_command="rm *"'},
+ {'name': None, 'product': 'Splunk', 'query': '```'},
+ {'name': None, 'product': 'Splunk', 'query': '```'},
+ {'name': None,
+  'product': 'Splunk',
+  'query': 'index=linux sourcetype="bash_history" bash_command="shred -u *"'},
+ {'name': None, 'product': 'Splunk', 'query': '```'}]
 ```
 
 ## Raw Dataset

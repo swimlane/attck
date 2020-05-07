@@ -25,11 +25,14 @@ Specific storage locations vary based on platform and/or application, but browse
 ## Potential Commands
 
 ```
-find / -path "*.mozilla/firefox/*/places.sqlite" -exec echo {} >> /tmp/firefox-bookmarks.txt \;
+find / -path "*.mozilla/firefox/*/places.sqlite" 2>/dev/null -exec echo {} >> /tmp/T1217-Firefox.txt \;
+cat /tmp/T1217-Firefox.txt 2>/dev/null
 
-find / -path "*/Firefox/Profiles/*/places.sqlite" -exec echo {} >> /tmp/firefox-bookmarks.txt \;
+find / -path "*/Firefox/Profiles/*/places.sqlite" -exec echo {} >> /tmp/T1217_Firefox.txt \;
+cat /tmp/T1217_Firefox.txt 2>/dev/null
 
-find / -path "*/Google/Chrome/*/Bookmarks" -exec echo {} >> /tmp/chrome-bookmarks.txt \;
+find / -path "*/Google/Chrome/*/Bookmarks" -exec echo {} >> /tmp/T1217-Chrome.txt \;
+cat /tmp/T1217-Chrome.txt 2>/dev/null
 
 Get-ChildItem -Path C:\Users\ -Filter Bookmarks -Recurse -ErrorAction SilentlyContinue -Force
 
@@ -43,16 +46,19 @@ powershell/collection/browser_data
 ## Commands Dataset
 
 ```
-[{'command': 'find / -path "*.mozilla/firefox/*/places.sqlite" -exec echo {} '
-             '>> /tmp/firefox-bookmarks.txt \\;\n',
+[{'command': 'find / -path "*.mozilla/firefox/*/places.sqlite" 2>/dev/null '
+             '-exec echo {} >> /tmp/T1217-Firefox.txt \\;\n'
+             'cat /tmp/T1217-Firefox.txt 2>/dev/null\n',
   'name': None,
   'source': 'atomics/T1217/T1217.yaml'},
  {'command': 'find / -path "*/Firefox/Profiles/*/places.sqlite" -exec echo {} '
-             '>> /tmp/firefox-bookmarks.txt \\;\n',
+             '>> /tmp/T1217_Firefox.txt \\;\n'
+             'cat /tmp/T1217_Firefox.txt 2>/dev/null\n',
   'name': None,
   'source': 'atomics/T1217/T1217.yaml'},
  {'command': 'find / -path "*/Google/Chrome/*/Bookmarks" -exec echo {} >> '
-             '/tmp/chrome-bookmarks.txt \\;\n',
+             '/tmp/T1217-Chrome.txt \\;\n'
+             'cat /tmp/T1217-Chrome.txt 2>/dev/null\n',
   'name': None,
   'source': 'atomics/T1217/T1217.yaml'},
  {'command': 'Get-ChildItem -Path C:\\Users\\ -Filter Bookmarks -Recurse '
@@ -116,17 +122,34 @@ powershell/collection/browser_data
                                                                                          'a '
                                                                                          'text '
                                                                                          'file.\n',
-                                                                          'executor': {'command': 'find '
+                                                                          'executor': {'cleanup_command': 'rm '
+                                                                                                          '-f '
+                                                                                                          '#{output_file} '
+                                                                                                          '2>/dev/null\n',
+                                                                                       'command': 'find '
                                                                                                   '/ '
                                                                                                   '-path '
                                                                                                   '"*.mozilla/firefox/*/places.sqlite" '
+                                                                                                  '2>/dev/null '
                                                                                                   '-exec '
                                                                                                   'echo '
                                                                                                   '{} '
                                                                                                   '>> '
-                                                                                                  '/tmp/firefox-bookmarks.txt '
-                                                                                                  '\\;\n',
+                                                                                                  '#{output_file} '
+                                                                                                  '\\;\n'
+                                                                                                  'cat '
+                                                                                                  '#{output_file} '
+                                                                                                  '2>/dev/null\n',
                                                                                        'name': 'sh'},
+                                                                          'input_arguments': {'output_file': {'default': '/tmp/T1217-Firefox.txt',
+                                                                                                              'description': 'Path '
+                                                                                                                             'where '
+                                                                                                                             'captured '
+                                                                                                                             'results '
+                                                                                                                             'will '
+                                                                                                                             'be '
+                                                                                                                             'placed.',
+                                                                                                              'type': 'Path'}},
                                                                           'name': 'List '
                                                                                   'Mozilla '
                                                                                   'Firefox '
@@ -156,7 +179,11 @@ powershell/collection/browser_data
                                                                                          'a '
                                                                                          'text '
                                                                                          'file.\n',
-                                                                          'executor': {'command': 'find '
+                                                                          'executor': {'cleanup_command': 'rm '
+                                                                                                          '-f '
+                                                                                                          '#{output_file} '
+                                                                                                          '2>/dev/null\n',
+                                                                                       'command': 'find '
                                                                                                   '/ '
                                                                                                   '-path '
                                                                                                   '"*/Firefox/Profiles/*/places.sqlite" '
@@ -164,9 +191,21 @@ powershell/collection/browser_data
                                                                                                   'echo '
                                                                                                   '{} '
                                                                                                   '>> '
-                                                                                                  '/tmp/firefox-bookmarks.txt '
-                                                                                                  '\\;\n',
+                                                                                                  '#{output_file} '
+                                                                                                  '\\;\n'
+                                                                                                  'cat '
+                                                                                                  '#{output_file} '
+                                                                                                  '2>/dev/null\n',
                                                                                        'name': 'sh'},
+                                                                          'input_arguments': {'output_file': {'default': '/tmp/T1217_Firefox.txt',
+                                                                                                              'description': 'Path '
+                                                                                                                             'where '
+                                                                                                                             'captured '
+                                                                                                                             'results '
+                                                                                                                             'will '
+                                                                                                                             'be '
+                                                                                                                             'placed.',
+                                                                                                              'type': 'Path'}},
                                                                           'name': 'List '
                                                                                   'Mozilla '
                                                                                   'Firefox '
@@ -199,7 +238,11 @@ powershell/collection/browser_data
                                                                                          'a '
                                                                                          'text '
                                                                                          'file.\n',
-                                                                          'executor': {'command': 'find '
+                                                                          'executor': {'cleanup_command': 'rm '
+                                                                                                          '-f '
+                                                                                                          '#{output_file} '
+                                                                                                          '2>/dev/null\n',
+                                                                                       'command': 'find '
                                                                                                   '/ '
                                                                                                   '-path '
                                                                                                   '"*/Google/Chrome/*/Bookmarks" '
@@ -207,9 +250,21 @@ powershell/collection/browser_data
                                                                                                   'echo '
                                                                                                   '{} '
                                                                                                   '>> '
-                                                                                                  '/tmp/chrome-bookmarks.txt '
-                                                                                                  '\\;\n',
+                                                                                                  '#{output_file} '
+                                                                                                  '\\;\n'
+                                                                                                  'cat '
+                                                                                                  '#{output_file} '
+                                                                                                  '2>/dev/null\n',
                                                                                        'name': 'sh'},
+                                                                          'input_arguments': {'output_file': {'default': '/tmp/T1217-Chrome.txt',
+                                                                                                              'description': 'Path '
+                                                                                                                             'where '
+                                                                                                                             'captured '
+                                                                                                                             'results '
+                                                                                                                             'will '
+                                                                                                                             'be '
+                                                                                                                             'placed.',
+                                                                                                              'type': 'Path'}},
                                                                           'name': 'List '
                                                                                   'Google '
                                                                                   'Chrome '

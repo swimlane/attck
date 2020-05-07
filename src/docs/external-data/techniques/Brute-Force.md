@@ -188,7 +188,7 @@ type = USER_AUTH msg = audit (1572163129.581: 316): pid = 2165 uid = 0 auid = 42
 ## Potential Detections
 
 ```json
-
+[{'data_source': '/var/log/secure'}]
 ```
 
 ## Potential Queries

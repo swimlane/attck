@@ -68,6 +68,12 @@ set-content -path . -stream adstest.txt -value "test3"
 
 attrib.exe +s +h * appdata
 ```
+mkdir .hidden-directory
+```
+```
+mv file to a .file
+```
+```
 
 ## Commands Dataset
 
@@ -125,13 +131,27 @@ attrib.exe +s +h * appdata
   'source': 'atomics/T1158/T1158.yaml'},
  {'command': 'attrib.exe +s +h * appdata',
   'name': None,
-  'source': 'Threat Hunting Tables'}]
+  'source': 'Threat Hunting Tables'},
+ {'command': '```', 'name': None, 'source': 'Kirtar22/Litmus_Test'},
+ {'command': 'mkdir .hidden-directory',
+  'name': None,
+  'source': 'Kirtar22/Litmus_Test'},
+ {'command': '```', 'name': None, 'source': 'Kirtar22/Litmus_Test'},
+ {'command': '```', 'name': None, 'source': 'Kirtar22/Litmus_Test'},
+ {'command': 'mv file to a .file',
+  'name': None,
+  'source': 'Kirtar22/Litmus_Test'},
+ {'command': '```', 'name': None, 'source': 'Kirtar22/Litmus_Test'}]
 ```
 
 ## Potential Detections
 
 ```json
-
+[{'data_source': 'bash_history logs'},
+ {'data_source': 'find the hidden files/dirs from certain directory paths like '
+                 '(/home/$user) and dump it to a location and ingest the file '
+                 'and look for any malicious hidden files (scripted input to '
+                 'the Splunk)'}]
 ```
 
 ## Potential Queries
@@ -146,7 +166,33 @@ attrib.exe +s +h * appdata
   'product': 'Azure Sentinel',
   'query': 'Sysmon| where EventID == 1and (process_path contains '
            '"*\\\\VolumeShadowCopy*\\\\*"or process_command_line contains '
-           '"*\\\\VolumeShadowCopy*\\\\*")'}]
+           '"*\\\\VolumeShadowCopy*\\\\*")'},
+ {'name': None,
+  'product': 'Splunk',
+  'query': 'There are 2 ways by which we can capture this'},
+ {'name': None, 'product': 'Splunk', 'query': '```'},
+ {'name': None,
+  'product': 'Splunk',
+  'query': 'index=linux sourcetype=bash_history bash_command="mkdir .*" | '
+           'table host,user_name,bash_command'},
+ {'name': None, 'product': 'Splunk', 'query': '```'},
+ {'name': None, 'product': 'Splunk', 'query': '```'},
+ {'name': None,
+  'product': 'Splunk',
+  'query': 'index=linux sourcetype=bash_history bash_command="mv * .*" | table '
+           'host,user_name,bash_command'},
+ {'name': None, 'product': 'Splunk', 'query': '```'},
+ {'name': None,
+  'product': 'Splunk',
+  'query': 'find_hidden_files.sh script can be run on a regular interval and '
+           'check for any suspecious file creation. A whitelist can be craeted '
+           'to filter out the standard hidden files/directories in a linux '
+           'system.'},
+ {'name': None, 'product': 'Splunk', 'query': '```'},
+ {'name': None, 'product': 'Splunk', 'query': 'find /home/ -name ".*"'},
+ {'name': None, 'product': 'Splunk', 'query': 'find /home/ -type d -name ".*"'},
+ {'name': None, 'product': 'Splunk', 'query': 'find /home/ -type f -name ".*"'},
+ {'name': None, 'product': 'Splunk', 'query': '```'}]
 ```
 
 ## Raw Dataset

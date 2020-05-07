@@ -38,6 +38,8 @@ ls -R | select-string -Pattern password
 type C:\Windows\Panther\unattend.xml
 type C:\Windows\Panther\Unattend\unattend.xml
 
+grep -riP password #{file_path}
+grep -riP password /
 ```
 
 ## Commands Dataset
@@ -59,13 +61,20 @@ type C:\Windows\Panther\Unattend\unattend.xml
  {'command': 'type C:\\Windows\\Panther\\unattend.xml\n'
              'type C:\\Windows\\Panther\\Unattend\\unattend.xml\n',
   'name': None,
-  'source': 'atomics/T1081/T1081.yaml'}]
+  'source': 'atomics/T1081/T1081.yaml'},
+ {'command': 'grep -riP password #{file_path}',
+  'name': None,
+  'source': 'Kirtar22/Litmus_Test'},
+ {'command': 'grep -riP password /',
+  'name': None,
+  'source': 'Kirtar22/Litmus_Test'}]
 ```
 
 ## Potential Detections
 
 ```json
-
+[{'data_source': 'auditlogs (audit.rules)'},
+ {'data_source': 'bash_history logs'}]
 ```
 
 ## Potential Queries
@@ -76,7 +85,14 @@ type C:\Windows\Panther\Unattend\unattend.xml
   'query': 'Sysmon| where EventID == 1 and (process_command_line contains '
            '"*findstr* /si pass*"or process_command_line contains '
            '"*select-string -Pattern pass*"or process_command_line contains '
-           '"*list vdir*/text:password*")'}]
+           '"*list vdir*/text:password*")'},
+ {'name': None,
+  'product': 'Splunk',
+  'query': 'index=linux sourcetype=linux_audit type=execve a0=grep password'},
+ {'name': None,
+  'product': 'Splunk',
+  'query': 'index=linux sourcetype="bash_history" grep password | table '
+           'host,user_name,bash_command'}]
 ```
 
 ## Raw Dataset

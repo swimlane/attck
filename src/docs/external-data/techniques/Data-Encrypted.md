@@ -23,15 +23,23 @@ Other exfiltration techniques likely apply as well to transfer the information o
 ## Potential Commands
 
 ```
-mkdir /tmp/victim-files
-cd /tmp/victim-files
-touch a b c d e f g
-echo "creating zip with password 'insert password here'"
-zip --password "insert password here" ./victim-files.zip ./*
-echo "encrypting file with gpg, you will need to provide a password"
-gpg -c /tmp/victim-files/victim-filex.zip
-#<enter passphrase and confirm>
-ls -l
+mkdir -p /tmp/T1022
+cd /tmp/T1022; touch a b c d e f g
+zip --password "#{encryption_password}" /tmp/T1022/#{test_file} ./*
+echo "#{encryption_password}" | gpg --batch --yes --passphrase-fd 0 --output /tmp/T1022/#{test_file}.zip.gpg -c /tmp/T1022/#{test_file}.zip
+ls -l /tmp/T1022
+
+mkdir -p #{test_folder}
+cd #{test_folder}; touch a b c d e f g
+zip --password "#{encryption_password}" #{test_folder}/T1022 ./*
+echo "#{encryption_password}" | gpg --batch --yes --passphrase-fd 0 --output #{test_folder}/T1022.zip.gpg -c #{test_folder}/T1022.zip
+ls -l #{test_folder}
+
+mkdir -p #{test_folder}
+cd #{test_folder}; touch a b c d e f g
+zip --password "InsertPasswordHere" #{test_folder}/#{test_file} ./*
+echo "InsertPasswordHere" | gpg --batch --yes --passphrase-fd 0 --output #{test_folder}/#{test_file}.zip.gpg -c #{test_folder}/#{test_file}.zip
+ls -l #{test_folder}
 
 mkdir .\tmp\victim-files
 cd .\tmp\victim-files
@@ -71,16 +79,34 @@ dir
 ## Commands Dataset
 
 ```
-[{'command': 'mkdir /tmp/victim-files\n'
-             'cd /tmp/victim-files\n'
-             'touch a b c d e f g\n'
-             'echo "creating zip with password \'insert password here\'"\n'
-             'zip --password "insert password here" ./victim-files.zip ./*\n'
-             'echo "encrypting file with gpg, you will need to provide a '
-             'password"\n'
-             'gpg -c /tmp/victim-files/victim-filex.zip\n'
-             '#<enter passphrase and confirm>\n'
-             'ls -l\n',
+[{'command': 'mkdir -p /tmp/T1022\n'
+             'cd /tmp/T1022; touch a b c d e f g\n'
+             'zip --password "#{encryption_password}" /tmp/T1022/#{test_file} '
+             './*\n'
+             'echo "#{encryption_password}" | gpg --batch --yes '
+             '--passphrase-fd 0 --output /tmp/T1022/#{test_file}.zip.gpg -c '
+             '/tmp/T1022/#{test_file}.zip\n'
+             'ls -l /tmp/T1022\n',
+  'name': None,
+  'source': 'atomics/T1022/T1022.yaml'},
+ {'command': 'mkdir -p #{test_folder}\n'
+             'cd #{test_folder}; touch a b c d e f g\n'
+             'zip --password "#{encryption_password}" #{test_folder}/T1022 '
+             './*\n'
+             'echo "#{encryption_password}" | gpg --batch --yes '
+             '--passphrase-fd 0 --output #{test_folder}/T1022.zip.gpg -c '
+             '#{test_folder}/T1022.zip\n'
+             'ls -l #{test_folder}\n',
+  'name': None,
+  'source': 'atomics/T1022/T1022.yaml'},
+ {'command': 'mkdir -p #{test_folder}\n'
+             'cd #{test_folder}; touch a b c d e f g\n'
+             'zip --password "InsertPasswordHere" #{test_folder}/#{test_file} '
+             './*\n'
+             'echo "InsertPasswordHere" | gpg --batch --yes --passphrase-fd 0 '
+             '--output #{test_folder}/#{test_file}.zip.gpg -c '
+             '#{test_folder}/#{test_file}.zip\n'
+             'ls -l #{test_folder}\n',
   'name': None,
   'source': 'atomics/T1022/T1022.yaml'},
  {'command': 'mkdir .\\tmp\\victim-files\n'
@@ -139,17 +165,59 @@ dir
 ## Raw Dataset
 
 ```json
-[{'Atomic Red Team Test - Data Encrypted': {'atomic_tests': [{'description': 'Encrypt '
+[{'Atomic Red Team Test - Data Encrypted': {'atomic_tests': [{'dependencies': [{'description': 'gpg '
+                                                                                               'and '
+                                                                                               'zip '
+                                                                                               'are '
+                                                                                               'required '
+                                                                                               'to '
+                                                                                               'run '
+                                                                                               'the '
+                                                                                               'test.',
+                                                                                'get_prereq_command': 'echo '
+                                                                                                      '"Install '
+                                                                                                      'gpg '
+                                                                                                      'and '
+                                                                                                      'zip '
+                                                                                                      'to '
+                                                                                                      'run '
+                                                                                                      'the '
+                                                                                                      'test"; '
+                                                                                                      'exit '
+                                                                                                      '1;\n',
+                                                                                'prereq_command': 'if '
+                                                                                                  '[ '
+                                                                                                  '! '
+                                                                                                  '-x '
+                                                                                                  '"$(command '
+                                                                                                  '-v '
+                                                                                                  'gpg)" '
+                                                                                                  '] '
+                                                                                                  '|| '
+                                                                                                  '[ '
+                                                                                                  '! '
+                                                                                                  '-x '
+                                                                                                  '"$(command '
+                                                                                                  '-v '
+                                                                                                  'zip)" '
+                                                                                                  ']; '
+                                                                                                  'then '
+                                                                                                  'exit '
+                                                                                                  '1; '
+                                                                                                  'fi;\n'}],
+                                                              'dependency_executor_name': 'sh',
+                                                              'description': 'Encrypt '
                                                                              'data '
                                                                              'for '
                                                                              'exiltration\n',
                                                               'executor': {'cleanup_command': 'rm '
                                                                                               '-Rf '
-                                                                                              '/tmp/victim-files\n',
+                                                                                              '#{test_folder}\n',
                                                                            'command': 'mkdir '
-                                                                                      '/tmp/victim-files\n'
+                                                                                      '-p '
+                                                                                      '#{test_folder}\n'
                                                                                       'cd '
-                                                                                      '/tmp/victim-files\n'
+                                                                                      '#{test_folder}; '
                                                                                       'touch '
                                                                                       'a '
                                                                                       'b '
@@ -158,46 +226,51 @@ dir
                                                                                       'e '
                                                                                       'f '
                                                                                       'g\n'
-                                                                                      'echo '
-                                                                                      '"creating '
-                                                                                      'zip '
-                                                                                      'with '
-                                                                                      'password '
-                                                                                      "'insert "
-                                                                                      'password '
-                                                                                      'here\'"\n'
                                                                                       'zip '
                                                                                       '--password '
-                                                                                      '"insert '
-                                                                                      'password '
-                                                                                      'here" '
-                                                                                      './victim-files.zip '
+                                                                                      '"#{encryption_password}" '
+                                                                                      '#{test_folder}/#{test_file} '
                                                                                       './*\n'
                                                                                       'echo '
-                                                                                      '"encrypting '
-                                                                                      'file '
-                                                                                      'with '
-                                                                                      'gpg, '
-                                                                                      'you '
-                                                                                      'will '
-                                                                                      'need '
-                                                                                      'to '
-                                                                                      'provide '
-                                                                                      'a '
-                                                                                      'password"\n'
+                                                                                      '"#{encryption_password}" '
+                                                                                      '| '
                                                                                       'gpg '
+                                                                                      '--batch '
+                                                                                      '--yes '
+                                                                                      '--passphrase-fd '
+                                                                                      '0 '
+                                                                                      '--output '
+                                                                                      '#{test_folder}/#{test_file}.zip.gpg '
                                                                                       '-c '
-                                                                                      '/tmp/victim-files/victim-filex.zip\n'
-                                                                                      '#<enter '
-                                                                                      'passphrase '
-                                                                                      'and '
-                                                                                      'confirm>\n'
+                                                                                      '#{test_folder}/#{test_file}.zip\n'
                                                                                       'ls '
-                                                                                      '-l\n',
+                                                                                      '-l '
+                                                                                      '#{test_folder}\n',
                                                                            'elevation_required': False,
-                                                                           'name': 'sh',
-                                                                           'prereq_command': 'which '
-                                                                                             'gpg'},
+                                                                           'name': 'sh'},
+                                                              'input_arguments': {'encryption_password': {'default': 'InsertPasswordHere',
+                                                                                                          'description': 'Password '
+                                                                                                                         'used '
+                                                                                                                         'to '
+                                                                                                                         'encrypt '
+                                                                                                                         'data.',
+                                                                                                          'type': 'string'},
+                                                                                  'test_file': {'default': 'T1022',
+                                                                                                'description': 'Temp '
+                                                                                                               'file '
+                                                                                                               'used '
+                                                                                                               'to '
+                                                                                                               'store '
+                                                                                                               'encrypted '
+                                                                                                               'data.',
+                                                                                                'type': 'Path'},
+                                                                                  'test_folder': {'default': '/tmp/T1022',
+                                                                                                  'description': 'Path '
+                                                                                                                 'used '
+                                                                                                                 'to '
+                                                                                                                 'store '
+                                                                                                                 'files.',
+                                                                                                  'type': 'Path'}},
                                                               'name': 'Data '
                                                                       'Encrypted '
                                                                       'with '

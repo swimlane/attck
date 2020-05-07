@@ -41,6 +41,30 @@ bash history -c
 bash rm ~/.bash_history
 bash cat /dev/null > ~/.bash_history
 ```
+rm ~/.bash_history
+```
+```
+echo " " > .bash_history
+```
+```
+cat /dev/null > ~/.bash_history
+```
+```
+ln -sf /dev/null ~/.bash_history
+```
+```
+truncate -s0 ~/.bash_history
+```
+```
+unset HISTFILE
+```
+```
+export HISTFILESIZE=0
+```
+```
+history -c
+```
+```
 
 ## Commands Dataset
 
@@ -77,13 +101,50 @@ bash cat /dev/null > ~/.bash_history
   'source': 'Threat Hunting Tables'},
  {'command': 'bash cat /dev/null > ~/.bash_history',
   'name': None,
-  'source': 'Threat Hunting Tables'}]
+  'source': 'Threat Hunting Tables'},
+ {'command': '```', 'name': None, 'source': 'Kirtar22/Litmus_Test'},
+ {'command': 'rm ~/.bash_history',
+  'name': None,
+  'source': 'Kirtar22/Litmus_Test'},
+ {'command': '```', 'name': None, 'source': 'Kirtar22/Litmus_Test'},
+ {'command': '```', 'name': None, 'source': 'Kirtar22/Litmus_Test'},
+ {'command': 'echo " " > .bash_history',
+  'name': None,
+  'source': 'Kirtar22/Litmus_Test'},
+ {'command': '```', 'name': None, 'source': 'Kirtar22/Litmus_Test'},
+ {'command': '```', 'name': None, 'source': 'Kirtar22/Litmus_Test'},
+ {'command': 'cat /dev/null > ~/.bash_history',
+  'name': None,
+  'source': 'Kirtar22/Litmus_Test'},
+ {'command': '```', 'name': None, 'source': 'Kirtar22/Litmus_Test'},
+ {'command': '```', 'name': None, 'source': 'Kirtar22/Litmus_Test'},
+ {'command': 'ln -sf /dev/null ~/.bash_history',
+  'name': None,
+  'source': 'Kirtar22/Litmus_Test'},
+ {'command': '```', 'name': None, 'source': 'Kirtar22/Litmus_Test'},
+ {'command': '```', 'name': None, 'source': 'Kirtar22/Litmus_Test'},
+ {'command': 'truncate -s0 ~/.bash_history',
+  'name': None,
+  'source': 'Kirtar22/Litmus_Test'},
+ {'command': '```', 'name': None, 'source': 'Kirtar22/Litmus_Test'},
+ {'command': '```', 'name': None, 'source': 'Kirtar22/Litmus_Test'},
+ {'command': 'unset HISTFILE', 'name': None, 'source': 'Kirtar22/Litmus_Test'},
+ {'command': '```', 'name': None, 'source': 'Kirtar22/Litmus_Test'},
+ {'command': '```', 'name': None, 'source': 'Kirtar22/Litmus_Test'},
+ {'command': 'export HISTFILESIZE=0',
+  'name': None,
+  'source': 'Kirtar22/Litmus_Test'},
+ {'command': '```', 'name': None, 'source': 'Kirtar22/Litmus_Test'},
+ {'command': '```', 'name': None, 'source': 'Kirtar22/Litmus_Test'},
+ {'command': 'history -c', 'name': None, 'source': 'Kirtar22/Litmus_Test'},
+ {'command': '```', 'name': None, 'source': 'Kirtar22/Litmus_Test'}]
 ```
 
 ## Potential Detections
 
 ```json
-
+[{'data_source': 'auditlogs (audit.rules)'},
+ {'data_source': 'bash_history logs'}]
 ```
 
 ## Potential Queries
@@ -96,7 +157,55 @@ bash cat /dev/null > ~/.bash_history
            'contains "*del (Get-PSReadlineOption).HistorySavePath*"or '
            'process_command_line contains "*Set-PSReadlineOption '
            '–HistorySaveStyle SaveNothing*"or process_command_line contains '
-           '"*Remove-Item (Get-PSReadlineOption).HistorySavePath*")'}]
+           '"*Remove-Item (Get-PSReadlineOption).HistorySavePath*")'},
+ {'name': None, 'product': 'Splunk', 'query': '```'},
+ {'name': None,
+  'product': 'Splunk',
+  'query': 'index=linux sourcetype=linux_audit syscall=263 | table '
+           'time,host,auid,uid,euid,exe,key'},
+ {'name': None,
+  'product': 'Splunk',
+  'query': 'index=linux sourcetype=linux_audit type=PATH name=.bash_history '
+           'nametype=delete | table time,name,nametype'},
+ {'name': None, 'product': 'Splunk', 'query': '```'},
+ {'name': None, 'product': 'Splunk', 'query': '```'},
+ {'name': None,
+  'product': 'Splunk',
+  'query': 'index=linux sourcetype="linux_audit" bash_history_changes '
+           'exe!=/home/ec2-user/splunk/bin/splunkd syscall=257 a2!=0 AND a3!=0 '
+           '| table host,syscall,syscall_name,exe,auid'},
+ {'name': None, 'product': 'Splunk', 'query': '```'},
+ {'name': None,
+  'product': 'Splunk',
+  'query': 'a2!=0 and a3!=0 are added in to the query to distinuish echo and '
+           'cat - both logs Systemcall 257 (openat). Morover, when a user '
+           'logsin through ssh - SYSCALL 257 is used with exe=/usr/bin/bash (2 '
+           'events generated)for /home/$USER/.bash_history; however in that '
+           'case the command arguments a2=0 and a3=0 ; when we use command '
+           '"echo " "> .bash_history"  the same systemcall (257) and the same '
+           'exe = /usr/bin/bash is used however command arguments a2!=0 and '
+           'a3!=0.'},
+ {'name': None,
+  'product': 'Splunk',
+  'query': 'index=linux sourcetype="linux_audit" bash_history_changes '
+           'exe!=/home/ec2-user/splunk/bin/splunkd syscall=257 '
+           'exe=/usr/bin/bash a2!=0 AND a3!=0| table '
+           'host,syscall,syscall_name,exe,auid'},
+ {'name': None, 'product': 'Splunk', 'query': '```'},
+ {'name': None,
+  'product': 'Splunk',
+  'query': '-a always,exit -F arch=b64 -F PATH=/home/ec2-user/.bash_history -S '
+           'unlinkat -F auid>=1000 -F auid!=4294967295 -F '
+           'key=delete_bash_history'},
+ {'name': None,
+  'product': 'Splunk',
+  'query': '-w /home/ec2-user/.bash_history -p rwa -k bash_history_changes'},
+ {'name': None, 'product': 'Splunk', 'query': '```'},
+ {'name': None, 'product': 'Splunk', 'query': '```'},
+ {'name': None,
+  'product': 'Splunk',
+  'query': 'index=linux sourcetype="bash_history"  "rm * .bash_history"'},
+ {'name': None, 'product': 'Splunk', 'query': '```'}]
 ```
 
 ## Raw Dataset

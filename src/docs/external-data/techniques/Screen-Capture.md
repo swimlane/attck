@@ -29,14 +29,14 @@ On Linux, there is the native command <code>xwd</code>. (Citation: Antiquated Ma
 ## Potential Commands
 
 ```
-screencapture desktop.png
+screencapture /tmp/T1113_desktop.png
 
-screencapture -x desktop.png
+screencapture -x /tmp/T1113_desktop.png
 
-xwd -root -out desktop.xwd
-xwud -in desktop.xwd
+xwd -root -out /tmp/T1113_desktop.xwd
+xwud -in /tmp/T1113_desktop.xwd
 
-import -window root desktop.png
+import -window root /tmp/T1113_desktop.png
 
 {'darwin': {'sh': {'command': 'for i in {1..5}; do screencapture -t png screen-$i.png; echo "$(cd "$(dirname "$1")"; pwd -P)/$(basename "screen-$i.png")"; sleep 5; done;\n'}}, 'windows': {'psh,pwsh': {'command': '[Reflection.Assembly]::LoadWithPartialName("System.Drawing");\nfunction screenshot([Drawing.Rectangle]$bounds, $path) {\n   $bmp = New-Object Drawing.Bitmap $bounds.width, $bounds.height;\n   $graphics = [Drawing.Graphics]::FromImage($bmp);\n   $graphics.CopyFromScreen($bounds.Location, [Drawing.Point]::Empty, $bounds.size);\n   $bmp.Save($path);\n   $graphics.Dispose();\n   $bmp.Dispose();\n}\n$bounds = [Drawing.Rectangle]::FromLTRB(0, 0, 1000, 900);\nscreenshot $bounds "$HOME\\Desktop\\screenshot.png";\n'}}}
 powershell/collection/screenshot
@@ -52,16 +52,17 @@ python/collection/osx/screenshot
 ## Commands Dataset
 
 ```
-[{'command': 'screencapture desktop.png\n',
+[{'command': 'screencapture /tmp/T1113_desktop.png\n',
   'name': None,
   'source': 'atomics/T1113/T1113.yaml'},
- {'command': 'screencapture -x desktop.png\n',
+ {'command': 'screencapture -x /tmp/T1113_desktop.png\n',
   'name': None,
   'source': 'atomics/T1113/T1113.yaml'},
- {'command': 'xwd -root -out desktop.xwd\nxwud -in desktop.xwd\n',
+ {'command': 'xwd -root -out /tmp/T1113_desktop.xwd\n'
+             'xwud -in /tmp/T1113_desktop.xwd\n',
   'name': None,
   'source': 'atomics/T1113/T1113.yaml'},
- {'command': 'import -window root desktop.png\n',
+ {'command': 'import -window root /tmp/T1113_desktop.png\n',
   'name': None,
   'source': 'atomics/T1113/T1113.yaml'},
  {'command': {'darwin': {'sh': {'command': 'for i in {1..5}; do screencapture '
@@ -144,11 +145,13 @@ python/collection/osx/screenshot
                                                                              'full '
                                                                              'desktop '
                                                                              'screenshot\n',
-                                                              'executor': {'command': 'screencapture '
+                                                              'executor': {'cleanup_command': 'rm '
+                                                                                              '#{output_file}\n',
+                                                                           'command': 'screencapture '
                                                                                       '#{output_file}\n',
                                                                            'elevation_required': False,
                                                                            'name': 'bash'},
-                                                              'input_arguments': {'output_file': {'default': 'desktop.png',
+                                                              'input_arguments': {'output_file': {'default': '/tmp/T1113_desktop.png',
                                                                                                   'description': 'Output '
                                                                                                                  'file '
                                                                                                                  'path',
@@ -164,12 +167,14 @@ python/collection/osx/screenshot
                                                                              'full '
                                                                              'desktop '
                                                                              'screenshot\n',
-                                                              'executor': {'command': 'screencapture '
+                                                              'executor': {'cleanup_command': 'rm '
+                                                                                              '#{output_file}\n',
+                                                                           'command': 'screencapture '
                                                                                       '-x '
                                                                                       '#{output_file}\n',
                                                                            'elevation_required': False,
                                                                            'name': 'bash'},
-                                                              'input_arguments': {'output_file': {'default': 'desktop.png',
+                                                              'input_arguments': {'output_file': {'default': '/tmp/T1113_desktop.png',
                                                                                                   'description': 'Output '
                                                                                                                  'file '
                                                                                                                  'path',
@@ -191,7 +196,9 @@ python/collection/osx/screenshot
                                                                              'file '
                                                                              'with '
                                                                              'xwud\n',
-                                                              'executor': {'command': 'xwd '
+                                                              'executor': {'cleanup_command': 'rm '
+                                                                                              '#{output_file}\n',
+                                                                           'command': 'xwd '
                                                                                       '-root '
                                                                                       '-out '
                                                                                       '#{output_file}\n'
@@ -199,7 +206,7 @@ python/collection/osx/screenshot
                                                                                       '-in '
                                                                                       '#{output_file}\n',
                                                                            'name': 'bash'},
-                                                              'input_arguments': {'output_file': {'default': 'desktop.xwd',
+                                                              'input_arguments': {'output_file': {'default': '/tmp/T1113_desktop.xwd',
                                                                                                   'description': 'Output '
                                                                                                                  'file '
                                                                                                                  'path',
@@ -217,12 +224,14 @@ python/collection/osx/screenshot
                                                                              'full '
                                                                              'desktop '
                                                                              'screenshot\n',
-                                                              'executor': {'command': 'import '
+                                                              'executor': {'cleanup_command': 'rm '
+                                                                                              '#{output_file}\n',
+                                                                           'command': 'import '
                                                                                       '-window '
                                                                                       'root '
                                                                                       '#{output_file}\n',
                                                                            'name': 'bash'},
-                                                              'input_arguments': {'output_file': {'default': 'desktop.png',
+                                                              'input_arguments': {'output_file': {'default': '/tmp/T1113_desktop.png',
                                                                                                   'description': 'Output '
                                                                                                                  'file '
                                                                                                                  'path',

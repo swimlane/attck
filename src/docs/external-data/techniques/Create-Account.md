@@ -84,6 +84,8 @@ powershell/persistence/misc/add_netuser
 powershell/persistence/misc/add_netuser
 powershell/privesc/powerup/service_useradd
 powershell/privesc/powerup/service_useradd
+useradd -M -N -r -s /bin/bash -c "#{comment}" #{username}
+useradd -o -u 0 -g 0 -M -d /root -s /bin/bash #{username}
 ```
 
 ## Commands Dataset
@@ -179,13 +181,19 @@ powershell/privesc/powerup/service_useradd
   'source': 'https://github.com/dstepanic/attck_empire/blob/master/Empire_modules.xlsx?raw=true'},
  {'command': 'powershell/privesc/powerup/service_useradd',
   'name': 'Empire Module Command',
-  'source': 'https://github.com/dstepanic/attck_empire/blob/master/Empire_modules.xlsx?raw=true'}]
+  'source': 'https://github.com/dstepanic/attck_empire/blob/master/Empire_modules.xlsx?raw=true'},
+ {'command': 'useradd -M -N -r -s /bin/bash -c "#{comment}" #{username}',
+  'name': None,
+  'source': 'Kirtar22/Litmus_Test'},
+ {'command': 'useradd -o -u 0 -g 0 -M -d /root -s /bin/bash #{username}',
+  'name': None,
+  'source': 'Kirtar22/Litmus_Test'}]
 ```
 
 ## Potential Detections
 
 ```json
-
+[{'data_source': '/var/log/secure with "useradd"  and "userdel"'}]
 ```
 
 ## Potential Queries
@@ -194,7 +202,19 @@ powershell/privesc/powerup/service_useradd
 [{'name': 'Create Account',
   'product': 'Azure Sentinel',
   'query': 'Sysmon| where EventID == 1and (process_command_line contains '
-           '"New-LocalUser"or process_command_line contains "net user add")'}]
+           '"New-LocalUser"or process_command_line contains "net user add")'},
+ {'name': None,
+  'product': 'Splunk',
+  'query': 'index=main  source="/var/log/secure" eventtype=useradd | table '
+           'user,host,src, UID, GID'},
+ {'name': None,
+  'product': 'Splunk',
+  'query': 'index=linux source="/var/log/secure" eventtype=userdel delete| '
+           'table user,host'},
+ {'name': None,
+  'product': 'Splunk',
+  'query': 'Root Account Creation: index=linux  source="/var/log/secure" '
+           'eventtype=useradd UID=0 OR GID=0'}]
 ```
 
 ## Raw Dataset

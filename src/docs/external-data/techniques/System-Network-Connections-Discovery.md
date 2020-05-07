@@ -383,7 +383,37 @@ List is empty.
                                                                                             'with '
                                                                                             'PowerShell',
                                                                                     'supported_platforms': ['windows']},
-                                                                                   {'description': 'Get '
+                                                                                   {'dependencies': [{'description': 'Check '
+                                                                                                                     'if '
+                                                                                                                     'netstat '
+                                                                                                                     'command '
+                                                                                                                     'exists '
+                                                                                                                     'on '
+                                                                                                                     'the '
+                                                                                                                     'machine\n',
+                                                                                                      'get_prereq_command': 'echo '
+                                                                                                                            '"Install '
+                                                                                                                            'netstat '
+                                                                                                                            'on '
+                                                                                                                            'the '
+                                                                                                                            'machine."; '
+                                                                                                                            'exit '
+                                                                                                                            '1;\n',
+                                                                                                      'prereq_command': 'if '
+                                                                                                                        '[ '
+                                                                                                                        '-x '
+                                                                                                                        '"$(command '
+                                                                                                                        '-v '
+                                                                                                                        'netstat)" '
+                                                                                                                        ']; '
+                                                                                                                        'then '
+                                                                                                                        'exit '
+                                                                                                                        '0; '
+                                                                                                                        'else '
+                                                                                                                        'exit '
+                                                                                                                        '1;\n'}],
+                                                                                    'dependency_executor_name': 'sh',
+                                                                                    'description': 'Get '
                                                                                                    'a '
                                                                                                    'listing '
                                                                                                    'of '

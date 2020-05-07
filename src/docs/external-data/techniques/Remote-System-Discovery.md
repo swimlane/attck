@@ -61,8 +61,10 @@ arp -a
 
 arp -a | grep -v '^?'
 
-for ip in $(seq 1 254); do ping -c 1 192.168.1.$ip; [ $? -eq 0 ] && echo "192.168.1.$ip UP" || : ; done
+for ip in $(seq #{start_host} #{stop_host}); do ping -c 1 192.168.1.$ip; [ $? -eq 0 ] && echo "192.168.1.$ip UP" || : ; done
 
+None
+None
 $localip = ((ipconfig | findstr [0-9].\.)[0]).Split()[-1]
 $pieces = $localip.split(".")
 $firstOctet = $pieces[0]
@@ -151,10 +153,13 @@ List is empty.
  {'command': "arp -a | grep -v '^?'\n",
   'name': None,
   'source': 'atomics/T1018/T1018.yaml'},
- {'command': 'for ip in $(seq 1 254); do ping -c 1 192.168.1.$ip; [ $? -eq 0 ] '
-             '&& echo "192.168.1.$ip UP" || : ; done\n',
+ {'command': 'for ip in $(seq #{start_host} #{stop_host}); do ping -c 1 '
+             '192.168.1.$ip; [ $? -eq 0 ] && echo "192.168.1.$ip UP" || : ; '
+             'done\n',
   'name': None,
   'source': 'atomics/T1018/T1018.yaml'},
+ {'command': None, 'name': None, 'source': 'atomics/T1018/T1018.yaml'},
+ {'command': None, 'name': None, 'source': 'atomics/T1018/T1018.yaml'},
  {'command': '$localip = ((ipconfig | findstr [0-9].\\.)[0]).Split()[-1]\n'
              '$pieces = $localip.split(".")\n'
              '$firstOctet = $pieces[0]\n'
@@ -627,7 +632,37 @@ List is empty.
                                                                                '- '
                                                                                'arp',
                                                                        'supported_platforms': ['windows']},
-                                                                      {'description': 'Identify '
+                                                                      {'dependencies': [{'description': 'Check '
+                                                                                                        'if '
+                                                                                                        'arp '
+                                                                                                        'command '
+                                                                                                        'exists '
+                                                                                                        'on '
+                                                                                                        'the '
+                                                                                                        'machine\n',
+                                                                                         'get_prereq_command': 'echo '
+                                                                                                               '"Install '
+                                                                                                               'arp '
+                                                                                                               'on '
+                                                                                                               'the '
+                                                                                                               'machine."; '
+                                                                                                               'exit '
+                                                                                                               '1;\n',
+                                                                                         'prereq_command': 'if '
+                                                                                                           '[ '
+                                                                                                           '-x '
+                                                                                                           '"$(command '
+                                                                                                           '-v '
+                                                                                                           'arp)" '
+                                                                                                           ']; '
+                                                                                                           'then '
+                                                                                                           'exit '
+                                                                                                           '0; '
+                                                                                                           'else '
+                                                                                                           'exit '
+                                                                                                           '1;\n'}],
+                                                                       'dependency_executor_name': 'sh',
+                                                                       'description': 'Identify '
                                                                                       'remote '
                                                                                       'systems '
                                                                                       'via '
@@ -699,13 +734,13 @@ List is empty.
                                                                                                'ip '
                                                                                                'in '
                                                                                                '$(seq '
-                                                                                               '1 '
-                                                                                               '254); '
+                                                                                               '#{start_host} '
+                                                                                               '#{stop_host}); '
                                                                                                'do '
                                                                                                'ping '
                                                                                                '-c '
                                                                                                '1 '
-                                                                                               '192.168.1.$ip; '
+                                                                                               '#{subnet}.$ip; '
                                                                                                '[ '
                                                                                                '$? '
                                                                                                '-eq '
@@ -713,7 +748,7 @@ List is empty.
                                                                                                '] '
                                                                                                '&& '
                                                                                                'echo '
-                                                                                               '"192.168.1.$ip '
+                                                                                               '"#{subnet}.$ip '
                                                                                                'UP" '
                                                                                                '|| '
                                                                                                ': '
@@ -721,6 +756,27 @@ List is empty.
                                                                                                'done\n',
                                                                                     'elevation_required': False,
                                                                                     'name': 'sh'},
+                                                                       'input_arguments': {'start_host': {'default': 1,
+                                                                                                          'description': 'Subnet '
+                                                                                                                         'used '
+                                                                                                                         'for '
+                                                                                                                         'ping '
+                                                                                                                         'sweep.',
+                                                                                                          'type': 'string'},
+                                                                                           'stop_host': {'default': 254,
+                                                                                                         'description': 'Subnet '
+                                                                                                                        'used '
+                                                                                                                        'for '
+                                                                                                                        'ping '
+                                                                                                                        'sweep.',
+                                                                                                         'type': 'string'},
+                                                                                           'subnet': {'default': '192.168.1',
+                                                                                                      'description': 'Subnet '
+                                                                                                                     'used '
+                                                                                                                     'for '
+                                                                                                                     'ping '
+                                                                                                                     'sweep.',
+                                                                                                      'type': 'string'}},
                                                                        'name': 'Remote '
                                                                                'System '
                                                                                'Discovery '

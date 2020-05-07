@@ -251,7 +251,41 @@ python/situational_awareness/network/port_scan
                                                                                 'Scan',
                                                                         'supported_platforms': ['linux',
                                                                                                 'macos']},
-                                                                       {'description': 'Scan '
+                                                                       {'dependencies': [{'description': 'Check '
+                                                                                                         'if '
+                                                                                                         'nmap '
+                                                                                                         'command '
+                                                                                                         'exists '
+                                                                                                         'on '
+                                                                                                         'the '
+                                                                                                         'machine\n',
+                                                                                          'get_prereq_command': 'echo '
+                                                                                                                '"Install '
+                                                                                                                'nmap '
+                                                                                                                'on '
+                                                                                                                'the '
+                                                                                                                'machine '
+                                                                                                                'to '
+                                                                                                                'run '
+                                                                                                                'the '
+                                                                                                                'test."; '
+                                                                                                                'exit '
+                                                                                                                '1;\n',
+                                                                                          'prereq_command': 'if '
+                                                                                                            '[ '
+                                                                                                            '-x '
+                                                                                                            '"$(command '
+                                                                                                            '-v '
+                                                                                                            'nmap)" '
+                                                                                                            ']; '
+                                                                                                            'then '
+                                                                                                            'exit '
+                                                                                                            '0; '
+                                                                                                            'else '
+                                                                                                            'exit '
+                                                                                                            '1;\n'}],
+                                                                        'dependency_executor_name': 'sh',
+                                                                        'description': 'Scan '
                                                                                        'ports '
                                                                                        'to '
                                                                                        'check '

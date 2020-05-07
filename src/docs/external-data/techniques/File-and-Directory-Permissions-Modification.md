@@ -68,6 +68,14 @@ chown root #{file_or_folder} -R
 chattr -i /var/spool/cron/root
 
 ```
+chmod 766 test1.txt
+chmod u+x test1.txt
+chmod o-x test1.txt
+```
+```
+chown ec2-user:ec2-user test1.txt
+```
+```
 
 ## Commands Dataset
 
@@ -137,19 +145,72 @@ chattr -i /var/spool/cron/root
   'source': 'atomics/T1222/T1222.yaml'},
  {'command': 'chattr -i /var/spool/cron/root\n',
   'name': None,
-  'source': 'atomics/T1222/T1222.yaml'}]
+  'source': 'atomics/T1222/T1222.yaml'},
+ {'command': '```', 'name': None, 'source': 'Kirtar22/Litmus_Test'},
+ {'command': 'chmod 766 test1.txt',
+  'name': None,
+  'source': 'Kirtar22/Litmus_Test'},
+ {'command': 'chmod u+x test1.txt',
+  'name': None,
+  'source': 'Kirtar22/Litmus_Test'},
+ {'command': 'chmod o-x test1.txt',
+  'name': None,
+  'source': 'Kirtar22/Litmus_Test'},
+ {'command': '```', 'name': None, 'source': 'Kirtar22/Litmus_Test'},
+ {'command': '```', 'name': None, 'source': 'Kirtar22/Litmus_Test'},
+ {'command': 'chown ec2-user:ec2-user test1.txt',
+  'name': None,
+  'source': 'Kirtar22/Litmus_Test'},
+ {'command': '```', 'name': None, 'source': 'Kirtar22/Litmus_Test'}]
 ```
 
 ## Potential Detections
 
 ```json
-
+[{'data_source': 'auditlogs (audit.rules)'},
+ {'data_source': 'bash_history logs'}]
 ```
 
 ## Potential Queries
 
 ```json
-
+[{'name': None, 'product': 'Splunk', 'query': '```'},
+ {'name': None,
+  'product': 'Splunk',
+  'query': 'index=linux sourcetype=linux_audit syscall=90 OR syscall=91 OR '
+           'sycall=268 | table msg,syscall,syscall_name,success,auid,comm,exe'},
+ {'name': None, 'product': 'Splunk', 'query': '```'},
+ {'name': None, 'product': 'Splunk', 'query': '```'},
+ {'name': None,
+  'product': 'Splunk',
+  'query': 'index=linux sourcetype=linux_audit syscall=92 OR syscall=93 OR '
+           'syscall=94 OR syscall=260 comm!=splunkd | table'},
+ {'name': None,
+  'product': 'Splunk',
+  'query': 'msg,syscall,syscall_name,success,auid,comm,exe'},
+ {'name': None, 'product': 'Splunk', 'query': '```'},
+ {'name': None, 'product': 'Splunk', 'query': '```'},
+ {'name': None,
+  'product': 'Splunk',
+  'query': '-a always,exit -F arch=b64 -S chmod,fchmod,fchmodat -F auid>=1000 '
+           '-F auid!=-1 -F key=perm_mod'},
+ {'name': None,
+  'product': 'Splunk',
+  'query': '-a always,exit -F arch=b64 -S chown,fchown,lchown,fchownat -F '
+           'auid>=1000 -F auid!=-1 -F key=perm_mod'},
+ {'name': None, 'product': 'Splunk', 'query': '```'},
+ {'name': None, 'product': 'Splunk', 'query': '```'},
+ {'name': None,
+  'product': 'Splunk',
+  'query': 'index=linux sourcetype="bash_history" bash_command="chmod *" | '
+           'table host,user_name,bash_command'},
+ {'name': None, 'product': 'Splunk', 'query': '```'},
+ {'name': None, 'product': 'Splunk', 'query': '```'},
+ {'name': None,
+  'product': 'Splunk',
+  'query': 'index=linux sourcetype="bash_history" bash_command="chown *" | '
+           'table host,user_name,bash_command'},
+ {'name': None, 'product': 'Splunk', 'query': '```'}]
 ```
 
 ## Raw Dataset

@@ -41,17 +41,19 @@ ls -recurse
 get-childitem -recurse
 gci -recurse
 
-ls -a > allcontents.txt
-ls -la /Library/Preferences/ > detailedprefsinfo.txt
-file */* *>> ../files.txt
+ls -a >> /tmp/T1083.txt
+if [ -d /Library/Preferences/ ]; then ls -la /Library/Preferences/ > /tmp/T1083.txt; fi;
+file */* *>> /tmp/T1083.txt
+cat /tmp/T1083.txt 2>/dev/null
 find . -type f
 ls -R | grep ":$" | sed -e 's/:$//' -e 's/[^-][^\/]*\//--/g' -e 's/^/ /' -e 's/-/|/'
 locate *
 which sh
 
-cd $HOME && find . -print | sed -e 's;[^/]*/;|__;g;s;__|; |;g' > /tmp/loot.txt
-cat /etc/mtab > /tmp/loot.txt
-find . -type f -iname *.pdf > /tmp/loot.txt
+cd $HOME && find . -print | sed -e 's;[^/]*/;|__;g;s;__|; |;g' > /tmp/T1083.txt
+if [ -f /etc/mtab ]; then cat /etc/mtab >> /tmp/T1083.txt; fi;
+find . -type f -iname *.pdf >> /tmp/T1083.txt
+cat /tmp/T1083.txt; fi;
 find . -type f -name ".*"
 
 {'windows': {'psh': {'command': 'Get-ChildItem -Path #{host.system.path}\n'}}}
@@ -82,9 +84,11 @@ powershell/situational_awareness/network/powerview/get_fileserver
  {'command': 'ls -recurse\nget-childitem -recurse\ngci -recurse\n',
   'name': None,
   'source': 'atomics/T1083/T1083.yaml'},
- {'command': 'ls -a > allcontents.txt\n'
-             'ls -la /Library/Preferences/ > detailedprefsinfo.txt\n'
-             'file */* *>> ../files.txt\n'
+ {'command': 'ls -a >> /tmp/T1083.txt\n'
+             'if [ -d /Library/Preferences/ ]; then ls -la '
+             '/Library/Preferences/ > /tmp/T1083.txt; fi;\n'
+             'file */* *>> /tmp/T1083.txt\n'
+             'cat /tmp/T1083.txt 2>/dev/null\n'
              'find . -type f\n'
              'ls -R | grep ":$" | sed -e \'s/:$//\' -e '
              "'s/[^-][^\\/]*\\//--/g' -e 's/^/ /' -e 's/-/|/'\n"
@@ -93,9 +97,10 @@ powershell/situational_awareness/network/powerview/get_fileserver
   'name': None,
   'source': 'atomics/T1083/T1083.yaml'},
  {'command': "cd $HOME && find . -print | sed -e 's;[^/]*/;|__;g;s;__|; |;g' > "
-             '/tmp/loot.txt\n'
-             'cat /etc/mtab > /tmp/loot.txt\n'
-             'find . -type f -iname *.pdf > /tmp/loot.txt\n'
+             '/tmp/T1083.txt\n'
+             'if [ -f /etc/mtab ]; then cat /etc/mtab >> /tmp/T1083.txt; fi;\n'
+             'find . -type f -iname *.pdf >> /tmp/T1083.txt\n'
+             'cat /tmp/T1083.txt; fi;\n'
              'find . -type f -name ".*"\n',
   'name': None,
   'source': 'atomics/T1083/T1083.yaml'},
@@ -285,19 +290,31 @@ powershell/situational_awareness/network/powerview/get_fileserver
                                                                                            'http://osxdaily.com/2013/01/29/list-all-files-subdirectory-contents-recursively/\n'
                                                                                            '\n'
                                                                                            'https://perishablepress.com/list-files-folders-recursively-terminal/\n',
-                                                                            'executor': {'command': 'ls '
+                                                                            'executor': {'cleanup_command': 'rm '
+                                                                                                            '#{output_file}\n',
+                                                                                         'command': 'ls '
                                                                                                     '-a '
-                                                                                                    '> '
-                                                                                                    'allcontents.txt\n'
+                                                                                                    '>> '
+                                                                                                    '#{output_file}\n'
+                                                                                                    'if '
+                                                                                                    '[ '
+                                                                                                    '-d '
+                                                                                                    '/Library/Preferences/ '
+                                                                                                    ']; '
+                                                                                                    'then '
                                                                                                     'ls '
                                                                                                     '-la '
                                                                                                     '/Library/Preferences/ '
                                                                                                     '> '
-                                                                                                    'detailedprefsinfo.txt\n'
+                                                                                                    '#{output_file}; '
+                                                                                                    'fi;\n'
                                                                                                     'file '
                                                                                                     '*/* '
                                                                                                     '*>> '
-                                                                                                    '../files.txt\n'
+                                                                                                    '#{output_file}\n'
+                                                                                                    'cat '
+                                                                                                    '#{output_file} '
+                                                                                                    '2>/dev/null\n'
                                                                                                     'find '
                                                                                                     '. '
                                                                                                     '-type '
@@ -323,6 +340,15 @@ powershell/situational_awareness/network/powerview/get_fileserver
                                                                                                     'which '
                                                                                                     'sh\n',
                                                                                          'name': 'sh'},
+                                                                            'input_arguments': {'output_file': {'default': '/tmp/T1083.txt',
+                                                                                                                'description': 'Output '
+                                                                                                                               'file '
+                                                                                                                               'used '
+                                                                                                                               'to '
+                                                                                                                               'store '
+                                                                                                                               'the '
+                                                                                                                               'results.',
+                                                                                                                'type': 'path'}},
                                                                             'name': 'Nix '
                                                                                     'File '
                                                                                     'and '
@@ -338,7 +364,9 @@ powershell/situational_awareness/network/powerview/get_fileserver
                                                                                            'the '
                                                                                            'file '
                                                                                            'system\n',
-                                                                            'executor': {'command': 'cd '
+                                                                            'executor': {'cleanup_command': 'rm '
+                                                                                                            '#{output_file}',
+                                                                                         'command': 'cd '
                                                                                                     '$HOME '
                                                                                                     '&& '
                                                                                                     'find '
@@ -350,19 +378,29 @@ powershell/situational_awareness/network/powerview/get_fileserver
                                                                                                     "'s;[^/]*/;|__;g;s;__|; "
                                                                                                     "|;g' "
                                                                                                     '> '
-                                                                                                    '/tmp/loot.txt\n'
+                                                                                                    '#{output_file}\n'
+                                                                                                    'if '
+                                                                                                    '[ '
+                                                                                                    '-f '
+                                                                                                    '/etc/mtab '
+                                                                                                    ']; '
+                                                                                                    'then '
                                                                                                     'cat '
                                                                                                     '/etc/mtab '
-                                                                                                    '> '
-                                                                                                    '/tmp/loot.txt\n'
+                                                                                                    '>> '
+                                                                                                    '#{output_file}; '
+                                                                                                    'fi;\n'
                                                                                                     'find '
                                                                                                     '. '
                                                                                                     '-type '
                                                                                                     'f '
                                                                                                     '-iname '
                                                                                                     '*.pdf '
-                                                                                                    '> '
-                                                                                                    '/tmp/loot.txt\n'
+                                                                                                    '>> '
+                                                                                                    '#{output_file}\n'
+                                                                                                    'cat '
+                                                                                                    '#{output_file}; '
+                                                                                                    'fi;\n'
                                                                                                     'find '
                                                                                                     '. '
                                                                                                     '-type '
@@ -370,6 +408,15 @@ powershell/situational_awareness/network/powerview/get_fileserver
                                                                                                     '-name '
                                                                                                     '".*"\n',
                                                                                          'name': 'sh'},
+                                                                            'input_arguments': {'output_file': {'default': '/tmp/T1083.txt',
+                                                                                                                'description': 'Output '
+                                                                                                                               'file '
+                                                                                                                               'used '
+                                                                                                                               'to '
+                                                                                                                               'store '
+                                                                                                                               'the '
+                                                                                                                               'results.',
+                                                                                                                'type': 'path'}},
                                                                             'name': 'Nix '
                                                                                     'File '
                                                                                     'and '

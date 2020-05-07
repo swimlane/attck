@@ -30,7 +30,7 @@ In macOS, the Ay MaMi malware uses <code>/usr/bin/security add-trusted-cert -d -
 
 ```
 openssl genrsa -out rootCA.key 4096
-openssl req -x509 -new -nodes -key rootCA.key -sha256 -days 365 -out #{cert_filename}
+openssl req -x509 -new -nodes -key rootCA.key -sha256 -days 365 -subj "/C=US/ST=Denial/L=Springfield/O=Dis/CN=www.example.com" -out #{cert_filename}
 
 if [ $(rpm -q --queryformat '%{VERSION}' centos-release) -le "5" ];
 then
@@ -41,7 +41,7 @@ else if [ $(rpm -q --queryformat '%{VERSION}' centos-release) -ge "7" ];
 fi
 
 openssl genrsa -out #{key_filename} 4096
-openssl req -x509 -new -nodes -key #{key_filename} -sha256 -days 365 -out rootCA.crt
+openssl req -x509 -new -nodes -key #{key_filename} -sha256 -days 365 -subj "/C=US/ST=Denial/L=Springfield/O=Dis/CN=www.example.com" -out rootCA.crt
 
 if [ $(rpm -q --queryformat '%{VERSION}' centos-release) -le "5" ];
 then
@@ -51,6 +51,19 @@ else if [ $(rpm -q --queryformat '%{VERSION}' centos-release) -ge "7" ];
   update-ca-trust
 fi
 
+mv #{cert_filename} /usr/local/share/ca-certificates
+echo sudo update-ca-certificates
+
+mv rootCA.crt /usr/local/share/ca-certificates
+echo sudo update-ca-certificates
+
+sudo security add-trusted-cert -d -r trustRoot -k "/Library/Keychains/System.keychain" "#{cert_filename}"
+
+sudo security add-trusted-cert -d -r trustRoot -k "/Library/Keychains/System.keychain" "rootCA.crt"
+
+$cert = Import-Certificate -FilePath rootCA.cer -CertStoreLocation Cert:\LocalMachine\My
+Move-Item -Path $cert.PSPath -Destination "Cert:\LocalMachine\Root"
+
 ```
 
 ## Commands Dataset
@@ -58,6 +71,7 @@ fi
 ```
 [{'command': 'openssl genrsa -out rootCA.key 4096\n'
              'openssl req -x509 -new -nodes -key rootCA.key -sha256 -days 365 '
+             '-subj "/C=US/ST=Denial/L=Springfield/O=Dis/CN=www.example.com" '
              '-out #{cert_filename}\n'
              '\n'
              "if [ $(rpm -q --queryformat '%{VERSION}' centos-release) -le "
@@ -73,7 +87,9 @@ fi
   'source': 'atomics/T1130/T1130.yaml'},
  {'command': 'openssl genrsa -out #{key_filename} 4096\n'
              'openssl req -x509 -new -nodes -key #{key_filename} -sha256 -days '
-             '365 -out rootCA.crt\n'
+             '365 -subj '
+             '"/C=US/ST=Denial/L=Springfield/O=Dis/CN=www.example.com" -out '
+             'rootCA.crt\n'
              '\n'
              "if [ $(rpm -q --queryformat '%{VERSION}' centos-release) -le "
              '"5" ];\n'
@@ -84,6 +100,28 @@ fi
              '  cp rootCA.crt /etc/pki/ca-trust/source/anchors/\n'
              '  update-ca-trust\n'
              'fi\n',
+  'name': None,
+  'source': 'atomics/T1130/T1130.yaml'},
+ {'command': 'mv #{cert_filename} /usr/local/share/ca-certificates\n'
+             'echo sudo update-ca-certificates\n',
+  'name': None,
+  'source': 'atomics/T1130/T1130.yaml'},
+ {'command': 'mv rootCA.crt /usr/local/share/ca-certificates\n'
+             'echo sudo update-ca-certificates\n',
+  'name': None,
+  'source': 'atomics/T1130/T1130.yaml'},
+ {'command': 'sudo security add-trusted-cert -d -r trustRoot -k '
+             '"/Library/Keychains/System.keychain" "#{cert_filename}"\n',
+  'name': None,
+  'source': 'atomics/T1130/T1130.yaml'},
+ {'command': 'sudo security add-trusted-cert -d -r trustRoot -k '
+             '"/Library/Keychains/System.keychain" "rootCA.crt"\n',
+  'name': None,
+  'source': 'atomics/T1130/T1130.yaml'},
+ {'command': '$cert = Import-Certificate -FilePath rootCA.cer '
+             '-CertStoreLocation Cert:\\LocalMachine\\My\n'
+             'Move-Item -Path $cert.PSPath -Destination '
+             '"Cert:\\LocalMachine\\Root"\n',
   'name': None,
   'source': 'atomics/T1130/T1130.yaml'}]
 ```
@@ -131,6 +169,8 @@ fi
                                                                                                 '-sha256 '
                                                                                                 '-days '
                                                                                                 '365 '
+                                                                                                '-subj '
+                                                                                                '"/C=US/ST=Denial/L=Springfield/O=Dis/CN=www.example.com" '
                                                                                                 '-out '
                                                                                                 '#{cert_filename}\n'
                                                                                                 '\n'
@@ -196,7 +236,274 @@ fi
                                                                                 'CA '
                                                                                 'on '
                                                                                 'CentOS/RHEL',
-                                                                        'supported_platforms': ['linux']}],
+                                                                        'supported_platforms': ['linux']},
+                                                                       {'dependencies': [{'description': 'Verify '
+                                                                                                         'the '
+                                                                                                         'certificate '
+                                                                                                         'exists. '
+                                                                                                         'It '
+                                                                                                         'generates '
+                                                                                                         'if '
+                                                                                                         'not '
+                                                                                                         'on '
+                                                                                                         'disk.\n',
+                                                                                          'get_prereq_command': 'if '
+                                                                                                                '[ '
+                                                                                                                '! '
+                                                                                                                '-f '
+                                                                                                                '#{key_filename} '
+                                                                                                                ']; '
+                                                                                                                'then '
+                                                                                                                'openssl '
+                                                                                                                'genrsa '
+                                                                                                                '-out '
+                                                                                                                '#{key_filename} '
+                                                                                                                '4096; '
+                                                                                                                'fi;\n'
+                                                                                                                'openssl '
+                                                                                                                'req '
+                                                                                                                '-x509 '
+                                                                                                                '-new '
+                                                                                                                '-nodes '
+                                                                                                                '-key '
+                                                                                                                '#{key_filename} '
+                                                                                                                '-sha256 '
+                                                                                                                '-days '
+                                                                                                                '365 '
+                                                                                                                '-subj '
+                                                                                                                '"/C=US/ST=Denial/L=Springfield/O=Dis/CN=www.example.com" '
+                                                                                                                '-out '
+                                                                                                                '#{cert_filename}\n',
+                                                                                          'prereq_command': 'if '
+                                                                                                            '[ '
+                                                                                                            '-f '
+                                                                                                            '#{cert_filename} '
+                                                                                                            ']; '
+                                                                                                            'then '
+                                                                                                            'exit '
+                                                                                                            '0; '
+                                                                                                            'else '
+                                                                                                            'exit '
+                                                                                                            '1; '
+                                                                                                            'fi;\n'}],
+                                                                        'dependency_executor_name': 'command_prompt',
+                                                                        'description': 'Creates '
+                                                                                       'a '
+                                                                                       'root '
+                                                                                       'CA '
+                                                                                       'with '
+                                                                                       'openssl\n',
+                                                                        'executor': {'command': 'mv '
+                                                                                                '#{cert_filename} '
+                                                                                                '/usr/local/share/ca-certificates\n'
+                                                                                                'echo '
+                                                                                                'sudo '
+                                                                                                'update-ca-certificates\n',
+                                                                                     'elevation_required': True,
+                                                                                     'name': 'sh'},
+                                                                        'input_arguments': {'cert_filename': {'default': 'rootCA.crt',
+                                                                                                              'description': 'CA '
+                                                                                                                             'file '
+                                                                                                                             'name',
+                                                                                                              'type': 'Path'},
+                                                                                            'key_filename': {'default': 'rootCA.key',
+                                                                                                             'description': 'Key '
+                                                                                                                            'we '
+                                                                                                                            'create '
+                                                                                                                            'that '
+                                                                                                                            'is '
+                                                                                                                            'used '
+                                                                                                                            'to '
+                                                                                                                            'create '
+                                                                                                                            'the '
+                                                                                                                            'CA '
+                                                                                                                            'certificate',
+                                                                                                             'type': 'Path'}},
+                                                                        'name': 'Install '
+                                                                                'root '
+                                                                                'CA '
+                                                                                'on '
+                                                                                'Debian/Ubuntu',
+                                                                        'supported_platforms': ['linux']},
+                                                                       {'dependencies': [{'description': 'Verify '
+                                                                                                         'the '
+                                                                                                         'certificate '
+                                                                                                         'exists. '
+                                                                                                         'It '
+                                                                                                         'generates '
+                                                                                                         'if '
+                                                                                                         'not '
+                                                                                                         'on '
+                                                                                                         'disk.\n',
+                                                                                          'get_prereq_command': 'if '
+                                                                                                                '[ '
+                                                                                                                '! '
+                                                                                                                '-f '
+                                                                                                                '#{key_filename} '
+                                                                                                                ']; '
+                                                                                                                'then '
+                                                                                                                'openssl '
+                                                                                                                'genrsa '
+                                                                                                                '-out '
+                                                                                                                '#{key_filename} '
+                                                                                                                '4096; '
+                                                                                                                'fi;\n'
+                                                                                                                'openssl '
+                                                                                                                'req '
+                                                                                                                '-x509 '
+                                                                                                                '-new '
+                                                                                                                '-nodes '
+                                                                                                                '-key '
+                                                                                                                '#{key_filename} '
+                                                                                                                '-sha256 '
+                                                                                                                '-days '
+                                                                                                                '365 '
+                                                                                                                '-subj '
+                                                                                                                '"/C=US/ST=Denial/L=Springfield/O=Dis/CN=www.example.com" '
+                                                                                                                '-out '
+                                                                                                                '#{cert_filename}\n',
+                                                                                          'prereq_command': 'if '
+                                                                                                            '[ '
+                                                                                                            '-f '
+                                                                                                            '#{cert_filename} '
+                                                                                                            ']; '
+                                                                                                            'then '
+                                                                                                            'exit '
+                                                                                                            '0; '
+                                                                                                            'else '
+                                                                                                            'exit '
+                                                                                                            '1; '
+                                                                                                            'fi;\n'}],
+                                                                        'dependency_executor_name': 'command_prompt',
+                                                                        'description': 'Creates '
+                                                                                       'a '
+                                                                                       'root '
+                                                                                       'CA '
+                                                                                       'with '
+                                                                                       'openssl\n',
+                                                                        'executor': {'command': 'sudo '
+                                                                                                'security '
+                                                                                                'add-trusted-cert '
+                                                                                                '-d '
+                                                                                                '-r '
+                                                                                                'trustRoot '
+                                                                                                '-k '
+                                                                                                '"/Library/Keychains/System.keychain" '
+                                                                                                '"#{cert_filename}"\n',
+                                                                                     'elevation_required': True,
+                                                                                     'name': 'command_prompt'},
+                                                                        'input_arguments': {'cert_filename': {'default': 'rootCA.crt',
+                                                                                                              'description': 'CA '
+                                                                                                                             'file '
+                                                                                                                             'name',
+                                                                                                              'type': 'Path'},
+                                                                                            'key_filename': {'default': 'rootCA.key',
+                                                                                                             'description': 'Key '
+                                                                                                                            'we '
+                                                                                                                            'create '
+                                                                                                                            'that '
+                                                                                                                            'is '
+                                                                                                                            'used '
+                                                                                                                            'to '
+                                                                                                                            'create '
+                                                                                                                            'the '
+                                                                                                                            'CA '
+                                                                                                                            'certificate',
+                                                                                                             'type': 'Path'}},
+                                                                        'name': 'Install '
+                                                                                'root '
+                                                                                'CA '
+                                                                                'on '
+                                                                                'macOS',
+                                                                        'supported_platforms': ['macos']},
+                                                                       {'dependencies': [{'description': 'Verify '
+                                                                                                         'the '
+                                                                                                         'certificate '
+                                                                                                         'exists. '
+                                                                                                         'It '
+                                                                                                         'generates '
+                                                                                                         'if '
+                                                                                                         'not '
+                                                                                                         'on '
+                                                                                                         'disk.\n',
+                                                                                          'get_prereq_command': '$cert '
+                                                                                                                '= '
+                                                                                                                'New-SelfSignedCertificate '
+                                                                                                                '-DnsName '
+                                                                                                                'atomicredteam.com '
+                                                                                                                '-CertStoreLocation '
+                                                                                                                'cert:\\LocalMachine\\My\n'
+                                                                                                                'Export-Certificate '
+                                                                                                                '-Type '
+                                                                                                                'CERT '
+                                                                                                                '-Cert  '
+                                                                                                                'Cert:\\LocalMachine\\My\\$cert.Thumbprint '
+                                                                                                                '-FilePath '
+                                                                                                                '#{pfx_path}\n'
+                                                                                                                'Get-ChildItem '
+                                                                                                                'Cert:\\LocalMachine\\My\\$($cert.Thumbprint) '
+                                                                                                                '| '
+                                                                                                                'Remove-Item        \n',
+                                                                                          'prereq_command': 'if '
+                                                                                                            '(Test-Path '
+                                                                                                            '#{cert_filename}) '
+                                                                                                            '{ '
+                                                                                                            'exit '
+                                                                                                            '0 '
+                                                                                                            '} '
+                                                                                                            'else '
+                                                                                                            '{ '
+                                                                                                            'exit '
+                                                                                                            '1 '
+                                                                                                            '}\n'}],
+                                                                        'dependency_executor_name': 'powershell',
+                                                                        'description': 'Creates '
+                                                                                       'a '
+                                                                                       'root '
+                                                                                       'CA '
+                                                                                       'with '
+                                                                                       'Powershell\n',
+                                                                        'executor': {'cleanup_command': '$cert '
+                                                                                                        '= '
+                                                                                                        'Import-Certificate '
+                                                                                                        '-FilePath '
+                                                                                                        '#{pfx_path} '
+                                                                                                        '-CertStoreLocation '
+                                                                                                        'Cert:\\LocalMachine\\My\n'
+                                                                                                        'Get-ChildItem '
+                                                                                                        'Cert:\\LocalMachine\\My\\$($cert.Thumbprint) '
+                                                                                                        '| '
+                                                                                                        'Remove-Item\n'
+                                                                                                        'Get-ChildItem '
+                                                                                                        'Cert:\\LocalMachine\\Root\\$($cert.Thumbprint) '
+                                                                                                        '| '
+                                                                                                        'Remove-Item\n',
+                                                                                     'command': '$cert '
+                                                                                                '= '
+                                                                                                'Import-Certificate '
+                                                                                                '-FilePath '
+                                                                                                '#{pfx_path} '
+                                                                                                '-CertStoreLocation '
+                                                                                                'Cert:\\LocalMachine\\My\n'
+                                                                                                'Move-Item '
+                                                                                                '-Path '
+                                                                                                '$cert.PSPath '
+                                                                                                '-Destination '
+                                                                                                '"Cert:\\LocalMachine\\Root"\n',
+                                                                                     'elevation_required': True,
+                                                                                     'name': 'command_prompt'},
+                                                                        'input_arguments': {'pfx_path': {'default': 'rootCA.cer',
+                                                                                                         'description': 'Path '
+                                                                                                                        'of '
+                                                                                                                        'the '
+                                                                                                                        'certificate',
+                                                                                                         'type': 'Path'}},
+                                                                        'name': 'Install '
+                                                                                'root '
+                                                                                'CA '
+                                                                                'on '
+                                                                                'Windows',
+                                                                        'supported_platforms': ['windows']}],
                                                       'attack_technique': 'T1130',
                                                       'display_name': 'Install '
                                                                       'Root '
