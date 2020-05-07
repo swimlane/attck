@@ -139,7 +139,48 @@ powershell.exe -Command "IEX ([Text.Encoding]::UNICODE.GetString([Convert]::From
 ## Potential Detections
 
 ```json
-
+[{'data_source': {'author': 'Florian Roth, @0xrawsec',
+                  'date': '2018/06/03',
+                  'description': 'Detects the creation of an ADS data stream '
+                                 'that contains an executable (non-empty '
+                                 'imphash)',
+                  'detection': {'condition': 'selection and not filter',
+                                'filter': {'Imphash': '00000000000000000000000000000000'},
+                                'selection': {'EventID': 15}},
+                  'falsepositives': ['unknown'],
+                  'fields': ['TargetFilename', 'Image'],
+                  'id': 'b69888d4-380c-45ce-9cf9-d9ce46e67821',
+                  'level': 'critical',
+                  'logsource': {'definition': 'Requirements: Sysmon config '
+                                              'with Imphash logging activated',
+                                'product': 'windows',
+                                'service': 'sysmon'},
+                  'references': ['https://twitter.com/0xrawsec/status/1002478725605273600?s=21'],
+                  'status': 'experimental',
+                  'tags': ['attack.defense_evasion',
+                           'attack.t1027',
+                           'attack.s0139'],
+                  'title': 'Executable in ADS'}},
+ {'data_source': {'author': 'Florian Roth',
+                  'date': '2018/03/23',
+                  'description': 'Detects a ping command that uses a hex '
+                                 'encoded IP address',
+                  'detection': {'condition': 'selection',
+                                'selection': {'CommandLine': ['*\\ping.exe 0x*',
+                                                              '*\\ping 0x*']}},
+                  'falsepositives': ['Unlikely, because no sane admin pings IP '
+                                     'addresses in a hexadecimal form'],
+                  'fields': ['ParentCommandLine'],
+                  'id': '1a0d4aba-7668-4365-9ce4-6d79ab088dfd',
+                  'level': 'high',
+                  'logsource': {'category': 'process_creation',
+                                'product': 'windows'},
+                  'references': ['https://github.com/vysec/Aggressor-VYSEC/blob/master/ping.cna',
+                                 'https://twitter.com/vysecurity/status/977198418354491392'],
+                  'tags': ['attack.defense_evasion',
+                           'attack.t1140',
+                           'attack.t1027'],
+                  'title': 'Ping Hex IP'}}]
 ```
 
 ## Potential Queries

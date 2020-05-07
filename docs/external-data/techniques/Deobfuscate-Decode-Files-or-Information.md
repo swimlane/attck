@@ -69,7 +69,102 @@ certutil.exe|-decode|-urlcache
 ## Potential Detections
 
 ```json
-
+[{'data_source': {'author': 'Florian Roth',
+                  'date': '2019/08/24',
+                  'description': 'Detects a base64 encoded FromBase64String '
+                                 'keyword in a process command line',
+                  'detection': {'condition': 'selection',
+                                'selection': {'CommandLine|base64offset|contains': '::FromBase64String'}},
+                  'falsepositives': ['unknown'],
+                  'fields': ['CommandLine', 'ParentCommandLine'],
+                  'id': 'fdb62a13-9a81-4e5c-a38f-ea93a16f6d7c',
+                  'level': 'critical',
+                  'logsource': {'category': 'process_creation',
+                                'product': 'windows'},
+                  'status': 'experimental',
+                  'tags': ['attack.t1086',
+                           'attack.t1140',
+                           'attack.execution',
+                           'attack.defense_evasion'],
+                  'title': 'Encoded FromBase64String'}},
+ {'data_source': {'author': 'Florian Roth',
+                  'date': '2019/08/23',
+                  'description': 'Detects a base64 encoded IEX command string '
+                                 'in a process command line',
+                  'detection': {'condition': 'selection',
+                                'selection': {'CommandLine|base64offset|contains': ['IEX '
+                                                                                    '([',
+                                                                                    'iex '
+                                                                                    '([',
+                                                                                    'iex '
+                                                                                    '(New',
+                                                                                    'IEX '
+                                                                                    '(New']}},
+                  'falsepositives': ['unknown'],
+                  'fields': ['CommandLine', 'ParentCommandLine'],
+                  'id': '88f680b8-070e-402c-ae11-d2914f2257f1',
+                  'level': 'critical',
+                  'logsource': {'category': 'process_creation',
+                                'product': 'windows'},
+                  'status': 'experimental',
+                  'tags': ['attack.t1086', 'attack.t1140', 'attack.execution'],
+                  'title': 'Encoded IEX'}},
+ {'data_source': {'author': 'juju4',
+                  'description': 'Detects suspicious process that use escape '
+                                 'characters',
+                  'detection': {'condition': 'selection',
+                                'selection': {'CommandLine': ['^h^t^t^p',
+                                                              'h"t"t"p']}},
+                  'falsepositives': ['False positives depend on scripts and '
+                                     'administrative tools used in the '
+                                     'monitored environment'],
+                  'id': 'f0cdd048-82dc-4f7a-8a7a-b87a52b6d0fd',
+                  'level': 'low',
+                  'logsource': {'category': 'process_creation',
+                                'product': 'windows'},
+                  'modified': '2018/12/11',
+                  'references': ['https://twitter.com/vysecurity/status/885545634958385153',
+                                 'https://twitter.com/Hexacorn/status/885553465417756673',
+                                 'https://twitter.com/Hexacorn/status/885570278637678592',
+                                 'https://www.fireeye.com/blog/threat-research/2017/06/obfuscation-in-the-wild.html',
+                                 'http://www.windowsinspired.com/understanding-the-command-line-string-and-arguments-received-by-a-windows-program/'],
+                  'status': 'experimental',
+                  'tags': ['attack.defense_evasion', 'attack.t1140'],
+                  'title': 'Suspicious Commandline Escape'}},
+ {'data_source': {'author': 'Diego Perez (@darkquassar)',
+                  'date': '22/02/2019',
+                  'description': 'Detection for mshta.exe suspicious execution '
+                                 'patterns sometimes involving file '
+                                 'polyglotism',
+                  'detection': {'condition': 'selection1 or selection2',
+                                'selection1': {'CommandLine': ['*mshta '
+                                                               'vbscript:CreateObject("Wscript.Shell")*',
+                                                               '*mshta '
+                                                               'vbscript:Execute("Execute*',
+                                                               '*mshta '
+                                                               'vbscript:CreateObject("Wscript.Shell").Run("mshta.exe*']},
+                                'selection2': {'CommandLine': ['*.jpg*',
+                                                               '*.png*',
+                                                               '*.lnk*',
+                                                               '*.xls*',
+                                                               '*.doc*',
+                                                               '*.zip*'],
+                                               'Image': ['C:\\Windows\\system32\\mshta.exe']}},
+                  'falsepositives': ['False positives depend on scripts and '
+                                     'administrative tools used in the '
+                                     'monitored environment'],
+                  'id': 'cc7abbd0-762b-41e3-8a26-57ad50d2eea3',
+                  'level': 'high',
+                  'logsource': {'category': 'process_creation',
+                                'product': 'windows'},
+                  'modified': '22/02/2019',
+                  'references': ['http://blog.sevagas.com/?Hacking-around-HTA-files',
+                                 'https://0x00sec.org/t/clientside-exploitation-in-2018-how-pentesting-has-changed/7356',
+                                 'https://docs.microsoft.com/en-us/dotnet/standard/data/xml/xslt-stylesheet-scripting-using-msxsl-script',
+                                 'https://medium.com/tsscyber/pentesting-and-hta-bypassing-powershell-constrained-language-mode-53a42856c997'],
+                  'status': 'experimental',
+                  'tags': ['attack.defense_evasion', 'attack.t1140'],
+                  'title': 'MSHTA Suspicious Execution 01'}}]
 ```
 
 ## Potential Queries

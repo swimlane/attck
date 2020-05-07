@@ -142,7 +142,27 @@ bitsadmin.exe
 ## Potential Detections
 
 ```json
-
+[{'data_source': {'author': 'Michael Haag',
+                  'description': 'Detects usage of bitsadmin downloading a '
+                                 'file',
+                  'detection': {'condition': 'selection',
+                                'selection': {'CommandLine': ['/transfer'],
+                                              'Image': ['*\\bitsadmin.exe']}},
+                  'falsepositives': ['Some legitimate apps use this, but '
+                                     'limited.'],
+                  'fields': ['CommandLine', 'ParentCommandLine'],
+                  'id': 'd059842b-6b9d-4ed1-b5c3-5b89143c6ede',
+                  'level': 'medium',
+                  'logsource': {'category': 'process_creation',
+                                'product': 'windows'},
+                  'references': ['https://blog.netspi.com/15-ways-to-download-a-file/#bitsadmin',
+                                 'https://isc.sans.edu/diary/22264'],
+                  'status': 'experimental',
+                  'tags': ['attack.defense_evasion',
+                           'attack.persistence',
+                           'attack.t1197',
+                           'attack.s0190'],
+                  'title': 'Bitsadmin Download'}}]
 ```
 
 ## Potential Queries

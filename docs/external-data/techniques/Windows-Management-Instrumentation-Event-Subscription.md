@@ -81,7 +81,70 @@ powershell/persistence/elevated/wmi_updater
 ## Potential Detections
 
 ```json
-
+[{'data_source': {'author': 'Tom Ueltschi (@c_APT_ure)',
+                  'date': '2019/01/12',
+                  'description': 'Detects creation of WMI event subscription '
+                                 'persistence method',
+                  'detection': {'condition': 'selector',
+                                'selector': {'EventID': [19, 20, 21]}},
+                  'falsepositives': ['exclude legitimate (vetted) use of WMI '
+                                     'event subscription in your network'],
+                  'id': '0f06a3a5-6a09-413f-8743-e6cf35561297',
+                  'level': 'high',
+                  'logsource': {'product': 'windows', 'service': 'sysmon'},
+                  'references': ['https://attack.mitre.org/techniques/T1084/'],
+                  'status': 'experimental',
+                  'tags': ['attack.t1084', 'attack.persistence'],
+                  'title': 'WMI Event Subscription'}},
+ {'data_source': {'author': 'Thomas Patzke',
+                  'date': '2018/03/07',
+                  'description': 'Detects WMI command line event consumers',
+                  'detection': {'condition': 'selection',
+                                'selection': {'EventID': 7,
+                                              'Image': 'C:\\Windows\\System32\\wbem\\WmiPrvSE.exe',
+                                              'ImageLoaded': 'wbemcons.dll'}},
+                  'falsepositives': ['Unknown (data set is too small; further '
+                                     'testing needed)'],
+                  'id': '05936ce2-ee05-4dae-9d03-9a391cf2d2c6',
+                  'level': 'high',
+                  'logsource': {'product': 'windows', 'service': 'sysmon'},
+                  'references': ['https://www.eideon.com/2018-03-02-THL03-WMIBackdoors/'],
+                  'status': 'experimental',
+                  'tags': ['attack.t1084', 'attack.persistence'],
+                  'title': 'WMI Persistence - Command Line Event Consumer'}},
+ {'data_source': {'author': 'Thomas Patzke',
+                  'date': '2018/03/07',
+                  'description': 'Detects file writes of WMI script event '
+                                 'consumer',
+                  'detection': {'condition': 'selection',
+                                'selection': {'EventID': 11,
+                                              'Image': 'C:\\WINDOWS\\system32\\wbem\\scrcons.exe'}},
+                  'falsepositives': ['Unknown (data set is too small; further '
+                                     'testing needed)'],
+                  'id': '33f41cdd-35ac-4ba8-814b-c6a4244a1ad4',
+                  'level': 'high',
+                  'logsource': {'product': 'windows', 'service': 'sysmon'},
+                  'references': ['https://www.eideon.com/2018-03-02-THL03-WMIBackdoors/'],
+                  'status': 'experimental',
+                  'tags': ['attack.t1084', 'attack.persistence'],
+                  'title': 'WMI Persistence - Script Event Consumer File '
+                           'Write'}},
+ {'data_source': {'author': 'Florian Roth',
+                  'date': '2019/10/11',
+                  'description': 'Detects a WMi backdoor in Exchange Transport '
+                                 'Agents via WMi event filters',
+                  'detection': {'condition': 'selection',
+                                'selection': {'ParentImage': '*\\EdgeTransport.exe'}},
+                  'falsepositives': ['Unknown'],
+                  'id': '797011dc-44f4-4e6f-9f10-a8ceefbe566b',
+                  'level': 'critical',
+                  'logsource': {'category': 'process_creation',
+                                'product': 'windows'},
+                  'references': ['https://twitter.com/cglyer/status/1182389676876980224',
+                                 'https://twitter.com/cglyer/status/1182391019633029120'],
+                  'status': 'experimental',
+                  'tags': ['attack.persistence', 'attack.t1084'],
+                  'title': 'WMI Backdoor Exchange Transport Agent'}}]
 ```
 
 ## Potential Queries

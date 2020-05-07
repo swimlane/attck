@@ -108,7 +108,26 @@ Start-Process -FilePath "$env:comspec" -ArgumentList "/c,type,#{payload_path},>,
 ## Potential Detections
 
 ```json
-
+[{'data_source': {'author': 'Sami Ruohonen',
+                  'description': 'Detects writing data into NTFS alternate '
+                                 'data streams from powershell. Needs Script '
+                                 'Block Logging.',
+                  'detection': {'condition': 'keyword1 and keyword2',
+                                'keyword1': ['set-content'],
+                                'keyword2': ['-stream']},
+                  'falsepositives': ['unknown'],
+                  'id': '8c521530-5169-495d-a199-0a3a881ad24e',
+                  'level': 'high',
+                  'logsource': {'definition': 'It is recommended to use the '
+                                              'new "Script Block Logging" of '
+                                              'PowerShell v5 '
+                                              'https://adsecurity.org/?p=2277',
+                                'product': 'windows',
+                                'service': 'powershell'},
+                  'references': ['http://www.powertheshell.com/ntfsstreams/'],
+                  'status': 'experimental',
+                  'tags': ['attack.defense_evasion', 'attack.t1096'],
+                  'title': 'NTFS Alternate Data Stream'}}]
 ```
 
 ## Potential Queries

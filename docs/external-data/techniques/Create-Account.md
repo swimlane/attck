@@ -193,7 +193,26 @@ useradd -o -u 0 -g 0 -M -d /root -s /bin/bash #{username}
 ## Potential Detections
 
 ```json
-[{'data_source': '/var/log/secure with "useradd"  and "userdel"'}]
+[{'data_source': '/var/log/secure with "useradd"  and "userdel"'},
+ {'data_source': {'author': 'Patrick Bareiss',
+                  'description': 'Detects local user creation on windows '
+                                 "servers, which shouldn't happen in an Active "
+                                 'Directory environment. Apply this Sigma Use '
+                                 'Case on your windows server logs and not on '
+                                 'your DC logs.',
+                  'detection': {'condition': 'selection',
+                                'selection': {'EventID': 4720}},
+                  'falsepositives': ['Domain Controller Logs',
+                                     'Local accounts managed by privileged '
+                                     'account management tools'],
+                  'fields': ['EventCode', 'AccountName', 'AccountDomain'],
+                  'id': '66b6be3d-55d0-4f47-9855-d69df21740ea',
+                  'level': 'low',
+                  'logsource': {'product': 'windows', 'service': 'security'},
+                  'references': ['https://patrick-bareiss.com/detecting-local-user-creation-in-ad-with-sigma/'],
+                  'status': 'experimental',
+                  'tags': ['attack.persistence', 'attack.t1136'],
+                  'title': 'Detects local user creation'}}]
 ```
 
 ## Potential Queries

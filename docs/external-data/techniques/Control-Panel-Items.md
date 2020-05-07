@@ -48,7 +48,25 @@ Shell32.dll,Control_RunDLLAsUser|.cpl
 ## Potential Detections
 
 ```json
-
+[{'data_source': {'author': 'Kyaw Min Thein',
+                  'date': '2019/08/27',
+                  'description': 'Detects the use of a control panel item '
+                                 '(.cpl) outside of the System32 folder',
+                  'detection': {'condition': 'selection and not filter',
+                                'filter': {'CommandLine': ['*\\System32\\\\*',
+                                                           '*%System%*']},
+                                'selection': {'CommandLine': '*.cpl'}},
+                  'falsepositives': ['Unknown'],
+                  'id': '0ba863e6-def5-4e50-9cea-4dd8c7dc46a4',
+                  'level': 'critical',
+                  'logsource': {'category': 'process_creation',
+                                'product': 'windows'},
+                  'reference': ['https://attack.mitre.org/techniques/T1196/'],
+                  'status': 'experimental',
+                  'tags': ['attack.execution',
+                           'attack.t1196',
+                           'attack.defense_evasion'],
+                  'title': 'Control Panel Items'}}]
 ```
 
 ## Potential Queries

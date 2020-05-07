@@ -41,7 +41,26 @@ powershell/persistence/misc/add_sid_history
 ## Potential Detections
 
 ```json
-
+[{'data_source': {'author': 'Thomas Patzke, @atc_project (improvements)',
+                  'description': 'An attacker can use the SID history '
+                                 'attribute to gain additional privileges.',
+                  'detection': {'condition': 'selection1 or (selection2 and '
+                                             'not selection3)',
+                                'selection1': {'EventID': [4765, 4766]},
+                                'selection2': {'EventID': 4738},
+                                'selection3': {'SidHistory': ['-', '%%1793']}},
+                  'falsepositives': ['Migration of an account into a new '
+                                     'domain'],
+                  'id': '2632954e-db1c-49cb-9936-67d1ef1d17d2',
+                  'level': 'medium',
+                  'logsource': {'product': 'windows', 'service': 'security'},
+                  'references': ['https://adsecurity.org/?p=1772'],
+                  'status': 'stable',
+                  'tags': ['attack.persistence',
+                           'attack.privilege_escalation',
+                           'attack.t1178'],
+                  'title': 'Addition of SID History to Active Directory '
+                           'Object'}}]
 ```
 
 ## Potential Queries

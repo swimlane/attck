@@ -179,7 +179,103 @@ rm -rf /var/log/*
 
 ```json
 [{'data_source': 'auditlogs (audit.rules)'},
- {'data_source': 'bash_history logs'}]
+ {'data_source': 'bash_history logs'},
+ {'data_source': {'author': '@neu5ron, Florian Roth',
+                  'date': '2019/03/22',
+                  'description': 'Detects a command that clears or disables '
+                                 'any ETW trace log which could indicate a '
+                                 'logging evasion.',
+                  'detection': {'condition': 'selection_clear_1 or '
+                                             'selection_clear_2 or '
+                                             'selection_disable_1 or '
+                                             'selection_disable_2',
+                                'selection_clear_1': {'CommandLine': '* cl '
+                                                                     '*/Trace*'},
+                                'selection_clear_2': {'CommandLine': '* '
+                                                                     'clear-log '
+                                                                     '*/Trace*'},
+                                'selection_disable_1': {'CommandLine': '* sl* '
+                                                                       '/e:false*'},
+                                'selection_disable_2': {'CommandLine': '* '
+                                                                       'set-log* '
+                                                                       '/e:false*'}},
+                  'id': 'a238b5d0-ce2d-4414-a676-7a531b3d13d6',
+                  'level': 'high',
+                  'logsource': {'category': 'process_creation',
+                                'product': 'windows'},
+                  'references': ['https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/wevtutil',
+                                 'https://github.com/Neo23x0/sigma/blob/master/rules/windows/process_creation/win_mal_lockergoga.yml',
+                                 'https://abuse.io/lockergoga.txt'],
+                  'tags': ['attack.execution',
+                           'attack.t1070',
+                           'car.2016-04-002'],
+                  'title': 'Disable of ETW Trace'}},
+ {'data_source': {'author': 'Ecco',
+                  'date': '2019/09/26',
+                  'description': 'Detects clearing or configuration of '
+                                 'eventlogs uwing wevtutil. Might be used by '
+                                 'ransomwares during the attack (seen by '
+                                 'NotPetya and others)',
+                  'detection': {'condition': '(1 of selection_binary_*) and (1 '
+                                             'of selection_clear_* or 1 of '
+                                             'selection_disable_*)',
+                                'selection_binary_1': {'Image': '*\\wevtutil.exe'},
+                                'selection_binary_2': {'OriginalFileName': 'wevtutil.exe'},
+                                'selection_clear_1': {'CommandLine': '* cl *'},
+                                'selection_clear_2': {'CommandLine': '* '
+                                                                     'clear-log '
+                                                                     '*'},
+                                'selection_disable_1': {'CommandLine': '* sl '
+                                                                       '*'},
+                                'selection_disable_2': {'CommandLine': '* '
+                                                                       'set-log '
+                                                                       '*'}},
+                  'falsepositives': ['Admin activity',
+                                     'Scripts and administrative tools used in '
+                                     'the monitored environment'],
+                  'id': 'cc36992a-4671-4f21-a91d-6c2b72a2edf5',
+                  'level': 'high',
+                  'logsource': {'category': 'process_creation',
+                                'product': 'windows'},
+                  'tags': ['attack.execution',
+                           'attack.t1070',
+                           'car.2016-04-002'],
+                  'title': 'Suspicious eventlog clear or configuration using '
+                           'wevtutil'}},
+ {'data_source': {'author': 'Florian Roth',
+                  'description': 'One of the Windows Eventlogs has been '
+                                 'cleared. e.g. caused by "wevtutil cl" '
+                                 'command execution',
+                  'detection': {'condition': 'selection',
+                                'selection': {'EventID': 104,
+                                              'Source': 'Microsoft-Windows-Eventlog'}},
+                  'falsepositives': ['Unknown'],
+                  'id': 'd99b79d2-0a6f-4f46-ad8b-260b6e17f982',
+                  'level': 'medium',
+                  'logsource': {'product': 'windows', 'service': 'system'},
+                  'references': ['https://twitter.com/deviouspolack/status/832535435960209408',
+                                 'https://www.hybrid-analysis.com/sample/027cc450ef5f8c5f653329641ec1fed91f694e0d229928963b30f6b0d7d3a745?environmentId=100'],
+                  'tags': ['attack.defense_evasion',
+                           'attack.t1070',
+                           'car.2016-04-002'],
+                  'title': 'Eventlog Cleared'}},
+ {'data_source': {'author': 'Florian Roth',
+                  'description': 'Some threat groups tend to delete the local '
+                                 "'Security' Eventlog using certain utitlities",
+                  'detection': {'condition': 'selection',
+                                'selection': {'EventID': [517, 1102]}},
+                  'falsepositives': ['Rollout of log collection agents (the '
+                                     'setup routine often includes a reset of '
+                                     'the local Eventlog)',
+                                     'System provisioning (system reset before '
+                                     'the golden image creation)'],
+                  'id': 'f2f01843-e7b8-4f95-a35a-d23584476423',
+                  'level': 'high',
+                  'logsource': {'product': 'windows', 'service': 'security'},
+                  'tags': ['attack.defense_evasion',
+                           'attack.t1070',
+                           'car.2016-04-002'],
+                  'title': 'Security Eventlog Cleared'}}]
 ```
 
 ## Potential Queries

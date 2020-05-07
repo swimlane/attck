@@ -114,7 +114,75 @@ The command completed successfully.
 ## Potential Detections
 
 ```json
-
+[{'data_source': {'author': '@neu5ron',
+                  'description': 'Detects scenarios where one can control '
+                                 'another users or computers account without '
+                                 'having to use their credentials.',
+                  'detection': {'condition': '(selection1 and not 1 of '
+                                             'filter*) or selection2 or '
+                                             'selection3 or selection4',
+                                'filter1': {'AllowedToDelegateTo': None},
+                                'filter2': {'AllowedToDelegateTo': '-'},
+                                'selection1': {'EventID': 4738},
+                                'selection2': {'AttributeLDAPDisplayName': 'msDS-AllowedToDelegateTo',
+                                               'EventID': 5136},
+                                'selection3': {'AttributeLDAPDisplayName': 'servicePrincipalName',
+                                               'EventID': 5136,
+                                               'ObjectClass': 'user'},
+                                'selection4': {'AttributeLDAPDisplayName': 'msDS-AllowedToActOnBehalfOfOtherIdentity',
+                                               'EventID': 5136}},
+                  'falsepositives': ['Unknown'],
+                  'id': '300bac00-e041-4ee2-9c36-e262656a6ecc',
+                  'level': 'high',
+                  'logsource': {'definition1': 'Requirements: Audit Policy : '
+                                               'Account Management > Audit '
+                                               'User Account Management, Group '
+                                               'Policy : Computer '
+                                               'Configuration\\Windows '
+                                               'Settings\\Security '
+                                               'Settings\\Advanced Audit '
+                                               'Policy Configuration\\Audit '
+                                               'Policies\\Account '
+                                               'Management\\Audit User Account '
+                                               'Management',
+                                'definition2': 'Requirements: Audit Policy : '
+                                               'DS Access > Audit Directory '
+                                               'Service Changes, Group Policy '
+                                               ': Computer '
+                                               'Configuration\\Windows '
+                                               'Settings\\Security '
+                                               'Settings\\Advanced Audit '
+                                               'Policy Configuration\\Audit '
+                                               'Policies\\DS Access\\Audit '
+                                               'Directory Service Changes',
+                                'product': 'windows',
+                                'service': 'security'},
+                  'references': ['https://msdn.microsoft.com/en-us/library/cc220234.aspx',
+                                 'https://adsecurity.org/?p=3466',
+                                 'https://www.harmj0y.net/blog/redteaming/another-word-on-delegation/'],
+                  'tags': ['attack.t1098',
+                           'attack.credential_access',
+                           'attack.persistence'],
+                  'title': 'Active Directory User Backdoors'}},
+ {'data_source': {'author': 'Thomas Patzke',
+                  'description': 'The Directory Service Restore Mode (DSRM) '
+                                 'account is a local administrator account on '
+                                 'Domain Controllers. Attackers may change the '
+                                 'password to gain persistence.',
+                  'detection': {'condition': 'selection',
+                                'selection': {'EventID': 4794}},
+                  'falsepositives': ['Initial installation of a domain '
+                                     'controller'],
+                  'id': '53ad8e36-f573-46bf-97e4-15ba5bf4bb51',
+                  'level': 'high',
+                  'logsource': {'product': 'windows', 'service': 'security'},
+                  'references': ['https://adsecurity.org/?p=1714'],
+                  'status': 'stable',
+                  'tags': ['attack.persistence',
+                           'attack.privilege_escalation',
+                           'attack.t1098'],
+                  'title': 'Password Change on Directory Service Restore Mode '
+                           '(DSRM) Account'}}]
 ```
 
 ## Potential Queries

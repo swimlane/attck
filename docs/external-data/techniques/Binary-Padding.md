@@ -79,7 +79,19 @@ cmp before after
 ## Potential Detections
 
 ```json
-[{'data_source': '```bash_history logs```'}]
+[{'data_source': '```bash_history logs```'},
+ {'data_source': {'author': 'Thomas Patzke',
+                  'description': 'Code integrity failures may indicate '
+                                 'tampered executables.',
+                  'detection': {'condition': 'selection',
+                                'selection': {'EventID': [5038, 6281]}},
+                  'falsepositives': ['Disk device errors'],
+                  'id': '470ec5fa-7b4e-4071-b200-4c753100f49b',
+                  'level': 'low',
+                  'logsource': {'product': 'windows', 'service': 'security'},
+                  'status': 'stable',
+                  'tags': ['attack.defense_evasion', 'attack.t1009'],
+                  'title': 'Failed Code Integrity Checks'}}]
 ```
 
 ## Potential Queries

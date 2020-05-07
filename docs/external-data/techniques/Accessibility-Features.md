@@ -252,7 +252,113 @@ powershell/persistence/misc/debugger
 ## Potential Detections
 
 ```json
-
+[{'data_source': {'action': 'global',
+                  'author': 'Florian Roth, @twjackomo',
+                  'date': '2018/03/15',
+                  'description': 'Detects the usage and installation of a '
+                                 'backdoor that uses an option to register a '
+                                 'malicious debugger for built-in tools that '
+                                 'are accessible in the login screen',
+                  'detection': {'condition': '1 of them'},
+                  'falsepositives': ['Unlikely'],
+                  'id': 'baca5663-583c-45f9-b5dc-ea96a22ce542',
+                  'level': 'critical',
+                  'references': ['https://blogs.technet.microsoft.com/jonathantrull/2016/10/03/detecting-sticky-key-backdoors/'],
+                  'tags': ['attack.privilege_escalation',
+                           'attack.persistence',
+                           'attack.t1015',
+                           'car.2014-11-003',
+                           'car.2014-11-008'],
+                  'title': 'Sticky Key Like Backdoor Usage'}},
+ {'data_source': {'detection': {'selection_registry': {'EventID': 13,
+                                                       'EventType': 'SetValue',
+                                                       'TargetObject': ['*\\SOFTWARE\\Microsoft\\Windows '
+                                                                        'NT\\CurrentVersion\\Image '
+                                                                        'File '
+                                                                        'Execution '
+                                                                        'Options\\sethc.exe\\Debugger',
+                                                                        '*\\SOFTWARE\\Microsoft\\Windows '
+                                                                        'NT\\CurrentVersion\\Image '
+                                                                        'File '
+                                                                        'Execution '
+                                                                        'Options\\utilman.exe\\Debugger',
+                                                                        '*\\SOFTWARE\\Microsoft\\Windows '
+                                                                        'NT\\CurrentVersion\\Image '
+                                                                        'File '
+                                                                        'Execution '
+                                                                        'Options\\osk.exe\\Debugger',
+                                                                        '*\\SOFTWARE\\Microsoft\\Windows '
+                                                                        'NT\\CurrentVersion\\Image '
+                                                                        'File '
+                                                                        'Execution '
+                                                                        'Options\\Magnify.exe\\Debugger',
+                                                                        '*\\SOFTWARE\\Microsoft\\Windows '
+                                                                        'NT\\CurrentVersion\\Image '
+                                                                        'File '
+                                                                        'Execution '
+                                                                        'Options\\Narrator.exe\\Debugger',
+                                                                        '*\\SOFTWARE\\Microsoft\\Windows '
+                                                                        'NT\\CurrentVersion\\Image '
+                                                                        'File '
+                                                                        'Execution '
+                                                                        'Options\\DisplaySwitch.exe\\Debugger']}},
+                  'logsource': {'product': 'windows', 'service': 'sysmon'}}},
+ {'data_source': {'detection': {'selection_process': {'CommandLine': ['*cmd.exe '
+                                                                      'sethc.exe '
+                                                                      '*',
+                                                                      '*cmd.exe '
+                                                                      'utilman.exe '
+                                                                      '*',
+                                                                      '*cmd.exe '
+                                                                      'osk.exe '
+                                                                      '*',
+                                                                      '*cmd.exe '
+                                                                      'Magnify.exe '
+                                                                      '*',
+                                                                      '*cmd.exe '
+                                                                      'Narrator.exe '
+                                                                      '*',
+                                                                      '*cmd.exe '
+                                                                      'DisplaySwitch.exe '
+                                                                      '*'],
+                                                      'ParentImage': ['*\\winlogon.exe']}},
+                  'logsource': {'category': 'process_creation',
+                                'product': 'windows'}}},
+ {'data_source': {'author': 'Florian Roth',
+                  'date': '2019/09/06',
+                  'description': 'Detects the registration of a debugger for a '
+                                 'program that is available in the logon '
+                                 'screen (sticky key backdoor).',
+                  'detection': {'condition': 'selection',
+                                'selection': {'CommandLine': ['*\\CurrentVersion\\Image '
+                                                              'File Execution '
+                                                              'Options\\sethc.exe*',
+                                                              '*\\CurrentVersion\\Image '
+                                                              'File Execution '
+                                                              'Options\\utilman.exe*',
+                                                              '*\\CurrentVersion\\Image '
+                                                              'File Execution '
+                                                              'Options\\osk.exe*',
+                                                              '*\\CurrentVersion\\Image '
+                                                              'File Execution '
+                                                              'Options\\magnify.exe*',
+                                                              '*\\CurrentVersion\\Image '
+                                                              'File Execution '
+                                                              'Options\\narrator.exe*',
+                                                              '*\\CurrentVersion\\Image '
+                                                              'File Execution '
+                                                              'Options\\displayswitch.exe*']}},
+                  'falsepositives': ['Penetration Tests'],
+                  'id': 'ae215552-081e-44c7-805f-be16f975c8a2',
+                  'level': 'high',
+                  'logsource': {'category': 'process_creation',
+                                'product': 'windows'},
+                  'references': ['https://blogs.technet.microsoft.com/jonathantrull/2016/10/03/detecting-sticky-key-backdoors/'],
+                  'status': 'experimental',
+                  'tags': ['attack.persistence',
+                           'attack.privilege_escalation',
+                           'attack.t1015'],
+                  'title': 'Suspicious Debugger Registration Cmdline'}}]
 ```
 
 ## Potential Queries

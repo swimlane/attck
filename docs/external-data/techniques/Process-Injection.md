@@ -304,7 +304,165 @@ echo /home/$USER/random.so > /etc/ld.so.preload
 
 ```json
 [{'data_source': 'auditlogs (audit.rules)'},
- {'data_source': 'bash_history logs'}]
+ {'data_source': 'bash_history logs'},
+ {'data_source': {'author': 'Olaf Hartong, Florian Roth, Aleksey Potapov, '
+                            'oscd.community',
+                  'date': '2018/11/30',
+                  'description': 'Detects a possible remote threat creation '
+                                 'with certain characteristics which are '
+                                 'typical for Cobalt Strike beacons',
+                  'detection': {'condition': 'selection',
+                                'selection': {'EventID': 8,
+                                              'TargetProcessAddress|endswith': ['0B80',
+                                                                                '0C7C',
+                                                                                '0C88']}},
+                  'falsepositives': ['unknown'],
+                  'id': '6309645e-122d-4c5b-bb2b-22e4f9c2fa42',
+                  'level': 'high',
+                  'logsource': {'product': 'windows', 'service': 'sysmon'},
+                  'modified': '2019/11/08',
+                  'references': ['https://medium.com/@olafhartong/cobalt-strike-remote-threads-detection-206372d11d0f',
+                                 'https://blog.cobaltstrike.com/2018/04/09/cobalt-strike-3-11-the-snake-that-eats-its-tail/'],
+                  'status': 'experimental',
+                  'tags': ['attack.defense_evasion', 'attack.t1055'],
+                  'title': 'CobaltStrike Process Injection'}},
+ {'data_source': {'author': 'Florian Roth',
+                  'date': '2017/11/06',
+                  'description': 'Detects the creation of a named pipe used by '
+                                 'known APT malware',
+                  'detection': {'condition': 'selection',
+                                'selection': {'EventID': [17, 18],
+                                              'PipeName': ['\\isapi_http',
+                                                           '\\isapi_dg',
+                                                           '\\isapi_dg2',
+                                                           '\\sdlrpc',
+                                                           '\\ahexec',
+                                                           '\\winsession',
+                                                           '\\lsassw',
+                                                           '\\46a676ab7f179e511e30dd2dc41bd388',
+                                                           '\\9f81f59bc58452127884ce513865ed20',
+                                                           '\\e710f28d59aa529d6792ca6ff0ca1b34',
+                                                           '\\rpchlp_3',
+                                                           '\\NamePipe_MoreWindows',
+                                                           '\\pcheap_reuse',
+                                                           '\\msagent_*']}},
+                  'falsepositives': ['Unkown'],
+                  'id': 'fe3ac066-98bb-432a-b1e7-a5229cb39d4a',
+                  'level': 'critical',
+                  'logsource': {'definition': 'Note that you have to configure '
+                                              'logging for PipeEvents in '
+                                              'Symson config',
+                                'product': 'windows',
+                                'service': 'sysmon'},
+                  'references': ['Various sources'],
+                  'status': 'experimental',
+                  'tags': ['attack.defense_evasion',
+                           'attack.privilege_escalation',
+                           'attack.t1055'],
+                  'title': 'Malicious Named Pipe'}},
+ {'data_source': {'author': 'John Lambert (tech), Florian Roth (rule)',
+                  'date': '2017/03/04',
+                  'description': 'Detects a process access to verclsid.exe '
+                                 'that injects shellcode from a Microsoft '
+                                 'Office application / VBA macro',
+                  'detection': {'combination1': {'CallTrace': '*|UNKNOWN(*VBE7.DLL*'},
+                                'combination2': {'CallTrace': '*|UNKNOWN*',
+                                                 'SourceImage': '*\\Microsoft '
+                                                                'Office\\\\*'},
+                                'condition': 'selection and 1 of combination*',
+                                'selection': {'EventID': 10,
+                                              'GrantedAccess': '0x1FFFFF',
+                                              'TargetImage': '*\\verclsid.exe'}},
+                  'falsepositives': ['unknown'],
+                  'id': 'b7967e22-3d7e-409b-9ed5-cdae3f9243a1',
+                  'level': 'high',
+                  'logsource': {'definition': 'Use the following config to '
+                                              'generate the necessary Event ID '
+                                              '10 Process Access events: '
+                                              '<ProcessAccess '
+                                              'onmatch="include"><CallTrace '
+                                              'condition="contains">VBE7.DLL</CallTrace></ProcessAccess><ProcessAccess '
+                                              'onmatch="exclude"><CallTrace '
+                                              'condition="excludes">UNKNOWN</CallTrace></ProcessAccess>',
+                                'product': 'windows',
+                                'service': 'sysmon'},
+                  'references': ['https://twitter.com/JohnLaTwC/status/837743453039534080'],
+                  'status': 'experimental',
+                  'tags': ['attack.defense_evasion',
+                           'attack.privilege_escalation',
+                           'attack.t1055'],
+                  'title': 'Malware Shellcode in Verclsid Target Process'}},
+ {'data_source': {'author': 'Florian Roth',
+                  'date': '2018/02/22',
+                  'description': 'Detects Winword starting uncommon sub '
+                                 'process FLTLDR.exe as used in exploits for '
+                                 'CVE-2017-0261 and CVE-2017-0262',
+                  'detection': {'condition': 'selection',
+                                'selection': {'Image': '*\\FLTLDR.exe*',
+                                              'ParentImage': '*\\WINWORD.EXE'}},
+                  'falsepositives': ['Several false positives identified, '
+                                     'check for suspicious file names or '
+                                     'locations (e.g. Temp folders)'],
+                  'id': '864403a1-36c9-40a2-a982-4c9a45f7d833',
+                  'level': 'medium',
+                  'logsource': {'category': 'process_creation',
+                                'product': 'windows'},
+                  'references': ['https://www.fireeye.com/blog/threat-research/2017/05/eps-processing-zero-days.html'],
+                  'status': 'experimental',
+                  'tags': ['attack.defense_evasion',
+                           'attack.privilege_escalation',
+                           'attack.t1055'],
+                  'title': 'Exploit for CVE-2017-0261'}},
+ {'data_source': {'author': 'Florian Roth',
+                  'date': '2019/11/15',
+                  'description': 'Detects exploitation attempt of privilege '
+                                 'escalation vulnerability via '
+                                 'SetupComplete.cmd and '
+                                 'PartnerSetupComplete.cmd decribed in '
+                                 'CVE-2019-1378',
+                  'detection': {'condition': 'selection and not filter',
+                                'filter': {'Image': ['C:\\Windows\\System32\\\\*',
+                                                     'C:\\Windows\\SysWOW64\\\\*',
+                                                     'C:\\Windows\\WinSxS\\\\*',
+                                                     'C:\\Windows\\Setup\\\\*']},
+                                'selection': {'ParentCommandLine': ['*\\cmd.exe '
+                                                                    '/c '
+                                                                    'C:\\Windows\\Setup\\Scripts\\SetupComplete.cmd',
+                                                                    '*\\cmd.exe '
+                                                                    '/c '
+                                                                    'C:\\Windows\\Setup\\Scripts\\PartnerSetupComplete.cmd']}},
+                  'falsepositives': ['Unknown'],
+                  'id': '1c373b6d-76ce-4553-997d-8c1da9a6b5f5',
+                  'level': 'high',
+                  'logsource': {'category': 'process_creation',
+                                'product': 'windows'},
+                  'references': ['https://www.embercybersecurity.com/blog/cve-2019-1378-exploiting-an-access-control-privilege-escalation-vulnerability-in-windows-10-update-assistant-wua'],
+                  'status': 'experimental',
+                  'tags': ['attack.defense_evasion',
+                           'attack.privilege_escalation',
+                           'attack.t1055'],
+                  'title': 'Exploiting SetupComplete.cmd CVE-2019-1378'}},
+ {'data_source': {'author': 'Florian Roth',
+                  'date': '2019/01/10',
+                  'description': 'Detects typical Dridex process patterns',
+                  'detection': {'condition': '1 of them',
+                                'selection1': {'CommandLine': '*\\svchost.exe '
+                                                              'C:\\Users\\\\*\\Desktop\\\\*'},
+                                'selection2': {'CommandLine': ['*whoami.exe '
+                                                               '/all',
+                                                               '*net.exe view'],
+                                               'ParentImage': '*\\svchost.exe*'}},
+                  'falsepositives': ['Unlikely'],
+                  'id': 'e6eb5a96-9e6f-4a18-9cdd-642cfda21c8e',
+                  'level': 'critical',
+                  'logsource': {'category': 'process_creation',
+                                'product': 'windows'},
+                  'references': ['https://app.any.run/tasks/993daa5e-112a-4ff6-8b5a-edbcec7c7ba3'],
+                  'status': 'experimental',
+                  'tags': ['attack.defense_evasion',
+                           'attack.privilege_escalation',
+                           'attack.t1055'],
+                  'title': 'Dridex Process Pattern'}}]
 ```
 
 ## Potential Queries

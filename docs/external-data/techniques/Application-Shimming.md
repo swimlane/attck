@@ -96,7 +96,23 @@ sdbinst.exe\SOFTWARE\Microsoft\Windows NT\CurrentVersion\AppCompatFlags\Custom|\
 ## Potential Detections
 
 ```json
-
+[{'data_source': {'author': 'Markus Neis',
+                  'description': 'Detects installation of a new shim using '
+                                 'sdbinst.exe. A shim can be used to load '
+                                 'malicious DLLs into applications.',
+                  'detection': {'condition': 'selection',
+                                'selection': {'CommandLine': ['*.sdb*'],
+                                              'Image': ['*\\sdbinst.exe']}},
+                  'falsepositives': ['Unknown'],
+                  'id': '517490a7-115a-48c6-8862-1a481504d5a8',
+                  'level': 'high',
+                  'logsource': {'category': 'process_creation',
+                                'product': 'windows'},
+                  'references': ['https://www.fireeye.com/blog/threat-research/2017/05/fin7-shim-databases-persistence.html'],
+                  'status': 'experimental',
+                  'tags': ['attack.persistence', 'attack.t1138'],
+                  'title': 'Possible Shim Database Persistence via '
+                           'sdbinst.exe'}}]
 ```
 
 ## Potential Queries

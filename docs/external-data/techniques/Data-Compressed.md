@@ -144,7 +144,144 @@ powershell/management/zipfolder
 ## Potential Detections
 
 ```json
-
+[{'data_source': {'author': 'Florian Roth',
+                  'date': '2019/02/21',
+                  'description': 'Detects Judgement Panda activity as '
+                                 'described in Global Threat Report 2019 by '
+                                 'Crowdstrike',
+                  'detection': {'condition': 'selection1 or selection2',
+                                'selection1': {'CommandLine': ['*\\ldifde.exe '
+                                                               '-f -n *',
+                                                               '*\\7za.exe a '
+                                                               '1.7z *',
+                                                               '* eprod.ldf',
+                                                               '*\\aaaa\\procdump64.exe*',
+                                                               '*\\aaaa\\netsess.exe*',
+                                                               '*\\aaaa\\7za.exe*',
+                                                               '*copy .\\1.7z '
+                                                               '\\\\*',
+                                                               '*copy '
+                                                               '\\\\client\\c$\\aaaa\\\\*']},
+                                'selection2': {'Image': 'C:\\Users\\Public\\7za.exe'}},
+                  'falsepositives': ['unknown'],
+                  'id': '03e2746e-2b31-42f1-ab7a-eb39365b2422',
+                  'level': 'critical',
+                  'logsource': {'category': 'process_creation',
+                                'product': 'windows'},
+                  'references': ['https://www.crowdstrike.com/resources/reports/2019-crowdstrike-global-threat-report/'],
+                  'tags': ['attack.lateral_movement',
+                           'attack.g0010',
+                           'attack.credential_access',
+                           'attack.t1098',
+                           'attack.exfiltration',
+                           'attack.t1002'],
+                  'title': 'Judgement Panda Exfil Activity'}},
+ {'data_source': {'author': 'Timur Zinniatullin, oscd.community',
+                  'date': '2019/10/21',
+                  'description': 'An adversary may compress data (e.g., '
+                                 'sensitive documents) that is collected prior '
+                                 'to exfiltration in order to make it portable '
+                                 'and minimize the amount of data sent over '
+                                 'the network',
+                  'detection': {'condition': '1 of them',
+                                'selection1': {'a0': 'zip', 'type': 'execve'},
+                                'selection2': {'a0': 'gzip',
+                                               'a1': '-f',
+                                               'type': 'execve'},
+                                'selection3': {'a0': 'tar',
+                                               'a1|contains': '-c',
+                                               'type': 'execve'}},
+                  'falsepositives': ['Legitimate use of archiving tools by '
+                                     'legitimate user'],
+                  'id': 'a3b5e3e9-1b49-4119-8b8e-0344a01f21ee',
+                  'level': 'low',
+                  'logsource': {'product': 'linux', 'service': 'auditd'},
+                  'modified': '2019/11/04',
+                  'references': ['https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1002/T1002.yaml'],
+                  'status': 'experimental',
+                  'tags': ['attack.exfiltration', 'attack.t1002'],
+                  'title': 'Data Compressed'}},
+ {'data_source': {'author': 'Timur Zinniatullin, oscd.community',
+                  'date': '2019/10/21',
+                  'description': 'An adversary may compress data (e.g., '
+                                 'sensitive documents) that is collected prior '
+                                 'to exfiltration in order to make it portable '
+                                 'and minimize the amount of data sent over '
+                                 'the network',
+                  'detection': {'condition': 'selection',
+                                'selection': {'EventID': 4104,
+                                              'keywords|contains|all': ['-Recurse',
+                                                                        '|',
+                                                                        'Compress-Archive']}},
+                  'falsepositives': ['highly likely if archive ops are done '
+                                     'via PS'],
+                  'id': '6dc5d284-69ea-42cf-9311-fb1c3932a69a',
+                  'level': 'low',
+                  'logsource': {'description': 'Script block logging must be '
+                                               'enabled',
+                                'product': 'windows',
+                                'service': 'powershell'},
+                  'modified': '2019/11/04',
+                  'references': ['https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1002/T1002.yaml'],
+                  'status': 'experimental',
+                  'tags': ['attack.exfiltration', 'attack.t1002'],
+                  'title': 'Data Compressed'}},
+ {'data_source': {'author': 'Timur Zinniatullin, oscd.community',
+                  'date': '2019/10/21',
+                  'description': 'An adversary may compress data (e.g., '
+                                 'sensitive documents) that is collected prior '
+                                 'to exfiltration in order to make it portable '
+                                 'and minimize the amount of data sent over '
+                                 'the network',
+                  'detection': {'condition': 'selection',
+                                'selection': {'CommandLine|contains|all': [' '
+                                                                           'a ',
+                                                                           '-r'],
+                                              'Image|endswith': '\\rar.exe'}},
+                  'falsepositives': ['highly likely if rar is default archiver '
+                                     'in the monitored environment'],
+                  'fields': ['Image',
+                             'CommandLine',
+                             'User',
+                             'LogonGuid',
+                             'Hashes',
+                             'ParentProcessGuid',
+                             'ParentCommandLine'],
+                  'id': '6f3e2987-db24-4c78-a860-b4f4095a7095',
+                  'level': 'low',
+                  'logsource': {'category': 'process_creation',
+                                'product': 'windows'},
+                  'modified': '2019/11/04',
+                  'references': ['https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1002/T1002.yaml'],
+                  'status': 'experimental',
+                  'tags': ['attack.exfiltration', 'attack.t1002'],
+                  'title': 'Data Compressed'}},
+ {'data_source': {'author': 'Florian Roth, Samir Bousseaden',
+                  'date': '2019/10/15',
+                  'description': 'Detects suspicious command line arguments of '
+                                 'common data compression tools',
+                  'detection': {'condition': 'selection and not falsepositive',
+                                'falsepositive': {'ParentImage': 'C:\\Program*'},
+                                'selection': {'CommandLine': ['* -p*',
+                                                              '* -ta*',
+                                                              '* -tb*',
+                                                              '* -sdel*',
+                                                              '* -dw*',
+                                                              '* -hp*'],
+                                              'OriginalFileName': ['7z*.exe',
+                                                                   '*rar.exe',
+                                                                   '*Command*Line*RAR*']}},
+                  'falsepositives': ['unknown'],
+                  'id': '27a72a60-7e5e-47b1-9d17-909c9abafdcd',
+                  'level': 'high',
+                  'logsource': {'category': 'process_creation',
+                                'product': 'windows'},
+                  'references': ['https://twitter.com/SBousseaden/status/1184067445612535811'],
+                  'status': 'experimental',
+                  'tags': ['attack.exfiltration',
+                           'attack.t1020',
+                           'attack.t1002'],
+                  'title': 'Suspicious Compression Tool Parameters'}}]
 ```
 
 ## Potential Queries

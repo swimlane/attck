@@ -46,7 +46,27 @@ C:\Windows\Microsoft.NET\Framework64\v4.0.30319\csc.exe /out:C:\Windows\Temp\T15
 ## Potential Detections
 
 ```json
-
+[{'data_source': {'author': 'Florian Roth',
+                  'date': '2019/08/24',
+                  'description': 'Detects a suspicious execution of csc.exe, '
+                                 'which uses a source in a suspicious folder '
+                                 '(e.g. AppData)',
+                  'detection': {'condition': 'selection',
+                                'selection': {'CommandLine': ['*\\AppData\\\\*',
+                                                              '*\\Windows\\Temp\\\\*'],
+                                              'Image': '*\\csc.exe'}},
+                  'falsepositives': ['Unkown'],
+                  'id': 'dcaa3f04-70c3-427a-80b4-b870d73c94c4',
+                  'level': 'high',
+                  'logsource': {'category': 'process_creation',
+                                'product': 'windows'},
+                  'modified': '2019/08/31',
+                  'references': ['https://securityboulevard.com/2019/08/agent-tesla-evading-edr-by-removing-api-hooks/',
+                                 'https://www.clearskysec.com/wp-content/uploads/2018/11/MuddyWater-Operations-in-Lebanon-and-Oman.pdf',
+                                 'https://app.any.run/tasks/c6993447-d1d8-414e-b856-675325e5aa09/'],
+                  'status': 'experimental',
+                  'tags': ['attack.defense_evasion', 'attack.t1500'],
+                  'title': 'Suspicious Csc.exe Source File Folder'}}]
 ```
 
 ## Potential Queries

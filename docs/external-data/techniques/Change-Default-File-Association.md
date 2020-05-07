@@ -56,7 +56,40 @@ assoc.exe
 ## Potential Detections
 
 ```json
-
+[{'data_source': {'author': 'Timur Zinniatullin, oscd.community',
+                  'date': '2019/10/21',
+                  'description': 'When a file is opened, the default program '
+                                 'used to open the file (also called the file '
+                                 'association or handler) is checked. File '
+                                 'association selections are stored in the '
+                                 'Windows Registry and can be edited by users, '
+                                 'administrators, or programs that have '
+                                 'Registry access or by administrators using '
+                                 'the built-in assoc utility. Applications can '
+                                 'modify the file association for a given file '
+                                 'extension to call an arbitrary program when '
+                                 'a file with the given extension is opened.',
+                  'detection': {'condition': 'selection',
+                                'selection': {'CommandLine|contains|all': ['cmd',
+                                                                           '/c',
+                                                                           'assoc']}},
+                  'falsepositives': ['Admin activity'],
+                  'fields': ['Image',
+                             'CommandLine',
+                             'User',
+                             'LogonGuid',
+                             'Hashes',
+                             'ParentProcessGuid',
+                             'ParentCommandLine'],
+                  'id': '3d3aa6cd-6272-44d6-8afc-7e88dfef7061',
+                  'level': 'low',
+                  'logsource': {'category': 'process_creation',
+                                'product': 'windows'},
+                  'modified': '2019/11/04',
+                  'references': ['https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1042/T1042.yaml'],
+                  'status': 'experimental',
+                  'tags': ['attack.persistence', 'attack.t1042'],
+                  'title': 'Change Default File Association'}}]
 ```
 
 ## Potential Queries

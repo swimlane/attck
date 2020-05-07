@@ -63,7 +63,77 @@ else{
 ## Potential Detections
 
 ```json
-
+[{'data_source': {'author': 'Florian Roth',
+                  'date': '2019/10/24',
+                  'description': 'Detects suspicious Hangul Word Processor '
+                                 '(Hanword) sub processes that could indicate '
+                                 'an exploitation',
+                  'detection': {'condition': 'selection',
+                                'selection': {'Image': '*\\gbb.exe',
+                                              'ParentImage': '*\\Hwp.exe'}},
+                  'falsepositives': ['Unknown'],
+                  'id': '023394c4-29d5-46ab-92b8-6a534c6f447b',
+                  'level': 'high',
+                  'logsource': {'category': 'process_creation',
+                                'product': 'windows'},
+                  'references': ['https://www.securitynewspaper.com/2016/11/23/technical-teardown-exploit-malware-hwp-files/',
+                                 'https://www.hybrid-analysis.com/search?query=context:74940dcc5b38f9f9b1a0fea760d344735d7d91b610e6d5bd34533dd0153402c5&from_sample=5db135000388385a7644131f&block_redirect=1',
+                                 'https://twitter.com/cyberwar_15/status/1187287262054076416',
+                                 'https://blog.alyac.co.kr/1901',
+                                 'https://en.wikipedia.org/wiki/Hangul_(word_processor)'],
+                  'status': 'experimental',
+                  'tags': ['attack.execution',
+                           'attack.defense_evasion',
+                           'attack.initial_access',
+                           'attack.t1059',
+                           'attack.t1202',
+                           'attack.t1193',
+                           'attack.g0032'],
+                  'title': 'Suspicious HWP Sub Processes'}},
+ {'data_source': {'author': 'Florian Roth (rule), @blu3_team (idea)',
+                  'date': '2019/06/26',
+                  'description': 'Detects suspicious use of an .exe extension '
+                                 'after a non-executable file extension like '
+                                 '.pdf.exe, a set of spaces or underlines to '
+                                 'cloak the executable file in spear phishing '
+                                 'campaigns',
+                  'detection': {'condition': 'selection',
+                                'selection': {'Image': ['*.doc.exe',
+                                                        '*.docx.exe',
+                                                        '*.xls.exe',
+                                                        '*.xlsx.exe',
+                                                        '*.ppt.exe',
+                                                        '*.pptx.exe',
+                                                        '*.rtf.exe',
+                                                        '*.pdf.exe',
+                                                        '*.txt.exe',
+                                                        '*      .exe',
+                                                        '*______.exe']}},
+                  'falsepositives': ['Unknown'],
+                  'id': '1cdd9a09-06c9-4769-99ff-626e2b3991b8',
+                  'level': 'critical',
+                  'logsource': {'category': 'process_creation',
+                                'product': 'windows'},
+                  'references': ['https://blu3-team.blogspot.com/2019/06/misleading-extensions-xlsexe-docexe.html',
+                                 'https://twitter.com/blackorbird/status/1140519090961825792'],
+                  'tags': ['attack.initial_access', 'attack.t1193'],
+                  'title': 'Suspicious Double Extension'}},
+ {'data_source': {'author': 'Florian Roth',
+                  'date': '2019/10/01',
+                  'description': 'Detects a suspicious program execution in '
+                                 'Outlook temp folder',
+                  'detection': {'condition': 'selection',
+                                'selection': {'Image': '*\\Temporary Internet '
+                                                       'Files\\Content.Outlook\\\\*'}},
+                  'falsepositives': ['Unknown'],
+                  'fields': ['CommandLine', 'ParentCommandLine'],
+                  'id': 'a018fdc3-46a3-44e5-9afb-2cd4af1d4b39',
+                  'level': 'high',
+                  'logsource': {'category': 'process_creation',
+                                'product': 'windows'},
+                  'status': 'experimental',
+                  'tags': ['attack.initial_access', 'attack.t1193'],
+                  'title': 'Execution in Outlook Temp Folder'}}]
 ```
 
 ## Potential Queries

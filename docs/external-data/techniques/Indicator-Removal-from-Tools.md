@@ -35,7 +35,26 @@ A good example of this is when malware is detected with a file signature and qua
 ## Potential Detections
 
 ```json
-
+[{'data_source': {'author': 'Thomas Patzke',
+                  'description': 'Detects renaming of file while deletion with '
+                                 'SDelete tool',
+                  'detection': {'condition': 'selection',
+                                'selection': {'EventID': [4656, 4663, 4658],
+                                              'ObjectName': ['*.AAA',
+                                                             '*.ZZZ']}},
+                  'falsepositives': ['Legitime usage of SDelete'],
+                  'id': '39a80702-d7ca-4a83-b776-525b1f86a36d',
+                  'level': 'medium',
+                  'logsource': {'product': 'windows', 'service': 'security'},
+                  'references': ['https://jpcertcc.github.io/ToolAnalysisResultSheet',
+                                 'https://www.jpcert.or.jp/english/pub/sr/ir_research.html',
+                                 'https://technet.microsoft.com/en-us/en-en/sysinternals/sdelete.aspx'],
+                  'status': 'experimental',
+                  'tags': ['attack.defense_evasion',
+                           'attack.t1107',
+                           'attack.t1066',
+                           'attack.s0195'],
+                  'title': 'Secure Deletion with SDelete'}}]
 ```
 
 ## Potential Queries

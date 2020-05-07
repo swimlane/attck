@@ -141,7 +141,40 @@ python/persistence/osx/loginhook
 ## Potential Detections
 
 ```json
-
+[{'data_source': {'action': 'global',
+                  'author': 'Tom Ueltschi (@c_APT_ure)',
+                  'description': 'Detects creation or execution of '
+                                 'UserInitMprLogonScript persistence method',
+                  'falsepositives': ['exclude legitimate logon scripts',
+                                     'penetration tests, red teaming'],
+                  'id': '0a98a10c-685d-4ab0-bddc-b6bdd1d48458',
+                  'level': 'high',
+                  'references': ['https://attack.mitre.org/techniques/T1037/'],
+                  'status': 'experimental',
+                  'tags': ['attack.t1037',
+                           'attack.persistence',
+                           'attack.lateral_movement'],
+                  'title': 'Logon Scripts (UserInitMprLogonScript)'}},
+ {'data_source': {'detection': {'condition': 'exec_selection and not '
+                                             'exec_exclusion1 and not '
+                                             'exec_exclusion2',
+                                'exec_exclusion1': {'Image': '*\\explorer.exe'},
+                                'exec_exclusion2': {'CommandLine': '*\\netlogon.bat'},
+                                'exec_selection': {'ParentImage': '*\\userinit.exe'}},
+                  'logsource': {'category': 'process_creation',
+                                'product': 'windows'}}},
+ {'data_source': {'detection': {'condition': 'create_keywords_cli',
+                                'create_keywords_cli': {'CommandLine': '*UserInitMprLogonScript*'}},
+                  'logsource': {'category': 'process_creation',
+                                'product': 'windows'}}},
+ {'data_source': {'detection': {'condition': 'create_selection_reg and '
+                                             'create_keywords_reg',
+                                'create_keywords_reg': {'TargetObject': '*UserInitMprLogonScript*'},
+                                'create_selection_reg': {'EventID': [11,
+                                                                     12,
+                                                                     13,
+                                                                     14]}},
+                  'logsource': {'product': 'windows', 'service': 'sysmon'}}}]
 ```
 
 ## Potential Queries

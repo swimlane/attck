@@ -53,7 +53,47 @@ powershell/credentials/invoke_kerberoast
 ## Potential Detections
 
 ```json
-
+[{'data_source': {'author': 'Markus Neis, keepwatch',
+                  'date': '2018/11/14',
+                  'description': 'Detects Service Principal Name Enumeration '
+                                 'used for Kerberoasting',
+                  'detection': {'cmd': {'CommandLine': '*-q*'},
+                                'condition': '(selection_image or '
+                                             'selection_desc) and cmd',
+                                'selection_desc': {'Description': '*Query or '
+                                                                  'reset the '
+                                                                  'computer* '
+                                                                  'SPN '
+                                                                  'attribute*'},
+                                'selection_image': {'Image': '*\\setspn.exe'}},
+                  'falsepositives': ['Administrator Activity'],
+                  'id': '1eeed653-dbc8-4187-ad0c-eeebb20e6599',
+                  'level': 'medium',
+                  'logsource': {'category': 'process_creation',
+                                'product': 'windows'},
+                  'references': ['https://p16.praetorian.com/blog/how-to-use-kerberoasting-t1208-for-privilege-escalation'],
+                  'status': 'experimental',
+                  'tags': ['attack.credential_access', 'attack.t1208'],
+                  'title': 'Possible SPN Enumeration'}},
+ {'data_source': {'description': 'Detects service ticket requests using RC4 '
+                                 'encryption type',
+                  'detection': {'condition': 'selection and not reduction',
+                                'reduction': [{'ServiceName': '$*'}],
+                                'selection': {'EventID': 4769,
+                                              'TicketEncryptionType': '0x17',
+                                              'TicketOptions': '0x40810000'}},
+                  'falsepositives': ['Service accounts used on legacy systems '
+                                     '(e.g. NetApp)',
+                                     'Windows Domains with DFL 2003 and legacy '
+                                     'systems'],
+                  'id': '496a0e47-0a33-4dca-b009-9e6ca3591f39',
+                  'level': 'medium',
+                  'logsource': {'product': 'windows', 'service': 'security'},
+                  'references': ['https://adsecurity.org/?p=3458',
+                                 'https://www.trimarcsecurity.com/single-post/TrimarcResearch/Detecting-Kerberoasting-Activity'],
+                  'status': 'experimental',
+                  'tags': ['attack.credential_access', 'attack.t1208'],
+                  'title': 'Suspicious Kerberos RC4 Ticket Encryption'}}]
 ```
 
 ## Potential Queries

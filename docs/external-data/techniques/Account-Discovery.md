@@ -530,7 +530,112 @@ id
 ## Potential Detections
 
 ```json
-[{'data_source': 'bash_history logs'}]
+[{'data_source': 'bash_history logs'},
+ {'data_source': {'author': 'Samir Bousseaden',
+                  'description': 'Detect priv users or groups recon based on '
+                                 '4661 eventid and known privileged users or '
+                                 'groups SIDs',
+                  'detection': {'condition': 'selection',
+                                'selection': {'EventID': 4661,
+                                              'ObjectName': ['*-512',
+                                                             '*-502',
+                                                             '*-500',
+                                                             '*-505',
+                                                             '*-519',
+                                                             '*-520',
+                                                             '*-544',
+                                                             '*-551',
+                                                             '*-555',
+                                                             '*admin*'],
+                                              'ObjectType': ['SAM_USER',
+                                                             'SAM_GROUP']}},
+                  'falsepositives': ['if source account name is not an admin '
+                                     'then its super suspicious'],
+                  'id': '35ba1d85-724d-42a3-889f-2e2362bcaf23',
+                  'level': 'high',
+                  'logsource': {'definition': 'Requirements: enable Object '
+                                              'Access SAM on your Domain '
+                                              'Controllers',
+                                'product': 'windows',
+                                'service': 'security'},
+                  'references': ['https://blog.menasec.net/2019/02/threat-hunting-5-detecting-enumeration.html'],
+                  'status': 'experimental',
+                  'tags': ['attack.discovery', 'attack.t1087'],
+                  'title': 'AD Privileged Users or Groups Reconnaissance'}},
+ {'data_source': {'author': 'Timur Zinniatullin, Daniil Yugoslavskiy, '
+                            'oscd.community',
+                  'date': '2019/10/21',
+                  'description': 'Local accounts, System Owner/User discovery '
+                                 'using operating systems utilities',
+                  'detection': {'condition': 'selection_1 or ( selection_2 and '
+                                             'not filter )',
+                                'filter': {'CommandLine|contains': ['/domain',
+                                                                    '/add',
+                                                                    '/delete',
+                                                                    '/active',
+                                                                    '/expires',
+                                                                    '/passwordreq',
+                                                                    '/scriptpath',
+                                                                    '/times',
+                                                                    '/workstations']},
+                                'selection_1': [{'Image|endswith': '\\whoami.exe'},
+                                                {'CommandLine|contains|all': ['useraccount',
+                                                                              'get'],
+                                                 'Image|endswith': '\\wmic.exe'},
+                                                {'Image|endswith': ['\\quser.exe',
+                                                                    '\\qwinsta.exe']},
+                                                {'CommandLine|contains': '/list',
+                                                 'Image|endswith': '\\cmdkey.exe'},
+                                                {'CommandLine|contains|all': ['/c',
+                                                                              'dir',
+                                                                              '\\Users\\'],
+                                                 'Image|endswith': '\\cmd.exe'}],
+                                'selection_2': {'CommandLine|contains': 'user',
+                                                'Image|endswith': ['\\net.exe',
+                                                                   '\\net1.exe']}},
+                  'falsepositives': ['Legitimate administrator or user '
+                                     'enumerates local users for legitimate '
+                                     'reason'],
+                  'fields': ['Image',
+                             'CommandLine',
+                             'User',
+                             'LogonGuid',
+                             'Hashes',
+                             'ParentProcessGuid',
+                             'ParentCommandLine'],
+                  'id': '502b42de-4306-40b4-9596-6f590c81f073',
+                  'level': 'low',
+                  'logsource': {'category': 'process_creation',
+                                'product': 'windows'},
+                  'modified': '2019/11/04',
+                  'references': ['https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1033/T1033.yaml'],
+                  'status': 'experimental',
+                  'tags': ['attack.discovery', 'attack.t1033', 'attack.t1087'],
+                  'title': 'Local Accounts Discovery'}},
+ {'data_source': {'analysis': {'recommendation': 'Check if the user that '
+                                                 'executed the commands is '
+                                                 'suspicious (e.g. service '
+                                                 'accounts, LOCAL_SYSTEM)'},
+                  'author': 'Florian Roth',
+                  'description': 'Detects suspicious command line activity on '
+                                 'Windows systems',
+                  'detection': {'condition': 'selection',
+                                'selection': {'CommandLine': ['net group '
+                                                              '"domain admins" '
+                                                              '/domain',
+                                                              'net localgroup '
+                                                              'administrators']}},
+                  'falsepositives': ['Inventory tool runs',
+                                     'Penetration tests',
+                                     'Administrative activity'],
+                  'fields': ['CommandLine', 'ParentCommandLine'],
+                  'id': 'd95de845-b83c-4a9a-8a6a-4fc802ebf6c0',
+                  'level': 'medium',
+                  'logsource': {'category': 'process_creation',
+                                'product': 'windows'},
+                  'status': 'experimental',
+                  'tags': ['attack.discovery', 'attack.t1087'],
+                  'title': 'Suspicious Reconnaissance Activity'}}]
 ```
 
 ## Potential Queries

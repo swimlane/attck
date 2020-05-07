@@ -118,7 +118,91 @@ tshark -c 5 -i #{interface}
 ## Potential Detections
 
 ```json
-[{'data_source': '/var/log/messages'}]
+[{'data_source': '/var/log/messages'},
+ {'data_source': {'author': 'Timur Zinniatullin, oscd.community',
+                  'date': '2019/10/21',
+                  'description': 'Network sniffing refers to using the network '
+                                 'interface on a system to monitor or capture '
+                                 'information sent over a wired or wireless '
+                                 'connection. An adversary may place a network '
+                                 'interface into promiscuous mode to passively '
+                                 'access data in transit over the network, or '
+                                 'use span ports to capture a larger amount of '
+                                 'data.',
+                  'detection': {'condition': 'selection1 or selection2',
+                                'selection1': {'a0': 'tcpdump',
+                                               'a1': '-c',
+                                               'a3|contains': '-i',
+                                               'type': 'execve'},
+                                'selection2': {'a0': 'tshark',
+                                               'a1': '-c',
+                                               'a3': '-i',
+                                               'type': 'execve'}},
+                  'falsepositives': ['Legitimate administrator or user uses '
+                                     'network sniffing tool for legitimate '
+                                     'reason'],
+                  'id': 'f4d3748a-65d1-4806-bd23-e25728081d01',
+                  'level': 'low',
+                  'logsource': {'product': 'linux', 'service': 'auditd'},
+                  'modified': '2019/11/04',
+                  'references': ['https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1040/T1040.yaml'],
+                  'status': 'experimental',
+                  'tags': ['attack.credential_access',
+                           'attack.discovery',
+                           'attack.t1040'],
+                  'title': 'Network Sniffing'}},
+ {'data_source': {'author': 'Kutepov Anton, oscd.community',
+                  'date': '2019/10/24',
+                  'description': 'Detects capture a network trace via '
+                                 'netsh.exe trace functionality',
+                  'detection': {'condition': 'selection',
+                                'selection': {'CommandLine|contains|all': ['netsh',
+                                                                           'trace',
+                                                                           'start']}},
+                  'falsepositives': ['Legitimate administrator or user uses '
+                                     'netsh.exe trace functionality for '
+                                     'legitimate reason'],
+                  'id': 'd3c3861d-c504-4c77-ba55-224ba82d0118',
+                  'level': 'medium',
+                  'logsource': {'category': 'process_creation',
+                                'product': 'windows'},
+                  'references': ['https://blogs.msdn.microsoft.com/canberrapfe/2012/03/30/capture-a-network-trace-without-installing-anything-capture-a-network-trace-of-a-reboot/'],
+                  'status': 'experimental',
+                  'tags': ['attack.discovery', 'attack.t1040'],
+                  'title': 'Capture a Network Trace with netsh.exe'}},
+ {'data_source': {'author': 'Timur Zinniatullin, oscd.community',
+                  'date': '2019/10/21',
+                  'description': 'Network sniffing refers to using the network '
+                                 'interface on a system to monitor or capture '
+                                 'information sent over a wired or wireless '
+                                 'connection. An adversary may place a network '
+                                 'interface into promiscuous mode to passively '
+                                 'access data in transit over the network, or '
+                                 'use span ports to capture a larger amount of '
+                                 'data.',
+                  'detection': {'condition': 'selection',
+                                'selection': [{'CommandLine|contains': '-i',
+                                               'Image|endswith': '\\tshark.exe'},
+                                              {'Image|endswith': '\\windump.exe'}]},
+                  'falsepositives': ['Admin activity'],
+                  'fields': ['Image',
+                             'CommandLine',
+                             'User',
+                             'LogonGuid',
+                             'Hashes',
+                             'ParentProcessGuid',
+                             'ParentCommandLine'],
+                  'id': 'ba1f7802-adc7-48b4-9ecb-81e227fddfd5',
+                  'level': 'low',
+                  'logsource': {'category': 'process_creation',
+                                'product': 'windows'},
+                  'modified': '2019/11/04',
+                  'references': ['https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1040/T1040.yaml'],
+                  'status': 'experimental',
+                  'tags': ['attack.credential_access',
+                           'attack.discovery',
+                           'attack.t1040'],
+                  'title': 'Network Sniffing'}}]
 ```
 
 ## Potential Queries

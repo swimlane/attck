@@ -216,7 +216,122 @@ New Process name: 'C: \ Windows \ System32 \ wbem \ WMIC.exe'
 ## Potential Detections
 
 ```json
-
+[{'data_source': {'author': 'Markus Neis / Florian Roth',
+                  'description': 'Detects WMI SquiblyTwo Attack with possible '
+                                 'renamed WMI by looking for imphash',
+                  'detection': {'condition': '1 of them',
+                                'selection1': {'CommandLine': ['wmic * '
+                                                               '*format:\\"http*',
+                                                               'wmic * '
+                                                               "/format:'http",
+                                                               'wmic * '
+                                                               '/format:http*'],
+                                               'Image': ['*\\wmic.exe']},
+                                'selection2': {'CommandLine': ['* '
+                                                               '*format:\\"http*',
+                                                               '* '
+                                                               "/format:'http",
+                                                               '* '
+                                                               '/format:http*'],
+                                               'Imphash': ['1B1A3F43BF37B5BFE60751F2EE2F326E',
+                                                           '37777A96245A3C74EB217308F3546F4C',
+                                                           '9D87C9D67CE724033C0B40CC4CA1B206']}},
+                  'falsepositives': ['Unknown'],
+                  'id': '8d63dadf-b91b-4187-87b6-34a1114577ea',
+                  'level': 'medium',
+                  'logsource': {'category': 'process_creation',
+                                'product': 'windows'},
+                  'references': ['https://subt0x11.blogspot.ch/2018/04/wmicexe-whitelisting-bypass-hacking.html',
+                                 'https://twitter.com/mattifestation/status/986280382042595328'],
+                  'status': 'experimental',
+                  'tags': ['attack.defense_evasion', 'attack.t1047'],
+                  'title': 'SquiblyTwo'}},
+ {'data_source': {'author': 'Michael Haag, Florian Roth, juju4',
+                  'description': 'Detects WMI executing suspicious commands',
+                  'detection': {'condition': 'selection',
+                                'selection': {'CommandLine': ['*/NODE:*process '
+                                                              'call create *',
+                                                              '* path '
+                                                              'AntiVirusProduct '
+                                                              'get *',
+                                                              '* path '
+                                                              'FirewallProduct '
+                                                              'get *',
+                                                              '* shadowcopy '
+                                                              'delete *'],
+                                              'Image': ['*\\wmic.exe']}},
+                  'falsepositives': ['Will need to be tuned',
+                                     'If using Splunk, I recommend | stats '
+                                     'count by Computer,CommandLine following '
+                                     'for easy hunting by '
+                                     'Computer/CommandLine.'],
+                  'fields': ['CommandLine', 'ParentCommandLine'],
+                  'id': '526be59f-a573-4eea-b5f7-f0973207634d',
+                  'level': 'medium',
+                  'logsource': {'category': 'process_creation',
+                                'product': 'windows'},
+                  'references': ['https://digital-forensics.sans.org/blog/2010/06/04/wmic-draft/',
+                                 'https://www.hybrid-analysis.com/sample/4be06ecd234e2110bd615649fe4a6fa95403979acf889d7e45a78985eb50acf9?environmentId=1',
+                                 'https://blog.malwarebytes.com/threat-analysis/2016/04/rokku-ransomware/'],
+                  'status': 'experimental',
+                  'tags': ['attack.execution',
+                           'attack.t1047',
+                           'car.2016-03-002'],
+                  'title': 'Suspicious WMI execution'}},
+ {'data_source': {'author': 'Thomas Patzke',
+                  'description': 'Detection of logins performed with WMI',
+                  'detection': {'condition': 'selection',
+                                'selection': {'EventID': 4624,
+                                              'ProcessName': '*\\WmiPrvSE.exe'}},
+                  'falsepositives': ['Monitoring tools',
+                                     'Legitimate system administration'],
+                  'id': '5af54681-df95-4c26-854f-2565e13cfab0',
+                  'level': 'low',
+                  'logsource': {'product': 'windows', 'service': 'security'},
+                  'status': 'stable',
+                  'tags': ['attack.execution', 'attack.t1047'],
+                  'title': 'Login with WMI'}},
+ {'data_source': {'author': 'Florian Roth',
+                  'description': 'Detects suspicious WMI event filter and '
+                                 'command line event consumer based on event '
+                                 'id 5861 and 5859 (Windows 10, 2012 and '
+                                 'higher)',
+                  'detection': {'condition': 'selection and 1 of keywords or '
+                                             'selection2',
+                                'keywords': {'Message': ['*ActiveScriptEventConsumer*',
+                                                         '*CommandLineEventConsumer*',
+                                                         '*CommandLineTemplate*']},
+                                'selection': {'EventID': 5861},
+                                'selection2': {'EventID': 5859}},
+                  'falsepositives': ['Unknown (data set is too small; further '
+                                     'testing needed)'],
+                  'id': '0b7889b4-5577-4521-a60a-3376ee7f9f7b',
+                  'level': 'medium',
+                  'logsource': {'product': 'windows', 'service': 'wmi'},
+                  'references': ['https://twitter.com/mattifestation/status/899646620148539397',
+                                 'https://www.eideon.com/2018-03-02-THL03-WMIBackdoors/'],
+                  'status': 'experimental',
+                  'tags': ['attack.execution',
+                           'attack.persistence',
+                           'attack.t1047'],
+                  'title': 'WMI Persistence'}},
+ {'data_source': {'author': 'Thomas Patzke',
+                  'date': '2018/03/07',
+                  'description': 'Detects WMI script event consumers',
+                  'detection': {'condition': 'selection',
+                                'selection': {'Image': 'C:\\WINDOWS\\system32\\wbem\\scrcons.exe',
+                                              'ParentImage': 'C:\\Windows\\System32\\svchost.exe'}},
+                  'falsepositives': ['Legitimate event consumers'],
+                  'id': 'ec1d5e28-8f3b-4188-a6f8-6e8df81dc28e',
+                  'level': 'high',
+                  'logsource': {'category': 'process_creation',
+                                'product': 'windows'},
+                  'references': ['https://www.eideon.com/2018-03-02-THL03-WMIBackdoors/'],
+                  'status': 'experimental',
+                  'tags': ['attack.execution',
+                           'attack.persistence',
+                           'attack.t1047'],
+                  'title': 'WMI Persistence - Script Event Consumer'}}]
 ```
 
 ## Potential Queries

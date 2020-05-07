@@ -105,7 +105,33 @@ wmic.exeos|get|/FORMAT|.xsl
 ## Potential Detections
 
 ```json
-
+[{'data_source': {'author': 'Timur Zinniatullin, oscd.community',
+                  'date': '2019/10/21',
+                  'description': 'Extensible Stylesheet Language (XSL) files '
+                                 'are commonly used to describe the processing '
+                                 'and rendering of data within XML files, rule '
+                                 'detects when adversaries abuse this '
+                                 'functionality to execute arbitrary files '
+                                 'while potentially bypassing application '
+                                 'whitelisting defenses',
+                  'detection': {'condition': 'selection',
+                                'selection': [{'CommandLine|contains': '/format',
+                                               'Image|endswith': '\\wmic.exe'},
+                                              {'Image|endswith': '\\msxsl.exe'}]},
+                  'falsepositives': ['WMIC.exe FP depend on scripts and '
+                                     'administrative methods used in the '
+                                     'monitored environment',
+                                     'msxsl.exe is not installed by default so '
+                                     'unlikely.'],
+                  'id': '05c36dd6-79d6-4a9a-97da-3db20298ab2d',
+                  'level': 'medium',
+                  'logsource': {'category': 'process_creation',
+                                'product': 'windows'},
+                  'modified': '2019/11/04',
+                  'references': ['https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1220/T1220.yaml'],
+                  'status': 'experimental',
+                  'tags': ['attack.execution', 'attack.t1220'],
+                  'title': 'XSL Script Processing'}}]
 ```
 
 ## Potential Queries

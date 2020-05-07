@@ -151,7 +151,33 @@ mv file to a .file
  {'data_source': 'find the hidden files/dirs from certain directory paths like '
                  '(/home/$user) and dump it to a location and ingest the file '
                  'and look for any malicious hidden files (scripted input to '
-                 'the Splunk)'}]
+                 'the Splunk)'},
+ {'data_source': {'author': 'Sami Ruohonen',
+                  'description': 'Detects usage of attrib.exe to hide files '
+                                 'from users.',
+                  'detection': {'condition': 'selection and not (ini or intel)',
+                                'ini': {'CommandLine': '*\\desktop.ini *'},
+                                'intel': {'CommandLine': '+R +H +S +A '
+                                                         '\\\\*.cui',
+                                          'ParentCommandLine': 'C:\\WINDOWS\\system32\\\\*.bat',
+                                          'ParentImage': '*\\cmd.exe'},
+                                'selection': {'CommandLine': '* +h *',
+                                              'Image': '*\\attrib.exe'}},
+                  'falsepositives': ['igfxCUIService.exe hiding *.cui files '
+                                     'via .bat script (attrib.exe a child of '
+                                     'cmd.exe and igfxCUIService.exe is the '
+                                     'parent of the cmd.exe)',
+                                     'msiexec.exe hiding desktop.ini'],
+                  'fields': ['CommandLine', 'ParentCommandLine', 'User'],
+                  'id': '4281cb20-2994-4580-aa63-c8b86d019934',
+                  'level': 'low',
+                  'logsource': {'category': 'process_creation',
+                                'product': 'windows'},
+                  'status': 'experimental',
+                  'tags': ['attack.defense_evasion',
+                           'attack.persistence',
+                           'attack.t1158'],
+                  'title': 'Hiding files with attrib.exe'}}]
 ```
 
 ## Potential Queries
