@@ -103,7 +103,24 @@ python/lateral_movement/multi/ssh_launcher
 ## Potential Detections
 
 ```json
-
+[{'data_source': {'author': 'Florian Roth',
+                  'date': '2019/01/29',
+                  'description': 'Detects netsh commands that configure a port '
+                                 'forwarding of port 3389 used for RDP',
+                  'detection': {'condition': 'selection',
+                                'selection': {'CommandLine': ['netsh i* '
+                                                              'p*=3389 c*']}},
+                  'falsepositives': ['Legitimate administration'],
+                  'id': '782d6f3e-4c5d-4b8c-92a3-1d05fed72e63',
+                  'level': 'high',
+                  'logsource': {'category': 'process_creation',
+                                'product': 'windows'},
+                  'references': ['https://www.fireeye.com/blog/threat-research/2019/01/bypassing-network-restrictions-through-rdp-tunneling.html'],
+                  'status': 'experimental',
+                  'tags': ['attack.lateral_movement',
+                           'attack.t1021',
+                           'car.2013-07-002'],
+                  'title': 'Netsh RDP Port Forwarding'}}]
 ```
 
 ## Potential Queries

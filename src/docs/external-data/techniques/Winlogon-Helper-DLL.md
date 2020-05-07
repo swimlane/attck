@@ -81,7 +81,40 @@ winlogon.exe
 ## Potential Detections
 
 ```json
-
+[{'data_source': {'author': 'Timur Zinniatullin, oscd.community',
+                  'date': '2019/10/21',
+                  'description': 'Winlogon.exe is a Windows component '
+                                 'responsible for actions at logon/logoff as '
+                                 'well as the secure attention sequence (SAS) '
+                                 'triggered by Ctrl-Alt-Delete. Registry '
+                                 'entries in '
+                                 'HKLM\\Software[Wow6432Node]Microsoft\\Windows '
+                                 'NT\\CurrentVersion\\Winlogon\\ and '
+                                 'HKCU\\Software\\Microsoft\\Windows '
+                                 'NT\\CurrentVersion\\Winlogon\\ are used to '
+                                 'manage additional helper programs and '
+                                 'functionalities that support Winlogon. '
+                                 'Malicious modifications to these Registry '
+                                 'keys may cause Winlogon to load and execute '
+                                 'malicious DLLs and/or executables.',
+                  'detection': {'condition': 'selection and ( keyword1 and '
+                                             'keyword2 )',
+                                'keyword1': ['*Set-ItemProperty*',
+                                             '*New-Item*'],
+                                'keyword2': ['*CurrentVersion\\Winlogon*'],
+                                'selection': {'EventID': 4104}},
+                  'falsepositives': ['Unknown'],
+                  'id': '851c506b-6b7c-4ce2-8802-c703009d03c0',
+                  'level': 'medium',
+                  'logsource': {'description': 'Script block logging must be '
+                                               'enabled',
+                                'product': 'windows',
+                                'service': 'powershell'},
+                  'modified': '2019/11/04',
+                  'references': ['https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1004/T1004.yaml'],
+                  'status': 'experimental',
+                  'tags': ['attack.persistence', 'attack.t1004'],
+                  'title': 'Winlogon Helper DLL'}}]
 ```
 
 ## Potential Queries

@@ -162,7 +162,151 @@ powershell/privesc/powerup/service_stager
 ## Potential Detections
 
 ```json
-
+[{'data_source': {'action': 'global',
+                  'description': 'This method detects malicious services '
+                                 'mentioned in APT29 report by FireEye. The '
+                                 'legitimate path for the Google update '
+                                 'service is C:\\Program Files '
+                                 '(x86)\\Google\\Update\\GoogleUpdate.exe so '
+                                 'the service names and executable locations '
+                                 'used by APT29 are specific enough to be '
+                                 'detected in log files.',
+                  'detection': {'condition': 'service_install | near process',
+                                'service_install': {'EventID': 7045,
+                                                    'ServiceName': 'Google '
+                                                                   'Update'},
+                                'timeframe': '5m'},
+                  'falsepositives': ['Unknown'],
+                  'id': 'c069f460-2b87-4010-8dcf-e45bab362624',
+                  'level': 'high',
+                  'logsource': {'product': 'windows', 'service': 'system'},
+                  'references': ['https://www.fireeye.com/blog/threat-research/2017/03/apt29_domain_frontin.html'],
+                  'tags': ['attack.persistence',
+                           'attack.g0016',
+                           'attack.t1050'],
+                  'title': 'APT29 Google Update Service Install'}},
+ {'data_source': {'detection': {'process': {'Image': ['C:\\Program '
+                                                      'Files(x86)\\Google\\GoogleService.exe',
+                                                      'C:\\Program '
+                                                      'Files(x86)\\Google\\GoogleUpdate.exe']}},
+                  'logsource': {'category': 'process_creation',
+                                'product': 'windows'}}},
+ {'data_source': {'description': 'This method detects a service install of '
+                                 'malicious services mentioned in Carbon Paper '
+                                 '- Turla report by ESET',
+                  'detection': {'condition': 'selection',
+                                'selection': {'EventID': 7045,
+                                              'ServiceName': ['srservice',
+                                                              'ipvpn',
+                                                              'hkmsvc']}},
+                  'falsepositives': ['Unknown'],
+                  'id': '1df8b3da-b0ac-4d8a-b7c7-6cb7c24160e4',
+                  'level': 'high',
+                  'logsource': {'product': 'windows', 'service': 'system'},
+                  'references': ['https://www.welivesecurity.com/2017/03/30/carbon-paper-peering-turlas-second-stage-backdoor/'],
+                  'tags': ['attack.persistence',
+                           'attack.g0010',
+                           'attack.t1050'],
+                  'title': 'Turla Service Install'}},
+ {'data_source': {'author': 'Florian Roth',
+                  'description': 'This method detects a service install of the '
+                                 'malicious Microsoft Network Realtime '
+                                 'Inspection Service service described in '
+                                 'StoneDrill report by Kaspersky',
+                  'detection': {'condition': 'selection',
+                                'selection': {'EventID': 7045,
+                                              'ServiceFileName': '* '
+                                                                 'LocalService',
+                                              'ServiceName': 'NtsSrv'}},
+                  'falsepositives': ['Unlikely'],
+                  'id': '9e987c6c-4c1e-40d8-bd85-dd26fba8fdd6',
+                  'level': 'high',
+                  'logsource': {'product': 'windows', 'service': 'system'},
+                  'references': ['https://securelist.com/blog/research/77725/from-shamoon-to-stonedrill/'],
+                  'tags': ['attack.persistence',
+                           'attack.g0064',
+                           'attack.t1050'],
+                  'title': 'StoneDrill Service Install'}},
+ {'data_source': {'author': 'Florian Roth',
+                  'date': '2018/11/23',
+                  'description': 'This method detects malicious services '
+                                 'mentioned in Turla PNG dropper report by NCC '
+                                 'Group in November 2018',
+                  'detection': {'condition': 'selection',
+                                'selection': {'EventID': 7045,
+                                              'ServiceName': 'WerFaultSvc'}},
+                  'falsepositives': ['unlikely'],
+                  'id': '1228f8e2-7e79-4dea-b0ad-c91f1d5016c1',
+                  'level': 'critical',
+                  'logsource': {'product': 'windows', 'service': 'system'},
+                  'references': ['https://www.nccgroup.trust/uk/about-us/newsroom-and-events/blogs/2018/november/turla-png-dropper-is-back/'],
+                  'tags': ['attack.persistence',
+                           'attack.g0010',
+                           'attack.t1050'],
+                  'title': 'Turla PNG Dropper Service'}},
+ {'data_source': {'author': 'Florian Roth',
+                  'description': 'Detects a driver load from a temporary '
+                                 'directory',
+                  'detection': {'condition': 'selection',
+                                'selection': {'EventID': 6,
+                                              'ImageLoaded': '*\\Temp\\\\*'}},
+                  'falsepositives': ['there is a relevant set of false '
+                                     'positives depending on applications in '
+                                     'the environment'],
+                  'id': '2c4523d5-d481-4ed0-8ec3-7fbf0cb41a75',
+                  'level': 'medium',
+                  'logsource': {'product': 'windows', 'service': 'sysmon'},
+                  'tags': ['attack.persistence', 'attack.t1050'],
+                  'title': 'Suspicious Driver Load from Temp'}},
+ {'data_source': {'author': 'Florian Roth',
+                  'description': 'Detects known malicious service installs '
+                                 'that only appear in cases of lateral '
+                                 'movement, credential dumping and other '
+                                 'suspicious activity',
+                  'detection': {'condition': 'selection and 1 of malsvc_*',
+                                'malsvc_others': {'ServiceName': ['pwdump*',
+                                                                  'gsecdump*',
+                                                                  'cachedump*']},
+                                'malsvc_paexec': {'ServiceFileName': '*\\PAExec*'},
+                                'malsvc_persistence': {'ServiceFileName': '* '
+                                                                          'net '
+                                                                          'user '
+                                                                          '*'},
+                                'malsvc_pwdumpx': {'ServiceFileName': '*\\DumpSvc.exe'},
+                                'malsvc_wannacry': {'ServiceName': 'mssecsvc2.0'},
+                                'malsvc_wce': {'ServiceName': ['WCESERVICE',
+                                                               'WCE SERVICE']},
+                                'malsvc_winexe': {'ServiceFileName': 'winexesvc.exe*'},
+                                'selection': {'EventID': 7045}},
+                  'falsepositives': ['Penetration testing'],
+                  'id': '5a105d34-05fc-401e-8553-272b45c1522d',
+                  'level': 'critical',
+                  'logsource': {'product': 'windows', 'service': 'system'},
+                  'tags': ['attack.persistence',
+                           'attack.privilege_escalation',
+                           'attack.t1050',
+                           'car.2013-09-005'],
+                  'title': 'Malicious Service Installations'}},
+ {'data_source': {'author': 'Florian Roth',
+                  'description': 'Detects rare service installs that only '
+                                 'appear a few times per time frame and could '
+                                 'reveal password dumpers, backdoor installs '
+                                 'or other types of malicious services',
+                  'detection': {'condition': 'selection | count() by '
+                                             'ServiceFileName < 5',
+                                'selection': {'EventID': 7045},
+                                'timeframe': '7d'},
+                  'falsepositives': ['Software installation',
+                                     'Software updates'],
+                  'id': '66bfef30-22a5-4fcd-ad44-8d81e60922ae',
+                  'level': 'low',
+                  'logsource': {'product': 'windows', 'service': 'system'},
+                  'status': 'experimental',
+                  'tags': ['attack.persistence',
+                           'attack.privilege_escalation',
+                           'attack.t1050',
+                           'car.2013-09-005'],
+                  'title': 'Rare Service Installs'}}]
 ```
 
 ## Potential Queries

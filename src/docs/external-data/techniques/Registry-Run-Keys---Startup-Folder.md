@@ -135,7 +135,83 @@ powershell/persistence/userland/registry
 ## Potential Detections
 
 ```json
-
+[{'data_source': {'author': 'Florian Roth',
+                  'date': '2019/10/01',
+                  'description': 'Detects the suspicious RUN keys created by '
+                                 'software located in Download or temporary '
+                                 'Outlook/Internet Explorer directories',
+                  'detection': {'condition': 'selection',
+                                'selection': {'EventID': 13,
+                                              'Image': ['*\\Downloads\\\\*',
+                                                        '*\\Temporary Internet '
+                                                        'Files\\Content.Outlook\\\\*',
+                                                        '*\\Local '
+                                                        'Settings\\Temporary '
+                                                        'Internet Files\\\\*'],
+                                              'TargetObject': '*\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run\\\\*'}},
+                  'falsepositives': ['Software installers downloaded and used '
+                                     'by users'],
+                  'id': '9c5037d1-c568-49b3-88c7-9846a5bdc2be',
+                  'level': 'high',
+                  'logsource': {'product': 'windows', 'service': 'sysmon'},
+                  'references': ['https://app.any.run/tasks/c5bef5b7-f484-4c43-9cf3-d5c5c7839def/'],
+                  'status': 'experimental',
+                  'tags': ['attack.persistence', 'attack.t1060'],
+                  'title': 'Suspicious RUN Key from Download'}},
+ {'data_source': {'author': 'Florian Roth',
+                  'date': '2018/07/18',
+                  'description': 'Detects a possible persistence mechanism '
+                                 'using RUN key for Windows Explorer and '
+                                 'poiting to a suspicious folder',
+                  'detection': {'condition': 'selection',
+                                'selection': {'Details': ['C:\\Windows\\Temp\\\\*',
+                                                          'C:\\ProgramData\\\\*',
+                                                          '*\\AppData\\\\*',
+                                                          'C:\\$Recycle.bin\\\\*',
+                                                          'C:\\Temp\\\\*',
+                                                          'C:\\Users\\Public\\\\*',
+                                                          'C:\\Users\\Default\\\\*'],
+                                              'EventID': 13,
+                                              'TargetObject': '*\\Microsoft\\Windows\\CurrentVersion\\Policies\\Explorer\\Run'}},
+                  'falsepositives': ['Unknown'],
+                  'fields': ['Image', 'ParentImage'],
+                  'id': 'b7916c2a-fa2f-4795-9477-32b731f70f11',
+                  'level': 'high',
+                  'logsource': {'product': 'windows', 'service': 'sysmon'},
+                  'references': ['https://researchcenter.paloaltonetworks.com/2018/07/unit42-upatre-continues-evolve-new-anti-analysis-techniques/'],
+                  'status': 'experimental',
+                  'tags': ['attack.persistence', 'attack.t1060', 'capec.270'],
+                  'title': 'Registry Persistence via Explorer Run Key'}},
+ {'data_source': {'author': 'Florian Roth, Markus Neis',
+                  'date': '2018/25/08',
+                  'description': 'Detects suspicious new RUN key element '
+                                 'pointing to an executable in a suspicious '
+                                 'folder',
+                  'detection': {'condition': 'selection',
+                                'selection': {'Details': ['*C:\\Windows\\Temp\\\\*',
+                                                          '*\\AppData\\\\*',
+                                                          '%AppData%\\\\*',
+                                                          '*C:\\$Recycle.bin\\\\*',
+                                                          '*C:\\Temp\\\\*',
+                                                          '*C:\\Users\\Public\\\\*',
+                                                          '%Public%\\\\*',
+                                                          '*C:\\Users\\Default\\\\*',
+                                                          '*C:\\Users\\Desktop\\\\*',
+                                                          'wscript*',
+                                                          'cscript*'],
+                                              'EventID': 13,
+                                              'TargetObject': ['*\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run\\\\*',
+                                                               '*\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\RunOnce\\\\*']}},
+                  'falsepositives': ['Software with rare behaviour'],
+                  'fields': ['Image'],
+                  'id': '02ee49e2-e294-4d0f-9278-f5b3212fc588',
+                  'level': 'high',
+                  'logsource': {'product': 'windows', 'service': 'sysmon'},
+                  'modified': '2019/10/01',
+                  'references': ['https://www.fireeye.com/blog/threat-research/2018/08/fin7-pursuing-an-enigmatic-and-evasive-global-criminal-operation.html'],
+                  'status': 'experimental',
+                  'tags': ['attack.persistence', 'attack.t1060'],
+                  'title': 'New RUN Key Pointing to Suspicious Folder'}}]
 ```
 
 ## Potential Queries

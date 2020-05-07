@@ -115,7 +115,26 @@ winrm.exe
 ## Potential Detections
 
 ```json
-
+[{'data_source': {'author': 'Patryk Prauze - ING Tech',
+                  'description': 'Detects usage of mimikatz through WinRM '
+                                 'protocol by monitoring access to lsass '
+                                 'process by wsmprovhost.exe.',
+                  'detection': {'condition': 'selection',
+                                'selection': {'EventID': 10,
+                                              'SourceImage': 'C:\\Windows\\system32\\wsmprovhost.exe',
+                                              'TargetImage': 'C:\\windows\\system32\\lsass.exe'}},
+                  'falsepositives': ['low'],
+                  'id': 'aa35a627-33fb-4d04-a165-d33b4afca3e8',
+                  'level': 'high',
+                  'logsource': {'product': 'windows', 'service': 'sysmon'},
+                  'references': ['https://pentestlab.blog/2018/05/15/lateral-movement-winrm/'],
+                  'status': 'stable',
+                  'tags': ['attack.credential_access',
+                           'attack.execution',
+                           'attack.t1003',
+                           'attack.t1028',
+                           'attack.s0005'],
+                  'title': 'Mimikatz through Windows Remote Management'}}]
 ```
 
 ## Potential Queries

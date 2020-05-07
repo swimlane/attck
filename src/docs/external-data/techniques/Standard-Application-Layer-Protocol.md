@@ -197,7 +197,24 @@ Start-Dnscat2 -Domain #{domain} -DNSServer 127.0.0.1
 ## Potential Detections
 
 ```json
-
+[{'data_source': {'author': 'Markus Neis',
+                  'date': '2018/08/08',
+                  'description': 'Detects strings used in command execution in '
+                                 'DNS TXT Answer',
+                  'detection': {'condition': 'selection',
+                                'selection': {'answer': ['*IEX*',
+                                                         '*Invoke-Expression*',
+                                                         '*cmd.exe*'],
+                                              'record_type': 'TXT'}},
+                  'falsepositives': ['Unknown'],
+                  'id': '8ae51330-899c-4641-8125-e39f2e07da72',
+                  'level': 'high',
+                  'logsource': {'category': 'dns'},
+                  'references': ['https://twitter.com/stvemillertime/status/1024707932447854592',
+                                 'https://github.com/samratashok/nishang/blob/master/Backdoors/DNS_TXT_Pwnage.ps1'],
+                  'status': 'experimental',
+                  'tags': ['attack.t1071'],
+                  'title': 'DNS TXT Answer with possible execution strings'}}]
 ```
 
 ## Potential Queries

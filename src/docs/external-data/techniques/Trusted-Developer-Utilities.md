@@ -128,7 +128,25 @@ Process the command line: C: \ Windows \ Microsoft.NET \ Framework64 \ v4.0.3031
 ## Potential Detections
 
 ```json
-
+[{'data_source': {'author': 'Nik Seetharaman',
+                  'description': 'Detects invocation of Microsoft Workflow '
+                                 'Compiler, which may permit the execution of '
+                                 'arbitrary unsigned code.',
+                  'detection': {'condition': 'selection',
+                                'selection': {'Image': '*\\Microsoft.Workflow.Compiler.exe'}},
+                  'falsepositives': ['Legitimate MWC use (unlikely in modern '
+                                     'enterprise environments)'],
+                  'fields': ['CommandLine', 'ParentCommandLine'],
+                  'id': '419dbf2b-8a9b-4bea-bf99-7544b050ec8d',
+                  'level': 'high',
+                  'logsource': {'category': 'process_creation',
+                                'product': 'windows'},
+                  'references': ['https://posts.specterops.io/arbitrary-unsigned-code-execution-vector-in-microsoft-workflow-compiler-exe-3d9294bc5efb'],
+                  'status': 'experimental',
+                  'tags': ['attack.defense_evasion',
+                           'attack.execution',
+                           'attack.t1127'],
+                  'title': 'Microsoft Workflow Compiler'}}]
 ```
 
 ## Potential Queries

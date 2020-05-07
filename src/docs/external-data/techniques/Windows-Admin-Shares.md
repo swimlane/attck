@@ -380,7 +380,85 @@ ParentCommandLine: C: \ Windows \ PSEXESVC.exe
 ## Potential Detections
 
 ```json
-
+[{'data_source': {'author': 'Florian Roth',
+                  'description': 'Detects access to $ADMIN share',
+                  'detection': {'condition': 'selection and not filter',
+                                'filter': {'SubjectUserName': '*$'},
+                                'selection': {'EventID': 5140,
+                                              'ShareName': 'Admin$'}},
+                  'falsepositives': ['Legitimate administrative activity'],
+                  'id': '098d7118-55bc-4912-a836-dc6483a8d150',
+                  'level': 'low',
+                  'logsource': {'definition': 'The advanced audit policy '
+                                              'setting "Object Access > Audit '
+                                              'File Share" must be configured '
+                                              'for Success/Failure',
+                                'product': 'windows',
+                                'service': 'security'},
+                  'status': 'experimental',
+                  'tags': ['attack.lateral_movement', 'attack.t1077'],
+                  'title': 'Access to ADMIN$ Share'}},
+ {'data_source': {'author': 'Samir Bousseaden',
+                  'description': 'This detection excludes known namped pipes '
+                                 'accessible remotely and notify on newly '
+                                 'observed ones, may help to detect lateral '
+                                 'movement and remote exec using named pipes',
+                  'detection': {'condition': 'selection1 and not selection2',
+                                'selection1': {'EventID': 5145,
+                                               'ShareName': '\\\\*\\IPC$'},
+                                'selection2': {'EventID': 5145,
+                                               'RelativeTargetName': ['atsvc',
+                                                                      'samr',
+                                                                      'lsarpc',
+                                                                      'winreg',
+                                                                      'netlogon',
+                                                                      'srvsvc',
+                                                                      'protected_storage',
+                                                                      'wkssvc',
+                                                                      'browser',
+                                                                      'netdfs'],
+                                               'ShareName': '\\\\*\\IPC$'}},
+                  'falsepositives': ['update the excluded named pipe to filter '
+                                     'out any newly observed legit named pipe'],
+                  'id': '52d8b0c6-53d6-439a-9e41-52ad442ad9ad',
+                  'level': 'high',
+                  'logsource': {'description': 'The advanced audit policy '
+                                               'setting "Object Access > Audit '
+                                               'Detailed File Share" must be '
+                                               'configured for Success/Failure',
+                                'product': 'windows',
+                                'service': 'security'},
+                  'references': ['https://twitter.com/menasec1/status/1104489274387451904'],
+                  'tags': ['attack.lateral_movement', 'attack.t1077'],
+                  'title': 'First time seen remote named pipe'}},
+ {'data_source': {'author': 'Samir Bousseaden',
+                  'description': 'detects execution of psexec or paexec with '
+                                 'renamed service name, this rule helps to '
+                                 'filter out the noise if psexec is used for '
+                                 'legit purposes or if attacker uses a '
+                                 'different psexec client other than '
+                                 'sysinternal one',
+                  'detection': {'condition': 'selection1 and not selection2',
+                                'selection1': {'EventID': 5145,
+                                               'RelativeTargetName': ['*-stdin',
+                                                                      '*-stdout',
+                                                                      '*-stderr'],
+                                               'ShareName': '\\\\*\\IPC$'},
+                                'selection2': {'EventID': 5145,
+                                               'RelativeTargetName': 'PSEXESVC*',
+                                               'ShareName': '\\\\*\\IPC$'}},
+                  'falsepositives': ['nothing observed so far'],
+                  'id': 'c462f537-a1e3-41a6-b5fc-b2c2cef9bf82',
+                  'level': 'high',
+                  'logsource': {'description': 'The advanced audit policy '
+                                               'setting "Object Access > Audit '
+                                               'Detailed File Share" must be '
+                                               'configured for Success/Failure',
+                                'product': 'windows',
+                                'service': 'security'},
+                  'references': ['https://blog.menasec.net/2019/02/threat-hunting-3-detecting-psexec.html'],
+                  'tags': ['attack.lateral_movement', 'attack.t1077'],
+                  'title': 'Suspicious PsExec execution'}}]
 ```
 
 ## Potential Queries

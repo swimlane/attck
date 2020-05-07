@@ -35,7 +35,23 @@ Adversaries may target lsass.exe drivers to obtain execution and/or persistence.
 ## Potential Detections
 
 ```json
-
+[{'data_source': {'author': 'Florian Roth',
+                  'date': '2019/10/16',
+                  'description': 'Detects a method to load DLL via LSASS '
+                                 'process using an undocumented Registry key',
+                  'detection': {'condition': 'selection',
+                                'selection': {'EventID': [12, 13],
+                                              'TargetObject': ['*\\CurrentControlSet\\Services\\NTDS\\DirectoryServiceExtPt*',
+                                                               '*\\CurrentControlSet\\Services\\NTDS\\LsaDbExtPt*']}},
+                  'falsepositives': ['Unknown'],
+                  'id': 'b3503044-60ce-4bf4-bbcb-e3db98788823',
+                  'level': 'high',
+                  'logsource': {'product': 'windows', 'service': 'sysmon'},
+                  'references': ['https://blog.xpnsec.com/exploring-mimikatz-part-1/',
+                                 'https://twitter.com/SBousseaden/status/1183745981189427200'],
+                  'status': 'experimental',
+                  'tags': ['attack.execution', 'attack.t1177'],
+                  'title': 'DLL Load via LSASS'}}]
 ```
 
 ## Potential Queries

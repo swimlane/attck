@@ -160,7 +160,26 @@ POWERSHELL -c 'Start-Sleep 1'
 ## Potential Detections
 
 ```json
-
+[{'data_source': {'author': 'Kutepov Anton, oscd.community',
+                  'date': '2019/10/23',
+                  'description': 'Detects COM object hijacking via TreatAs '
+                                 'subkey',
+                  'detection': {'condition': 'selection',
+                                'selection': {'EventID': 12,
+                                              'TargetObject|contains': '_Classes\\CLSID\\',
+                                              'TargetObject|endswith': '\\TreatAs',
+                                              'TargetObject|startswith': 'HKU\\'}},
+                  'falsepositives': ['Maybe some system utilities in rare '
+                                     'cases use linking keys for backward '
+                                     'compability'],
+                  'id': '9b0f8a61-91b2-464f-aceb-0527e0a45020',
+                  'level': 'medium',
+                  'logsource': {'product': 'windows', 'service': 'sysmon'},
+                  'modified': '2019/11/07',
+                  'references': ['https://bohops.com/2018/08/18/abusing-the-com-registry-structure-part-2-loading-techniques-for-evasion-and-persistence/'],
+                  'status': 'experimental',
+                  'tags': ['attack.persistence', 'attack.t1122'],
+                  'title': 'Windows Registry Persistence - COM key linking'}}]
 ```
 
 ## Potential Queries

@@ -159,7 +159,40 @@ powershell/situational_awareness/host/get_uaclevel
 ## Potential Detections
 
 ```json
-
+[{'data_source': {'author': 'Florian Roth (rule), Jack Croock (method)',
+                  'description': 'Detects activity as "net user administrator '
+                                 '/domain" and "net group domain admins '
+                                 '/domain"',
+                  'detection': {'condition': 'selection',
+                                'selection': [{'AccessMask': '0x2d',
+                                               'EventID': 4661,
+                                               'ObjectName': 'S-1-5-21-*-500',
+                                               'ObjectType': 'SAM_USER'},
+                                              {'AccessMask': '0x2d',
+                                               'EventID': 4661,
+                                               'ObjectName': 'S-1-5-21-*-512',
+                                               'ObjectType': 'SAM_GROUP'}]},
+                  'falsepositives': ['Administrator activity',
+                                     'Penetration tests'],
+                  'id': '968eef52-9cff-4454-8992-1e74b9cbad6c',
+                  'level': 'high',
+                  'logsource': {'definition': 'The volume of Event ID 4661 is '
+                                              'high on Domain Controllers and '
+                                              'therefore "Audit SAM" and '
+                                              '"Audit Kernel Object" advanced '
+                                              'audit policy settings are not '
+                                              'configured in the '
+                                              'recommendations for server '
+                                              'systems',
+                                'product': 'windows',
+                                'service': 'security'},
+                  'references': ['https://findingbad.blogspot.de/2017/01/hunting-what-does-it-look-like.html'],
+                  'status': 'experimental',
+                  'tags': ['attack.discovery',
+                           'attack.t1087',
+                           'attack.t1069',
+                           'attack.s0039'],
+                  'title': 'Reconnaissance Activity'}}]
 ```
 
 ## Potential Queries

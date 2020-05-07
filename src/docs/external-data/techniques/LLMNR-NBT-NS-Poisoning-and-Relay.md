@@ -51,7 +51,27 @@ powershell/lateral_movement/inveigh_relay
 ## Potential Detections
 
 ```json
-
+[{'data_source': {'author': '@SBousseaden, Florian Roth',
+                  'date': '2019/11/15',
+                  'description': 'Detects logon events that have '
+                                 'characteristics of events generated during '
+                                 'an attack with RottenPotato and the like',
+                  'detection': {'condition': 'selection',
+                                'selection': {'EventID': 4624,
+                                              'LogonType': 3,
+                                              'SourceNetworkAddress': '127.0.0.1',
+                                              'TargetUserName': 'ANONYMOUS_LOGON',
+                                              'WorkstationName': '-'}},
+                  'falsepositives': ['Unknown'],
+                  'id': '16f5d8ca-44bd-47c8-acbe-6fc95a16c12f',
+                  'level': 'high',
+                  'logsource': {'product': 'windows', 'service': 'security'},
+                  'references': ['https://twitter.com/SBousseaden/status/1195284233729777665'],
+                  'status': 'experimental',
+                  'tags': ['attack.privilege_escalation',
+                           'attack.credential_access',
+                           'attack.t1171'],
+                  'title': 'RottenPotato Like Attack Pattern'}}]
 ```
 
 ## Potential Queries

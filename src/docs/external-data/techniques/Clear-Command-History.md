@@ -144,7 +144,31 @@ history -c
 
 ```json
 [{'data_source': 'auditlogs (audit.rules)'},
- {'data_source': 'bash_history logs'}]
+ {'data_source': 'bash_history logs'},
+ {'data_source': {'author': 'Patrick Bareiss',
+                  'date': '2019/03/24',
+                  'description': 'Clear command history in linux which is used '
+                                 'for defense evasion.',
+                  'detection': {'condition': 'keywords',
+                                'keywords': ['rm *bash_history',
+                                             'echo "" > *bash_history',
+                                             'cat /dev/null > *bash_history',
+                                             'ln -sf /dev/null *bash_history',
+                                             'truncate -s0 *bash_history',
+                                             'export HISTFILESIZE=0',
+                                             'history -c',
+                                             'history -w',
+                                             'shred *bash_history']},
+                  'falsepositives': ['Unknown'],
+                  'id': 'fdc88d25-96fb-4b7c-9633-c0e417fdbd4e',
+                  'level': 'high',
+                  'logsource': {'product': 'linux'},
+                  'references': ['https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1146/T1146.yaml',
+                                 'https://attack.mitre.org/techniques/T1146/',
+                                 'https://www.hackers-arise.com/single-post/2016/06/20/Covering-your-BASH-Shell-Tracks-AntiForensics'],
+                  'status': 'experimental',
+                  'tags': ['attack.defense_evasion', 'attack.t1146'],
+                  'title': 'Clear Command History'}}]
 ```
 
 ## Potential Queries

@@ -305,7 +305,37 @@ powershell/management/disable_rdp
 ## Potential Detections
 
 ```json
-
+[{'data_source': {'author': '@neu5ron',
+                  'description': 'Detects scenario where weak encryption is '
+                                 'enabled for a user profile which could be '
+                                 'used for hash/password cracking.',
+                  'detection': {'condition': 'selection and keywords and '
+                                             'filters',
+                                'filters': {'Message': ['*Enabled*']},
+                                'keywords': {'Message': ['*DES*',
+                                                         '*Preauth*',
+                                                         '*Encrypted*']},
+                                'selection': {'EventID': 4738}},
+                  'falsepositives': ['Unknown'],
+                  'id': 'f6de9536-0441-4b3f-a646-f4e00f300ffd',
+                  'level': 'high',
+                  'logsource': {'definition': 'Requirements: Audit Policy : '
+                                              'Account Management > Audit User '
+                                              'Account Management, Group '
+                                              'Policy : Computer '
+                                              'Configuration\\Windows '
+                                              'Settings\\Security '
+                                              'Settings\\Advanced Audit Policy '
+                                              'Configuration\\Audit '
+                                              'Policies\\Account '
+                                              'Management\\Audit User Account '
+                                              'Management',
+                                'product': 'windows',
+                                'service': 'security'},
+                  'references': ['https://adsecurity.org/?p=2053',
+                                 'https://www.harmj0y.net/blog/activedirectory/roasting-as-reps/'],
+                  'tags': ['attack.defense_evasion', 'attack.t1089'],
+                  'title': 'Weak Encryption Enabled and Kerberoast'}}]
 ```
 
 ## Potential Queries

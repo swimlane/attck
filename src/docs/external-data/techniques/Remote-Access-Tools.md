@@ -78,7 +78,48 @@ python/management/osx/screen_sharing
 ## Potential Detections
 
 ```json
-
+[{'data_source': {'author': 'Florian Roth',
+                  'date': '2018/09/09',
+                  'description': 'Detects a highly relevant Antivirus alert '
+                                 'that reports an exploitation framework',
+                  'detection': {'condition': 'selection',
+                                'selection': {'Signature': ['*MeteTool*',
+                                                            '*MPreter*',
+                                                            '*Meterpreter*',
+                                                            '*Metasploit*',
+                                                            '*PowerSploit*',
+                                                            '*CobaltSrike*',
+                                                            '*Swrort*',
+                                                            '*Rozena*',
+                                                            '*Backdoor.Cobalt*']}},
+                  'falsepositives': ['Unlikely'],
+                  'fields': ['FileName', 'User'],
+                  'id': '238527ad-3c2c-4e4f-a1f6-92fd63adb864',
+                  'level': 'critical',
+                  'logsource': {'product': 'antivirus'},
+                  'modified': '2019/01/16',
+                  'references': ['https://www.nextron-systems.com/2018/09/08/antivirus-event-analysis-cheat-sheet-v1-4/'],
+                  'tags': ['attack.execution',
+                           'attack.t1203',
+                           'attack.command_and_control',
+                           'attack.t1219'],
+                  'title': 'Antivirus Exploitation Framework Detection'}},
+ {'data_source': {'author': 'Florian Roth',
+                  'date': '2018/03/17',
+                  'description': 'Detects a tscon.exe start as LOCAL SYSTEM',
+                  'detection': {'condition': 'selection',
+                                'selection': {'Image': '*\\tscon.exe',
+                                              'User': 'NT AUTHORITY\\SYSTEM'}},
+                  'falsepositives': ['Unknown'],
+                  'id': '9847f263-4a81-424f-970c-875dab15b79b',
+                  'level': 'high',
+                  'logsource': {'category': 'process_creation',
+                                'product': 'windows'},
+                  'references': ['http://www.korznikov.com/2017/03/0-day-or-feature-privilege-escalation.html',
+                                 'https://medium.com/@networksecurity/rdp-hijacking-how-to-hijack-rds-and-remoteapp-sessions-transparently-to-move-through-an-da2a1e73a5f6'],
+                  'status': 'experimental',
+                  'tags': ['attack.command_and_control', 'attack.t1219'],
+                  'title': 'Suspicious TSCON Start'}}]
 ```
 
 ## Potential Queries

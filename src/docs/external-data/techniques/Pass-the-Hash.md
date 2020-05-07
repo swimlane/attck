@@ -88,7 +88,114 @@ powershell/credentials/mimikatz/pth
 ## Potential Detections
 
 ```json
-
+[{'data_source': {'author': 'Roberto Rodriguez (source), Dominik Schaudel '
+                            '(rule)',
+                  'date': '2018/02/12',
+                  'description': 'Detects successful logon with logon type 9 '
+                                 '(NewCredentials) which matches the Overpass '
+                                 "the Hash behavior of e.g Mimikatz's "
+                                 'sekurlsa::pth module.',
+                  'detection': {'condition': 'selection',
+                                'selection': {'AuthenticationPackageName': 'Negotiate',
+                                              'EventID': 4624,
+                                              'LogonProcessName': 'seclogo',
+                                              'LogonType': 9}},
+                  'falsepositives': ['Runas command-line tool using /netonly '
+                                     'parameter'],
+                  'id': '192a0330-c20b-4356-90b6-7b7049ae0b87',
+                  'level': 'high',
+                  'logsource': {'product': 'windows', 'service': 'security'},
+                  'references': ['https://cyberwardog.blogspot.de/2017/04/chronicles-of-threat-hunter-hunting-for.html'],
+                  'status': 'experimental',
+                  'tags': ['attack.lateral_movement',
+                           'attack.t1075',
+                           'attack.s0002'],
+                  'title': 'Successful Overpass the Hash Attempt'}},
+ {'data_source': {'author': 'Ilias el Matani (rule), The Information Assurance '
+                            'Directorate at the NSA (method)',
+                  'description': 'Detects the attack technique pass the hash '
+                                 'which is used to move laterally inside the '
+                                 'network',
+                  'detection': {'condition': 'selection and not filter',
+                                'filter': {'AccountName': 'ANONYMOUS LOGON'},
+                                'selection': [{'ComputerName': '%Workstations%',
+                                               'EventID': 4624,
+                                               'LogonProcessName': 'NtLmSsp',
+                                               'LogonType': '3',
+                                               'WorkstationName': '%Workstations%'},
+                                              {'ComputerName': '%Workstations%',
+                                               'EventID': 4625,
+                                               'LogonProcessName': 'NtLmSsp',
+                                               'LogonType': '3',
+                                               'WorkstationName': '%Workstations%'}]},
+                  'falsepositives': ['Administrator activity',
+                                     'Penetration tests'],
+                  'id': 'f8d98d6c-7a07-4d74-b064-dd4a3c244528',
+                  'level': 'medium',
+                  'logsource': {'definition': 'The successful use of PtH for '
+                                              'lateral movement between '
+                                              'workstations would trigger '
+                                              'event ID 4624, a failed logon '
+                                              'attempt would trigger an event '
+                                              'ID 4625',
+                                'product': 'windows',
+                                'service': 'security'},
+                  'references': ['https://github.com/iadgov/Event-Forwarding-Guidance/tree/master/Events'],
+                  'status': 'experimental',
+                  'tags': ['attack.lateral_movement',
+                           'attack.t1075',
+                           'car.2016-04-004'],
+                  'title': 'Pass the Hash Activity'}},
+ {'data_source': {'author': 'Dave Kennedy, Jeff Warren (method) / David '
+                            'Vassallo (rule)',
+                  'description': 'Detects the attack technique pass the hash '
+                                 'which is used to move laterally inside the '
+                                 'network',
+                  'detection': {'condition': 'selection and not filter',
+                                'filter': {'AccountName': 'ANONYMOUS LOGON'},
+                                'selection': [{'EventID': 4624,
+                                               'KeyLength': '0',
+                                               'LogonProcessName': 'NtLmSsp',
+                                               'LogonType': '3',
+                                               'SubjectUserSid': 'S-1-0-0'},
+                                              {'EventID': 4624,
+                                               'LogonProcessName': 'seclogo',
+                                               'LogonType': '9'}]},
+                  'falsepositives': ['Administrator activity',
+                                     'Penetration tests'],
+                  'id': '8eef149c-bd26-49f2-9e5a-9b00e3af499b',
+                  'level': 'medium',
+                  'logsource': {'definition': 'The successful use of PtH for '
+                                              'lateral movement between '
+                                              'workstations would trigger '
+                                              'event ID 4624',
+                                'product': 'windows',
+                                'service': 'security'},
+                  'references': ['https://github.com/iadgov/Event-Forwarding-Guidance/tree/master/Events',
+                                 'https://blog.binarydefense.com/reliably-detecting-pass-the-hash-through-event-log-analysis',
+                                 'https://blog.stealthbits.com/how-to-detect-pass-the-hash-attacks/'],
+                  'status': 'production',
+                  'tags': ['attack.lateral_movement', 'attack.t1075'],
+                  'title': 'Pass the Hash Activity'}},
+ {'data_source': {'author': 'Florian Roth',
+                  'date': '2018/06/08',
+                  'description': 'Detects logons using NTLM, which could be '
+                                 'caused by a legacy source or attackers',
+                  'detection': {'condition': 'selection',
+                                'selection': {'CallingProcessName': '*',
+                                              'EventID': 8002}},
+                  'falsepositives': ['Legacy hosts'],
+                  'id': '98c3bcf1-56f2-49dc-9d8d-c66cf190238b',
+                  'level': 'low',
+                  'logsource': {'definition': 'Reqiures events from '
+                                              'Microsoft-Windows-NTLM/Operational',
+                                'product': 'windows',
+                                'service': 'ntlm'},
+                  'references': ['https://twitter.com/JohnLaTwC/status/1004895028995477505',
+                                 'https://goo.gl/PsqrhT'],
+                  'status': 'experimental',
+                  'tags': ['attack.lateral_movement', 'attack.t1075'],
+                  'title': 'NTLM Logon'}}]
 ```
 
 ## Potential Queries

@@ -62,7 +62,45 @@ python/management/multi/socks
 ## Potential Detections
 
 ```json
-
+[{'data_source': {'author': 'Markus Neis',
+                  'date': '2019/01/29',
+                  'description': 'Allow Incoming Connections by Port or '
+                                 'Application on Windows Firewall',
+                  'detection': {'condition': 'selection',
+                                'selection': {'CommandLine': ['*netsh firewall '
+                                                              'add*']}},
+                  'falsepositives': ['Legitimate administration'],
+                  'id': 'cd5cfd80-aa5f-44c0-9c20-108c4ae12e3c',
+                  'level': 'medium',
+                  'logsource': {'category': 'process_creation',
+                                'product': 'windows'},
+                  'references': ['https://attack.mitre.org/software/S0246/ '
+                                 '(Lazarus HARDRAIN)',
+                                 'https://www.operationblockbuster.com/wp-content/uploads/2016/02/Operation-Blockbuster-RAT-and-Staging-Report.pdf'],
+                  'status': 'experimental',
+                  'tags': ['attack.lateral_movement',
+                           'attack.command_and_control',
+                           'attack.t1090'],
+                  'title': 'Netsh'}},
+ {'data_source': {'author': 'Florian Roth',
+                  'date': '2019/01/29',
+                  'description': 'Detects netsh commands that configure a port '
+                                 'forwarding',
+                  'detection': {'condition': 'selection',
+                                'selection': {'CommandLine': ['netsh interface '
+                                                              'portproxy add '
+                                                              'v4tov4 *']}},
+                  'falsepositives': ['Legitimate administration'],
+                  'id': '322ed9ec-fcab-4f67-9a34-e7c6aef43614',
+                  'level': 'medium',
+                  'logsource': {'category': 'process_creation',
+                                'product': 'windows'},
+                  'references': ['https://www.fireeye.com/blog/threat-research/2019/01/bypassing-network-restrictions-through-rdp-tunneling.html'],
+                  'status': 'experimental',
+                  'tags': ['attack.lateral_movement',
+                           'attack.command_and_control',
+                           'attack.t1090'],
+                  'title': 'Netsh Port Forwarding'}}]
 ```
 
 ## Potential Queries

@@ -41,7 +41,27 @@ The MBR passes control of the boot process to the VBR. Similar to the case of MB
 ## Potential Detections
 
 ```json
-
+[{'data_source': {'author': '@neu5ron',
+                  'date': '2019/02/07',
+                  'description': 'Detects, possibly, malicious unauthorized '
+                                 'usage of bcdedit.exe',
+                  'detection': {'condition': 'selection',
+                                'selection': {'NewProcessName': '*\\bcdedit.exe',
+                                              'ProcessCommandLine': ['*delete*',
+                                                                     '*deletevalue*',
+                                                                     '*import*']}},
+                  'id': 'c9fbe8e9-119d-40a6-9b59-dd58a5d84429',
+                  'level': 'medium',
+                  'logsource': {'category': 'process_creation',
+                                'product': 'windows'},
+                  'references': ['https://docs.microsoft.com/en-us/windows-hardware/drivers/devtest/bcdedit--set'],
+                  'status': 'experimental',
+                  'tags': ['attack.defense_evasion',
+                           'attack.t1070',
+                           'attack.persistence',
+                           'attack.t1067'],
+                  'title': 'Possible Ransomware or unauthorized MBR '
+                           'modifications'}}]
 ```
 
 ## Potential Queries

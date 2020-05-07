@@ -77,7 +77,112 @@ mshta "$env:appdata\Microsoft\Windows\Start Menu\Programs\Startup\T1170.hta"
 ## Potential Detections
 
 ```json
-
+[{'data_source': {'author': 'Florian Roth',
+                  'date': '2019/02/24',
+                  'description': 'Detects activity that could be related to '
+                                 'Baby Shark malware',
+                  'detection': {'condition': 'selection',
+                                'selection': {'CommandLine': ['reg query '
+                                                              '"HKEY_CURRENT_USER\\Software\\Microsoft\\Terminal '
+                                                              'Server '
+                                                              'Client\\Default"',
+                                                              'powershell.exe '
+                                                              'mshta.exe http*',
+                                                              'cmd.exe /c '
+                                                              'taskkill /im '
+                                                              'cmd.exe']}},
+                  'falsepositives': ['unknown'],
+                  'id': '2b30fa36-3a18-402f-a22d-bf4ce2189f35',
+                  'level': 'high',
+                  'logsource': {'category': 'process_creation',
+                                'product': 'windows'},
+                  'references': ['https://unit42.paloaltonetworks.com/new-babyshark-malware-targets-u-s-national-security-think-tanks/'],
+                  'status': 'experimental',
+                  'tags': ['attack.execution',
+                           'attack.t1059',
+                           'attack.t1086',
+                           'attack.discovery',
+                           'attack.t1012',
+                           'attack.defense_evasion',
+                           'attack.t1170'],
+                  'title': 'Baby Shark Activity'}},
+ {'data_source': {'author': 'Markus Neis',
+                  'date': '2018/06/07',
+                  'description': 'Detects MSHTA.EXE spwaned by SVCHOST '
+                                 'described in report',
+                  'detection': {'condition': 'selection',
+                                'selection': {'Image': '*\\mshta.exe',
+                                              'ParentImage': '*\\svchost.exe'}},
+                  'falsepositives': ['Unknown'],
+                  'id': 'ed5d72a6-f8f4-479d-ba79-02f6a80d7471',
+                  'level': 'high',
+                  'logsource': {'category': 'process_creation',
+                                'product': 'windows'},
+                  'references': ['https://codewhitesec.blogspot.com/2018/07/lethalhta.html'],
+                  'status': 'experimental',
+                  'tags': ['attack.defense_evasion',
+                           'attack.execution',
+                           'attack.t1170'],
+                  'title': 'MSHTA spwaned by SVCHOST as seen in LethalHTA'}},
+ {'data_source': {'author': 'Michael Haag',
+                  'description': 'Detects a Windows command line executable '
+                                 'started from MSHTA.',
+                  'detection': {'condition': 'selection',
+                                'selection': {'Image': ['*\\cmd.exe',
+                                                        '*\\powershell.exe',
+                                                        '*\\wscript.exe',
+                                                        '*\\cscript.exe',
+                                                        '*\\sh.exe',
+                                                        '*\\bash.exe',
+                                                        '*\\reg.exe',
+                                                        '*\\regsvr32.exe',
+                                                        '*\\BITSADMIN*'],
+                                              'ParentImage': '*\\mshta.exe'}},
+                  'falsepositives': ['Printer software / driver installations',
+                                     'HP software'],
+                  'fields': ['CommandLine', 'ParentCommandLine'],
+                  'id': '03cc0c25-389f-4bf8-b48d-11878079f1ca',
+                  'level': 'high',
+                  'logsource': {'category': 'process_creation',
+                                'product': 'windows'},
+                  'references': ['https://www.trustedsec.com/july-2015/malicious-htas/'],
+                  'status': 'experimental',
+                  'tags': ['attack.defense_evasion',
+                           'attack.execution',
+                           'attack.t1170',
+                           'car.2013-02-003',
+                           'car.2013-03-001',
+                           'car.2014-04-003'],
+                  'title': 'MSHTA Spawning Windows Shell'}},
+ {'data_source': {'author': 'juju4',
+                  'description': 'Detects execution of executables that can be '
+                                 'used to bypass Applocker whitelisting',
+                  'detection': {'condition': 'selection',
+                                'selection': {'CommandLine|contains': ['\\msdt.exe',
+                                                                       '\\installutil.exe',
+                                                                       '\\regsvcs.exe',
+                                                                       '\\regasm.exe',
+                                                                       '\\msbuild.exe',
+                                                                       '\\ieexec.exe']}},
+                  'falsepositives': ['False positives depend on scripts and '
+                                     'administrative tools used in the '
+                                     'monitored environment',
+                                     'Using installutil to add features for '
+                                     '.NET applications (primarly would occur '
+                                     'in developer environments)'],
+                  'id': '82a19e3a-2bfe-4a91-8c0d-5d4c98fbb719',
+                  'level': 'low',
+                  'logsource': {'category': 'process_creation',
+                                'product': 'windows'},
+                  'references': ['https://github.com/subTee/ApplicationWhitelistBypassTechniques/blob/master/TheList.txt',
+                                 'https://room362.com/post/2014/2014-01-16-application-whitelist-bypass-using-ieexec-dot-exe/'],
+                  'status': 'experimental',
+                  'tags': ['attack.defense_evasion',
+                           'attack.t1118',
+                           'attack.t1121',
+                           'attack.t1127',
+                           'attack.t1170'],
+                  'title': 'Possible Applocker Bypass'}}]
 ```
 
 ## Potential Queries

@@ -90,7 +90,149 @@ powershell/persistence/misc/disable_machine_acct_change
 ## Potential Detections
 
 ```json
-
+[{'data_source': {'action': 'global',
+                  'author': 'Florian Roth, Markus Neis',
+                  'date': '2018/03/23',
+                  'description': 'Detects Chafer activity attributed to OilRig '
+                                 'as reported in Nyotron report in March 2018',
+                  'detection': {'condition': '1 of them'},
+                  'falsepositives': ['Unknown'],
+                  'id': '53ba33fd-3a50-4468-a5ef-c583635cfa92',
+                  'level': 'critical',
+                  'modified': '2019/03/01',
+                  'references': ['https://nyotron.com/nyotron-discovers-next-generation-oilrig-attacks/'],
+                  'tags': ['attack.persistence',
+                           'attack.g0049',
+                           'attack.t1053',
+                           'attack.s0111',
+                           'attack.defense_evasion',
+                           'attack.t1112'],
+                  'title': 'Chafer Activity'}},
+ {'data_source': {'detection': {'selection_service': {'EventID': 7045,
+                                                      'ServiceName': ['SC '
+                                                                      'Scheduled '
+                                                                      'Scan',
+                                                                      'UpdatMachine']}},
+                  'logsource': {'product': 'windows', 'service': 'system'}}},
+ {'data_source': {'detection': {'selection_service': {'EventID': 4698,
+                                                      'TaskName': ['SC '
+                                                                   'Scheduled '
+                                                                   'Scan',
+                                                                   'UpdatMachine']}},
+                  'logsource': {'product': 'windows', 'service': 'security'}}},
+ {'data_source': {'detection': {'selection_reg1': {'EventID': 13,
+                                                   'EventType': 'SetValue',
+                                                   'TargetObject': ['*SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\UMe',
+                                                                    '*SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\UT']},
+                                'selection_reg2': {'Details': 'DWORD '
+                                                              '(0x00000001)',
+                                                   'EventID': 13,
+                                                   'EventType': 'SetValue',
+                                                   'TargetObject': '*\\Control\\SecurityProviders\\WDigest\\UseLogonCredential'}},
+                  'logsource': {'product': 'windows', 'service': 'sysmon'}}},
+ {'data_source': {'detection': {'selection_process1': {'CommandLine': ['*\\Service.exe '
+                                                                       'i',
+                                                                       '*\\Service.exe '
+                                                                       'u',
+                                                                       '*\\microsoft\\Taskbar\\autoit3.exe',
+                                                                       'C:\\wsc.exe*']},
+                                'selection_process2': {'Image': '*\\Windows\\Temp\\DB\\\\*.exe'},
+                                'selection_process3': {'CommandLine': '*\\nslookup.exe '
+                                                                      '-q=TXT*',
+                                                       'ParentImage': '*\\Autoit*'}},
+                  'logsource': {'category': 'process_creation',
+                                'product': 'windows'}}},
+ {'data_source': {'author': 'megan201296',
+                  'date': '2019/04/14',
+                  'description': 'Detects registry keys created in OceanLotus '
+                                 '(also known as APT32) attacks',
+                  'detection': {'condition': 'selection',
+                                'selection': {'EventID': 13,
+                                              'TargetObject': ['*\\SOFTWARE\\Classes\\CLSID\\{E08A0F4B-1F65-4D4D-9A09-BD4625B9C5A1}\\Model',
+                                                               '*\\SOFTWARE\\App\\AppXbf13d4ea2945444d8b13e2121cb6b663\\Application',
+                                                               '*\\SOFTWARE\\App\\AppXbf13d4ea2945444d8b13e2121cb6b663\\DefaultIcon',
+                                                               '*\\SOFTWARE\\App\\AppX70162486c7554f7f80f481985d67586d\\Application',
+                                                               '*\\SOFTWARE\\App\\AppX70162486c7554f7f80f481985d67586d\\DefaultIcon',
+                                                               '*\\SOFTWARE\\App\\AppX37cc7fdccd644b4f85f4b22d5a3f105a\\Application',
+                                                               '*\\SOFTWARE\\App\\AppX37cc7fdccd644b4f85f4b22d5a3f105a\\DefaultIcon']}},
+                  'falsepositives': ['Unknown'],
+                  'id': '4ac5fc44-a601-4c06-955b-309df8c4e9d4',
+                  'level': 'critical',
+                  'logsource': {'product': 'windows', 'service': 'sysmon'},
+                  'references': ['https://www.welivesecurity.com/2019/03/20/fake-or-fake-keeping-up-with-oceanlotus-decoys/'],
+                  'status': 'experimental',
+                  'tags': ['attack.t1112'],
+                  'title': 'OceanLotus Registry Activity'}},
+ {'data_source': {'author': 'Dimitrios Slamaris',
+                  'date': '2017/05/15',
+                  'description': 'Detects the installation of a Callout DLL '
+                                 'via CalloutDlls and CalloutEnabled parameter '
+                                 'in Registry, which can be used to execute '
+                                 'code in context of the DHCP server (restart '
+                                 'required)',
+                  'detection': {'condition': 'selection',
+                                'selection': {'EventID': 13,
+                                              'TargetObject': ['*\\Services\\DHCPServer\\Parameters\\CalloutDlls',
+                                                               '*\\Services\\DHCPServer\\Parameters\\CalloutEnabled']}},
+                  'falsepositives': ['unknown'],
+                  'id': '9d3436ef-9476-4c43-acca-90ce06bdf33a',
+                  'level': 'high',
+                  'logsource': {'product': 'windows', 'service': 'sysmon'},
+                  'references': ['https://blog.3or.de/mimilib-dhcp-server-callout-dll-injection.html',
+                                 'https://technet.microsoft.com/en-us/library/cc726884(v=ws.10).aspx',
+                                 'https://msdn.microsoft.com/de-de/library/windows/desktop/aa363389(v=vs.85).aspx'],
+                  'status': 'experimental',
+                  'tags': ['attack.defense_evasion',
+                           'attack.t1073',
+                           'attack.t1112'],
+                  'title': 'DHCP Callout DLL installation'}},
+ {'data_source': {'author': 'SBousseaden',
+                  'date': '2019/10/28',
+                  'description': 'IKEEXT and SessionEnv service, as they call '
+                                 'LoadLibrary on files that do not exist '
+                                 'within C:\\Windows\\System32\\ by default. '
+                                 'An attacker can place their malicious logic '
+                                 'within the PROCESS_ATTACH block of their '
+                                 'library and restart the aforementioned '
+                                 'services "svchost.exe -k netsvcs" to gain '
+                                 'code execution on a remote machine.',
+                  'detection': {'condition': 'selection and not filter',
+                                'filter': {'EventID': 7,
+                                           'Image': ['*\\svchost.exe'],
+                                           'ImageLoaded': ['C:\\Windows\\WinSxS\\*']},
+                                'selection': {'EventID': 7,
+                                              'Image': ['*\\svchost.exe'],
+                                              'ImageLoaded': ['*\\tsmsisrv.dll',
+                                                              '*\\tsvipsrv.dll',
+                                                              '*\\wlbsctrl.dll']}},
+                  'falsepositives': ['Pentest'],
+                  'id': '602a1f13-c640-4d73-b053-be9a2fa58b77',
+                  'level': 'high',
+                  'logsource': {'product': 'windows', 'service': 'sysmon'},
+                  'references': ['https://posts.specterops.io/lateral-movement-scm-and-dll-hijacking-primer-d2f61e8ab992'],
+                  'status': 'experimental',
+                  'tags': ['attack.persistence',
+                           'attack.defense_evasion',
+                           'attack.t1073',
+                           'attack.t1038',
+                           'attack.t1112'],
+                  'title': 'Svchost DLL Search Order Hijack'}},
+ {'data_source': {'author': 'megan201296',
+                  'date': '2019/02/13',
+                  'description': 'Detects new registry key created by Ursnif '
+                                 'malware.',
+                  'detection': {'condition': 'selection',
+                                'selection': {'EventID': 13,
+                                              'TargetObject': '*\\Software\\AppDataLow\\Software\\Microsoft\\\\*'}},
+                  'falsepositives': ['Unknown'],
+                  'id': '21f17060-b282-4249-ade0-589ea3591558',
+                  'level': 'critical',
+                  'logsource': {'product': 'windows', 'service': 'sysmon'},
+                  'references': ['https://blog.yoroi.company/research/ursnif-long-live-the-steganography/',
+                                 'https://blog.trendmicro.com/trendlabs-security-intelligence/phishing-campaign-uses-hijacked-emails-to-deliver-ursnif-by-replying-to-ongoing-threads/'],
+                  'status': 'experimental',
+                  'tags': ['attack.execution', 'attack.t1112'],
+                  'title': 'Ursnif'}}]
 ```
 
 ## Potential Queries

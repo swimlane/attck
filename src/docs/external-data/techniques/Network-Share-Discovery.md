@@ -180,7 +180,43 @@ The command completed successfully.
 ## Potential Detections
 
 ```json
-
+[{'data_source': {'action': 'global',
+                  'author': 'Markus Neis',
+                  'date': '2017/11/07',
+                  'description': 'Detects automated lateral movement by Turla '
+                                 'group',
+                  'falsepositives': ['Unknown'],
+                  'id': 'c601f20d-570a-4cde-a7d6-e17f99cb8e7f',
+                  'logsource': {'category': 'process_creation',
+                                'product': 'windows'},
+                  'references': ['https://securelist.com/the-epic-turla-operation/65545/'],
+                  'status': 'experimental',
+                  'tags': ['attack.g0010',
+                           'attack.execution',
+                           'attack.t1059',
+                           'attack.lateral_movement',
+                           'attack.t1077',
+                           'attack.discovery',
+                           'attack.t1083',
+                           'attack.t1135'],
+                  'title': 'Turla Group Lateral Movement'}},
+ {'data_source': {'detection': {'condition': 'selection',
+                                'selection': {'CommandLine': ['net use '
+                                                              '\\\\%DomainController%\\C$ '
+                                                              '"P@ssw0rd" *',
+                                                              'dir '
+                                                              'c:\\\\*.doc* /s',
+                                                              'dir '
+                                                              '%TEMP%\\\\*.exe']}},
+                  'level': 'critical'}},
+ {'data_source': {'detection': {'condition': 'netCommand1 | near netCommand2 '
+                                             'and netCommand3',
+                                'netCommand1': {'CommandLine': 'net view '
+                                                               '/DOMAIN'},
+                                'netCommand2': {'CommandLine': 'net session'},
+                                'netCommand3': {'CommandLine': 'net share'},
+                                'timeframe': '1m'},
+                  'level': 'medium'}}]
 ```
 
 ## Potential Queries

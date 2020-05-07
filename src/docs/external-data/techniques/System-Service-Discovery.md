@@ -126,7 +126,40 @@ COM + System Application
 ## Potential Detections
 
 ```json
-
+[{'data_source': {'author': 'Timur Zinniatullin, oscd.community',
+                  'date': '2019/10/21',
+                  'description': 'Adversaries may interact with the Windows '
+                                 'Registry to gather information about the '
+                                 'system, configuration, and installed '
+                                 'software.',
+                  'detection': {'condition': 'selection',
+                                'selection': {'CommandLine|contains': ['currentVersion\\windows',
+                                                                       'currentVersion\\runServicesOnce',
+                                                                       'currentVersion\\runServices',
+                                                                       'winlogon\\',
+                                                                       'currentVersion\\shellServiceObjectDelayLoad',
+                                                                       'currentVersion\\runOnce',
+                                                                       'currentVersion\\runOnceEx',
+                                                                       'currentVersion\\run',
+                                                                       'currentVersion\\policies\\explorer\\run',
+                                                                       'currentcontrolset\\services'],
+                                              'Image|endswith': '\\reg.exe'}},
+                  'fields': ['Image',
+                             'CommandLine',
+                             'User',
+                             'LogonGuid',
+                             'Hashes',
+                             'ParentProcessGuid',
+                             'ParentCommandLine'],
+                  'id': '970007b7-ce32-49d0-a4a4-fbef016950bd',
+                  'level': 'low',
+                  'logsource': {'category': 'process_creation',
+                                'product': 'windows'},
+                  'modified': '2019/11/04',
+                  'references': ['https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1012/T1012.yaml'],
+                  'status': 'experimental',
+                  'tags': ['attack.discovery', 'attack.t1012', 'attack.t1007'],
+                  'title': 'Query Registry'}}]
 ```
 
 ## Potential Queries

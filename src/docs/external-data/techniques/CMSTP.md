@@ -136,7 +136,62 @@ ShortSvcName = "Micropoor"
 ## Potential Detections
 
 ```json
-
+[{'data_source': {'action': 'global',
+                  'author': 'Nik Seetharaman',
+                  'description': 'Detects various indicators of Microsoft '
+                                 'Connection Manager Profile Installer '
+                                 'execution',
+                  'detection': {'condition': '1 of them'},
+                  'falsepositives': ['Legitimate CMSTP use (unlikely in modern '
+                                     'enterprise environments)'],
+                  'fields': ['CommandLine', 'ParentCommandLine', 'Details'],
+                  'id': '9d26fede-b526-4413-b069-6e24b6d07167',
+                  'level': 'high',
+                  'references': ['http://www.endurant.io/cmstp/detecting-cmstp-enabled-code-execution-and-uac-bypass-with-sysmon/'],
+                  'status': 'stable',
+                  'tags': ['attack.defense_evasion',
+                           'attack.execution',
+                           'attack.t1191',
+                           'attack.g0069',
+                           'car.2019-04-001'],
+                  'title': 'CMSTP Execution'}},
+ {'data_source': {'detection': {'selection2': {'EventID': 12,
+                                               'TargetObject': '*\\cmmgr32.exe*'},
+                                'selection3': {'EventID': 13,
+                                               'TargetObject': '*\\cmmgr32.exe*'},
+                                'selection4': {'CallTrace': '*cmlua.dll*',
+                                               'EventID': 10}},
+                  'logsource': {'product': 'windows', 'service': 'sysmon'}}},
+ {'data_source': {'detection': {'selection1': {'ParentImage': '*\\cmstp.exe'}},
+                  'logsource': {'category': 'process_creation',
+                                'product': 'windows'}}},
+ {'data_source': {'author': 'Nik Seetharaman',
+                  'description': 'Detects UAC Bypass Attempt Using Microsoft '
+                                 'Connection Manager Profile Installer '
+                                 'Autoelevate-capable COM Objects',
+                  'detection': {'condition': 'selection1 and selection2',
+                                'selection1': {'ParentCommandLine': '*\\DllHost.exe'},
+                                'selection2': {'ParentCommandLine': ['*{3E5FC7F9-9A51-4367-9063-A120244FBEC7}',
+                                                                     '*{3E000D72-A845-4CD9-BD83-80C07C3B881F}']}},
+                  'falsepositives': ['Legitimate CMSTP use (unlikely in modern '
+                                     'enterprise environments)'],
+                  'fields': ['CommandLine', 'ParentCommandLine', 'Hashes'],
+                  'id': '4b60e6f2-bf39-47b4-b4ea-398e33cfe253',
+                  'level': 'high',
+                  'logsource': {'category': 'process_creation',
+                                'product': 'windows'},
+                  'modified': '2019/07/31',
+                  'references': ['http://www.endurant.io/cmstp/detecting-cmstp-enabled-code-execution-and-uac-bypass-with-sysmon/',
+                                 'https://twitter.com/hFireF0X/status/897640081053364225'],
+                  'status': 'stable',
+                  'tags': ['attack.defense_evasion',
+                           'attack.privilege_escalation',
+                           'attack.execution',
+                           'attack.t1088',
+                           'attack.t1191',
+                           'attack.g0069',
+                           'car.2019-04-001'],
+                  'title': 'CMSTP UAC Bypass via COM Object Access'}}]
 ```
 
 ## Potential Queries

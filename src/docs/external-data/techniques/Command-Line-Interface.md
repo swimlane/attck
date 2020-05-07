@@ -336,7 +336,121 @@ New Process Name: C: \ Windows \ System32 \ WindowsPowerShell \ v1.0 \ powershel
 ## Potential Detections
 
 ```json
-
+[{'data_source': {'author': 'Florian Roth',
+                  'description': 'Detects suspicious shell commands used in '
+                                 'various Equation Group scripts and tools',
+                  'detection': {'condition': 'keywords',
+                                'keywords': ['chown root*chmod 4777 ',
+                                             'cp /bin/sh .;chown',
+                                             'chmod 4777 '
+                                             '/tmp/.scsi/dev/bin/gsh',
+                                             'chown root:root '
+                                             '/tmp/.scsi/dev/bin/',
+                                             'chown root:root x;',
+                                             '/bin/telnet locip locport < '
+                                             '/dev/console | /bin/sh',
+                                             '/tmp/ratload',
+                                             'ewok -t ',
+                                             'xspy -display ',
+                                             'cat > /dev/tcp/127.0.0.1/80 '
+                                             '<<END',
+                                             'rm -f '
+                                             '/current/tmp/ftshell.latest',
+                                             'ghost_* -v ',
+                                             ' --wipe > /dev/null',
+                                             'ping -c 2 *; grep * '
+                                             '/proc/net/arp >/tmp/gx',
+                                             'iptables * OUTPUT -p tcp -d '
+                                             '127.0.0.1 --tcp-flags RST RST -j '
+                                             'DROP;',
+                                             '> /var/log/audit/audit.log; rm '
+                                             '-f .',
+                                             'cp /var/log/audit/audit.log .tmp',
+                                             'sh >/dev/tcp/* <&1 2>&1',
+                                             'ncat -vv -l -p * <',
+                                             'nc -vv -l -p * <',
+                                             '< /dev/console | uudecode && '
+                                             'uncompress',
+                                             'sendmail -osendmail;chmod +x '
+                                             'sendmail',
+                                             '/usr/bin/wget -O /tmp/a http* && '
+                                             'chmod 755 /tmp/cron',
+                                             'chmod 666 /var/run/utmp~',
+                                             'chmod 700 nscd crond',
+                                             'cp /etc/shadow /tmp/.',
+                                             '</dev/console |uudecode > '
+                                             '/dev/null 2>&1 && uncompress',
+                                             'chmod 700 jp&&netstat -an|grep',
+                                             'uudecode > /dev/null 2>&1 && '
+                                             'uncompress -f * && chmod 755',
+                                             'chmod 700 crond',
+                                             'wget http*; chmod +x '
+                                             '/tmp/sendmail',
+                                             'chmod 700 fp sendmail pt',
+                                             'chmod 755 /usr/vmsys/bin/pipe',
+                                             'chmod -R 755 /usr/vmsys',
+                                             'chmod 755 $opbin/*tunnel',
+                                             'chmod 700 sendmail',
+                                             'chmod 0700 sendmail',
+                                             '/usr/bin/wget '
+                                             'http*sendmail;chmod +x sendmail;',
+                                             '&& telnet * 2>&1 </dev/console']},
+                  'falsepositives': ['Unknown'],
+                  'id': '41e5c73d-9983-4b69-bd03-e13b67e9623c',
+                  'level': 'high',
+                  'logsource': {'product': 'linux'},
+                  'references': ['https://medium.com/@shadowbrokerss/dont-forget-your-base-867d304a94b1'],
+                  'tags': ['attack.execution', 'attack.g0020', 'attack.t1059'],
+                  'title': 'Equation Group Indicators'}},
+ {'data_source': {'author': 'Florian Roth',
+                  'date': '2017/05/31',
+                  'description': 'This events that are generated when using '
+                                 'the hacktool Ruler by Sensepost',
+                  'detection': {'condition': '(1 of selection*)',
+                                'selection1': {'EventID': [4776],
+                                               'Workstation': 'RULER'},
+                                'selection2': {'EventID': [4624, 4625],
+                                               'WorkstationName': 'RULER'}},
+                  'falsepositives': ['Go utilities that use staaldraad awesome '
+                                     'NTLM library'],
+                  'id': '24549159-ac1b-479c-8175-d42aea947cae',
+                  'level': 'high',
+                  'logsource': {'product': 'windows', 'service': 'security'},
+                  'modified': '2019/07/26',
+                  'references': ['https://github.com/sensepost/ruler',
+                                 'https://github.com/sensepost/ruler/issues/47',
+                                 'https://github.com/staaldraad/go-ntlm/blob/master/ntlm/ntlmv1.go#L427',
+                                 'https://docs.microsoft.com/en-us/windows/security/threat-protection/auditing/event-4776',
+                                 'https://docs.microsoft.com/en-us/windows/security/threat-protection/auditing/event-4624'],
+                  'tags': ['attack.discovery',
+                           'attack.execution',
+                           'attack.t1087',
+                           'attack.t1075',
+                           'attack.t1114',
+                           'attack.t1059'],
+                  'title': 'Hacktool Ruler'}},
+ {'data_source': {'author': 'Florian Roth',
+                  'description': 'Detects a suspicious command line execution '
+                                 'that includes an URL and AppData string in '
+                                 'the command line parameters as used by '
+                                 'several droppers (js/vbs > powershell)',
+                  'detection': {'condition': 'selection',
+                                'selection': {'CommandLine': ['cmd.exe /c '
+                                                              '*http://*%AppData%',
+                                                              'cmd.exe /c '
+                                                              '*https://*%AppData%']}},
+                  'falsepositives': ['High'],
+                  'fields': ['CommandLine', 'ParentCommandLine'],
+                  'id': '1ac8666b-046f-4201-8aba-1951aaec03a3',
+                  'level': 'medium',
+                  'logsource': {'category': 'process_creation',
+                                'product': 'windows'},
+                  'references': ['https://www.hybrid-analysis.com/sample/3a1f01206684410dbe8f1900bbeaaa543adfcd07368ba646b499fa5274b9edf6?environmentId=100',
+                                 'https://www.hybrid-analysis.com/sample/f16c729aad5c74f19784a24257236a8bbe27f7cdc4a89806031ec7f1bebbd475?environmentId=100'],
+                  'status': 'experimental',
+                  'tags': ['attack.execution', 'attack.t1059'],
+                  'title': 'Command Line Execution with suspicious URL and '
+                           'AppData Strings'}}]
 ```
 
 ## Potential Queries

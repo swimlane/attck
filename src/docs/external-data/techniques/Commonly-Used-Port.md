@@ -68,7 +68,124 @@ powershell/lateral_movement/invoke_sshcommand
 ## Potential Detections
 
 ```json
-
+[{'data_source': {'author': 'Patrick Bareiss',
+                  'date': '2019/04/07',
+                  'description': 'Normally, DNS logs contain a limited amount '
+                                 'of different dns queries for a single '
+                                 'domain. This rule detects a high amount of '
+                                 'queries for a single domain, which can be an '
+                                 'indicator that DNS is used to transfer data.',
+                  'detection': {'condition': 'selection | count(dns_query) by '
+                                             'parent_domain > 1000',
+                                'selection': {'parent_domain': '*'}},
+                  'falsepositives': ['Valid software, which uses dns for '
+                                     'transferring data'],
+                  'id': '1ec4b281-aa65-46a2-bdae-5fd830ed914e',
+                  'level': 'high',
+                  'logsource': {'product': 'dns'},
+                  'references': ['https://zeltser.com/c2-dns-tunneling/',
+                                 'https://patrick-bareiss.com/detect-c2-traffic-over-dns-using-sigma/'],
+                  'status': 'experimental',
+                  'tags': ['attack.t1043'],
+                  'title': 'Possible DNS Tunneling'}},
+ {'data_source': {'author': 'Florian Roth',
+                  'date': '2017/03/19',
+                  'description': 'Detects programs that connect to typical '
+                                 'malware back connect ports based on '
+                                 'statistical analysis from two different '
+                                 'sandbox system databases',
+                  'detection': {'condition': 'selection and not ( filter1 or '
+                                             'filter2 )',
+                                'filter1': {'Image': '*\\Program Files*'},
+                                'filter2': {'DestinationIp': ['10.*',
+                                                              '192.168.*',
+                                                              '172.16.*',
+                                                              '172.17.*',
+                                                              '172.18.*',
+                                                              '172.19.*',
+                                                              '172.20.*',
+                                                              '172.21.*',
+                                                              '172.22.*',
+                                                              '172.23.*',
+                                                              '172.24.*',
+                                                              '172.25.*',
+                                                              '172.26.*',
+                                                              '172.27.*',
+                                                              '172.28.*',
+                                                              '172.29.*',
+                                                              '172.30.*',
+                                                              '172.31.*',
+                                                              '127.*'],
+                                            'DestinationIsIpv6': 'false'},
+                                'selection': {'DestinationPort': ['4443',
+                                                                  '2448',
+                                                                  '8143',
+                                                                  '1777',
+                                                                  '1443',
+                                                                  '243',
+                                                                  '65535',
+                                                                  '13506',
+                                                                  '3360',
+                                                                  '200',
+                                                                  '198',
+                                                                  '49180',
+                                                                  '13507',
+                                                                  '6625',
+                                                                  '4444',
+                                                                  '4438',
+                                                                  '1904',
+                                                                  '13505',
+                                                                  '13504',
+                                                                  '12102',
+                                                                  '9631',
+                                                                  '5445',
+                                                                  '2443',
+                                                                  '777',
+                                                                  '13394',
+                                                                  '13145',
+                                                                  '12103',
+                                                                  '5552',
+                                                                  '3939',
+                                                                  '3675',
+                                                                  '666',
+                                                                  '473',
+                                                                  '5649',
+                                                                  '4455',
+                                                                  '4433',
+                                                                  '1817',
+                                                                  '100',
+                                                                  '65520',
+                                                                  '1960',
+                                                                  '1515',
+                                                                  '743',
+                                                                  '700',
+                                                                  '14154',
+                                                                  '14103',
+                                                                  '14102',
+                                                                  '12322',
+                                                                  '10101',
+                                                                  '7210',
+                                                                  '4040',
+                                                                  '9943'],
+                                              'EventID': 3,
+                                              'Initiated': 'true'}},
+                  'falsepositives': ['unknown'],
+                  'id': '4b89abaa-99fe-4232-afdd-8f9aa4d20382',
+                  'level': 'medium',
+                  'logsource': {'definition': 'Use the following config to '
+                                              'generate the necessary Event ID '
+                                              '10 Process Access events: '
+                                              '<ProcessAccess '
+                                              'onmatch="include"><CallTrace '
+                                              'condition="contains">VBE7.DLL</CallTrace></ProcessAccess><ProcessAccess '
+                                              'onmatch="exclude"><CallTrace '
+                                              'condition="excludes">UNKNOWN</CallTrace></ProcessAccess>',
+                                'product': 'windows',
+                                'service': 'sysmon'},
+                  'references': ['https://docs.google.com/spreadsheets/d/17pSTDNpa0sf6pHeRhusvWG6rThciE8CsXTSlDUAZDyo'],
+                  'status': 'experimental',
+                  'tags': ['attack.command_and_control', 'attack.t1043'],
+                  'title': 'Suspicious Typical Malware Back Connect Ports'}}]
 ```
 
 ## Potential Queries

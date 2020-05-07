@@ -172,7 +172,22 @@ python/situational_awareness/network/port_scan
 ## Potential Detections
 
 ```json
-
+[{'data_source': {'author': 'Florian Roth',
+                  'description': 'Detects a JAVA process running with remote '
+                                 'debugging allowing more than just localhost '
+                                 'to connect',
+                  'detection': {'condition': 'selection and not exclusion',
+                                'exclusion': [{'CommandLine': '*address=127.0.0.1*'},
+                                              {'CommandLine': '*address=localhost*'}],
+                                'selection': {'CommandLine': '*transport=dt_socket,address=*'}},
+                  'falsepositives': ['unknown'],
+                  'fields': ['CommandLine', 'ParentCommandLine'],
+                  'id': '8f88e3f6-2a49-48f5-a5c4-2f7eedf78710',
+                  'level': 'medium',
+                  'logsource': {'category': 'process_creation',
+                                'product': 'windows'},
+                  'tags': ['attack.discovery', 'attack.t1046'],
+                  'title': 'Java Running with Remote Debugging'}}]
 ```
 
 ## Potential Queries

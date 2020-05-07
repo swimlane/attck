@@ -117,7 +117,42 @@ powershell/management/timestomp
 ## Potential Detections
 
 ```json
-
+[{'data_source': {'author': '@neu5ron',
+                  'date': '2019/02/05',
+                  'description': 'Detect scenarios where a potentially '
+                                 'unauthorized application or user is '
+                                 'modifying the system time.',
+                  'detection': {'condition': 'selection and not ( filter1 or '
+                                             'filter2 or filter3 )',
+                                'filter1': {'ProcessName': 'C:\\Program '
+                                                           'Files\\VMware\\VMware '
+                                                           'Tools\\vmtoolsd.exe'},
+                                'filter2': {'ProcessName': 'C:\\Windows\\System32\\VBoxService.exe'},
+                                'filter3': {'ProcessName': 'C:\\Windows\\System32\\svchost.exe',
+                                            'SubjectUserSid': 'S-1-5-19'},
+                                'selection': {'EventID': 4616}},
+                  'falsepositives': ['HyperV or other virtualization '
+                                     'technologies with binary not listed in '
+                                     'filter portion of detection'],
+                  'id': 'faa031b5-21ed-4e02-8881-2591f98d82ed',
+                  'level': 'high',
+                  'logsource': {'definition': 'Requirements: Audit Policy : '
+                                              'System > Audit Security State '
+                                              'Change, Group Policy : Computer '
+                                              'Configuration\\Windows '
+                                              'Settings\\Security '
+                                              'Settings\\Advanced Audit Policy '
+                                              'Configuration\\Audit '
+                                              'Policies\\System\\Audit '
+                                              'Security State Change',
+                                'product': 'windows',
+                                'service': 'security'},
+                  'references': ['Private Cuckoo Sandbox (from many years ago, '
+                                 'no longer have hash, NDA as well)',
+                                 'Live environment caused by malware'],
+                  'status': 'experimental',
+                  'tags': ['attack.defense_evasion', 'attack.t1099'],
+                  'title': 'Unauthorized System Time Modification'}}]
 ```
 
 ## Potential Queries

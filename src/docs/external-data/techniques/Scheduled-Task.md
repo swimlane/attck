@@ -189,7 +189,175 @@ powershell/persistence/userland/schtasks
 ## Potential Detections
 
 ```json
-
+[{'data_source': {'action': 'global',
+                  'author': 'Florian Roth',
+                  'description': 'Detects the deactivation of the Scheduled '
+                                 'defragmentation task as seen by Slingshot '
+                                 'APT group',
+                  'detection': {'condition': '1 of them'},
+                  'falsepositives': ['Unknown'],
+                  'id': '958d81aa-8566-4cea-a565-59ccd4df27b0',
+                  'level': 'medium',
+                  'references': ['https://securelist.com/apt-slingshot/84312/'],
+                  'tags': ['attack.persistence',
+                           'attack.t1053',
+                           'attack.s0111'],
+                  'title': 'Defrag Deactivation'}},
+ {'data_source': {'detection': {'selection1': {'CommandLine': ['*schtasks* '
+                                                               '/delete '
+                                                               '*Defrag\\ScheduledDefrag*']}},
+                  'logsource': {'category': 'process_creation',
+                                'product': 'windows'}}},
+ {'data_source': {'detection': {'selection2': {'EventID': 4701,
+                                               'TaskName': '\\Microsoft\\Windows\\Defrag\\ScheduledDefrag'}},
+                  'logsource': {'definition': 'Requirements: Audit Policy : '
+                                              'Audit Other Object Access '
+                                              'Events > Success',
+                                'product': 'windows',
+                                'service': 'security'}}},
+ {'data_source': {'author': 'Samir Bousseaden',
+                  'description': 'Detect lateral movement using GPO scheduled '
+                                 'task, ususally used to deploy ransomware at '
+                                 'scale',
+                  'detection': {'condition': 'selection',
+                                'selection': {'Accesses': '*WriteData*',
+                                              'EventID': 5145,
+                                              'RelativeTargetName': '*ScheduledTasks.xml',
+                                              'ShareName': '\\\\*\\SYSVOL'}},
+                  'falsepositives': ['if the source IP is not localhost then '
+                                     "it's super suspicious, better to monitor "
+                                     'both local and remote changes to GPO '
+                                     'scheduledtasks'],
+                  'id': 'a8f29a7b-b137-4446-80a0-b804272f3da2',
+                  'level': 'high',
+                  'logsource': {'description': 'The advanced audit policy '
+                                               'setting "Object Access > Audit '
+                                               'Detailed File Share" must be '
+                                               'configured for Success/Failure',
+                                'product': 'windows',
+                                'service': 'security'},
+                  'references': ['https://twitter.com/menasec1/status/1106899890377052160'],
+                  'tags': ['attack.persistence',
+                           'attack.lateral_movement',
+                           'attack.t1053'],
+                  'title': 'Persistence and Execution at scale via GPO '
+                           'scheduled task'}},
+ {'data_source': {'author': 'Samir Bousseaden',
+                  'description': 'Detects remote task creation via at.exe or '
+                                 'API interacting with ATSVC namedpipe',
+                  'detection': {'condition': 'selection',
+                                'selection': {'Accesses': '*WriteData*',
+                                              'EventID': 5145,
+                                              'RelativeTargetName': 'atsvc',
+                                              'ShareName': '\\\\*\\IPC$'}},
+                  'falsepositives': ['pentesting'],
+                  'id': 'f6de6525-4509-495a-8a82-1f8b0ed73a00',
+                  'level': 'medium',
+                  'logsource': {'description': 'The advanced audit policy '
+                                               'setting "Object Access > Audit '
+                                               'Detailed File Share" must be '
+                                               'configured for Success/Failure',
+                                'product': 'windows',
+                                'service': 'security'},
+                  'references': ['https://blog.menasec.net/2019/03/threat-hunting-25-scheduled-tasks-for.html'],
+                  'tags': ['attack.lateral_movement',
+                           'attack.persistence',
+                           'attack.t1053',
+                           'car.2013-05-004',
+                           'car.2015-04-001'],
+                  'title': 'Remote Task Creation via ATSVC named pipe'}},
+ {'data_source': {'author': 'Florian Roth',
+                  'description': 'This rule detects rare scheduled task '
+                                 'creations. Typically software gets installed '
+                                 'on multiple systems and not only on a few. '
+                                 'The aggregation and count function selects '
+                                 'tasks with rare names.',
+                  'detection': {'condition': 'selection | count() by TaskName '
+                                             '< 5',
+                                'selection': {'EventID': 106},
+                                'timeframe': '7d'},
+                  'falsepositives': ['Software installation'],
+                  'id': 'b20f6158-9438-41be-83da-a5a16ac90c2b',
+                  'level': 'low',
+                  'logsource': {'product': 'windows',
+                                'service': 'taskscheduler'},
+                  'status': 'experimental',
+                  'tags': ['attack.persistence',
+                           'attack.t1053',
+                           'attack.s0111'],
+                  'title': 'Rare Scheduled Task Creations'}},
+ {'data_source': {'author': 'Florian Roth',
+                  'description': 'Detects rare scheduled tasks creations that '
+                                 'only appear a few times per time frame and '
+                                 'could reveal password dumpers, backdoor '
+                                 'installs or other types of malicious code',
+                  'detection': {'condition': 'selection | count() by TaskName '
+                                             '< 5',
+                                'selection': {'EventID': 4698},
+                                'timeframe': '7d'},
+                  'falsepositives': ['Software installation',
+                                     'Software updates'],
+                  'id': 'b0d77106-7bb0-41fe-bd94-d1752164d066',
+                  'level': 'low',
+                  'logsource': {'definition': 'The Advanced Audit Policy '
+                                              'setting Object Access > Audit '
+                                              'Other Object Access Events has '
+                                              'to be configured to allow this '
+                                              'detection (not in the baseline '
+                                              'recommendations by Microsoft). '
+                                              'We also recommend extracting '
+                                              'the Command field from the '
+                                              'embedded XML in the event data.',
+                                'product': 'windows',
+                                'service': 'security'},
+                  'status': 'experimental',
+                  'tags': ['attack.execution',
+                           'attack.privilege_escalation',
+                           'attack.persistence',
+                           'attack.t1053',
+                           'car.2013-08-001'],
+                  'title': 'Rare Schtasks Creations'}},
+ {'data_source': {'author': 'Florian Roth',
+                  'description': 'Detects the creation of scheduled tasks in '
+                                 'user session',
+                  'detection': {'condition': 'selection and not filter',
+                                'filter': {'User': 'NT AUTHORITY\\SYSTEM'},
+                                'selection': {'CommandLine': '* /create *',
+                                              'Image': '*\\schtasks.exe'}},
+                  'falsepositives': ['Administrative activity',
+                                     'Software installation'],
+                  'fields': ['CommandLine', 'ParentCommandLine'],
+                  'id': '92626ddd-662c-49e3-ac59-f6535f12d189',
+                  'level': 'low',
+                  'logsource': {'category': 'process_creation',
+                                'product': 'windows'},
+                  'status': 'experimental',
+                  'tags': ['attack.execution',
+                           'attack.persistence',
+                           'attack.privilege_escalation',
+                           'attack.t1053',
+                           'attack.s0111',
+                           'car.2013-08-001'],
+                  'title': 'Scheduled Task Creation'}},
+ {'data_source': {'author': 'Olaf Hartong',
+                  'date': '2019/05/22',
+                  'description': 'Detects Task Scheduler .job import arbitrary '
+                                 'DACL write\\par',
+                  'detection': {'condition': 'selection',
+                                'selection': {'CommandLine': '*/change*/TN*/RU*/RP*',
+                                              'Image': 'schtasks.exe'}},
+                  'falsepositives': ['Unknown'],
+                  'id': '931b6802-d6a6-4267-9ffa-526f57f22aaf',
+                  'level': 'high',
+                  'logsource': {'category': 'process_creation',
+                                'product': 'windows'},
+                  'references': ['https://github.com/SandboxEscaper/polarbearrepo/tree/master/bearlpe'],
+                  'status': 'experimental',
+                  'tags': ['attack.privilege_escalation',
+                           'attack.execution',
+                           'attack.t1053',
+                           'car.2013-08-001'],
+                  'title': 'Windows 10 scheduled task SandboxEscaper 0-day'}}]
 ```
 
 ## Potential Queries

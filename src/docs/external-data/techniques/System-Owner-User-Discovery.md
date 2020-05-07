@@ -136,7 +136,48 @@ powershell/situational_awareness/network/powerview/get_session
 ## Potential Detections
 
 ```json
-
+[{'data_source': {'author': 'Timur Zinniatullin, oscd.community',
+                  'date': '2019/10/21',
+                  'description': 'Adversaries may use the information from '
+                                 'System Owner/User Discovery during automated '
+                                 'discovery to shape follow-on behaviors, '
+                                 'including whether or not the adversary fully '
+                                 'infects the target and/or attempts specific '
+                                 'actions.',
+                  'detection': {'condition': 'selection',
+                                'selection': {'a0': ['users', 'w', 'who'],
+                                              'type': 'EXECVE'}},
+                  'falsepositives': ['Admin activity'],
+                  'id': '9a0d8ca0-2385-4020-b6c6-cb6153ca56f3',
+                  'level': 'low',
+                  'logsource': {'product': 'linux', 'service': 'auditd'},
+                  'references': ['https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1033/T1033.yaml'],
+                  'status': 'experimental',
+                  'tags': ['attack.discovery', 'attack.t1033'],
+                  'title': 'System Owner or User Discovery'}},
+ {'data_source': {'author': 'Florian Roth',
+                  'date': '2018/08/13',
+                  'description': 'Detects the execution of whoami, which is '
+                                 'often used by attackers after exloitation / '
+                                 'privilege escalation but rarely used by '
+                                 'administrators',
+                  'detection': {'condition': 'selection or selection2',
+                                'selection': {'Image': '*\\whoami.exe'},
+                                'selection2': {'OriginalFileName': 'whoami.exe'}},
+                  'falsepositives': ['Admin activity',
+                                     'Scripts and administrative tools used in '
+                                     'the monitored environment'],
+                  'id': 'e28a5a99-da44-436d-b7a0-2afc20a5f413',
+                  'level': 'high',
+                  'logsource': {'category': 'process_creation',
+                                'product': 'windows'},
+                  'references': ['https://brica.de/alerts/alert/public/1247926/agent-tesla-keylogger-delivered-inside-a-power-iso-daa-archive/',
+                                 'https://app.any.run/tasks/7eaba74e-c1ea-400f-9c17-5e30eee89906/'],
+                  'status': 'experimental',
+                  'tags': ['attack.discovery',
+                           'attack.t1033',
+                           'car.2016-03-001'],
+                  'title': 'Whoami Execution'}}]
 ```
 
 ## Potential Queries

@@ -327,7 +327,74 @@ powershell/privesc/bypassuac_tokenmanipulation
 ## Potential Detections
 
 ```json
-
+[{'data_source': {'author': 'Florian Roth',
+                  'description': 'Detects UAC bypass method using Windows '
+                                 'event viewer',
+                  'detection': {'condition': 'methregistry or ( methprocess '
+                                             'and not filterprocess )',
+                                'filterprocess': {'Image': '*\\mmc.exe'},
+                                'methprocess': {'EventID': 1,
+                                                'ParentImage': '*\\eventvwr.exe'},
+                                'methregistry': {'EventID': 13,
+                                                 'TargetObject': 'HKEY_USERS\\\\*\\mscfile\\shell\\open\\command'}},
+                  'falsepositives': ['unknown'],
+                  'fields': ['CommandLine', 'ParentCommandLine'],
+                  'id': '7c81fec3-1c1d-43b0-996a-46753041b1b6',
+                  'level': 'critical',
+                  'logsource': {'product': 'windows', 'service': 'sysmon'},
+                  'references': ['https://enigma0x3.net/2016/08/15/fileless-uac-bypass-using-eventvwr-exe-and-registry-hijacking/',
+                                 'https://www.hybrid-analysis.com/sample/e122bc8bf291f15cab182a5d2d27b8db1e7019e4e96bb5cdbd1dfe7446f3f51f?environmentId=100'],
+                  'status': 'experimental',
+                  'tags': ['attack.defense_evasion',
+                           'attack.privilege_escalation',
+                           'attack.t1088',
+                           'car.2019-04-001'],
+                  'title': 'UAC Bypass via Event Viewer'}},
+ {'data_source': {'author': 'Omer Yampel',
+                  'description': 'Detects changes to '
+                                 'HKCU:\\Software\\Classes\\exefile\\shell\\runas\\command\\isolatedCommand',
+                  'detection': {'condition': 'selection',
+                                'selection': {'EventID': 13,
+                                              'TargetObject': 'HKEY_USERS\\\\*\\Classes\\exefile\\shell\\runas\\command\\isolatedCommand'}},
+                  'falsepositives': ['unknown'],
+                  'id': '5b872a46-3b90-45c1-8419-f675db8053aa',
+                  'level': 'high',
+                  'logsource': {'product': 'windows', 'service': 'sysmon'},
+                  'references': ['https://enigma0x3.net/2017/03/17/fileless-uac-bypass-using-sdclt-exe/'],
+                  'status': 'experimental',
+                  'tags': ['attack.defense_evasion',
+                           'attack.privilege_escalation',
+                           'attack.t1088',
+                           'car.2019-04-001'],
+                  'title': 'UAC Bypass via sdclt'}},
+ {'data_source': {'author': 'Ecco',
+                  'date': '2019/08/30',
+                  'description': 'Detects some Empire PowerShell UAC bypass '
+                                 'methods',
+                  'detection': {'condition': 'selection',
+                                'selection': {'CommandLine': ['* -NoP -NonI -w '
+                                                              'Hidden -c '
+                                                              '$x=$((gp '
+                                                              'HKCU:Software\\\\Microsoft\\\\Windows '
+                                                              'Update).Update)*',
+                                                              '* -NoP -NonI -c '
+                                                              '$x=$((gp '
+                                                              'HKCU:Software\\\\Microsoft\\\\Windows '
+                                                              'Update).Update);*']}},
+                  'falsepositives': ['unknown'],
+                  'fields': ['CommandLine', 'ParentCommandLine'],
+                  'id': '3268b746-88d8-4cd3-bffc-30077d02c787',
+                  'level': 'critical',
+                  'logsource': {'category': 'process_creation',
+                                'product': 'windows'},
+                  'references': ['https://github.com/EmpireProject/Empire/blob/e37fb2eef8ff8f5a0a689f1589f424906fe13055/data/module_source/privesc/Invoke-EventVwrBypass.ps1#L64',
+                                 'https://github.com/EmpireProject/Empire/blob/e37fb2eef8ff8f5a0a689f1589f424906fe13055/data/module_source/privesc/Invoke-FodHelperBypass.ps1#L64'],
+                  'status': 'experimental',
+                  'tags': ['attack.defense_evasion',
+                           'attack.privilege_escalation',
+                           'attack.t1088',
+                           'car.2019-04-001'],
+                  'title': 'Empire PowerShell UAC Bypass'}}]
 ```
 
 ## Potential Queries
