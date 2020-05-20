@@ -13,14 +13,20 @@ Silver Tickets can be obtained for services that use Kerberos as an authenticati
 
 Golden Tickets can be obtained for the domain using the Key Distribution Service account KRBTGT account NTLM hash, which enables generation of TGTs for any account in Active Directory. (Citation: Campbell 2014)
 
+## Aliases
+
+```
+
+```
+
 ## Additional Attributes
 
 * Bypass: None
 * Effective Permissions: None
-* Network: intentionally left blank
+* Network: None
 * Permissions: None
 * Platforms: ['Windows']
-* Remote: intentionally left blank
+* Remote: None
 * Type: attack-pattern
 * Wiki: https://attack.mitre.org/techniques/T1097
 
@@ -47,7 +53,8 @@ mimikatz # kerberos::ptt #{user_name}@atomic.local
 ## Potential Detections
 
 ```json
-
+[{'data_source': ['4624', 'Authentication logs']},
+ {'data_source': ['4624', 'Authentication logs']}]
 ```
 
 ## Potential Queries
@@ -157,7 +164,8 @@ mimikatz # kerberos::ptt #{user_name}@atomic.local
 ## Raw Dataset
 
 ```json
-[{'Atomic Red Team Test - Pass the Ticket': {'atomic_tests': [{'description': 'Similar '
+[{'Atomic Red Team Test - Pass the Ticket': {'atomic_tests': [{'auto_generated_guid': 'dbf38128-7ba7-4776-bedf-cc2eed432098',
+                                                               'description': 'Similar '
                                                                               'to '
                                                                               'PTH, '
                                                                               'but '

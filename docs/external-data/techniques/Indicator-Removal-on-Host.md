@@ -23,14 +23,20 @@ The event logs can be cleared with the following utility commands:
 
 Logs may also be cleared through other mechanisms, such as [PowerShell](https://attack.mitre.org/techniques/T1086).
 
+## Aliases
+
+```
+
+```
+
 ## Additional Attributes
 
 * Bypass: ['Log analysis', 'Host intrusion prevention systems', 'Anti-virus']
 * Effective Permissions: None
-* Network: intentionally left blank
+* Network: None
 * Permissions: None
 * Platforms: ['Linux', 'macOS', 'Windows']
-* Remote: intentionally left blank
+* Remote: None
 * Type: attack-pattern
 * Wiki: https://attack.mitre.org/techniques/T1070
 
@@ -275,7 +281,13 @@ rm -rf /var/log/*
                   'tags': ['attack.defense_evasion',
                            'attack.t1070',
                            'car.2016-04-002'],
-                  'title': 'Security Eventlog Cleared'}}]
+                  'title': 'Security Eventlog Cleared'}},
+ {'data_source': ['4663', 'File monitoring']},
+ {'data_source': ['4688 ', 'Process CMD Line']},
+ {'data_source': ['4688', 'Process Execution']},
+ {'data_source': ['4663', 'File monitoring']},
+ {'data_source': ['4688 ', 'Process CMD Line']},
+ {'data_source': ['4688', 'Process Execution']}]
 ```
 
 ## Potential Queries
@@ -313,7 +325,8 @@ rm -rf /var/log/*
 ## Raw Dataset
 
 ```json
-[{'Atomic Red Team Test - Indicator Removal on Host': {'atomic_tests': [{'description': 'Upon '
+[{'Atomic Red Team Test - Indicator Removal on Host': {'atomic_tests': [{'auto_generated_guid': 'e6abb60e-26b8-41da-8aae-0c35174b0967',
+                                                                         'description': 'Upon '
                                                                                         'execution '
                                                                                         'this '
                                                                                         'test '
@@ -350,7 +363,8 @@ rm -rf /var/log/*
                                                                          'name': 'Clear '
                                                                                  'Logs',
                                                                          'supported_platforms': ['windows']},
-                                                                        {'description': 'Manages '
+                                                                        {'auto_generated_guid': 'b4115c7a-0e92-47f0-a61e-17e7218b2435',
+                                                                         'description': 'Manages '
                                                                                         'the '
                                                                                         'update '
                                                                                         'sequence '
@@ -403,7 +417,8 @@ rm -rf /var/log/*
                                                                                       'name': 'command_prompt'},
                                                                          'name': 'FSUtil',
                                                                          'supported_platforms': ['windows']},
-                                                                        {'description': 'Delete '
+                                                                        {'auto_generated_guid': '989cc1b1-3642-4260-a809-54f9dd559683',
+                                                                         'description': 'Delete '
                                                                                         'system '
                                                                                         'and '
                                                                                         'audit '
@@ -419,7 +434,8 @@ rm -rf /var/log/*
                                                                                  '-rf',
                                                                          'supported_platforms': ['macos',
                                                                                                  'linux']},
-                                                                        {'description': 'This '
+                                                                        {'auto_generated_guid': '1602ff76-ed7f-4c94-b550-2f727b4782d4',
+                                                                         'description': 'This '
                                                                                         'test '
                                                                                         'overwrites '
                                                                                         'the '
@@ -460,7 +476,8 @@ rm -rf /var/log/*
                                                                                  'Mail '
                                                                                  'Spool',
                                                                          'supported_platforms': ['linux']},
-                                                                        {'description': 'This '
+                                                                        {'auto_generated_guid': 'd304b2dc-90b4-4465-a650-16ddd503f7b5',
+                                                                         'description': 'This '
                                                                                         'test '
                                                                                         'overwrites '
                                                                                         'the '
@@ -495,7 +512,8 @@ rm -rf /var/log/*
                                                                                  'Linux '
                                                                                  'Log',
                                                                          'supported_platforms': ['linux']},
-                                                                        {'description': 'Recommended '
+                                                                        {'auto_generated_guid': '334c36ca-fec3-47ff-afdb-22b2ae6d0812',
+                                                                         'description': 'Recommended '
                                                                                         'Detection: '
                                                                                         'Monitor '
                                                                                         'for '
@@ -578,7 +596,8 @@ rm -rf /var/log/*
                                                                                  'Using '
                                                                                  'PowerShell',
                                                                          'supported_platforms': ['windows']},
-                                                                        {'description': 'Clear '
+                                                                        {'auto_generated_guid': 'b13e9306-3351-4b4b-a6e8-477358b0b498',
+                                                                         'description': 'Clear '
                                                                                         'event '
                                                                                         'logs '
                                                                                         'using '

@@ -13,6 +13,12 @@ Popular websites and social media acting as a mechanism for C2 may give a signif
 
 Use of Web services may also protect back-end C2 infrastructure from discovery through malware binary analysis while also enabling operational resiliency (since this infrastructure may be dynamically changed).
 
+## Aliases
+
+```
+
+```
+
 ## Additional Attributes
 
 * Bypass: ['Binary Analysis', 'Log analysis', 'Firewall']
@@ -20,7 +26,7 @@ Use of Web services may also protect back-end C2 infrastructure from discovery t
 * Network: True
 * Permissions: ['User']
 * Platforms: ['Linux', 'macOS', 'Windows']
-* Remote: intentionally left blank
+* Remote: None
 * Type: attack-pattern
 * Wiki: https://attack.mitre.org/techniques/T1102
 
@@ -138,7 +144,17 @@ $T1102 = $wc.DownloadString("https://www.aol.com/")
                   'references': ['https://www.virustotal.com/gui/domain/paste.ee/relations'],
                   'status': 'experimental',
                   'tags': ['attack.t1102', 'attack.defense_evasion'],
-                  'title': 'Raw Paste Service Access'}}]
+                  'title': 'Raw Paste Service Access'}},
+ {'data_source': ['Host network interface']},
+ {'data_source': ['Netflow/Enclave netflow']},
+ {'data_source': ['Network protocol analysis']},
+ {'data_source': ['Packet capture']},
+ {'data_source': ['SSL/TLS inspection']},
+ {'data_source': ['Host network interface']},
+ {'data_source': ['Netflow/Enclave netflow']},
+ {'data_source': ['Network protocol analysis']},
+ {'data_source': ['Packet capture']},
+ {'data_source': ['SSL/TLS inspection']}]
 ```
 
 ## Potential Queries
@@ -150,7 +166,8 @@ $T1102 = $wc.DownloadString("https://www.aol.com/")
 ## Raw Dataset
 
 ```json
-[{'Atomic Red Team Test - Web Service': {'atomic_tests': [{'description': 'Download '
+[{'Atomic Red Team Test - Web Service': {'atomic_tests': [{'auto_generated_guid': 'e8dd0f73-4a37-41ee-a4f8-fe06dc247340',
+                                                           'description': 'Download '
                                                                           'data '
                                                                           'from '
                                                                           'a '
@@ -176,7 +193,8 @@ $T1102 = $wc.DownloadString("https://www.aol.com/")
                                                                    'URLs via '
                                                                    'command_prompt',
                                                            'supported_platforms': ['windows']},
-                                                          {'description': 'Multiple '
+                                                          {'auto_generated_guid': 'be6f5309-73d7-426e-9b9d-da128305fa50',
+                                                           'description': 'Multiple '
                                                                           'download '
                                                                           'methods '
                                                                           'for '

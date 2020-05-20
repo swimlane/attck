@@ -24,7 +24,6 @@ _____  _______/  |/_   /   __   \
 ## Aliases
 
 ```
-intentionally left blank
 APT19
 Codoso
 C0d0so0

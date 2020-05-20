@@ -28,14 +28,20 @@ Implementations for Linux and OS X/macOS systems include: (Citation: Datawire Co
 
 Malware commonly utilizes process injection to access system resources through which Persistence and other environment modifications can be made. More sophisticated samples may perform multiple process injections to segment modules and further evade detection, utilizing named pipes or other inter-process communication (IPC) mechanisms as a communication channel.
 
+## Aliases
+
+```
+
+```
+
 ## Additional Attributes
 
 * Bypass: ['Process whitelisting', 'Anti-virus']
 * Effective Permissions: ['User', 'Administrator', 'SYSTEM', 'root']
-* Network: intentionally left blank
+* Network: None
 * Permissions: ['User', 'Administrator', 'SYSTEM', 'root']
 * Platforms: ['Linux', 'macOS', 'Windows']
-* Remote: intentionally left blank
+* Remote: None
 * Type: attack-pattern
 * Wiki: https://attack.mitre.org/techniques/T1055
 
@@ -462,7 +468,19 @@ echo /home/$USER/random.so > /etc/ld.so.preload
                   'tags': ['attack.defense_evasion',
                            'attack.privilege_escalation',
                            'attack.t1055'],
-                  'title': 'Dridex Process Pattern'}}]
+                  'title': 'Dridex Process Pattern'}},
+ {'data_source': ['4657', 'Windows Registry']},
+ {'data_source': ['4663', 'File monitoring']},
+ {'data_source': ['4688', 'Process Execution']},
+ {'data_source': ['DLL monitoring']},
+ {'data_source': ['Named Pipes']},
+ {'data_source': ['API monitoring']},
+ {'data_source': ['4657', 'Windows Registry']},
+ {'data_source': ['4663', 'File monitoring']},
+ {'data_source': ['4688', 'Process Execution']},
+ {'data_source': ['Sysmon ID 7', 'DLL monitoring']},
+ {'data_source': ['Sysmon ID 17', ' 18', 'Named Pipes']},
+ {'data_source': ['API monitoring']}]
 ```
 
 ## Potential Queries
@@ -494,7 +512,8 @@ echo /home/$USER/random.so > /etc/ld.so.preload
 ## Raw Dataset
 
 ```json
-[{'Atomic Red Team Test - Process Injection': {'atomic_tests': [{'dependencies': [{'description': 'Utility '
+[{'Atomic Red Team Test - Process Injection': {'atomic_tests': [{'auto_generated_guid': '74496461-11a1-4982-b439-4d87a550d254',
+                                                                 'dependencies': [{'description': 'Utility '
                                                                                                   'to '
                                                                                                   'inject '
                                                                                                   'must '
@@ -579,7 +598,8 @@ echo /home/$USER/random.so > /etc/ld.so.preload
                                                                          'via '
                                                                          'mavinject.exe',
                                                                  'supported_platforms': ['windows']},
-                                                                {'dependencies': [{'description': 'The '
+                                                                {'auto_generated_guid': '39cb0e67-dd0d-4b74-a74b-c072db7ae991',
+                                                                 'dependencies': [{'description': 'The '
                                                                                                   'shared '
                                                                                                   'library '
                                                                                                   'must '
@@ -695,7 +715,8 @@ echo /home/$USER/random.so > /etc/ld.so.preload
                                                                          'via '
                                                                          '/etc/ld.so.preload',
                                                                  'supported_platforms': ['linux']},
-                                                                {'dependencies': [{'description': 'The '
+                                                                {'auto_generated_guid': 'bc219ff7-789f-4d51-9142-ecae3397deae',
+                                                                 'dependencies': [{'description': 'The '
                                                                                                   'shared '
                                                                                                   'library '
                                                                                                   'must '
@@ -806,7 +827,8 @@ echo /home/$USER/random.so > /etc/ld.so.preload
                                                                          'via '
                                                                          'LD_PRELOAD',
                                                                  'supported_platforms': ['linux']},
-                                                                {'description': 'Process '
+                                                                {'auto_generated_guid': '611b39b7-e243-4c81-87a4-7145a90358b1',
+                                                                 'description': 'Process '
                                                                                 'Injection '
                                                                                 'using '
                                                                                 'C#\n'
@@ -853,7 +875,8 @@ echo /home/$USER/random.so > /etc/ld.so.preload
                                                                          'via '
                                                                          'C#',
                                                                  'supported_platforms': ['windows']},
-                                                                {'description': 'svchost.exe '
+                                                                {'auto_generated_guid': 'fa5a2759-41d7-4e13-a19c-e8f28a53566f',
+                                                                 'description': 'svchost.exe '
                                                                                 'writing '
                                                                                 'a '
                                                                                 'non-Microsoft '

@@ -10,7 +10,8 @@
 ## Aliases
 
 ```
-intentionally left blank
+route
+route.exe
 ```
 
 ## Additional Attributes

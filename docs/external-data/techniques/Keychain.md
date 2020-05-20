@@ -9,14 +9,20 @@
 
 To manage their credentials, users have to use additional credentials to access their keychain. If an adversary knows the credentials for the login keychain, then they can get access to all the other credentials stored in this vault. (Citation: External to DA, the OS X Way) By default, the passphrase for the keychain is the user’s logon credentials.
 
+## Aliases
+
+```
+
+```
+
 ## Additional Attributes
 
 * Bypass: None
 * Effective Permissions: None
-* Network: intentionally left blank
+* Network: None
 * Permissions: ['Administrator']
 * Platforms: ['macOS']
-* Remote: intentionally left blank
+* Remote: None
 * Type: attack-pattern
 * Wiki: https://attack.mitre.org/techniques/T1142
 
@@ -78,7 +84,8 @@ python/collection/osx/keychaindump_decrypt
 ## Raw Dataset
 
 ```json
-[{'Atomic Red Team Test - Keychain': {'atomic_tests': [{'description': '### '
+[{'Atomic Red Team Test - Keychain': {'atomic_tests': [{'auto_generated_guid': '1864fdec-ff86-4452-8c30-f12507582a93',
+                                                        'description': '### '
                                                                        'Keychain '
                                                                        'Files\n'
                                                                        '\n'

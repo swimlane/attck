@@ -9,14 +9,20 @@
 
 Adversaries may install a new service that can be configured to execute at startup by using utilities to interact with services or by directly modifying the Registry. The service name may be disguised by using a name from a related operating system or benign software with [Masquerading](https://attack.mitre.org/techniques/T1036). Services may be created with administrator privileges but are executed under SYSTEM privileges, so an adversary may also use a service to escalate privileges from administrator to SYSTEM. Adversaries may also directly start services through [Service Execution](https://attack.mitre.org/techniques/T1035).
 
+## Aliases
+
+```
+
+```
+
 ## Additional Attributes
 
 * Bypass: None
 * Effective Permissions: ['SYSTEM']
-* Network: intentionally left blank
+* Network: None
 * Permissions: ['Administrator', 'SYSTEM']
 * Platforms: ['Windows']
-* Remote: intentionally left blank
+* Remote: None
 * Type: attack-pattern
 * Wiki: https://attack.mitre.org/techniques/T1050
 
@@ -306,7 +312,13 @@ powershell/privesc/powerup/service_stager
                            'attack.privilege_escalation',
                            'attack.t1050',
                            'car.2013-09-005'],
-                  'title': 'Rare Service Installs'}}]
+                  'title': 'Rare Service Installs'}},
+ {'data_source': ['4657', 'Windows Registry']},
+ {'data_source': ['4688', 'Process Execution']},
+ {'data_source': ['4688 ', 'Process CMD Line']},
+ {'data_source': ['4657', 'Windows Registry']},
+ {'data_source': ['4688', 'Process Execution']},
+ {'data_source': ['4688 ', 'Process CMD Line']}]
 ```
 
 ## Potential Queries
@@ -325,7 +337,8 @@ powershell/privesc/powerup/service_stager
 ## Raw Dataset
 
 ```json
-[{'Atomic Red Team Test - Service Installation': {'atomic_tests': [{'dependencies': [{'description': 'Service '
+[{'Atomic Red Team Test - Service Installation': {'atomic_tests': [{'auto_generated_guid': '981e2942-e433-44e9-afc1-8c957a1496b6',
+                                                                    'dependencies': [{'description': 'Service '
                                                                                                      'binary '
                                                                                                      'must '
                                                                                                      'exist '
@@ -433,7 +446,8 @@ powershell/privesc/powerup/service_stager
                                                                             'Installation '
                                                                             'CMD',
                                                                     'supported_platforms': ['windows']},
-                                                                   {'dependencies': [{'description': 'Service '
+                                                                   {'auto_generated_guid': '491a4af6-a521-4b74-b23b-f7b3f1ee9e77',
+                                                                    'dependencies': [{'description': 'Service '
                                                                                                      'binary '
                                                                                                      'must '
                                                                                                      'exist '

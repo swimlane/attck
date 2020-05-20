@@ -11,6 +11,12 @@ Remote access tools will call back to the first-stage command and control server
 
 The different stages will likely be hosted separately with no overlapping infrastructure. The loader may also have backup first-stage callbacks or [Fallback Channels](https://attack.mitre.org/techniques/T1008) in case the original first-stage communication path is discovered and blocked.
 
+## Aliases
+
+```
+
+```
+
 ## Additional Attributes
 
 * Bypass: None
@@ -18,7 +24,7 @@ The different stages will likely be hosted separately with no overlapping infras
 * Network: True
 * Permissions: None
 * Platforms: ['Linux', 'macOS', 'Windows']
-* Remote: intentionally left blank
+* Remote: None
 * Type: attack-pattern
 * Wiki: https://attack.mitre.org/techniques/T1104
 
@@ -37,7 +43,16 @@ The different stages will likely be hosted separately with no overlapping infras
 ## Potential Detections
 
 ```json
-
+[{'data_source': ['5156', 'Windows Firewall']},
+ {'data_source': ['Network device logs']},
+ {'data_source': ['Network protocol analysis']},
+ {'data_source': ['Packet capture']},
+ {'data_source': ['Netflow/Enclave netflow']},
+ {'data_source': ['5156', 'Windows Firewall']},
+ {'data_source': ['Network device logs']},
+ {'data_source': ['Network protocol analysis']},
+ {'data_source': ['Packet capture']},
+ {'data_source': ['Netflow/Enclave netflow']}]
 ```
 
 ## Potential Queries

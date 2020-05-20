@@ -27,14 +27,20 @@ On Google Cloud Platform (GCP) <code>GET /v1beta1/{parent=organizations/*}/asset
 
 In Azure, the API request <code>GET https://management.azure.com/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}?api-version=2019-03-01</code> may be used to retrieve information about the model or instance view of a virtual machine.(Citation: Microsoft Virutal Machine API)
 
+## Aliases
+
+```
+
+```
+
 ## Additional Attributes
 
 * Bypass: None
 * Effective Permissions: None
-* Network: intentionally left blank
+* Network: None
 * Permissions: ['User']
 * Platforms: ['Linux', 'macOS', 'Windows', 'AWS', 'GCP', 'Azure']
-* Remote: intentionally left blank
+* Remote: None
 * Type: attack-pattern
 * Wiki: https://attack.mitre.org/techniques/T1082
 
@@ -292,7 +298,11 @@ powershell/situational_awareness/network/powerview/get_computer
                            'attack.t1087',
                            'attack.t1082',
                            'car.2016-03-001'],
-                  'title': 'Reconnaissance Activity with Net Command'}}]
+                  'title': 'Reconnaissance Activity with Net Command'}},
+ {'data_source': ['4688 ', 'Process CMD Line']},
+ {'data_source': ['4688', 'Process Execution']},
+ {'data_source': ['4688 ', 'Process CMD Line']},
+ {'data_source': ['4688', 'Process Execution']}]
 ```
 
 ## Potential Queries
@@ -420,7 +430,8 @@ powershell/situational_awareness/network/powerview/get_computer
                                                   'Metasploit': 'sysinfo, run '
                                                                 'winenum, '
                                                                 'get_env.rb'}},
- {'Atomic Red Team Test - System Information Discovery': {'atomic_tests': [{'description': 'Identify '
+ {'Atomic Red Team Test - System Information Discovery': {'atomic_tests': [{'auto_generated_guid': '66703791-c902-4560-8770-42b8a91f7667',
+                                                                            'description': 'Identify '
                                                                                            'System '
                                                                                            'Info. '
                                                                                            'Upon '
@@ -443,7 +454,8 @@ powershell/situational_awareness/network/powerview/get_computer
                                                                                     'Information '
                                                                                     'Discovery',
                                                                             'supported_platforms': ['windows']},
-                                                                           {'description': 'Identify '
+                                                                           {'auto_generated_guid': 'edff98ec-0f73-4f63-9890-6b117092aff6',
+                                                                            'description': 'Identify '
                                                                                            'System '
                                                                                            'Info\n',
                                                                             'executor': {'command': 'system_profiler\n'
@@ -455,7 +467,8 @@ powershell/situational_awareness/network/powerview/get_computer
                                                                                     'Information '
                                                                                     'Discovery',
                                                                             'supported_platforms': ['macos']},
-                                                                           {'description': 'Identify '
+                                                                           {'auto_generated_guid': 'cccb070c-df86-4216-a5bc-9fb60c74e27c',
+                                                                            'description': 'Identify '
                                                                                            'System '
                                                                                            'Info\n',
                                                                             'executor': {'cleanup_command': 'rm '
@@ -519,7 +532,8 @@ powershell/situational_awareness/network/powerview/get_computer
                                                                                     'Information',
                                                                             'supported_platforms': ['linux',
                                                                                                     'macos']},
-                                                                           {'description': 'Identify '
+                                                                           {'auto_generated_guid': '31dad7ad-2286-4c02-ae92-274418c85fec',
+                                                                            'description': 'Identify '
                                                                                            'virtual '
                                                                                            'machine '
                                                                                            'hardware. '
@@ -649,7 +663,8 @@ powershell/situational_awareness/network/powerview/get_computer
                                                                                     'via '
                                                                                     'Hardware',
                                                                             'supported_platforms': ['linux']},
-                                                                           {'description': 'Identify '
+                                                                           {'auto_generated_guid': '8057d484-0fae-49a4-8302-4812c4f1e64e',
+                                                                            'description': 'Identify '
                                                                                            'virtual '
                                                                                            'machine '
                                                                                            'guest '
@@ -704,7 +719,8 @@ powershell/situational_awareness/network/powerview/get_computer
                                                                                     'Kernel '
                                                                                     'Modules',
                                                                             'supported_platforms': ['linux']},
-                                                                           {'description': 'Identify '
+                                                                           {'auto_generated_guid': '85cfbf23-4a1e-4342-8792-007e004b975f',
+                                                                            'description': 'Identify '
                                                                                            'system '
                                                                                            'hostname '
                                                                                            'for '
@@ -726,7 +742,8 @@ powershell/situational_awareness/network/powerview/get_computer
                                                                                     'Discovery '
                                                                                     '(Windows)',
                                                                             'supported_platforms': ['windows']},
-                                                                           {'description': 'Identify '
+                                                                           {'auto_generated_guid': '486e88ea-4f56-470f-9b57-3f4d73f39133',
+                                                                            'description': 'Identify '
                                                                                            'system '
                                                                                            'hostname '
                                                                                            'for '
@@ -741,7 +758,8 @@ powershell/situational_awareness/network/powerview/get_computer
                                                                                     'Discovery',
                                                                             'supported_platforms': ['linux',
                                                                                                     'macos']},
-                                                                           {'description': 'Identify '
+                                                                           {'auto_generated_guid': '224b4daf-db44-404e-b6b2-f4d1f0126ef8',
+                                                                            'description': 'Identify '
                                                                                            'the '
                                                                                            'Windows '
                                                                                            'MachineGUID '

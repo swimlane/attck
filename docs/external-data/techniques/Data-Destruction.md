@@ -11,14 +11,20 @@ Adversaries may attempt to overwrite files and directories with randomly generat
 
 To maximize impact on the target organization in operations where network-wide availability interruption is the goal, malware designed for destroying data may have worm-like features to propagate across a network by leveraging additional techniques like [Valid Accounts](https://attack.mitre.org/techniques/T1078), [Credential Dumping](https://attack.mitre.org/techniques/T1003), and [Windows Admin Shares](https://attack.mitre.org/techniques/T1077).(Citation: Symantec Shamoon 2012)(Citation: FireEye Shamoon Nov 2016)(Citation: Palo Alto Shamoon Nov 2016)(Citation: Kaspersky StoneDrill 2017)(Citation: Talos Olympic Destroyer 2018)
 
+## Aliases
+
+```
+
+```
+
 ## Additional Attributes
 
 * Bypass: None
 * Effective Permissions: None
-* Network: intentionally left blank
+* Network: None
 * Permissions: ['User', 'Administrator', 'root', 'SYSTEM']
 * Platforms: ['Linux', 'macOS', 'Windows']
-* Remote: intentionally left blank
+* Remote: None
 * Type: attack-pattern
 * Wiki: https://attack.mitre.org/techniques/T1485
 
@@ -69,7 +75,8 @@ dd of=/var/log/syslog if=#{overwrite_source}
 ## Raw Dataset
 
 ```json
-[{'Atomic Red Team Test - Data Destruction': {'atomic_tests': [{'dependencies': [{'description': 'Secure '
+[{'Atomic Red Team Test - Data Destruction': {'atomic_tests': [{'auto_generated_guid': '476419b5-aebf-4366-a131-ae3e8dae5fc2',
+                                                                'dependencies': [{'description': 'Secure '
                                                                                                  'delete '
                                                                                                  'tool '
                                                                                                  'from '
@@ -185,7 +192,8 @@ dd of=/var/log/syslog if=#{overwrite_source}
                                                                         'Sysinternals '
                                                                         'SDelete',
                                                                 'supported_platforms': ['windows']},
-                                                               {'description': 'Overwrites '
+                                                               {'auto_generated_guid': '38deee99-fd65-4031-bec8-bfa4f9f26146',
+                                                                'description': 'Overwrites '
                                                                                'and '
                                                                                'deletes '
                                                                                'a '

@@ -19,14 +19,20 @@ Malicious hooking mechanisms may also capture API calls that include parameters 
 
 Hooking is commonly utilized by [Rootkit](https://attack.mitre.org/techniques/T1014)s to conceal files, processes, Registry keys, and other objects in order to hide malware and associated behaviors. (Citation: Symantec Windows Rootkits)
 
+## Aliases
+
+```
+
+```
+
 ## Additional Attributes
 
 * Bypass: None
 * Effective Permissions: None
-* Network: intentionally left blank
+* Network: None
 * Permissions: ['Administrator', 'SYSTEM']
 * Platforms: ['Windows']
-* Remote: intentionally left blank
+* Remote: None
 * Type: attack-pattern
 * Wiki: https://attack.mitre.org/techniques/T1179
 
@@ -66,7 +72,18 @@ powershell/collection/netripper
 ## Potential Detections
 
 ```json
-
+[{'data_source': ['4688', 'Process Execution']},
+ {'data_source': ['Windows event logs']},
+ {'data_source': ['Sysmon ID 7', 'DLL monitoring']},
+ {'data_source': ['Sysmon - ID 7', 'Loaded DLLs']},
+ {'data_source': ['API monitoring']},
+ {'data_source': ['Binary file metadata']},
+ {'data_source': ['Sysmon ID 7', 'DLL monitoring']},
+ {'data_source': ['Sysmon - ID 7', 'Loaded DLLs']},
+ {'data_source': ['4688', 'Process Execution']},
+ {'data_source': ['Windows event logs']},
+ {'data_source': ['API monitoring']},
+ {'data_source': ['Binary file metadata']}]
 ```
 
 ## Potential Queries
@@ -81,7 +98,8 @@ powershell/collection/netripper
 ## Raw Dataset
 
 ```json
-[{'Atomic Red Team Test - Hooking': {'atomic_tests': [{'dependencies': [{'description': 'T1179x64.dll '
+[{'Atomic Red Team Test - Hooking': {'atomic_tests': [{'auto_generated_guid': 'de1934ea-1fbf-425b-8795-65fb27dd7e33',
+                                                       'dependencies': [{'description': 'T1179x64.dll '
                                                                                         'must '
                                                                                         'exist '
                                                                                         'on '

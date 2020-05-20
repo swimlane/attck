@@ -24,7 +24,6 @@ _____  _______/  |/_   |
 ## Aliases
 
 ```
-intentionally left blank
 APT1
 Comment Crew
 Comment Group

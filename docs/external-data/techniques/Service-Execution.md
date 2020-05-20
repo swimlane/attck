@@ -7,11 +7,17 @@
 
 > Adversaries may execute a binary, command, or script via a method that interacts with Windows services, such as the Service Control Manager. This can be done by either creating a new service or modifying an existing service. This technique is the execution used in conjunction with [New Service](https://attack.mitre.org/techniques/T1050) and [Modify Existing Service](https://attack.mitre.org/techniques/T1031) during service persistence or privilege escalation.
 
+## Aliases
+
+```
+
+```
+
 ## Additional Attributes
 
 * Bypass: None
 * Effective Permissions: None
-* Network: intentionally left blank
+* Network: None
 * Permissions: ['Administrator', 'SYSTEM']
 * Platforms: ['Windows']
 * Remote: True
@@ -208,7 +214,16 @@ powershell/lateral_movement/invoke_psexec
                                                            'User': 'NT '
                                                                    'AUTHORITY\\SYSTEM'}},
                   'logsource': {'category': 'process_creation',
-                                'product': 'windows'}}}]
+                                'product': 'windows'}}},
+ {'data_source': ['4688 ', 'Process CMD Line']},
+ {'data_source': ['4688', 'Process Execution']},
+ {'data_source': ['4657', 'Windows Registry']},
+ {'data_source': ['7045', 'New Service']},
+ {'data_source': ['7040', 'Service Change']},
+ {'data_source': ['4688 ', 'Process CMD Line']},
+ {'data_source': ['4688', 'Process Execution']},
+ {'data_source': ['4657', 'Windows Registry']},
+ {'data_source': ['7040/7045', 'New and changed Service']}]
 ```
 
 ## Potential Queries
@@ -306,7 +321,8 @@ powershell/lateral_movement/invoke_psexec
                                                                  'dir '
                                                                  '\\\\COMP\\ADMIN$\\acachsrv.exe',
                                                   'Metasploit': ''}},
- {'Atomic Red Team Test - Service Execution': {'atomic_tests': [{'description': 'Creates '
+ {'Atomic Red Team Test - Service Execution': {'atomic_tests': [{'auto_generated_guid': '2382dee2-a75f-49aa-9378-f52df6ed3fb1',
+                                                                 'description': 'Creates '
                                                                                 'a '
                                                                                 'service '
                                                                                 'specifying '
@@ -403,7 +419,8 @@ powershell/lateral_movement/invoke_psexec
                                                                          'as a '
                                                                          'Service',
                                                                  'supported_platforms': ['windows']},
-                                                                {'dependencies': [{'description': 'PsExec '
+                                                                {'auto_generated_guid': '873106b7-cfed-454b-8680-fa9f6400431c',
+                                                                 'dependencies': [{'description': 'PsExec '
                                                                                                   'tool '
                                                                                                   'from '
                                                                                                   'Sysinternals '

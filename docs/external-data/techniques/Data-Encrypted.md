@@ -9,14 +9,20 @@
 
 Other exfiltration techniques likely apply as well to transfer the information out of the network, such as [Exfiltration Over Command and Control Channel](https://attack.mitre.org/techniques/T1041) and [Exfiltration Over Alternative Protocol](https://attack.mitre.org/techniques/T1048)
 
+## Aliases
+
+```
+
+```
+
 ## Additional Attributes
 
 * Bypass: None
 * Effective Permissions: None
-* Network: intentionally left blank
+* Network: None
 * Permissions: None
 * Platforms: ['Linux', 'macOS', 'Windows']
-* Remote: intentionally left blank
+* Remote: None
 * Type: attack-pattern
 * Wiki: https://attack.mitre.org/techniques/T1022
 
@@ -153,7 +159,20 @@ dir
 ## Potential Detections
 
 ```json
-
+[{'data_source': ['4688', 'Process Execution']},
+ {'data_source': ['4688 ', 'Process CMD Line']},
+ {'data_source': ['4663', 'File monitoring']},
+ {'data_source': ['Binary file metadata']},
+ {'data_source': ['IDS/IPS']},
+ {'data_source': ['DLP']},
+ {'data_source': ['Network protocol analysis']},
+ {'data_source': ['4688', 'Process Execution']},
+ {'data_source': ['4688 ', 'Process CMD Line']},
+ {'data_source': ['4663', 'File monitoring']},
+ {'data_source': ['LOG-MD B9', 'Binary file metadata']},
+ {'data_source': ['IDS/IPS']},
+ {'data_source': ['DLP']},
+ {'data_source': ['Network protocol analysis']}]
 ```
 
 ## Potential Queries
@@ -165,7 +184,8 @@ dir
 ## Raw Dataset
 
 ```json
-[{'Atomic Red Team Test - Data Encrypted': {'atomic_tests': [{'dependencies': [{'description': 'gpg '
+[{'Atomic Red Team Test - Data Encrypted': {'atomic_tests': [{'auto_generated_guid': '0286eb44-e7ce-41a0-b109-3da516e05a5f',
+                                                              'dependencies': [{'description': 'gpg '
                                                                                                'and '
                                                                                                'zip '
                                                                                                'are '
@@ -279,7 +299,8 @@ dir
                                                                       'symmetric',
                                                               'supported_platforms': ['macos',
                                                                                       'linux']},
-                                                             {'description': 'Note: '
+                                                             {'auto_generated_guid': '8dd61a55-44c6-43cc-af0c-8bdda276860c',
+                                                              'description': 'Note: '
                                                                              'Requires '
                                                                              'winrar '
                                                                              'installation\n'
@@ -318,7 +339,8 @@ dir
                                                                       'with '
                                                                       'winrar',
                                                               'supported_platforms': ['windows']},
-                                                             {'dependencies': [{'description': 'Winzip '
+                                                             {'auto_generated_guid': '01df0353-d531-408d-a0c5-3161bf822134',
+                                                              'dependencies': [{'description': 'Winzip '
                                                                                                'must '
                                                                                                'be '
                                                                                                'installed\n',
@@ -423,7 +445,8 @@ dir
                                                                       'with '
                                                                       'winzip',
                                                               'supported_platforms': ['windows']},
-                                                             {'description': 'Note: '
+                                                             {'auto_generated_guid': 'd1334303-59cb-4a03-8313-b3e24d02c198',
+                                                              'description': 'Note: '
                                                                              'Requires '
                                                                              '7zip '
                                                                              'installation\n',

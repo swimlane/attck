@@ -15,14 +15,20 @@ Default accounts are also not limited to Guest and Administrator on client machi
 
 The overlap of account access, credentials, and permissions across a network of systems is of concern because the adversary may be able to pivot across accounts and systems to reach a high level of access (i.e., domain or enterprise administrator) to bypass access controls set within the enterprise. (Citation: TechNet Credential Theft)
 
+## Aliases
+
+```
+
+```
+
 ## Additional Attributes
 
 * Bypass: ['Firewall', 'Host intrusion prevention systems', 'Network intrusion detection system', 'Process whitelisting', 'System access controls', 'Anti-virus']
 * Effective Permissions: ['User', 'Administrator']
-* Network: intentionally left blank
+* Network: None
 * Permissions: ['User', 'Administrator']
 * Platforms: ['Linux', 'macOS', 'Windows', 'AWS', 'GCP', 'Azure', 'SaaS', 'Office 365']
-* Remote: intentionally left blank
+* Remote: None
 * Type: attack-pattern
 * Wiki: https://attack.mitre.org/techniques/T1078
 
@@ -178,7 +184,11 @@ The overlap of account access, credentials, and permissions across a network of 
                   'logsource': {'product': 'windows', 'service': 'security'},
                   'status': 'stable',
                   'tags': ['attack.privilege_escalation', 'attack.t1078'],
-                  'title': 'User Added to Local Administrators'}}]
+                  'title': 'User Added to Local Administrators'}},
+ {'data_source': ['4624', 'Authentication logs']},
+ {'data_source': ['4688', 'Process Execution']},
+ {'data_source': ['4624', 'Authentication logs']},
+ {'data_source': ['4688', 'Process Execution']}]
 ```
 
 ## Potential Queries

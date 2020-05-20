@@ -7,14 +7,20 @@
 
 > An adversary may use [Valid Accounts](https://attack.mitre.org/techniques/T1078) to log into a service specifically designed to accept remote connections, such as telnet, SSH, and VNC. The adversary may then perform actions as the logged-on user.
 
+## Aliases
+
+```
+
+```
+
 ## Additional Attributes
 
 * Bypass: None
 * Effective Permissions: None
-* Network: intentionally left blank
+* Network: None
 * Permissions: None
 * Platforms: ['Linux', 'macOS', 'Windows']
-* Remote: intentionally left blank
+* Remote: None
 * Type: attack-pattern
 * Wiki: https://attack.mitre.org/techniques/T1021
 
@@ -120,7 +126,11 @@ python/lateral_movement/multi/ssh_launcher
                   'tags': ['attack.lateral_movement',
                            'attack.t1021',
                            'car.2013-07-002'],
-                  'title': 'Netsh RDP Port Forwarding'}}]
+                  'title': 'Netsh RDP Port Forwarding'}},
+ {'data_source': ['4624', ' 4625', 'Authentication logs']},
+ {'data_source': ['21', ' 23', ' 25', ' 41', 'RDP Logs']},
+ {'data_source': ['4624', ' 4625', 'Authentication logs']},
+ {'data_source': ['21', ' 23', ' 25', ' 41', 'RDP Logs']}]
 ```
 
 ## Potential Queries

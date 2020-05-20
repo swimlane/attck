@@ -9,11 +9,17 @@
 
 An adversary may use task scheduling to execute programs at system startup or on a scheduled basis for persistence, to conduct remote Execution as part of Lateral Movement, to gain SYSTEM privileges, or to run a process under the context of a specified account.
 
+## Aliases
+
+```
+
+```
+
 ## Additional Attributes
 
 * Bypass: None
 * Effective Permissions: ['SYSTEM', 'Administrator', 'User']
-* Network: intentionally left blank
+* Network: None
 * Permissions: ['Administrator', 'SYSTEM', 'User']
 * Platforms: ['Windows']
 * Remote: True
@@ -357,7 +363,15 @@ powershell/persistence/userland/schtasks
                            'attack.execution',
                            'attack.t1053',
                            'car.2013-08-001'],
-                  'title': 'Windows 10 scheduled task SandboxEscaper 0-day'}}]
+                  'title': 'Windows 10 scheduled task SandboxEscaper 0-day'}},
+ {'data_source': ['4688 ', 'Process CMD Line']},
+ {'data_source': ['4688', 'Process Execution']},
+ {'data_source': ['4663', 'File monitoring']},
+ {'data_source': ['Windows event logs']},
+ {'data_source': ['4688 ', 'Process CMD Line']},
+ {'data_source': ['4688', 'Process Execution']},
+ {'data_source': ['4663', 'File monitoring']},
+ {'data_source': ['106', 'Task Registered']}]
 ```
 
 ## Potential Queries
@@ -495,7 +509,8 @@ powershell/persistence/userland/schtasks
                                                                  '/delete /tn '
                                                                  '"name"',
                                                   'Metasploit': ''}},
- {'Atomic Red Team Test - Scheduled Task': {'atomic_tests': [{'description': 'Executes '
+ {'Atomic Red Team Test - Scheduled Task': {'atomic_tests': [{'auto_generated_guid': '4a6c0dc4-0f2a-4203-9298-a5a9bdc21ed8',
+                                                              'description': 'Executes '
                                                                              'cmd.exe\n'
                                                                              'Note: '
                                                                              'deprecated '
@@ -533,7 +548,8 @@ powershell/persistence/userland/schtasks
                                                                       'Scheduled '
                                                                       'task',
                                                               'supported_platforms': ['windows']},
-                                                             {'description': 'Upon '
+                                                             {'auto_generated_guid': '42f53695-ad4a-4546-abb6-7d837f644a71',
+                                                              'description': 'Upon '
                                                                              'successful '
                                                                              'execution, '
                                                                              'cmd.exe '
@@ -583,7 +599,8 @@ powershell/persistence/userland/schtasks
                                                                       'task '
                                                                       'Local',
                                                               'supported_platforms': ['windows']},
-                                                             {'description': 'Create '
+                                                             {'auto_generated_guid': '2e5eac3e-327b-4a88-a0c0-c4057039a8dd',
+                                                              'description': 'Create '
                                                                              'a '
                                                                              'task '
                                                                              'on '
@@ -663,7 +680,8 @@ powershell/persistence/userland/schtasks
                                                                       'task '
                                                                       'Remote',
                                                               'supported_platforms': ['windows']},
-                                                             {'description': 'Create '
+                                                             {'auto_generated_guid': 'af9fd58f-c4ac-4bf2-a9ba-224b71ff25fd',
+                                                              'description': 'Create '
                                                                              'an '
                                                                              'atomic '
                                                                              'scheduled '

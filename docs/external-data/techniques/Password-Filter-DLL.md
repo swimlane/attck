@@ -11,14 +11,20 @@ Before registering new passwords in the Security Accounts Manager (SAM), the Loc
 
 Adversaries can register malicious password filters to harvest credentials from local computers and/or entire domains. To perform proper validation, filters must receive plain-text credentials from the LSA. A malicious password filter would receive these plain-text credentials every time a password request is made. (Citation: Carnal Ownage Password Filters Sept 2013)
 
+## Aliases
+
+```
+
+```
+
 ## Additional Attributes
 
 * Bypass: None
 * Effective Permissions: None
-* Network: intentionally left blank
+* Network: None
 * Permissions: ['Administrator', 'SYSTEM']
 * Platforms: ['Windows']
-* Remote: intentionally left blank
+* Remote: None
 * Type: attack-pattern
 * Wiki: https://attack.mitre.org/techniques/T1174
 
@@ -56,7 +62,14 @@ Restart-Computer -Confirm
 ## Potential Detections
 
 ```json
-
+[{'data_source': ['4688', 'Process Execution']},
+ {'data_source': ['4657', 'Windows Registry']},
+ {'data_source': ['Sysmon', 'DLL monitoring']},
+ {'data_source': ['Autoruns']},
+ {'data_source': ['4688', 'Process Execution']},
+ {'data_source': ['4657', 'Windows Registry']},
+ {'data_source': ['Sysmon ID 7', 'DLL monitoring']},
+ {'data_source': ['LOG-MD', 'Autoruns']}]
 ```
 
 ## Potential Queries
@@ -68,7 +81,8 @@ Restart-Computer -Confirm
 ## Raw Dataset
 
 ```json
-[{'Atomic Red Team Test - Password Filter DLL': {'atomic_tests': [{'dependencies': [{'description': 'AtomicPasswordFilter.dll '
+[{'Atomic Red Team Test - Password Filter DLL': {'atomic_tests': [{'auto_generated_guid': 'a7961770-beb5-4134-9674-83d7e1fa865c',
+                                                                   'dependencies': [{'description': 'AtomicPasswordFilter.dll '
                                                                                                     'must '
                                                                                                     'exist '
                                                                                                     'on '

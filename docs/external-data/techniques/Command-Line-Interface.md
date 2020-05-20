@@ -9,14 +9,20 @@
 
 Adversaries may use command-line interfaces to interact with systems and execute other software during the course of an operation.
 
+## Aliases
+
+```
+
+```
+
 ## Additional Attributes
 
 * Bypass: None
 * Effective Permissions: None
-* Network: intentionally left blank
+* Network: None
 * Permissions: ['User', 'Administrator', 'SYSTEM']
 * Platforms: ['Linux', 'macOS', 'Windows']
-* Remote: intentionally left blank
+* Remote: None
 * Type: attack-pattern
 * Wiki: https://attack.mitre.org/techniques/T1059
 
@@ -450,7 +456,11 @@ New Process Name: C: \ Windows \ System32 \ WindowsPowerShell \ v1.0 \ powershel
                   'status': 'experimental',
                   'tags': ['attack.execution', 'attack.t1059'],
                   'title': 'Command Line Execution with suspicious URL and '
-                           'AppData Strings'}}]
+                           'AppData Strings'}},
+ {'data_source': ['4688 ', 'Process CMD Line']},
+ {'data_source': ['4688', 'Process Execution']},
+ {'data_source': ['4688 ', 'Process CMD Line']},
+ {'data_source': ['4688', 'Process Execution']}]
 ```
 
 ## Potential Queries
@@ -464,7 +474,8 @@ New Process Name: C: \ Windows \ System32 \ WindowsPowerShell \ v1.0 \ powershel
 ## Raw Dataset
 
 ```json
-[{'Atomic Red Team Test - Command-Line Interface': {'atomic_tests': [{'description': 'Using '
+[{'Atomic Red Team Test - Command-Line Interface': {'atomic_tests': [{'auto_generated_guid': 'd0c88567-803d-4dca-99b4-7ce65e7b257c',
+                                                                      'description': 'Using '
                                                                                      'Curl '
                                                                                      'to '
                                                                                      'download '

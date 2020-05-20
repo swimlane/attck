@@ -17,14 +17,20 @@ Utilities and commands that acquire this information include [netstat](https://a
 
 In Mac and Linux, <code>netstat</code> and <code>lsof</code> can be used to list current connections. <code>who -a</code> and <code>w</code> can be used to show which users are currently logged in, similar to "net session".
 
+## Aliases
+
+```
+
+```
+
 ## Additional Attributes
 
 * Bypass: None
 * Effective Permissions: None
-* Network: intentionally left blank
+* Network: None
 * Permissions: ['User', 'Administrator']
 * Platforms: ['Linux', 'macOS', 'Windows', 'AWS', 'GCP', 'Azure']
-* Remote: intentionally left blank
+* Remote: None
 * Type: attack-pattern
 * Wiki: https://attack.mitre.org/techniques/T1049
 
@@ -142,7 +148,10 @@ List is empty.
 ## Potential Detections
 
 ```json
-
+[{'data_source': ['4688 ', 'Process CMD Line']},
+ {'data_source': ['4688', 'Process Execution']},
+ {'data_source': ['4688 ', 'Process CMD Line']},
+ {'data_source': ['4688', 'Process Execution']}]
 ```
 
 ## Potential Queries
@@ -318,7 +327,8 @@ List is empty.
                                                                  'active '
                                                                  'connections.',
                                                   'Metasploit': 'post/windows/gather/enum_logged_on_users'}},
- {'Atomic Red Team Test - System Network Connections Discovery': {'atomic_tests': [{'description': 'Get '
+ {'Atomic Red Team Test - System Network Connections Discovery': {'atomic_tests': [{'auto_generated_guid': '0940a971-809a-48f1-9c4d-b1d785e96ee5',
+                                                                                    'description': 'Get '
                                                                                                    'a '
                                                                                                    'listing '
                                                                                                    'of '
@@ -354,7 +364,8 @@ List is empty.
                                                                                             'Connections '
                                                                                             'Discovery',
                                                                                     'supported_platforms': ['windows']},
-                                                                                   {'description': 'Get '
+                                                                                   {'auto_generated_guid': 'f069f0f1-baad-4831-aa2b-eddac4baac4a',
+                                                                                    'description': 'Get '
                                                                                                    'a '
                                                                                                    'listing '
                                                                                                    'of '
@@ -383,7 +394,8 @@ List is empty.
                                                                                             'with '
                                                                                             'PowerShell',
                                                                                     'supported_platforms': ['windows']},
-                                                                                   {'dependencies': [{'description': 'Check '
+                                                                                   {'auto_generated_guid': '9ae28d3f-190f-4fa0-b023-c7bd3e0eabf2',
+                                                                                    'dependencies': [{'description': 'Check '
                                                                                                                      'if '
                                                                                                                      'netstat '
                                                                                                                      'command '

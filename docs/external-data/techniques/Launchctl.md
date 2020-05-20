@@ -9,14 +9,20 @@
 
 Adversaries can abuse this functionality to execute code or even bypass whitelisting if launchctl is an allowed process.
 
+## Aliases
+
+```
+
+```
+
 ## Additional Attributes
 
 * Bypass: ['Application whitelisting', 'Process whitelisting', 'Whitelisting by file name or path']
 * Effective Permissions: None
-* Network: intentionally left blank
+* Network: None
 * Permissions: ['User', 'Administrator']
 * Platforms: ['macOS']
-* Remote: intentionally left blank
+* Remote: None
 * Type: attack-pattern
 * Wiki: https://attack.mitre.org/techniques/T1152
 
@@ -51,7 +57,8 @@ launchctl submit -l evil -- /Applications/Calculator.app/Contents/MacOS/Calculat
 ## Raw Dataset
 
 ```json
-[{'Atomic Red Team Test - Launchctl': {'atomic_tests': [{'description': 'Utilize '
+[{'Atomic Red Team Test - Launchctl': {'atomic_tests': [{'auto_generated_guid': '6fb61988-724e-4755-a595-07743749d4e2',
+                                                         'description': 'Utilize '
                                                                         'launchctl\n',
                                                          'executor': {'command': 'launchctl '
                                                                                  'submit '

@@ -7,14 +7,20 @@
 
 > Adversaries may disable security tools to avoid possible detection of their tools and activities. This can take the form of killing security software or event logging processes, deleting Registry keys so that tools do not start at run time, or other methods to interfere with security scanning or event reporting.
 
+## Aliases
+
+```
+
+```
+
 ## Additional Attributes
 
 * Bypass: ['File monitoring', 'Host intrusion prevention systems', 'Signature-based detection', 'Log analysis', 'Anti-virus']
 * Effective Permissions: None
-* Network: intentionally left blank
+* Network: None
 * Permissions: None
 * Platforms: ['Linux', 'macOS', 'Windows']
-* Remote: intentionally left blank
+* Remote: None
 * Type: attack-pattern
 * Wiki: https://attack.mitre.org/techniques/T1089
 
@@ -335,7 +341,21 @@ powershell/management/disable_rdp
                   'references': ['https://adsecurity.org/?p=2053',
                                  'https://www.harmj0y.net/blog/activedirectory/roasting-as-reps/'],
                   'tags': ['attack.defense_evasion', 'attack.t1089'],
-                  'title': 'Weak Encryption Enabled and Kerberoast'}}]
+                  'title': 'Weak Encryption Enabled and Kerberoast'}},
+ {'data_source': ['4688 ', 'Process CMD Line']},
+ {'data_source': ['4689', 'Process Term']},
+ {'data_source': ['4657', 'Windows Registry']},
+ {'data_source': ['4663', 'File monitoring']},
+ {'data_source': ['7040', 'Service Changed']},
+ {'data_source': ['API monitoring']},
+ {'data_source': ['Anti-virus']},
+ {'data_source': ['4688 ', 'Process CMD Line']},
+ {'data_source': ['4689', 'Process Term']},
+ {'data_source': ['4657', 'Windows Registry']},
+ {'data_source': ['4663', 'File monitoring']},
+ {'data_source': ['7040', 'Service Changed']},
+ {'data_source': ['API monitoring']},
+ {'data_source': ['Anti-virus']}]
 ```
 
 ## Potential Queries
@@ -350,7 +370,8 @@ powershell/management/disable_rdp
 ## Raw Dataset
 
 ```json
-[{'Atomic Red Team Test - Disabling Security Tools': {'atomic_tests': [{'description': 'Disables '
+[{'Atomic Red Team Test - Disabling Security Tools': {'atomic_tests': [{'auto_generated_guid': '80f5e701-f7a4-4d06-b140-26c8efd1b6b4',
+                                                                        'description': 'Disables '
                                                                                        'the '
                                                                                        'iptables '
                                                                                        'firewall\n',
@@ -406,7 +427,8 @@ powershell/management/disable_rdp
                                                                                 'iptables '
                                                                                 'firewall',
                                                                         'supported_platforms': ['linux']},
-                                                                       {'description': 'Disables '
+                                                                       {'auto_generated_guid': '4ce786f8-e601-44b5-bfae-9ebb15a7d1c8',
+                                                                        'description': 'Disables '
                                                                                        'syslog '
                                                                                        'collection\n',
                                                                         'executor': {'command': 'if '
@@ -452,7 +474,8 @@ powershell/management/disable_rdp
                                                                         'name': 'Disable '
                                                                                 'syslog',
                                                                         'supported_platforms': ['linux']},
-                                                                       {'description': 'Disable '
+                                                                       {'auto_generated_guid': 'ae8943f7-0f8d-44de-962d-fbc2e2f03eb8',
+                                                                        'description': 'Disable '
                                                                                        'the '
                                                                                        'Cb '
                                                                                        'Response '
@@ -501,7 +524,8 @@ powershell/management/disable_rdp
                                                                                 'Cb '
                                                                                 'Response',
                                                                         'supported_platforms': ['linux']},
-                                                                       {'description': 'Disables '
+                                                                       {'auto_generated_guid': 'fc225f36-9279-4c39-b3f9-5141ab74f8d8',
+                                                                        'description': 'Disables '
                                                                                        'SELinux '
                                                                                        'enforcement\n',
                                                                         'executor': {'command': 'setenforce '
@@ -510,7 +534,8 @@ powershell/management/disable_rdp
                                                                         'name': 'Disable '
                                                                                 'SELinux',
                                                                         'supported_platforms': ['linux']},
-                                                                       {'description': 'Stop '
+                                                                       {'auto_generated_guid': '828a1278-81cc-4802-96ab-188bf29ca77d',
+                                                                        'description': 'Stop '
                                                                                        'and '
                                                                                        'disable '
                                                                                        'Crowdstrike '
@@ -541,7 +566,8 @@ powershell/management/disable_rdp
                                                                                 'on '
                                                                                 'Linux',
                                                                         'supported_platforms': ['linux']},
-                                                                       {'description': 'Disables '
+                                                                       {'auto_generated_guid': '8fba7766-2d11-4b4a-979a-1e3d9cc9a88c',
+                                                                        'description': 'Disables '
                                                                                        'Carbon '
                                                                                        'Black '
                                                                                        'Response\n',
@@ -555,7 +581,8 @@ powershell/management/disable_rdp
                                                                                 'Black '
                                                                                 'Response',
                                                                         'supported_platforms': ['macos']},
-                                                                       {'description': 'Disables '
+                                                                       {'auto_generated_guid': '62155dd8-bb3d-4f32-b31c-6532ff3ac6a3',
+                                                                        'description': 'Disables '
                                                                                        'LittleSnitch\n',
                                                                         'executor': {'command': 'sudo '
                                                                                                 'launchctl '
@@ -565,7 +592,8 @@ powershell/management/disable_rdp
                                                                         'name': 'Disable '
                                                                                 'LittleSnitch',
                                                                         'supported_platforms': ['macos']},
-                                                                       {'description': 'Disables '
+                                                                       {'auto_generated_guid': '07f43b33-1e15-4e99-be70-bc094157c849',
+                                                                        'description': 'Disables '
                                                                                        'OpenDNS '
                                                                                        'Umbrella\n',
                                                                         'executor': {'command': 'sudo '
@@ -577,7 +605,8 @@ powershell/management/disable_rdp
                                                                                 'OpenDNS '
                                                                                 'Umbrella',
                                                                         'supported_platforms': ['macos']},
-                                                                       {'description': 'Stop '
+                                                                       {'auto_generated_guid': 'b3e7510c-2d4c-4249-a33f-591a2bc83eef',
+                                                                        'description': 'Stop '
                                                                                        'and '
                                                                                        'unload '
                                                                                        'Crowdstrike '
@@ -626,7 +655,8 @@ powershell/management/disable_rdp
                                                                                 'on '
                                                                                 'macOS',
                                                                         'supported_platforms': ['macos']},
-                                                                       {'dependencies': [{'description': 'Sysmon '
+                                                                       {'auto_generated_guid': '811b3e76-c41b-430c-ac0d-e2380bfaa164',
+                                                                        'dependencies': [{'description': 'Sysmon '
                                                                                                          'must '
                                                                                                          'be '
                                                                                                          'downloaded\n',
@@ -821,7 +851,8 @@ powershell/management/disable_rdp
                                                                                 'Filter '
                                                                                 'Driver',
                                                                         'supported_platforms': ['windows']},
-                                                                       {'description': 'Disables '
+                                                                       {'auto_generated_guid': '69435dcf-c66f-4ec0-a8b1-82beb76b34db',
+                                                                        'description': 'Disables '
                                                                                        'HTTP '
                                                                                        'logging '
                                                                                        'on '
@@ -887,7 +918,8 @@ powershell/management/disable_rdp
                                                                                 'HTTP '
                                                                                 'Logging',
                                                                         'supported_platforms': ['windows']},
-                                                                       {'dependencies': [{'description': 'Sysmon '
+                                                                       {'auto_generated_guid': 'a316fb2e-5344-470d-91c1-23e15c374edc',
+                                                                        'dependencies': [{'description': 'Sysmon '
                                                                                                          'executable '
                                                                                                          'must '
                                                                                                          'be '
@@ -987,7 +1019,8 @@ powershell/management/disable_rdp
                                                                         'name': 'Uninstall '
                                                                                 'Sysmon',
                                                                         'supported_platforms': ['windows']},
-                                                                       {'description': 'Any '
+                                                                       {'auto_generated_guid': '695eed40-e949-40e5-b306-b4031e4154bd',
+                                                                        'description': 'Any '
                                                                                        'easy '
                                                                                        'way '
                                                                                        'to '
@@ -1025,7 +1058,8 @@ powershell/management/disable_rdp
                                                                                 'AMSI '
                                                                                 'InitFailed',
                                                                         'supported_platforms': ['windows']},
-                                                                       {'description': 'With '
+                                                                       {'auto_generated_guid': '13f09b91-c953-438e-845b-b585e51cac9b',
+                                                                        'description': 'With '
                                                                                        'administrative '
                                                                                        'rights, '
                                                                                        'an '
@@ -1095,7 +1129,8 @@ powershell/management/disable_rdp
                                                                                 'Reg '
                                                                                 'Key',
                                                                         'supported_platforms': ['windows']},
-                                                                       {'description': 'With '
+                                                                       {'auto_generated_guid': 'a1230893-56ac-4c81-b644-2108e982f8f5',
+                                                                        'description': 'With '
                                                                                        'administrative '
                                                                                        'rights, '
                                                                                        'an '
@@ -1184,7 +1219,8 @@ powershell/management/disable_rdp
                                                                                 'Windows '
                                                                                 'Service',
                                                                         'supported_platforms': ['windows']},
-                                                                       {'description': 'Attempting '
+                                                                       {'auto_generated_guid': '6b8df440-51ec-4d53-bf83-899591c9b5d7',
+                                                                        'description': 'Attempting '
                                                                                        'to '
                                                                                        'disable '
                                                                                        'scheduled '
@@ -1242,7 +1278,8 @@ powershell/management/disable_rdp
                                                                                 'ATP '
                                                                                 'PowerShell',
                                                                         'supported_platforms': ['windows']},
-                                                                       {'description': 'Attempting '
+                                                                       {'auto_generated_guid': 'aa875ed4-8935-47e2-b2c5-6ec00ab220d2',
+                                                                        'description': 'Attempting '
                                                                                        'to '
                                                                                        'disable '
                                                                                        'scheduled '
@@ -1336,7 +1373,8 @@ powershell/management/disable_rdp
                                                                                 'Command '
                                                                                 'Prompt',
                                                                         'supported_platforms': ['windows']},
-                                                                       {'description': 'Disable '
+                                                                       {'auto_generated_guid': '1b3e0146-a1e5-4c5c-89fb-1bb2ffe8fc45',
+                                                                        'description': 'Disable '
                                                                                        'Windows '
                                                                                        'Defender '
                                                                                        'from '
@@ -1390,7 +1428,8 @@ powershell/management/disable_rdp
                                                                                 'Defender '
                                                                                 'Registry',
                                                                         'supported_platforms': ['windows']},
-                                                                       {'description': 'Gorgon '
+                                                                       {'auto_generated_guid': '6f5fb61b-4e56-4a3d-a8c3-82e13686c6d7',
+                                                                        'description': 'Gorgon '
                                                                                        'group '
                                                                                        'may '
                                                                                        'disable '
@@ -1481,7 +1520,8 @@ powershell/management/disable_rdp
                                                                                 'Security '
                                                                                 'Features',
                                                                         'supported_platforms': ['windows']},
-                                                                       {'description': 'Removing '
+                                                                       {'auto_generated_guid': '3d47daaa-2f56-43e0-94cc-caf5d8d52a68',
+                                                                        'description': 'Removing '
                                                                                        'definition '
                                                                                        'files '
                                                                                        'would '
@@ -1542,7 +1582,8 @@ powershell/management/disable_rdp
                                                                                 'Definition '
                                                                                 'Files',
                                                                         'supported_platforms': ['windows']},
-                                                                       {'description': 'Beginning '
+                                                                       {'auto_generated_guid': 'ae753dda-0f15-4af6-a168-b9ba16143143',
+                                                                        'description': 'Beginning '
                                                                                        'with '
                                                                                        'Powershell '
                                                                                        '6.0, '
@@ -1604,7 +1645,8 @@ powershell/management/disable_rdp
                                                                                 'Windows '
                                                                                 'Service',
                                                                         'supported_platforms': ['windows']},
-                                                                       {'description': 'Uninstall '
+                                                                       {'auto_generated_guid': 'b32b1ccf-f7c1-49bc-9ddd-7d7466a7b297',
+                                                                        'description': 'Uninstall '
                                                                                        'Crowdstrike '
                                                                                        'Falcon. '
                                                                                        'If '

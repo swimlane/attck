@@ -82,7 +82,7 @@
 
 ### MITRE Description
 
-> intentionally left blank
+> None
 
 ### External Description
 
@@ -91,7 +91,6 @@
 ## Aliases
 
 ```
-intentionally left blank
 
 ```
 

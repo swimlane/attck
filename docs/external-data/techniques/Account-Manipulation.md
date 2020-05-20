@@ -19,14 +19,20 @@ In Azure, an adversary can set a second password for Service Principals, facilit
 
 AWS policies allow trust between accounts by simply identifying the account name. It is then up to the trusted account to only allow the correct roles to have access.(Citation: Summit Route Advanced AWS policy auditing)
 
+## Aliases
+
+```
+
+```
+
 ## Additional Attributes
 
 * Bypass: None
 * Effective Permissions: None
-* Network: intentionally left blank
+* Network: None
 * Permissions: ['Administrator']
 * Platforms: ['Windows', 'Office 365', 'Azure', 'GCP', 'Azure AD', 'AWS']
-* Remote: intentionally left blank
+* Remote: None
 * Type: attack-pattern
 * Wiki: https://attack.mitre.org/techniques/T1098
 
@@ -182,7 +188,15 @@ The command completed successfully.
                            'attack.privilege_escalation',
                            'attack.t1098'],
                   'title': 'Password Change on Directory Service Restore Mode '
-                           '(DSRM) Account'}}]
+                           '(DSRM) Account'}},
+ {'data_source': ['4624', 'Authentication logs']},
+ {'data_source': ['Windows event logs']},
+ {'data_source': ['Packet capture']},
+ {'data_source': ['API monitoring']},
+ {'data_source': ['4624', 'Authentication logs']},
+ {'data_source': ['Windows event logs']},
+ {'data_source': ['Packet capture']},
+ {'data_source': ['API monitoring']}]
 ```
 
 ## Potential Queries
@@ -349,7 +363,8 @@ The command completed successfully.
 ## Raw Dataset
 
 ```json
-[{'Atomic Red Team Test - Account Manipulation': {'atomic_tests': [{'description': 'Manipulate '
+[{'Atomic Red Team Test - Account Manipulation': {'atomic_tests': [{'auto_generated_guid': '5598f7cb-cf43-455e-883a-f6008c5d46af',
+                                                                    'description': 'Manipulate '
                                                                                    'Admin '
                                                                                    'Account '
                                                                                    'Name\n',

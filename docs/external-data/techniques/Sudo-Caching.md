@@ -11,14 +11,20 @@ Adversaries can abuse poor configurations of this to escalate privileges without
 
 The OSX Proton Malware has disabled <code>tty_tickets</code> to potentially make scripting easier by issuing <code>echo \'Defaults !tty_tickets\' >> /etc/sudoers</code>  (Citation: cybereason osx proton). In order for this change to be reflected, the Proton malware also must issue <code>killall Terminal</code>. As of macOS Sierra, the sudoers file has <code>tty_tickets</code> enabled by default.
 
+## Aliases
+
+```
+
+```
+
 ## Additional Attributes
 
 * Bypass: None
 * Effective Permissions: ['root']
-* Network: intentionally left blank
+* Network: None
 * Permissions: ['User']
 * Platforms: ['Linux', 'macOS']
-* Remote: intentionally left blank
+* Remote: None
 * Type: attack-pattern
 * Wiki: https://attack.mitre.org/techniques/T1206
 
@@ -77,7 +83,8 @@ sudo sh -c "echo Defaults "'!'"tty_tickets >> /etc/sudoers"
 ## Raw Dataset
 
 ```json
-[{'Atomic Red Team Test - Sudo Caching': {'atomic_tests': [{'description': 'Sets '
+[{'Atomic Red Team Test - Sudo Caching': {'atomic_tests': [{'auto_generated_guid': 'a7b17659-dd5e-46f7-b7d1-e6792c91d0bc',
+                                                            'description': 'Sets '
                                                                            'sudo '
                                                                            'caching '
                                                                            'timestamp_timeout '
@@ -119,7 +126,8 @@ sudo sh -c "echo Defaults "'!'"tty_tickets >> /etc/sudoers"
                                                                     'timeout',
                                                             'supported_platforms': ['macos',
                                                                                     'linux']},
-                                                           {'description': 'Sets '
+                                                           {'auto_generated_guid': '91a60b03-fb75-4d24-a42e-2eb8956e8de1',
+                                                            'description': 'Sets '
                                                                            'sudo '
                                                                            'caching '
                                                                            'tty_tickets '

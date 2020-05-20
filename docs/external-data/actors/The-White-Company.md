@@ -30,7 +30,6 @@ _/  |_|  |__   ____    __  _  _|  |__ |__|/  |_  ____       ____  ____
 ## Aliases
 
 ```
-intentionally left blank
 The White Company
 ```
 

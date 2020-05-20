@@ -9,14 +9,20 @@
 
 Adversaries may use the information from [System Network Configuration Discovery](https://attack.mitre.org/techniques/T1016) during automated discovery to shape follow-on behaviors, including whether or not the adversary fully infects the target and/or attempts specific actions.
 
+## Aliases
+
+```
+
+```
+
 ## Additional Attributes
 
 * Bypass: None
 * Effective Permissions: None
-* Network: intentionally left blank
+* Network: None
 * Permissions: ['User']
 * Platforms: ['Linux', 'macOS', 'Windows']
-* Remote: intentionally left blank
+* Remote: None
 * Type: attack-pattern
 * Wiki: https://attack.mitre.org/techniques/T1016
 
@@ -353,7 +359,14 @@ powershell/situational_awareness/network/powerview/get_subnet
 ## Potential Detections
 
 ```json
-
+[{'data_source': ['4688', 'Process Execution']},
+ {'data_source': ['4688 ', 'Process CMD Line']},
+ {'data_source': ['200-500', ' 4100-4104', 'PowerShell']},
+ {'data_source': ['5861', 'WMI']},
+ {'data_source': ['4688', 'Process Execution']},
+ {'data_source': ['4688 ', 'Process CMD Line']},
+ {'data_source': ['5861', 'WMI']},
+ {'data_source': ['200-500', ' 4100-4104', 'PowerShell']}]
 ```
 
 ## Potential Queries
@@ -476,7 +489,8 @@ powershell/situational_awareness/network/powerview/get_subnet
                                                                  'domain '
                                                                  'controller)',
                                                   'Metasploit': ''}},
- {'Atomic Red Team Test - System Network Configuration Discovery': {'atomic_tests': [{'description': 'Identify '
+ {'Atomic Red Team Test - System Network Configuration Discovery': {'atomic_tests': [{'auto_generated_guid': '970ab6a1-0157-4f3f-9a73-ec4166754b23',
+                                                                                      'description': 'Identify '
                                                                                                      'network '
                                                                                                      'configuration '
                                                                                                      'information\n'
@@ -519,7 +533,8 @@ powershell/situational_awareness/network/powerview/get_subnet
                                                                                               'on '
                                                                                               'Windows',
                                                                                       'supported_platforms': ['windows']},
-                                                                                     {'description': 'Enumerates '
+                                                                                     {'auto_generated_guid': '038263cb-00f4-4b0a-98ae-0696c67e1752',
+                                                                                      'description': 'Enumerates '
                                                                                                      'Windows '
                                                                                                      'Firewall '
                                                                                                      'Rules '
@@ -555,7 +570,8 @@ powershell/situational_awareness/network/powerview/get_subnet
                                                                                               'Firewall '
                                                                                               'Rules',
                                                                                       'supported_platforms': ['windows']},
-                                                                                     {'description': 'Identify '
+                                                                                     {'auto_generated_guid': 'c141bbdb-7fca-4254-9fd6-f47e79447e17',
+                                                                                      'description': 'Identify '
                                                                                                      'network '
                                                                                                      'configuration '
                                                                                                      'information.\n'
@@ -674,7 +690,8 @@ powershell/situational_awareness/network/powerview/get_subnet
                                                                                               'Discovery',
                                                                                       'supported_platforms': ['macos',
                                                                                                               'linux']},
-                                                                                     {'description': 'Identify '
+                                                                                     {'auto_generated_guid': 'dafaf052-5508-402d-bf77-51e0700c02e2',
+                                                                                      'description': 'Identify '
                                                                                                      'network '
                                                                                                      'configuration '
                                                                                                      'information '
@@ -729,7 +746,8 @@ powershell/situational_awareness/network/powerview/get_subnet
                                                                                               '(TrickBot '
                                                                                               'Style)',
                                                                                       'supported_platforms': ['windows']},
-                                                                                     {'dependencies': [{'description': 'Test '
+                                                                                     {'auto_generated_guid': '4b467538-f102-491d-ace7-ed487b853bf5',
+                                                                                      'dependencies': [{'description': 'Test '
                                                                                                                        'requires '
                                                                                                                        '#{port_file} '
                                                                                                                        'to '

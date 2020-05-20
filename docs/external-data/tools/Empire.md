@@ -12,7 +12,9 @@
 ## Aliases
 
 ```
-intentionally left blank
+Empire
+EmPyre
+PowerShell Empire
 ```
 
 ## Additional Attributes
@@ -23,7 +25,7 @@ intentionally left blank
 # C2 Matrix Dataset
 
 ```json
-{"Empire": {"Name": "Empire", "License": "BSD3", "Price": "NA", "GitHub": "https://github.com/BC-SECURITY/Empire", "Site": "", "Twitter": "@BCSecurity1", "Evaluator": "@jorgeorchilles", "Date": "1/30/2020", "Version": "3.0.5", "Implementation": "install.sh", "How-To": "Yes", "Slingshot": "Yes", "Kali": "Yes", "Server": "Python", "Agent": "PowerShell", "Multi-User": "Yes", "UI": "Web", "API": "Yes", "Windows": "Yes", "Linux": "Yes", "macOS": "Yes", "TCP": "No", "HTTP": "Yes", "HTTP2": "No", "HTTP3": "No", "DNS": "No", "DoH": "No", "ICMP": "No", "FTP": "No", "IMAP": "No", "MAPI": "No", "SMB": "No", "Key Exchange": "Encrypted Key Exchange", "Stego": "No", "Proxy Aware": "Yes", "DomainFront": "Yes", "Custom Profile": "Yes", "Jitter": "Yes", "Working Hours": "Yes", "Kill Date": "Yes", "Chaining": "No", "Logging": "Yes", "ATT&CK Mapping": "Yes", "Dashboard": "No", "NetWitness": "Yes", "Actively Maint.": "Yes", "Slack": "#psempire bloodhoundhq.slack.com", "Slack Members": "1299", "GH Issues": "61", "Notes": ""}}
+{"Empire": {"Name": "Empire", "License": "BSD3", "Price": "NA", "GitHub": "https://github.com/BC-SECURITY/Empire", "Site": "", "Twitter": "@BCSecurity1", "Evaluator": "@jorgeorchilles", "Date": "1/30/2020", "Version": "3.0.5", "Implementation": "install.sh", "How-To": "Yes", "Slingshot": "Yes", "Kali": "Yes", "Server": "Python", "Agent": "PowerShell", "Multi-User": "Yes", "UI": "GUI", "API": "Yes", "Windows": "Yes", "Linux": "Yes", "macOS": "Yes", "TCP": "No", "HTTP": "Yes", "HTTP2": "No", "HTTP3": "No", "DNS": "No", "DoH": "No", "ICMP": "No", "FTP": "No", "IMAP": "No", "MAPI": "No", "SMB": "No", "Key Exchange": "Encrypted Key Exchange", "Stego": "No", "Proxy Aware": "Yes", "DomainFront": "Yes", "Custom Profile": "Yes", "Jitter": "Yes", "Working Hours": "Yes", "Kill Date": "Yes", "Chaining": "No", "Logging": "Yes", "ATT&CK Mapping": "Yes", "Dashboard": "No", "NetWitness": "Yes", "Actively Maint.": "Yes", "Slack": "#psempire bloodhoundhq.slack.com", "Slack Members": "1299", "GH Issues": "61", "Notes": ""}}
 ```
 
 # C2 Matrix Properties
@@ -111,7 +113,7 @@ intentionally left blank
 
 * API: Yes
 
-* UI: Web
+* UI: GUI
 
 * Linux: Yes
  

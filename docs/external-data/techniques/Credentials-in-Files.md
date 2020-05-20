@@ -13,14 +13,20 @@ In cloud environments, authenticated user credentials are often stored in local 
 
 
 
+## Aliases
+
+```
+
+```
+
 ## Additional Attributes
 
 * Bypass: None
 * Effective Permissions: None
-* Network: intentionally left blank
+* Network: None
 * Permissions: ['User', 'Administrator', 'SYSTEM']
 * Platforms: ['Linux', 'macOS', 'Windows', 'AWS', 'GCP', 'Azure']
-* Remote: intentionally left blank
+* Remote: None
 * Type: attack-pattern
 * Wiki: https://attack.mitre.org/techniques/T1081
 
@@ -74,7 +80,11 @@ grep -riP password /
 
 ```json
 [{'data_source': 'auditlogs (audit.rules)'},
- {'data_source': 'bash_history logs'}]
+ {'data_source': 'bash_history logs'},
+ {'data_source': ['4663', 'File monitoring']},
+ {'data_source': ['4688 ', 'Process CMD Line']},
+ {'data_source': ['4663', 'File monitoring']},
+ {'data_source': ['4688 ', 'Process CMD Line']}]
 ```
 
 ## Potential Queries
@@ -144,7 +154,8 @@ grep -riP password /
                                                                  'targeting '
                                                                  'Firefox',
                                                   'Metasploit': ''}},
- {'Atomic Red Team Test - Credentials in Files': {'atomic_tests': [{'description': '[LaZagne '
+ {'Atomic Red Team Test - Credentials in Files': {'atomic_tests': [{'auto_generated_guid': '9e507bb8-1d30-4e3b-a49b-cb5727d7ea79',
+                                                                    'description': '[LaZagne '
                                                                                    'Source](https://github.com/AlessandroZ/LaZagne)\n',
                                                                     'executor': {'command': 'python2 '
                                                                                             'laZagne.py '
@@ -158,7 +169,8 @@ grep -riP password /
                                                                             'with '
                                                                             'LaZagne',
                                                                     'supported_platforms': ['macos']},
-                                                                   {'description': 'Extracting '
+                                                                   {'auto_generated_guid': 'bd4cf0d1-7646-474e-8610-78ccf5a097c4',
+                                                                    'description': 'Extracting '
                                                                                    'credentials '
                                                                                    'from '
                                                                                    'files\n',
@@ -178,7 +190,8 @@ grep -riP password /
                                                                             'grep',
                                                                     'supported_platforms': ['macos',
                                                                                             'linux']},
-                                                                   {'description': 'Extracting '
+                                                                   {'auto_generated_guid': '0e56bf29-ff49-4ea5-9af4-3b81283fd513',
+                                                                    'description': 'Extracting '
                                                                                    'Credentials '
                                                                                    'from '
                                                                                    'Files. '
@@ -216,7 +229,8 @@ grep -riP password /
                                                                             'with '
                                                                             'findstr',
                                                                     'supported_platforms': ['windows']},
-                                                                   {'description': 'Attempts '
+                                                                   {'auto_generated_guid': '367d4004-5fc0-446d-823f-960c74ae52c3',
+                                                                    'description': 'Attempts '
                                                                                    'to '
                                                                                    'access '
                                                                                    'unattend.xml, '

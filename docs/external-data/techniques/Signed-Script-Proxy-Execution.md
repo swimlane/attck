@@ -11,14 +11,20 @@ PubPrn.vbs is signed by Microsoft and can be used to proxy execution from a remo
 
 There are several other signed scripts that may be used in a similar manner. (Citation: GitHub Ultimate AppLocker Bypass List)
 
+## Aliases
+
+```
+
+```
+
 ## Additional Attributes
 
 * Bypass: ['Application whitelisting', 'Digital Certificate Validation']
 * Effective Permissions: None
-* Network: intentionally left blank
+* Network: None
 * Permissions: ['User']
 * Platforms: ['Windows']
-* Remote: intentionally left blank
+* Remote: None
 * Type: attack-pattern
 * Wiki: https://attack.mitre.org/techniques/T1216
 
@@ -60,7 +66,10 @@ PubPrn.vbsPubPrn.vbs
 ## Potential Detections
 
 ```json
-
+[{'data_source': ['4688', 'Process Execution']},
+ {'data_source': ['4688 ', 'Process CMD Line']},
+ {'data_source': ['4688', 'Process Execution']},
+ {'data_source': ['4688 ', 'Process CMD Line']}]
 ```
 
 ## Potential Queries
@@ -77,7 +86,8 @@ PubPrn.vbsPubPrn.vbs
 ## Raw Dataset
 
 ```json
-[{'Atomic Red Team Test - Signed Script Proxy Execution': {'atomic_tests': [{'description': 'Executes '
+[{'Atomic Red Team Test - Signed Script Proxy Execution': {'atomic_tests': [{'auto_generated_guid': '9dd29a1f-1e16-4862-be83-913b10a88f6c',
+                                                                             'description': 'Executes '
                                                                                             'the '
                                                                                             'signed '
                                                                                             'PubPrn.vbs '
@@ -112,7 +122,8 @@ PubPrn.vbsPubPrn.vbs
                                                                                      'Script '
                                                                                      'Bypass',
                                                                              'supported_platforms': ['windows']},
-                                                                            {'description': 'Executes '
+                                                                            {'auto_generated_guid': '275d963d-3f36-476c-8bef-a2a3960ee6eb',
+                                                                             'description': 'Executes '
                                                                                             'the '
                                                                                             'signed '
                                                                                             'SyncAppvPublishingServer '
@@ -150,7 +161,8 @@ PubPrn.vbsPubPrn.vbs
                                                                                      'Command '
                                                                                      'Execution',
                                                                              'supported_platforms': ['windows']},
-                                                                            {'description': 'Executes '
+                                                                            {'auto_generated_guid': '2a8f2d3c-3dec-4262-99dd-150cb2a4d63a',
+                                                                             'description': 'Executes '
                                                                                             'the '
                                                                                             'signed '
                                                                                             'manage-bde.wsf '

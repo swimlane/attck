@@ -23,14 +23,20 @@ On Mac, locally mounted shares can be viewed with the <code>df -aH</code> comman
 
 Cloud virtual networks may contain remote network shares or file storage services accessible to an adversary after they have obtained access to a system. For example, AWS, GCP, and Azure support creation of Network File System (NFS) shares and Server Message Block (SMB) shares that may be mapped on endpoint or cloud-based systems.(Citation: Amazon Creating an NFS File Share)(Citation: Google File servers on Compute Engine)
 
+## Aliases
+
+```
+
+```
+
 ## Additional Attributes
 
 * Bypass: None
 * Effective Permissions: None
-* Network: intentionally left blank
+* Network: None
 * Permissions: ['User']
 * Platforms: ['macOS', 'Windows', 'AWS', 'GCP', 'Azure']
-* Remote: intentionally left blank
+* Remote: None
 * Type: attack-pattern
 * Wiki: https://attack.mitre.org/techniques/T1135
 
@@ -216,7 +222,17 @@ The command completed successfully.
                                 'netCommand2': {'CommandLine': 'net session'},
                                 'netCommand3': {'CommandLine': 'net share'},
                                 'timeframe': '1m'},
-                  'level': 'medium'}}]
+                  'level': 'medium'}},
+ {'data_source': ['4688', 'Process Execution']},
+ {'data_source': ['4688 ', 'Process CMD Line']},
+ {'data_source': ['5156', 'Windows Firewall']},
+ {'data_source': ['5140/5145', 'Net Shares']},
+ {'data_source': ['Network protocol analysis']},
+ {'data_source': ['4688', 'Process Execution']},
+ {'data_source': ['4688 ', 'Process CMD Line']},
+ {'data_source': ['5156', 'Windows Firewall']},
+ {'data_source': ['5140/5145', 'Net Shares']},
+ {'data_source': ['Network protocol analysis']}]
 ```
 
 ## Potential Queries
@@ -404,7 +420,8 @@ The command completed successfully.
                                                                  'the '
                                                                  'network. ',
                                                   'Metasploit': 'auxiliary/scanner/smb/smb_enumshares'}},
- {'Atomic Red Team Test - Network Share Discovery': {'atomic_tests': [{'description': 'Network '
+ {'Atomic Red Team Test - Network Share Discovery': {'atomic_tests': [{'auto_generated_guid': 'f94b5ad9-911c-4eff-9718-fd21899db4f7',
+                                                                       'description': 'Network '
                                                                                       'Share '
                                                                                       'Discovery\n',
                                                                        'executor': {'command': 'df '
@@ -430,7 +447,8 @@ The command completed successfully.
                                                                                'Discovery',
                                                                        'supported_platforms': ['macos',
                                                                                                'linux']},
-                                                                      {'description': 'Network '
+                                                                      {'auto_generated_guid': '20f1097d-81c1-405c-8380-32174d493bbb',
+                                                                       'description': 'Network '
                                                                                       'Share '
                                                                                       'Discovery '
                                                                                       'utilizing '
@@ -484,7 +502,8 @@ The command completed successfully.
                                                                                'command '
                                                                                'prompt',
                                                                        'supported_platforms': ['windows']},
-                                                                      {'description': 'Network '
+                                                                      {'auto_generated_guid': '1b0814d1-bb24-402d-9615-1b20c50733fb',
+                                                                       'description': 'Network '
                                                                                       'Share '
                                                                                       'Discovery '
                                                                                       'utilizing '
@@ -538,7 +557,8 @@ The command completed successfully.
                                                                                'Discovery '
                                                                                'PowerShell',
                                                                        'supported_platforms': ['windows']},
-                                                                      {'description': 'View '
+                                                                      {'auto_generated_guid': 'ab39a04f-0c93-4540-9ff2-83f862c385ae',
+                                                                       'description': 'View '
                                                                                       'information '
                                                                                       'about '
                                                                                       'all '

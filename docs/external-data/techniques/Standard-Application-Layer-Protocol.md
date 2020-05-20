@@ -9,6 +9,12 @@
 
 For connections that occur internally within an enclave (such as those between a proxy or pivot node and other nodes), commonly used protocols are RPC, SSH, or RDP.
 
+## Aliases
+
+```
+
+```
+
 ## Additional Attributes
 
 * Bypass: None
@@ -16,7 +22,7 @@ For connections that occur internally within an enclave (such as those between a
 * Network: True
 * Permissions: None
 * Platforms: ['Linux', 'macOS', 'Windows']
-* Remote: intentionally left blank
+* Remote: None
 * Type: attack-pattern
 * Wiki: https://attack.mitre.org/techniques/T1071
 
@@ -214,7 +220,15 @@ Start-Dnscat2 -Domain #{domain} -DNSServer 127.0.0.1
                                  'https://github.com/samratashok/nishang/blob/master/Backdoors/DNS_TXT_Pwnage.ps1'],
                   'status': 'experimental',
                   'tags': ['attack.t1071'],
-                  'title': 'DNS TXT Answer with possible execution strings'}}]
+                  'title': 'DNS TXT Answer with possible execution strings'}},
+ {'data_source': ['5156', 'Windows Firewall']},
+ {'data_source': ['4688', 'Process Execution']},
+ {'data_source': ['Network intrusion detection system']},
+ {'data_source': ['Network protocol analysis']},
+ {'data_source': ['5156', 'Windows Firewall']},
+ {'data_source': ['4688', 'Process Execution']},
+ {'data_source': ['Network intrusion detection system']},
+ {'data_source': ['Network protocol analysis']}]
 ```
 
 ## Potential Queries
@@ -226,7 +240,8 @@ Start-Dnscat2 -Domain #{domain} -DNSServer 127.0.0.1
 ## Raw Dataset
 
 ```json
-[{'Atomic Red Team Test - Standard Application Layer Protocol': {'atomic_tests': [{'description': 'This '
+[{'Atomic Red Team Test - Standard Application Layer Protocol': {'atomic_tests': [{'auto_generated_guid': '81c13829-f6c9-45b8-85a6-053366d55297',
+                                                                                   'description': 'This '
                                                                                                   'test '
                                                                                                   'simulates '
                                                                                                   'an '
@@ -314,7 +329,8 @@ Start-Dnscat2 -Domain #{domain} -DNSServer 127.0.0.1
                                                                                            '- '
                                                                                            'Powershell',
                                                                                    'supported_platforms': ['windows']},
-                                                                                  {'description': 'This '
+                                                                                  {'auto_generated_guid': 'dc3488b0-08c7-4fea-b585-905c83b48180',
+                                                                                   'description': 'This '
                                                                                                   'test '
                                                                                                   'simulates '
                                                                                                   'an '
@@ -410,7 +426,8 @@ Start-Dnscat2 -Domain #{domain} -DNSServer 127.0.0.1
                                                                                            '- '
                                                                                            'CMD',
                                                                                    'supported_platforms': ['windows']},
-                                                                                  {'description': 'This '
+                                                                                  {'auto_generated_guid': '2d7c471a-e887-4b78-b0dc-b0df1f2e0658',
+                                                                                   'description': 'This '
                                                                                                   'test '
                                                                                                   'simulates '
                                                                                                   'an '
@@ -473,7 +490,8 @@ Start-Dnscat2 -Domain #{domain} -DNSServer 127.0.0.1
                                                                                            'Nix',
                                                                                    'supported_platforms': ['linux',
                                                                                                            'macos']},
-                                                                                  {'description': 'This '
+                                                                                  {'auto_generated_guid': '1700f5d6-5a44-487b-84de-bc66f507b0a6',
+                                                                                   'description': 'This '
                                                                                                   'test '
                                                                                                   'simulates '
                                                                                                   'an '
@@ -602,7 +620,8 @@ Start-Dnscat2 -Domain #{domain} -DNSServer 127.0.0.1
                                                                                            'Query '
                                                                                            'Volume',
                                                                                    'supported_platforms': ['windows']},
-                                                                                  {'description': 'This '
+                                                                                  {'auto_generated_guid': '3efc144e-1af8-46bb-8ca2-1376bb6db8b6',
+                                                                                   'description': 'This '
                                                                                                   'test '
                                                                                                   'simulates '
                                                                                                   'an '
@@ -765,7 +784,8 @@ Start-Dnscat2 -Domain #{domain} -DNSServer 127.0.0.1
                                                                                            'Regular '
                                                                                            'Beaconing',
                                                                                    'supported_platforms': ['windows']},
-                                                                                  {'description': 'This '
+                                                                                  {'auto_generated_guid': 'fef31710-223a-40ee-8462-a396d6b66978',
+                                                                                   'description': 'This '
                                                                                                   'test '
                                                                                                   'simulates '
                                                                                                   'an '
@@ -877,7 +897,8 @@ Start-Dnscat2 -Domain #{domain} -DNSServer 127.0.0.1
                                                                                            'Domain '
                                                                                            'Query',
                                                                                    'supported_platforms': ['windows']},
-                                                                                  {'description': 'This '
+                                                                                  {'auto_generated_guid': 'e7bf9802-2e78-4db9-93b5-181b7bcd37d7',
+                                                                                   'description': 'This '
                                                                                                   'will '
                                                                                                   'attempt '
                                                                                                   'to '

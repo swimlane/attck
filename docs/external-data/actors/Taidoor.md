@@ -24,7 +24,6 @@ _/  |______  |__| __| _/____   ___________
 ## Aliases
 
 ```
-intentionally left blank
 Taidoor
 ```
 

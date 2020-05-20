@@ -9,14 +9,20 @@
 
 Malware or scripts may be used to interact with the devices through an available API provided by the operating system or an application to capture audio. Audio files may be written to disk and exfiltrated later.
 
+## Aliases
+
+```
+
+```
+
 ## Additional Attributes
 
 * Bypass: None
 * Effective Permissions: None
-* Network: intentionally left blank
+* Network: None
 * Permissions: ['User']
 * Platforms: ['Linux', 'macOS', 'Windows']
-* Remote: intentionally left blank
+* Remote: None
 * Type: attack-pattern
 * Wiki: https://attack.mitre.org/techniques/T1123
 
@@ -46,7 +52,12 @@ python/collection/osx/osx_mic_record
 ## Potential Detections
 
 ```json
-
+[{'data_source': ['4688', 'Process Execution']},
+ {'data_source': ['4663', 'File monitoring']},
+ {'data_source': ['API monitoring']},
+ {'data_source': ['4688', 'Process Execution']},
+ {'data_source': ['4663', 'File monitoring']},
+ {'data_source': ['API monitoring']}]
 ```
 
 ## Potential Queries
@@ -63,7 +74,8 @@ python/collection/osx/osx_mic_record
 ## Raw Dataset
 
 ```json
-[{'Atomic Red Team Test - Audio Capture': {'atomic_tests': [{'description': '[AudioDeviceCmdlets](https://github.com/cdhunt/WindowsAudioDevice-Powershell-Cmdlet)\n',
+[{'Atomic Red Team Test - Audio Capture': {'atomic_tests': [{'auto_generated_guid': '9c3ad250-b185-4444-b5a9-d69218a10c95',
+                                                             'description': '[AudioDeviceCmdlets](https://github.com/cdhunt/WindowsAudioDevice-Powershell-Cmdlet)\n',
                                                              'executor': {'command': 'powershell.exe '
                                                                                      '-Command '
                                                                                      'WindowsAudioDevice-Powershell-Cmdlet\n',

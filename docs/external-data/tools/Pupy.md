@@ -10,7 +10,7 @@
 ## Aliases
 
 ```
-intentionally left blank
+Pupy
 ```
 
 ## Additional Attributes
@@ -21,7 +21,7 @@ intentionally left blank
 # C2 Matrix Dataset
 
 ```json
-{"Pupy": {"Name": "Pupy", "License": "BSD3", "Price": "NA", "GitHub": "https://github.com/n1nj4sec/pupy", "Site": "", "Twitter": "@n1nj4sec", "Evaluator": "", "Date": "", "Version": "", "Implementation": "", "How-To": "", "Slingshot": "", "Kali": "", "Server": "Python", "Agent": "Python", "Multi-User": "No", "UI": "CLI", "API": "No", "Windows": "", "Linux": "", "macOS": "", "TCP": "", "HTTP": "", "HTTP2": "", "HTTP3": "", "DNS": "", "DoH": "", "ICMP": "", "FTP": "", "IMAP": "", "MAPI": "", "SMB": "", "Key Exchange": "", "Stego": "", "Proxy Aware": "", "DomainFront": "", "Custom Profile": "", "Jitter": "", "Working Hours": "", "Kill Date": "", "Chaining": "", "Logging": "", "ATT&CK Mapping": "Yes", "Dashboard": "", "NetWitness": "", "Actively Maint.": "Yes", "Slack": "No", "Slack Members": "NA", "GH Issues": "596", "Notes": ""}}
+{"Pupy": {"Name": "Pupy", "License": "BSD3", "Price": "NA", "GitHub": "https://github.com/n1nj4sec/pupy", "Site": "", "Twitter": "@n1nj4sec", "Evaluator": "Contribute", "Date": "", "Version": "", "Implementation": "", "How-To": "", "Slingshot": "", "Kali": "", "Server": "Python", "Agent": "Python", "Multi-User": "No", "UI": "CLI", "API": "No", "Windows": "", "Linux": "", "macOS": "", "TCP": "", "HTTP": "", "HTTP2": "", "HTTP3": "", "DNS": "", "DoH": "", "ICMP": "", "FTP": "", "IMAP": "", "MAPI": "", "SMB": "", "Key Exchange": "", "Stego": "", "Proxy Aware": "", "DomainFront": "", "Custom Profile": "", "Jitter": "", "Working Hours": "", "Kill Date": "", "Chaining": "", "Logging": "", "ATT&CK Mapping": "Yes", "Dashboard": "", "NetWitness": "", "Actively Maint.": "Yes", "Slack": "No", "Slack Members": "NA", "GH Issues": "596", "Notes": ""}}
 ```
 
 # C2 Matrix Properties
@@ -32,6 +32,8 @@ intentionally left blank
 * GitHub: https://github.com/n1nj4sec/pupy
 
 * Price: NA
+
+* Evaluator: Contribute
 
 * Slack: No
 

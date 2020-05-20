@@ -24,7 +24,6 @@ ___.   .__                 __                      .__
 ## Aliases
 
 ```
-intentionally left blank
 BlackOasis
 ```
 

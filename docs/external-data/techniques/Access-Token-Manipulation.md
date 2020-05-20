@@ -21,14 +21,20 @@ Any standard user can use the <code>runas</code> command, and the Windows API fu
 
 Metasploit’s Meterpreter payload allows arbitrary token manipulation and uses token impersonation to escalate privileges.(Citation: Metasploit access token) The Cobalt Strike beacon payload allows arbitrary token impersonation and can also create tokens. (Citation: Cobalt Strike Access Token)
 
+## Aliases
+
+```
+
+```
+
 ## Additional Attributes
 
 * Bypass: None
 * Effective Permissions: ['SYSTEM']
-* Network: intentionally left blank
+* Network: None
 * Permissions: ['User', 'Administrator']
 * Platforms: ['Windows']
-* Remote: intentionally left blank
+* Remote: None
 * Type: attack-pattern
 * Wiki: https://attack.mitre.org/techniques/T1134
 
@@ -88,7 +94,12 @@ powershell/privesc/getsystem
 ## Potential Detections
 
 ```json
-
+[{'data_source': ['4688 ', 'Process CMD Line']},
+ {'data_source': ['API monitoring']},
+ {'data_source': ['Access Tokens']},
+ {'data_source': ['4688 ', 'Process CMD Line']},
+ {'data_source': ['API monitoring']},
+ {'data_source': ['Access Tokens']}]
 ```
 
 ## Potential Queries

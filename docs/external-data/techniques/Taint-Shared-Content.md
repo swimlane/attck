@@ -11,14 +11,20 @@ A directory share pivot is a variation on this technique that uses several other
 
 Adversaries may also compromise shared network directories through binary infections by appending or prepending its code to the healthy binary on the shared network directory. The malware may modify the original entry point (OEP) of the healthy binary to ensure that it is executed before the legitimate code. The infection could continue to spread via the newly infected file when it is executed by a remote system. These infections may target both binary and non-binary formats that end with extensions including, but not limited to, .EXE, .DLL, .SCR, .BAT, and/or .VBS.
 
+## Aliases
+
+```
+
+```
+
 ## Additional Attributes
 
 * Bypass: None
 * Effective Permissions: None
-* Network: intentionally left blank
+* Network: None
 * Permissions: ['User']
 * Platforms: ['Windows']
-* Remote: intentionally left blank
+* Remote: None
 * Type: attack-pattern
 * Wiki: https://attack.mitre.org/techniques/T1080
 
@@ -37,7 +43,10 @@ Adversaries may also compromise shared network directories through binary infect
 ## Potential Detections
 
 ```json
-
+[{'data_source': ['4663', 'File monitoring']},
+ {'data_source': ['4688', 'Process Execution']},
+ {'data_source': ['4663', 'File monitoring']},
+ {'data_source': ['4688', 'Process Execution']}]
 ```
 
 ## Potential Queries

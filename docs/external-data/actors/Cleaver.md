@@ -117,7 +117,6 @@
 ## Aliases
 
 ```
-intentionally left blank
 Cleaver
 Threat Group 2889
 TG-2889

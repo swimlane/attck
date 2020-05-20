@@ -11,14 +11,20 @@ Adversaries may install a new launch daemon that can be configured to execute at
  
 The plist file permissions must be root:wheel, but the script or program that it points to has no such requirement. So, it is possible for poor configurations to allow an adversary to modify a current Launch Daemon’s executable and gain persistence or Privilege Escalation.
 
+## Aliases
+
+```
+
+```
+
 ## Additional Attributes
 
 * Bypass: None
 * Effective Permissions: ['root']
-* Network: intentionally left blank
+* Network: None
 * Permissions: ['Administrator']
 * Platforms: ['macOS']
-* Remote: intentionally left blank
+* Remote: None
 * Type: attack-pattern
 * Wiki: https://attack.mitre.org/techniques/T1160
 
@@ -55,7 +61,8 @@ python/persistence/osx/launchdaemonexecutable
 ## Raw Dataset
 
 ```json
-[{'Atomic Red Team Test - Launch Daemon': {'atomic_tests': [{'description': 'Utilize '
+[{'Atomic Red Team Test - Launch Daemon': {'atomic_tests': [{'auto_generated_guid': '03ab8df5-3a6b-4417-b6bd-bb7a5cfd74cf',
+                                                             'description': 'Utilize '
                                                                             'LaunchDaemon '
                                                                             'to '
                                                                             'launch '

@@ -7,14 +7,20 @@
 
 > Timestomping is a technique that modifies the timestamps of a file (the modify, access, create, and change times), often to mimic files that are in the same folder. This is done, for example, on files that have been modified or created by the adversary so that they do not appear conspicuous to forensic investigators or file analysis tools. Timestomping may be used along with file name [Masquerading](https://attack.mitre.org/techniques/T1036) to hide malware and tools. (Citation: WindowsIR Anti-Forensic Techniques)
 
+## Aliases
+
+```
+
+```
+
 ## Additional Attributes
 
 * Bypass: ['Host forensic analysis']
 * Effective Permissions: None
-* Network: intentionally left blank
+* Network: None
 * Permissions: ['User', 'Administrator', 'SYSTEM']
 * Platforms: ['Linux', 'Windows', 'macOS']
-* Remote: intentionally left blank
+* Remote: None
 * Type: attack-pattern
 * Wiki: https://attack.mitre.org/techniques/T1099
 
@@ -152,7 +158,13 @@ powershell/management/timestomp
                                  'Live environment caused by malware'],
                   'status': 'experimental',
                   'tags': ['attack.defense_evasion', 'attack.t1099'],
-                  'title': 'Unauthorized System Time Modification'}}]
+                  'title': 'Unauthorized System Time Modification'}},
+ {'data_source': ['4688 ', 'Process CMD Line']},
+ {'data_source': ['4688', 'Process Execution']},
+ {'data_source': ['4663', 'File monitoring']},
+ {'data_source': ['4688 ', 'Process CMD Line']},
+ {'data_source': ['4688', 'Process Execution']},
+ {'data_source': ['4663', 'File monitoring']}]
 ```
 
 ## Potential Queries
@@ -164,7 +176,8 @@ powershell/management/timestomp
 ## Raw Dataset
 
 ```json
-[{'Atomic Red Team Test - Timestomp': {'atomic_tests': [{'description': 'Stomps '
+[{'Atomic Red Team Test - Timestomp': {'atomic_tests': [{'auto_generated_guid': '5f9113d5-ed75-47ed-ba23-ea3573d05810',
+                                                         'description': 'Stomps '
                                                                         'on '
                                                                         'the '
                                                                         'access '
@@ -197,7 +210,8 @@ powershell/management/timestomp
                                                                  'timestamp',
                                                          'supported_platforms': ['linux',
                                                                                  'macos']},
-                                                        {'description': 'Stomps '
+                                                        {'auto_generated_guid': '20ef1523-8758-4898-b5a2-d026cc3d2c52',
+                                                         'description': 'Stomps '
                                                                         'on '
                                                                         'the '
                                                                         'modification '
@@ -230,7 +244,8 @@ powershell/management/timestomp
                                                                  'timestamp',
                                                          'supported_platforms': ['linux',
                                                                                  'macos']},
-                                                        {'description': 'Stomps '
+                                                        {'auto_generated_guid': '8164a4a6-f99c-4661-ac4f-80f5e4e78d2b',
+                                                         'description': 'Stomps '
                                                                         'on '
                                                                         'the '
                                                                         'create '
@@ -294,7 +309,8 @@ powershell/management/timestomp
                                                                  'timestamp',
                                                          'supported_platforms': ['linux',
                                                                                  'macos']},
-                                                        {'description': 'Modifies '
+                                                        {'auto_generated_guid': '631ea661-d661-44b0-abdb-7a7f3fc08e50',
+                                                         'description': 'Modifies '
                                                                         'the '
                                                                         '`modify` '
                                                                         'and '
@@ -355,7 +371,8 @@ powershell/management/timestomp
                                                                  'file',
                                                          'supported_platforms': ['linux',
                                                                                  'macos']},
-                                                        {'dependencies': [{'description': 'A '
+                                                        {'auto_generated_guid': 'b3b2c408-2ff0-4a33-b89b-1cb46a9e6a9c',
+                                                         'dependencies': [{'description': 'A '
                                                                                           'file '
                                                                                           'must '
                                                                                           'exist '
@@ -474,7 +491,8 @@ powershell/management/timestomp
                                                                  'with '
                                                                  'PowerShell',
                                                          'supported_platforms': ['windows']},
-                                                        {'dependencies': [{'description': 'A '
+                                                        {'auto_generated_guid': 'f8f6634d-93e1-4238-8510-f8a90a20dcf2',
+                                                         'dependencies': [{'description': 'A '
                                                                                           'file '
                                                                                           'must '
                                                                                           'exist '
@@ -595,7 +613,8 @@ powershell/management/timestomp
                                                                  'with '
                                                                  'PowerShell',
                                                          'supported_platforms': ['windows']},
-                                                        {'dependencies': [{'description': 'A '
+                                                        {'auto_generated_guid': 'da627f63-b9bd-4431-b6f8-c5b44d061a62',
+                                                         'dependencies': [{'description': 'A '
                                                                                           'file '
                                                                                           'must '
                                                                                           'exist '
@@ -716,7 +735,8 @@ powershell/management/timestomp
                                                                  'with '
                                                                  'PowerShell',
                                                          'supported_platforms': ['windows']},
-                                                        {'dependencies': [{'description': 'timestomp.ps1 '
+                                                        {'auto_generated_guid': 'd7512c33-3a75-4806-9893-69abc3ccdd43',
+                                                         'dependencies': [{'description': 'timestomp.ps1 '
                                                                                           'must '
                                                                                           'be '
                                                                                           'present '

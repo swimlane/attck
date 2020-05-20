@@ -7,6 +7,12 @@
 
 > Adversaries may use fallback or alternate communication channels if the primary channel is compromised or inaccessible in order to maintain reliable command and control and to avoid data transfer thresholds.
 
+## Aliases
+
+```
+
+```
+
 ## Additional Attributes
 
 * Bypass: None
@@ -14,7 +20,7 @@
 * Network: True
 * Permissions: None
 * Platforms: ['Linux', 'Windows', 'macOS']
-* Remote: intentionally left blank
+* Remote: None
 * Type: attack-pattern
 * Wiki: https://attack.mitre.org/techniques/T1008
 
@@ -47,7 +53,16 @@ external/generate_agent
 ## Potential Detections
 
 ```json
-
+[{'data_source': ['4688', 'Process Execution']},
+ {'data_source': ['5156', 'Windows Firewall']},
+ {'data_source': ['Malware reverse engineering']},
+ {'data_source': ['Netflow/Enclave netflow']},
+ {'data_source': ['Packet capture']},
+ {'data_source': ['4688', 'Process Execution']},
+ {'data_source': ['5156', 'Windows Firewall']},
+ {'data_source': ['Malware reverse engineering']},
+ {'data_source': ['Netflow/Enclave netflow']},
+ {'data_source': ['Packet capture']}]
 ```
 
 ## Potential Queries

@@ -24,7 +24,6 @@ _____  _______/  |\_____  \\   _  \
 ## Aliases
 
 ```
-intentionally left blank
 APT30
 ```
 
@@ -56,10 +55,12 @@ satellite communications operator, Telecoms, and Defense Companies, Hong Kong
 https://securelist.com/analysis/publications/69953/the-naikon-apt/
 http://blog.trendmicro.com/trendlabs-security-intelligence/rarstone-found-in-targeted-attacks/
 https://www.threatconnect.com/camerashy/
+https://cdn2.hubspot.net/hubfs/454298/Project_CAMERASHY_ThreatConnect_Copyright_2015.pdf?t=1443030820943&submissionGuid=407e0945-4acd-407c-8668-c5943f220e29
 http://www.crowdstrike.com/blog/rhetoric-foreshadows-cyber-activity-in-the-south-china-sea/
 https://www.symantec.com/blogs/threat-intelligence/thrip-hits-satellite-telecoms-defense-targets
 https://www.crowdstrike.com/resources/reports/2019-crowdstrike-global-threat-report/
 https://www.symantec.com/blogs/threat-intelligence/thrip-apt-south-east-asia
+https://research.checkpoint.com/2020/naikon-apt-cyber-espionage-reloaded/
 ```
 
 ## Country

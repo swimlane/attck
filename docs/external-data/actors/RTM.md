@@ -24,7 +24,6 @@ ________/  |_  _____
 ## Aliases
 
 ```
-intentionally left blank
 RTM
 ```
 

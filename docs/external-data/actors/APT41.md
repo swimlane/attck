@@ -88,7 +88,6 @@
 ## Aliases
 
 ```
-intentionally left blank
 APT41
 ```
 

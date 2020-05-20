@@ -15,14 +15,20 @@ An example command that would obtain details on processes is "tasklist" using th
 
 In Mac and Linux, this is accomplished with the <code>ps</code> command.
 
+## Aliases
+
+```
+
+```
+
 ## Additional Attributes
 
 * Bypass: None
 * Effective Permissions: None
-* Network: intentionally left blank
+* Network: None
 * Permissions: ['User', 'Administrator', 'SYSTEM']
 * Platforms: ['Linux', 'macOS', 'Windows']
-* Remote: intentionally left blank
+* Remote: None
 * Type: attack-pattern
 * Wiki: https://attack.mitre.org/techniques/T1057
 
@@ -240,7 +246,10 @@ powershell/situational_awareness/network/powerview/process_hunter
 ## Potential Detections
 
 ```json
-
+[{'data_source': ['4688 ', 'Process CMD Line']},
+ {'data_source': ['4688', 'Process Execution']},
+ {'data_source': ['4688 ', 'Process CMD Line']},
+ {'data_source': ['4688', 'Process Execution']}]
 ```
 
 ## Potential Queries
@@ -302,7 +311,8 @@ powershell/situational_awareness/network/powerview/process_hunter
                                                                  'system',
                                                   'Metasploit': 'ps\n'
                                                                 'post/windows/gather/enum_services'}},
- {'Atomic Red Team Test - Process Discovery': {'atomic_tests': [{'description': 'Utilize '
+ {'Atomic Red Team Test - Process Discovery': {'atomic_tests': [{'auto_generated_guid': '4ff64f0b-aaf2-4866-b39d-38d9791407cc',
+                                                                 'description': 'Utilize '
                                                                                 'ps '
                                                                                 'to '
                                                                                 'identify '
@@ -339,7 +349,8 @@ powershell/situational_awareness/network/powerview/process_hunter
                                                                          '- ps',
                                                                  'supported_platforms': ['macos',
                                                                                          'linux']},
-                                                                {'description': 'Utilize '
+                                                                {'auto_generated_guid': 'c5806a4f-62b8-4900-980b-c7ec004e9908',
+                                                                 'description': 'Utilize '
                                                                                 'tasklist '
                                                                                 'to '
                                                                                 'identify '

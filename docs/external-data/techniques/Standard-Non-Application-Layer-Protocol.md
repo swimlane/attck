@@ -9,6 +9,12 @@
 
 ICMP communication between hosts is one example. Because ICMP is part of the Internet Protocol Suite, it is required to be implemented by all IP-compatible hosts; (Citation: Microsoft ICMP) however, it is not as commonly monitored as other Internet Protocols such as TCP or UDP and may be used by adversaries to hide communications.
 
+## Aliases
+
+```
+
+```
+
 ## Additional Attributes
 
 * Bypass: None
@@ -16,7 +22,7 @@ ICMP communication between hosts is one example. Because ICMP is part of the Int
 * Network: True
 * Permissions: None
 * Platforms: ['Windows', 'Linux', 'macOS']
-* Remote: intentionally left blank
+* Remote: None
 * Type: attack-pattern
 * Wiki: https://attack.mitre.org/techniques/T1095
 
@@ -69,7 +75,16 @@ None
 ## Potential Detections
 
 ```json
-
+[{'data_source': ['5156', 'Windows Firewall']},
+ {'data_source': ['4688', 'Process Execution']},
+ {'data_source': ['Malware reverse engineering']},
+ {'data_source': ['Packet capture']},
+ {'data_source': ['Netflow/Enclave netflow']},
+ {'data_source': ['5156', 'Windows Firewall']},
+ {'data_source': ['4688', 'Process Execution']},
+ {'data_source': ['Malware reverse engineering']},
+ {'data_source': ['Packet capture']},
+ {'data_source': ['Netflow/Enclave netflow']}]
 ```
 
 ## Potential Queries
@@ -81,7 +96,8 @@ None
 ## Raw Dataset
 
 ```json
-[{'Atomic Red Team Test - Standard Non-Application Layer Protocol': {'atomic_tests': [{'description': 'This '
+[{'Atomic Red Team Test - Standard Non-Application Layer Protocol': {'atomic_tests': [{'auto_generated_guid': '0268e63c-e244-42db-bef7-72a9e59fc1fc',
+                                                                                       'description': 'This '
                                                                                                       'will '
                                                                                                       'attempt '
                                                                                                       'to  '
@@ -125,7 +141,8 @@ None
                                                                                        'name': 'ICMP '
                                                                                                'C2',
                                                                                        'supported_platforms': ['windows']},
-                                                                                      {'dependencies': [{'description': 'ncat.exe '
+                                                                                      {'auto_generated_guid': 'bcf0d1c1-3f6a-4847-b1c9-7ed4ea321f37',
+                                                                                       'dependencies': [{'description': 'ncat.exe '
                                                                                                                         'must '
                                                                                                                         'be '
                                                                                                                         'available '
@@ -255,7 +272,8 @@ None
                                                                                        'name': 'Netcat '
                                                                                                'C2',
                                                                                        'supported_platforms': ['windows']},
-                                                                                      {'description': 'Start '
+                                                                                      {'auto_generated_guid': '3e0e0e7f-6aa2-4a61-b61d-526c2cc9330e',
+                                                                                       'description': 'Start '
                                                                                                       'C2 '
                                                                                                       'Session '
                                                                                                       'Using '

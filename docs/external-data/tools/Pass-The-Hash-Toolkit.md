@@ -10,7 +10,7 @@
 ## Aliases
 
 ```
-intentionally left blank
+Pass-The-Hash Toolkit
 ```
 
 ## Additional Attributes

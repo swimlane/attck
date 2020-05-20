@@ -10,14 +10,20 @@
 Source code payloads may also be encrypted, encoded, and/or embedded within other files, such as those delivered as a [Spearphishing Attachment](https://attack.mitre.org/techniques/T1193). Payloads may also be delivered in formats unrecognizable and inherently benign to the native OS (ex: EXEs on macOS/Linux) before later being (re)compiled into a proper executable binary with a bundled compiler and execution framework.(Citation: TrendMicro WindowsAppMac)
 
 
+## Aliases
+
+```
+
+```
+
 ## Additional Attributes
 
 * Bypass: ['Static File Analysis', 'Binary Analysis', 'Anti-virus', 'Host intrusion prevention systems', 'Signature-based detection']
 * Effective Permissions: None
-* Network: intentionally left blank
+* Network: None
 * Permissions: ['User']
 * Platforms: ['Linux', 'macOS', 'Windows']
-* Remote: intentionally left blank
+* Remote: None
 * Type: attack-pattern
 * Wiki: https://attack.mitre.org/techniques/T1500
 
@@ -78,7 +84,8 @@ C:\Windows\Microsoft.NET\Framework64\v4.0.30319\csc.exe /out:C:\Windows\Temp\T15
 ## Raw Dataset
 
 ```json
-[{'Atomic Red Team Test - Compile After Delivery': {'atomic_tests': [{'dependencies': [{'description': 'C# '
+[{'Atomic Red Team Test - Compile After Delivery': {'atomic_tests': [{'auto_generated_guid': 'ffcdbd6a-b0e8-487d-927a-09127fe9a206',
+                                                                      'dependencies': [{'description': 'C# '
                                                                                                        'file '
                                                                                                        'must '
                                                                                                        'exist '

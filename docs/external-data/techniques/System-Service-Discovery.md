@@ -7,14 +7,20 @@
 
 > Adversaries may try to get information about registered services. Commands that may obtain information about services using operating system utilities are "sc," "tasklist /svc" using [Tasklist](https://attack.mitre.org/software/S0057), and "net start" using [Net](https://attack.mitre.org/software/S0039), but adversaries may also use other tools as well. Adversaries may use the information from [System Service Discovery](https://attack.mitre.org/techniques/T1007) during automated discovery to shape follow-on behaviors, including whether or not the adversary fully infects the target and/or attempts specific actions.
 
+## Aliases
+
+```
+
+```
+
 ## Additional Attributes
 
 * Bypass: None
 * Effective Permissions: None
-* Network: intentionally left blank
+* Network: None
 * Permissions: ['User', 'Administrator', 'SYSTEM']
 * Platforms: ['Windows']
-* Remote: intentionally left blank
+* Remote: None
 * Type: attack-pattern
 * Wiki: https://attack.mitre.org/techniques/T1007
 
@@ -159,7 +165,13 @@ COM + System Application
                   'references': ['https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1012/T1012.yaml'],
                   'status': 'experimental',
                   'tags': ['attack.discovery', 'attack.t1012', 'attack.t1007'],
-                  'title': 'Query Registry'}}]
+                  'title': 'Query Registry'}},
+ {'data_source': ['4688', 'Process Execution']},
+ {'data_source': ['4688 ', 'Process CMD Line']},
+ {'data_source': ['5861', 'WMI']},
+ {'data_source': ['4688', 'Process Execution']},
+ {'data_source': ['4688 ', 'Process CMD Line']},
+ {'data_source': ['5861', 'WMI']}]
 ```
 
 ## Potential Queries
@@ -324,7 +336,8 @@ COM + System Application
 ## Raw Dataset
 
 ```json
-[{'Atomic Red Team Test - System Service Discovery': {'atomic_tests': [{'description': 'Identify '
+[{'Atomic Red Team Test - System Service Discovery': {'atomic_tests': [{'auto_generated_guid': '89676ba1-b1f8-47ee-b940-2e1a113ebc71',
+                                                                        'description': 'Identify '
                                                                                        'system '
                                                                                        'services.\n'
                                                                                        '\n'
@@ -354,7 +367,8 @@ COM + System Application
                                                                                 'Service '
                                                                                 'Discovery',
                                                                         'supported_platforms': ['windows']},
-                                                                       {'description': 'Enumerates '
+                                                                       {'auto_generated_guid': '5f864a3f-8ce9-45c0-812c-bdf7d8aeacc3',
+                                                                        'description': 'Enumerates '
                                                                                        'started '
                                                                                        'system '
                                                                                        'services '

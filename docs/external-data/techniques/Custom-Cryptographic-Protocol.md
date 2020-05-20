@@ -11,6 +11,12 @@ Custom encryption schemes may vary in sophistication. Analysis and reverse engin
 
 Some adversaries may also attempt to implement their own version of a well-known cryptographic algorithm instead of using a known implementation library, which may lead to unintentional errors. (Citation: F-Secure Cosmicduke)
 
+## Aliases
+
+```
+
+```
+
 ## Additional Attributes
 
 * Bypass: None
@@ -18,7 +24,7 @@ Some adversaries may also attempt to implement their own version of a well-known
 * Network: True
 * Permissions: None
 * Platforms: ['Linux', 'macOS', 'Windows']
-* Remote: intentionally left blank
+* Remote: None
 * Type: attack-pattern
 * Wiki: https://attack.mitre.org/techniques/T1024
 
@@ -37,7 +43,18 @@ Some adversaries may also attempt to implement their own version of a well-known
 ## Potential Detections
 
 ```json
-
+[{'data_source': ['4688', 'Process Execution']},
+ {'data_source': ['4688 ', 'Process CMD Line']},
+ {'data_source': ['5156', 'Windows Firewall']},
+ {'data_source': ['Packet capture']},
+ {'data_source': ['Netflow/Enclave netflow']},
+ {'data_source': ['Malware reverse engineering']},
+ {'data_source': ['4688', 'Process Execution']},
+ {'data_source': ['4688 ', 'Process CMD Line']},
+ {'data_source': ['5156', 'Windows Firewall']},
+ {'data_source': ['Packet capture']},
+ {'data_source': ['Netflow/Enclave netflow']},
+ {'data_source': ['Malware reverse engineering']}]
 ```
 
 ## Potential Queries

@@ -10,14 +10,20 @@
 Adversaries will often search the file system on computers they have compromised to find files of interest. They may do this using a [Command-Line Interface](https://attack.mitre.org/techniques/T1059), such as [cmd](https://attack.mitre.org/software/S0106), which has functionality to interact with the file system to gather information. Some adversaries may also use [Automated Collection](https://attack.mitre.org/techniques/T1119) on the local system.
 
 
+## Aliases
+
+```
+
+```
+
 ## Additional Attributes
 
 * Bypass: None
 * Effective Permissions: None
-* Network: intentionally left blank
+* Network: None
 * Permissions: None
 * Platforms: ['Linux', 'macOS', 'Windows', 'GCP', 'AWS', 'Azure']
-* Remote: intentionally left blank
+* Remote: None
 * Type: attack-pattern
 * Wiki: https://attack.mitre.org/techniques/T1005
 
@@ -27,7 +33,7 @@ Adversaries will often search the file system on computers they have compromised
 cd ~/Library/Cookies
 grep -q "coinbase" "Cookies.binarycookies"
 
-{'darwin': {'sh': {'command': 'pip install stormssh && storm list\n', 'parsers': {'plugins.stockpile.app.parsers.ssh': [{'source': 'remote.ssh.cmd'}]}}}, 'linux': {'sh': {'command': 'pip install stormssh && storm list\n', 'parsers': {'plugins.stockpile.app.parsers.ssh': [{'source': 'remote.ssh.cmd'}]}}}}
+{'darwin': {'sh': {'command': 'pip install stormssh && storm list\n', 'parsers': {'plugins.stockpile.app.parsers.ssh': [{'source': 'remote.ssh.cmd'}]}}}, 'linux': {'sh': {'command': "pip install -q stormssh 2> /dev/null && storm list | sed 's/\\x1b\\[[0-9;]*m//g'\n", 'parsers': {'plugins.stockpile.app.parsers.ssh': [{'source': 'remote.ssh.cmd'}]}}}}
 {'darwin': {'sh': {'command': 'find $(echo ~#{host.user.name}) -type f -size -500k -maxdepth 5 -exec grep -EIr -o "\\b[A-Za-z0-9._%+-]+@#{target.org.name}\\b" 2>/dev/null {} \\;\n'}}}
 {'darwin': {'sh': {'command': 'curl #{remote.host.socket}\n'}}, 'linux': {'sh': {'command': 'curl #{remote.host.socket}\n'}}}
 {'darwin': {'sh': {'command': "find /Users -name '*.#{file.sensitive.extension}' -type f -not -path '*/\\.*' -size -500k 2>/dev/null | head -5\n", 'parsers': {'plugins.stockpile.app.parsers.basic': [{'source': 'host.file.path'}]}}}, 'windows': {'psh,pwsh': {'command': "Get-ChildItem C:\\Users -Recurse -Include *.#{file.sensitive.extension} -ErrorAction 'SilentlyContinue' | foreach {$_.FullName} | Select-Object -first 5;\nexit 0;\n", 'parsers': {'plugins.stockpile.app.parsers.basic': [{'source': 'host.file.path'}]}}}, 'linux': {'sh': {'command': "find / -name '*.#{file.sensitive.extension}' -type f -not -path '*/\\.*' -size -500k 2>/dev/null | head -5\n", 'parsers': {'plugins.stockpile.app.parsers.basic': [{'source': 'host.file.path'}]}}}}
@@ -58,8 +64,9 @@ python/situational_awareness/host/osx/situational_awareness
  {'command': {'darwin': {'sh': {'command': 'pip install stormssh && storm '
                                            'list\n',
                                 'parsers': {'plugins.stockpile.app.parsers.ssh': [{'source': 'remote.ssh.cmd'}]}}},
-              'linux': {'sh': {'command': 'pip install stormssh && storm '
-                                          'list\n',
+              'linux': {'sh': {'command': 'pip install -q stormssh 2> '
+                                          '/dev/null && storm list | sed '
+                                          "'s/\\x1b\\[[0-9;]*m//g'\n",
                                'parsers': {'plugins.stockpile.app.parsers.ssh': [{'source': 'remote.ssh.cmd'}]}}}},
   'name': 'Search for valid SSH commands in the config file',
   'source': 'data/abilities/collection/02de522f-7e0a-4544-8afc-0c195f400f5f.yml'},
@@ -150,7 +157,16 @@ python/situational_awareness/host/osx/situational_awareness
 ## Potential Detections
 
 ```json
-
+[{'data_source': ['4688', 'Process Execution']},
+ {'data_source': ['4688 ', 'Process CMD Line']},
+ {'data_source': ['200-500', ' 4100-4104', 'PowerShell logs']},
+ {'data_source': ['4663', 'File monitoring']},
+ {'data_source': ['5861', 'WMI']},
+ {'data_source': ['4688', 'Process Execution']},
+ {'data_source': ['4688 ', 'Process CMD Line']},
+ {'data_source': ['200-500', ' 4100-4104', 'PowerShell logs']},
+ {'data_source': ['4663', 'File monitoring']},
+ {'data_source': ['5861', 'WMI']}]
 ```
 
 ## Potential Queries
@@ -162,7 +178,8 @@ python/situational_awareness/host/osx/situational_awareness
 ## Raw Dataset
 
 ```json
-[{'Atomic Red Team Test - Data from Local System': {'atomic_tests': [{'description': 'This '
+[{'Atomic Red Team Test - Data from Local System': {'atomic_tests': [{'auto_generated_guid': 'c1402f7b-67ca-43a8-b5f3-3143abedc01b',
+                                                                      'description': 'This '
                                                                                      'test '
                                                                                      'uses '
                                                                                      '`grep` '
@@ -244,10 +261,16 @@ python/situational_awareness/host/osx/situational_awareness
                                                                                                          'parsers': {'plugins.stockpile.app.parsers.ssh': [{'source': 'remote.ssh.cmd'}]}}},
                                                                                        'linux': {'sh': {'command': 'pip '
                                                                                                                    'install '
+                                                                                                                   '-q '
                                                                                                                    'stormssh '
+                                                                                                                   '2> '
+                                                                                                                   '/dev/null '
                                                                                                                    '&& '
                                                                                                                    'storm '
-                                                                                                                   'list\n',
+                                                                                                                   'list '
+                                                                                                                   '| '
+                                                                                                                   'sed '
+                                                                                                                   "'s/\\x1b\\[[0-9;]*m//g'\n",
                                                                                                         'parsers': {'plugins.stockpile.app.parsers.ssh': [{'source': 'remote.ssh.cmd'}]}}}},
                                                                          'tactic': 'collection',
                                                                          'technique': {'attack_id': 'T1005',

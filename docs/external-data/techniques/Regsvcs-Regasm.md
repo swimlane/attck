@@ -9,14 +9,20 @@
 
 Adversaries can use Regsvcs and Regasm to proxy execution of code through a trusted Windows utility. Both utilities may be used to bypass process whitelisting through use of attributes within the binary to specify code that should be run before registration or unregistration: <code>[ComRegisterFunction]</code> or <code>[ComUnregisterFunction]</code> respectively. The code with the registration and unregistration attributes will be executed even if the process is run under insufficient privileges and fails to execute. (Citation: LOLBAS Regsvcs)(Citation: LOLBAS Regasm)
 
+## Aliases
+
+```
+
+```
+
 ## Additional Attributes
 
 * Bypass: ['Process whitelisting', 'Digital Certificate Validation']
 * Effective Permissions: None
-* Network: intentionally left blank
+* Network: None
 * Permissions: ['User', 'Administrator']
 * Platforms: ['Windows']
-* Remote: intentionally left blank
+* Remote: None
 * Type: attack-pattern
 * Wiki: https://attack.mitre.org/techniques/T1121
 
@@ -100,7 +106,11 @@ rundll32.exe *.dll.entrypoint
 ## Potential Detections
 
 ```json
-
+[{'data_source': ['4688', 'Process Execution']},
+ {'data_source': ['4688 ', 'Process CMD Line']},
+ {'data_source': ['ID 1 & 7', 'Sysmon']},
+ {'data_source': ['4688', 'Process Execution']},
+ {'data_source': ['4688 ', 'Process CMD Line']}]
 ```
 
 ## Potential Queries
@@ -115,7 +125,8 @@ rundll32.exe *.dll.entrypoint
 ## Raw Dataset
 
 ```json
-[{'Atomic Red Team Test - RegSvcs/RegAsm': {'atomic_tests': [{'dependencies': [{'description': 'The '
+[{'Atomic Red Team Test - RegSvcs/RegAsm': {'atomic_tests': [{'auto_generated_guid': '71bfbfac-60b1-4fc0-ac8b-2cedbbdcb112',
+                                                              'dependencies': [{'description': 'The '
                                                                                                'CSharp '
                                                                                                'source '
                                                                                                'file '
@@ -200,7 +211,8 @@ rundll32.exe *.dll.entrypoint
                                                                       'Call '
                                                                       'Test',
                                                               'supported_platforms': ['windows']},
-                                                             {'dependencies': [{'description': 'The '
+                                                             {'auto_generated_guid': 'fd3c1c6a-02d2-4b72-82d9-71c527abb126',
+                                                              'dependencies': [{'description': 'The '
                                                                                                'CSharp '
                                                                                                'source '
                                                                                                'file '

@@ -15,14 +15,20 @@ The MBR is the section of disk that is first loaded after completing hardware in
 ### Volume Boot Record
 The MBR passes control of the boot process to the VBR. Similar to the case of MBR, an adversary who has raw access to the boot drive may overwrite the VBR to divert execution during startup to adversary code.
 
+## Aliases
+
+```
+
+```
+
 ## Additional Attributes
 
 * Bypass: None
 * Effective Permissions: None
-* Network: intentionally left blank
+* Network: None
 * Permissions: ['Administrator', 'SYSTEM']
 * Platforms: ['Linux', 'Windows']
-* Remote: intentionally left blank
+* Remote: None
 * Type: attack-pattern
 * Wiki: https://attack.mitre.org/techniques/T1067
 
@@ -61,7 +67,13 @@ The MBR passes control of the boot process to the VBR. Similar to the case of MB
                            'attack.persistence',
                            'attack.t1067'],
                   'title': 'Possible Ransomware or unauthorized MBR '
-                           'modifications'}}]
+                           'modifications'}},
+ {'data_source': ['API monitoring']},
+ {'data_source': ['MBR']},
+ {'data_source': ['VBR']},
+ {'data_source': ['API monitoring']},
+ {'data_source': ['MBR']},
+ {'data_source': ['VBR']}]
 ```
 
 ## Potential Queries

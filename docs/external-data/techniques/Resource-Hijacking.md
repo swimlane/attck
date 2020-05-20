@@ -9,14 +9,20 @@
 
 One common purpose for Resource Hijacking is to validate transactions of cryptocurrency networks and earn virtual currency. Adversaries may consume enough system resources to negatively impact and/or cause affected machines to become unresponsive.(Citation: Kaspersky Lazarus Under The Hood Blog 2017) Servers and cloud-based(Citation: CloudSploit - Unused AWS Regions) systems are common targets because of the high potential for available resources, but user endpoint systems may also be compromised and used for Resource Hijacking and cryptocurrency mining.
 
+## Aliases
+
+```
+
+```
+
 ## Additional Attributes
 
 * Bypass: None
 * Effective Permissions: None
-* Network: intentionally left blank
+* Network: None
 * Permissions: ['User', 'Administrator']
 * Platforms: ['Linux', 'macOS', 'Windows', 'AWS', 'GCP', 'Azure']
-* Remote: intentionally left blank
+* Remote: None
 * Type: attack-pattern
 * Wiki: https://attack.mitre.org/techniques/T1496
 
@@ -57,7 +63,8 @@ yes > /dev/null
 ## Raw Dataset
 
 ```json
-[{'Atomic Red Team Test - Resource Hijacking': {'atomic_tests': [{'description': 'This '
+[{'Atomic Red Team Test - Resource Hijacking': {'atomic_tests': [{'auto_generated_guid': '904a5a0e-fb02-490d-9f8d-0e256eb37549',
+                                                                  'description': 'This '
                                                                                  'test '
                                                                                  'simulates '
                                                                                  'a '

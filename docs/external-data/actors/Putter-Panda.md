@@ -24,7 +24,6 @@ ______  __ ___/  |__/  |_  ___________  ___________    ____    __| _/____
 ## Aliases
 
 ```
-intentionally left blank
 Putter Panda
 APT2
 MSUpdater

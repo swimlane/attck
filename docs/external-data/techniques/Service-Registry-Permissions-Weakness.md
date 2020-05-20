@@ -11,14 +11,20 @@ If the permissions for users and groups are not properly set and allow access to
 
 Adversaries may also alter Registry keys associated with service failure parameters (such as <code>FailureCommand</code>) that may be executed in an elevated context anytime the service fails or is intentionally corrupted.(Citation: TrustedSignal Service Failure)(Citation: Twitter Service Recovery Nov 2017)
 
+## Aliases
+
+```
+
+```
+
 ## Additional Attributes
 
 * Bypass: None
 * Effective Permissions: ['SYSTEM']
-* Network: intentionally left blank
+* Network: None
 * Permissions: ['Administrator', 'SYSTEM']
 * Platforms: ['Windows']
-* Remote: intentionally left blank
+* Remote: None
 * Type: attack-pattern
 * Wiki: https://attack.mitre.org/techniques/T1058
 
@@ -65,7 +71,12 @@ get-acl REGISTRY::HKLM\SYSTEM\CurrentControlSet\Services\weakservicename |FL
 ## Potential Detections
 
 ```json
-
+[{'data_source': ['4688 ', 'Process CMD Line']},
+ {'data_source': ['7040', ' 7045', 'Services']},
+ {'data_source': ['4657', 'Windows Registry']},
+ {'data_source': ['4688 ', 'Process CMD Line']},
+ {'data_source': ['7040', ' 7045', 'Services']},
+ {'data_source': ['4657', 'Windows Registry']}]
 ```
 
 ## Potential Queries
@@ -136,7 +147,8 @@ get-acl REGISTRY::HKLM\SYSTEM\CurrentControlSet\Services\weakservicename |FL
                                                                  'of abusing '
                                                                  'it.',
                                                   'Metasploit': 'exploit/windows/local/trusted_service_path'}},
- {'Atomic Red Team Test - Service Registry Permissions Weakness': {'atomic_tests': [{'description': 'Service '
+ {'Atomic Red Team Test - Service Registry Permissions Weakness': {'atomic_tests': [{'auto_generated_guid': 'f7536d63-7fd4-466f-89da-7e48d550752a',
+                                                                                     'description': 'Service '
                                                                                                     'registry '
                                                                                                     'permissions '
                                                                                                     'weakness '

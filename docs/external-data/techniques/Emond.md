@@ -9,14 +9,20 @@
 
 Adversaries may abuse this service by writing a rule to execute commands when a defined event occurs, such as system start up or user authentication.(Citation: xorrior emond Jan 2018)(Citation: magnusviri emond Apr 2016)(Citation: sentinelone macos persist Jun 2019) Adversaries may also be able to escalate privileges from administrator to root as the emond service is executed with root privileges by the [Launch Daemon](https://attack.mitre.org/techniques/T1160) service.
 
+## Aliases
+
+```
+
+```
+
 ## Additional Attributes
 
 * Bypass: None
 * Effective Permissions: None
-* Network: intentionally left blank
+* Network: None
 * Permissions: ['Administrator']
 * Platforms: ['macOS']
-* Remote: intentionally left blank
+* Remote: None
 * Type: attack-pattern
 * Wiki: https://attack.mitre.org/techniques/T1519
 
@@ -53,7 +59,8 @@ sudo touch /private/var/db/emondClients/T1519
 ## Raw Dataset
 
 ```json
-[{'Atomic Red Team Test - Emond': {'atomic_tests': [{'description': 'Establish '
+[{'Atomic Red Team Test - Emond': {'atomic_tests': [{'auto_generated_guid': '23c9c127-322b-4c75-95ca-eff464906114',
+                                                     'description': 'Establish '
                                                                     'persistence '
                                                                     'via a '
                                                                     'rule run '

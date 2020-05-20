@@ -24,7 +24,6 @@
 ## Aliases
 
 ```
-intentionally left blank
 Magic Hound
 Rocket Kitten
 Operation Saffron Rose

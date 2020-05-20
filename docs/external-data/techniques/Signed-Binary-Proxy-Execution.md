@@ -30,14 +30,20 @@ Odbcconf.exe is a Windows utility that allows you to configure Open Database Con
 
 Several other binaries exist that may be used to perform similar behavior. (Citation: GitHub Ultimate AppLocker Bypass List)
 
+## Aliases
+
+```
+
+```
+
 ## Additional Attributes
 
 * Bypass: ['Application whitelisting', 'Digital Certificate Validation']
 * Effective Permissions: None
-* Network: intentionally left blank
+* Network: None
 * Permissions: ['User']
 * Platforms: ['Windows']
-* Remote: intentionally left blank
+* Remote: None
 * Type: attack-pattern
 * Wiki: https://attack.mitre.org/techniques/T1218
 
@@ -482,7 +488,11 @@ ParentCommandLine: C: \ Windows \ SysWOW64 \ odbcconf.exe / a {regsvr C: \ paylo
                                  'https://www.sans.org/summit-archives/file/summit-archive-1493861893.pdf'],
                   'status': 'experimental',
                   'tags': ['attack.persistence', 'attack.t1218'],
-                  'title': 'psr.exe capture screenshots'}}]
+                  'title': 'psr.exe capture screenshots'}},
+ {'data_source': ['4688', 'Process Execution']},
+ {'data_source': ['4688 ', 'Process CMD Line']},
+ {'data_source': ['4688', 'Process Execution']},
+ {'data_source': ['4688 ', 'Process CMD Line']}]
 ```
 
 ## Potential Queries
@@ -510,7 +520,8 @@ ParentCommandLine: C: \ Windows \ SysWOW64 \ odbcconf.exe / a {regsvr C: \ paylo
 ## Raw Dataset
 
 ```json
-[{'Atomic Red Team Test - Signed Binary Proxy Execution': {'atomic_tests': [{'dependencies': [{'description': 'T1218.dll '
+[{'Atomic Red Team Test - Signed Binary Proxy Execution': {'atomic_tests': [{'auto_generated_guid': 'c426dacf-575d-4937-8611-a148a86a5e61',
+                                                                             'dependencies': [{'description': 'T1218.dll '
                                                                                                               'must '
                                                                                                               'exist '
                                                                                                               'on '
@@ -580,7 +591,8 @@ ParentCommandLine: C: \ Windows \ SysWOW64 \ odbcconf.exe / a {regsvr C: \ paylo
                                                                                      'running '
                                                                                      'process',
                                                                              'supported_platforms': ['windows']},
-                                                                            {'description': 'Executes '
+                                                                            {'auto_generated_guid': 'd590097e-d402-44e2-ad72-2c6aa1ce78b1',
+                                                                             'description': 'Executes '
                                                                                             'arbitrary '
                                                                                             'PowerShell '
                                                                                             'code '
@@ -607,7 +619,8 @@ ParentCommandLine: C: \ Windows \ SysWOW64 \ odbcconf.exe / a {regsvr C: \ paylo
                                                                                      'PowerShell '
                                                                                      'code',
                                                                              'supported_platforms': ['windows']},
-                                                                            {'dependencies': [{'description': 'T1218-2.dll '
+                                                                            {'auto_generated_guid': 'ad2c17ed-f626-4061-b21e-b9804a6f3655',
+                                                                             'dependencies': [{'description': 'T1218-2.dll '
                                                                                                               'must '
                                                                                                               'exist '
                                                                                                               'on '
@@ -671,7 +684,8 @@ ParentCommandLine: C: \ Windows \ SysWOW64 \ odbcconf.exe / a {regsvr C: \ paylo
                                                                                      'evil '
                                                                                      'dll',
                                                                              'supported_platforms': ['windows']},
-                                                                            {'dependencies': [{'description': 'T1218.msi '
+                                                                            {'auto_generated_guid': '0683e8f7-a27b-4b62-b7ab-dc7d4fed1df8',
+                                                                             'dependencies': [{'description': 'T1218.msi '
                                                                                                               'must '
                                                                                                               'exist '
                                                                                                               'on '
@@ -730,7 +744,8 @@ ParentCommandLine: C: \ Windows \ SysWOW64 \ odbcconf.exe / a {regsvr C: \ paylo
                                                                                      'MSI '
                                                                                      'file',
                                                                              'supported_platforms': ['windows']},
-                                                                            {'description': 'Execute '
+                                                                            {'auto_generated_guid': 'bde7d2fe-d049-458d-a362-abda32a7e649',
+                                                                             'description': 'Execute '
                                                                                             'arbitrary '
                                                                                             'MSI '
                                                                                             'file '
@@ -772,7 +787,8 @@ ParentCommandLine: C: \ Windows \ SysWOW64 \ odbcconf.exe / a {regsvr C: \ paylo
                                                                                      'MSI '
                                                                                      'file',
                                                                              'supported_platforms': ['windows']},
-                                                                            {'dependencies': [{'description': 'T1218.dll '
+                                                                            {'auto_generated_guid': '66f64bd5-7c35-4c24-953a-04ca30a0a0ec',
+                                                                             'dependencies': [{'description': 'T1218.dll '
                                                                                                               'must '
                                                                                                               'exist '
                                                                                                               'on '
@@ -871,7 +887,8 @@ ParentCommandLine: C: \ Windows \ SysWOW64 \ odbcconf.exe / a {regsvr C: \ paylo
                                                                                      'Arbitrary '
                                                                                      'DLL',
                                                                              'supported_platforms': ['windows']},
-                                                                            {'dependencies': [{'description': 'T1218-2.dll '
+                                                                            {'auto_generated_guid': '2430498b-06c0-4b92-a448-8ad263c388e2',
+                                                                             'dependencies': [{'description': 'T1218-2.dll '
                                                                                                               'must '
                                                                                                               'exist '
                                                                                                               'on '
@@ -925,7 +942,8 @@ ParentCommandLine: C: \ Windows \ SysWOW64 \ odbcconf.exe / a {regsvr C: \ paylo
                                                                                      'Arbitrary '
                                                                                      'DLL',
                                                                              'supported_platforms': ['windows']},
-                                                                            {'dependencies': [{'description': 'INF '
+                                                                            {'auto_generated_guid': '54ad7d5a-a1b5-472c-b6c4-f8090fb2daef',
+                                                                             'dependencies': [{'description': 'INF '
                                                                                                               'file '
                                                                                                               'must '
                                                                                                               'exist '

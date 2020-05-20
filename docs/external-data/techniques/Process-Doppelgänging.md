@@ -18,14 +18,20 @@ Process Doppelgänging is implemented in 4 steps (Citation: BlackHat Process Dop
 * Rollback – Undo changes to original executable, effectively removing malicious code from the file system.
 * Animate – Create a process from the tainted section of memory and initiate execution.
 
+## Aliases
+
+```
+
+```
+
 ## Additional Attributes
 
 * Bypass: ['Process whitelisting', 'Anti-virus', 'Whitelisting by file name or path', 'Signature-based detection']
 * Effective Permissions: None
-* Network: intentionally left blank
+* Network: None
 * Permissions: ['Administrator', 'SYSTEM', 'User']
 * Platforms: ['Windows']
-* Remote: intentionally left blank
+* Remote: None
 * Type: attack-pattern
 * Wiki: https://attack.mitre.org/techniques/T1186
 
@@ -44,7 +50,10 @@ Process Doppelgänging is implemented in 4 steps (Citation: BlackHat Process Dop
 ## Potential Detections
 
 ```json
-
+[{'data_source': ['4688', 'Process Execution']},
+ {'data_source': ['API monitoring']},
+ {'data_source': ['4688', 'Process Execution']},
+ {'data_source': ['API monitoring']}]
 ```
 
 ## Potential Queries

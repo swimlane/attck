@@ -15,14 +15,20 @@ Root certificates (and their associated chains) can also be cloned and reinstall
 
 In macOS, the Ay MaMi malware uses <code>/usr/bin/security add-trusted-cert -d -r trustRoot -k /Library/Keychains/System.keychain /path/to/malicious/cert</code> to install a malicious certificate as a trusted root certificate into the system keychain. (Citation: objective-see ay mami 2018)
 
+## Aliases
+
+```
+
+```
+
 ## Additional Attributes
 
 * Bypass: ['Digital Certificate Validation']
 * Effective Permissions: None
-* Network: intentionally left blank
+* Network: None
 * Permissions: ['Administrator', 'User']
 * Platforms: ['Linux', 'Windows', 'macOS']
-* Remote: intentionally left blank
+* Remote: None
 * Type: attack-pattern
 * Wiki: https://attack.mitre.org/techniques/T1130
 
@@ -129,7 +135,12 @@ Move-Item -Path $cert.PSPath -Destination "Cert:\LocalMachine\Root"
 ## Potential Detections
 
 ```json
-
+[{'data_source': ['4657', 'Reg Audit']},
+ {'data_source': ['SSL/TLS inspection']},
+ {'data_source': ['Digital Certificate Logs']},
+ {'data_source': ['4657', 'Reg Audit']},
+ {'data_source': ['SSL/TLS inspection']},
+ {'data_source': ['Digital Certificate Logs']}]
 ```
 
 ## Potential Queries
@@ -148,7 +159,8 @@ Move-Item -Path $cert.PSPath -Destination "Cert:\LocalMachine\Root"
 ## Raw Dataset
 
 ```json
-[{'Atomic Red Team Test - Install Root Certificate': {'atomic_tests': [{'description': 'Creates '
+[{'Atomic Red Team Test - Install Root Certificate': {'atomic_tests': [{'auto_generated_guid': '9c096ec4-fd42-419d-a762-d64cc950627e',
+                                                                        'description': 'Creates '
                                                                                        'a '
                                                                                        'root '
                                                                                        'CA '
@@ -237,7 +249,8 @@ Move-Item -Path $cert.PSPath -Destination "Cert:\LocalMachine\Root"
                                                                                 'on '
                                                                                 'CentOS/RHEL',
                                                                         'supported_platforms': ['linux']},
-                                                                       {'dependencies': [{'description': 'Verify '
+                                                                       {'auto_generated_guid': '53bcf8a0-1549-4b85-b919-010c56d724ff',
+                                                                        'dependencies': [{'description': 'Verify '
                                                                                                          'the '
                                                                                                          'certificate '
                                                                                                          'exists. '
@@ -325,7 +338,8 @@ Move-Item -Path $cert.PSPath -Destination "Cert:\LocalMachine\Root"
                                                                                 'on '
                                                                                 'Debian/Ubuntu',
                                                                         'supported_platforms': ['linux']},
-                                                                       {'dependencies': [{'description': 'Verify '
+                                                                       {'auto_generated_guid': 'cc4a0b8c-426f-40ff-9426-4e10e5bf4c49',
+                                                                        'dependencies': [{'description': 'Verify '
                                                                                                          'the '
                                                                                                          'certificate '
                                                                                                          'exists. '
@@ -416,7 +430,8 @@ Move-Item -Path $cert.PSPath -Destination "Cert:\LocalMachine\Root"
                                                                                 'on '
                                                                                 'macOS',
                                                                         'supported_platforms': ['macos']},
-                                                                       {'dependencies': [{'description': 'Verify '
+                                                                       {'auto_generated_guid': '76f49d86-5eb1-461a-a032-a480f86652f1',
+                                                                        'dependencies': [{'description': 'Verify '
                                                                                                          'the '
                                                                                                          'certificate '
                                                                                                          'exists. '

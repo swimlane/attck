@@ -9,14 +9,20 @@
 
 Adversaries may store malicious data or binaries in file attribute metadata instead of directly in files. This may be done to evade some defenses, such as static indicator scanning tools and anti-virus. (Citation: Journey into IR ZeroAccess NTFS EA) (Citation: MalwareBytes ADS July 2015)
 
+## Aliases
+
+```
+
+```
+
 ## Additional Attributes
 
 * Bypass: ['Signature-based detection', 'Host forensic analysis', 'Anti-virus']
 * Effective Permissions: None
-* Network: intentionally left blank
+* Network: None
 * Permissions: None
 * Platforms: ['Windows']
-* Remote: intentionally left blank
+* Remote: None
 * Type: attack-pattern
 * Wiki: https://attack.mitre.org/techniques/T1096
 
@@ -127,7 +133,15 @@ Start-Process -FilePath "$env:comspec" -ArgumentList "/c,type,#{payload_path},>,
                   'references': ['http://www.powertheshell.com/ntfsstreams/'],
                   'status': 'experimental',
                   'tags': ['attack.defense_evasion', 'attack.t1096'],
-                  'title': 'NTFS Alternate Data Stream'}}]
+                  'title': 'NTFS Alternate Data Stream'}},
+ {'data_source': ['4663', 'File monitoring']},
+ {'data_source': ['Kernel drivers']},
+ {'data_source': ['API monitoring']},
+ {'data_source': ['LMD', 'EA', ' ADS', 'Hash Compare']},
+ {'data_source': ['4663', 'File monitoring']},
+ {'data_source': ['Kernel drivers']},
+ {'data_source': ['API monitoring']},
+ {'data_source': ['LOG-MD', 'Hash Compare']}]
 ```
 
 ## Potential Queries
@@ -142,7 +156,8 @@ Start-Process -FilePath "$env:comspec" -ArgumentList "/c,type,#{payload_path},>,
 ## Raw Dataset
 
 ```json
-[{'Atomic Red Team Test - NTFS File Attributes': {'atomic_tests': [{'description': 'Execute '
+[{'Atomic Red Team Test - NTFS File Attributes': {'atomic_tests': [{'auto_generated_guid': '8822c3b0-d9f9-4daf-a043-49f4602364f4',
+                                                                    'description': 'Execute '
                                                                                    'from '
                                                                                    'Alternate '
                                                                                    'Streams\n'
@@ -212,7 +227,8 @@ Start-Process -FilePath "$env:comspec" -ArgumentList "/c,type,#{payload_path},>,
                                                                             'Streams '
                                                                             '(ADS)',
                                                                     'supported_platforms': ['windows']},
-                                                                   {'description': 'Storing '
+                                                                   {'auto_generated_guid': '2ab75061-f5d5-4c1a-b666-ba2a50df5b02',
+                                                                    'description': 'Storing '
                                                                                    'files '
                                                                                    'in '
                                                                                    'Alternate '

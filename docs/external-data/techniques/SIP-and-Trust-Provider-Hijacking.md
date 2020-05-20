@@ -18,14 +18,20 @@ Similar to [Code Signing](https://attack.mitre.org/techniques/T1116), adversarie
 
 Hijacking SIP or trust provider components can also enable persistent code execution, since these malicious components may be invoked by any application that performs code signing or signature validation. (Citation: SpectorOps Subverting Trust Sept 2017)
 
+## Aliases
+
+```
+
+```
+
 ## Additional Attributes
 
 * Bypass: ['Application whitelisting', 'Autoruns Analysis', 'Digital Certificate Validation', 'Process whitelisting', 'User Mode Signature Validation']
 * Effective Permissions: None
-* Network: intentionally left blank
+* Network: None
 * Permissions: ['Administrator', 'SYSTEM']
 * Platforms: ['Windows']
-* Remote: intentionally left blank
+* Remote: None
 * Type: attack-pattern
 * Wiki: https://attack.mitre.org/techniques/T1198
 
@@ -44,7 +50,20 @@ Hijacking SIP or trust provider components can also enable persistent code execu
 ## Potential Detections
 
 ```json
-
+[{'data_source': ['4688', 'Process Execution']},
+ {'data_source': ['4657', 'Windows Registry']},
+ {'data_source': ['Windows event logs']},
+ {'data_source': ['Loaded DLLs']},
+ {'data_source': ['DLL monitoring']},
+ {'data_source': ['API monitoring']},
+ {'data_source': ['Application Logs']},
+ {'data_source': ['4688', 'Process Execution']},
+ {'data_source': ['4657', 'Windows Registry']},
+ {'data_source': ['Windows event logs']},
+ {'data_source': ['Sysmon - ID 7', 'Loaded DLLs']},
+ {'data_source': ['Sysmon - ID 7', 'DLL monitoring']},
+ {'data_source': ['API monitoring']},
+ {'data_source': ['Application Logs']}]
 ```
 
 ## Potential Queries

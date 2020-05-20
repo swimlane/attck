@@ -24,7 +24,6 @@ _/ ____\__| ____  /  _____/
 ## Aliases
 
 ```
-intentionally left blank
 FIN6
 ITG08
 ```

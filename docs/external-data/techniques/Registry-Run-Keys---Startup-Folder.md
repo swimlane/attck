@@ -40,14 +40,20 @@ By default, the multistring BootExecute value of the registry key <code>HKEY_LOC
 
 Adversaries can use these configuration locations to execute malware, such as remote access tools, to maintain persistence through system reboots. Adversaries may also use [Masquerading](https://attack.mitre.org/techniques/T1036) to make the Registry entries look as if they are associated with legitimate programs.
 
+## Aliases
+
+```
+
+```
+
 ## Additional Attributes
 
 * Bypass: None
 * Effective Permissions: None
-* Network: intentionally left blank
+* Network: None
 * Permissions: ['User', 'Administrator']
 * Platforms: ['Windows']
-* Remote: intentionally left blank
+* Remote: None
 * Type: attack-pattern
 * Wiki: https://attack.mitre.org/techniques/T1060
 
@@ -211,7 +217,11 @@ powershell/persistence/userland/registry
                   'references': ['https://www.fireeye.com/blog/threat-research/2018/08/fin7-pursuing-an-enigmatic-and-evasive-global-criminal-operation.html'],
                   'status': 'experimental',
                   'tags': ['attack.persistence', 'attack.t1060'],
-                  'title': 'New RUN Key Pointing to Suspicious Folder'}}]
+                  'title': 'New RUN Key Pointing to Suspicious Folder'}},
+ {'data_source': ['4657', 'Windows Registry']},
+ {'data_source': ['4663', 'File monitoring']},
+ {'data_source': ['4657', 'Windows Registry']},
+ {'data_source': ['4663', 'File monitoring']}]
 ```
 
 ## Potential Queries
@@ -230,7 +240,8 @@ powershell/persistence/userland/registry
 ## Raw Dataset
 
 ```json
-[{'Atomic Red Team Test - Registry Run Keys / Start Folder': {'atomic_tests': [{'description': 'Run '
+[{'Atomic Red Team Test - Registry Run Keys / Start Folder': {'atomic_tests': [{'auto_generated_guid': 'e55be3fd-3521-4610-9d1a-e210e42dcf05',
+                                                                                'description': 'Run '
                                                                                                'Key '
                                                                                                'Persistence\n'
                                                                                                '\n'
@@ -288,7 +299,8 @@ powershell/persistence/userland/registry
                                                                                         'Key '
                                                                                         'Run',
                                                                                 'supported_platforms': ['windows']},
-                                                                               {'description': 'RunOnce '
+                                                                               {'auto_generated_guid': '554cbd88-cde1-4b56-8168-0be552eed9eb',
+                                                                                'description': 'RunOnce '
                                                                                                'Key '
                                                                                                'Persistence.\n'
                                                                                                '\n'
@@ -335,7 +347,8 @@ powershell/persistence/userland/registry
                                                                                         'Key '
                                                                                         'RunOnce',
                                                                                 'supported_platforms': ['windows']},
-                                                                               {'description': 'RunOnce '
+                                                                               {'auto_generated_guid': 'eb44f842-0457-4ddc-9b92-c4caa144ac42',
+                                                                                'description': 'RunOnce '
                                                                                                'Key '
                                                                                                'Persistence '
                                                                                                'via '

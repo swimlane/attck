@@ -24,7 +24,6 @@ ___________ _/  |_  ____ |  |____  _  _____________|  | __
 ## Aliases
 
 ```
-intentionally left blank
 Patchwork
 Dropping Elephant
 Chinastrats
@@ -69,6 +68,7 @@ https://blog.trendmicro.com/trendlabs-security-intelligence/deciphering-confuciu
 https://blog.trendmicro.com/trendlabs-security-intelligence/the-urpage-connection-to-bahamut-confucius-and-patchwork/
 https://blog.trendmicro.com/trendlabs-security-intelligence/confucius-update-new-tools-and-techniques-further-connections-with-patchwork/
 https://ti.qianxin.com/blog/articles/coronavirus-analysis-of-global-outbreak-related-cyber-attacks/
+https://unit42.paloaltonetworks.com/updated-backconfig-malware-targeting-government-and-military-organizations/
 ```
 
 ## Country
@@ -80,7 +80,7 @@ other
 ## Comments
 
 ```
-Overlaps with BITTER (group)
+Overlaps with BITTER (group) MITRE: G0040
 ```
 
 # Techniques

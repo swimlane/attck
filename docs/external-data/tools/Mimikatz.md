@@ -10,7 +10,7 @@
 ## Aliases
 
 ```
-intentionally left blank
+Mimikatz
 ```
 
 ## Additional Attributes
@@ -24,12 +24,15 @@ intentionally left blank
 ```
 Mimikatz
 Powerkatz
+Mimikatz
+Powerkatz
 ```
 
 
 # Attribution Links
 
 ```
+https://github.com/gentilkiwi/mimikatz
 https://github.com/gentilkiwi/mimikatz
 ```
 
@@ -38,6 +41,7 @@ https://github.com/gentilkiwi/mimikatz
 
 ```
 Password Dumper, PTH, DCSync, SkeletonKey, Golden/Silver Tickets
+[]
 ```
 
 # Techniques

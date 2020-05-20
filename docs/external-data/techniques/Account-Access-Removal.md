@@ -9,14 +9,20 @@
 
 Adversaries may also subsequently log off and/or reboot boxes to set malicious changes into place.(Citation: CarbonBlack LockerGoga 2019)(Citation: Unit42 LockerGoga 2019)
 
+## Aliases
+
+```
+
+```
+
 ## Additional Attributes
 
 * Bypass: None
 * Effective Permissions: None
-* Network: intentionally left blank
+* Network: None
 * Permissions: ['User', 'Administrator', 'root', 'SYSTEM']
 * Platforms: ['Linux', 'macOS', 'Windows']
-* Remote: intentionally left blank
+* Remote: None
 * Type: attack-pattern
 * Wiki: https://attack.mitre.org/techniques/T1531
 
@@ -70,7 +76,8 @@ net.exe user #{user_account} /delete
 ## Raw Dataset
 
 ```json
-[{'Atomic Red Team Test - Account Access Removal': {'atomic_tests': [{'dependencies': [{'description': 'User '
+[{'Atomic Red Team Test - Account Access Removal': {'atomic_tests': [{'auto_generated_guid': '1b99ef28-f83c-4ec5-8a08-1a56263a5bb2',
+                                                                      'dependencies': [{'description': 'User '
                                                                                                        'account '
                                                                                                        'to '
                                                                                                        'change '
@@ -160,7 +167,8 @@ net.exe user #{user_account} /delete
                                                                               '- '
                                                                               'Windows',
                                                                       'supported_platforms': ['windows']},
-                                                                     {'dependencies': [{'description': 'User '
+                                                                     {'auto_generated_guid': 'f21a1d7d-a62f-442a-8c3a-2440d43b19e5',
+                                                                      'dependencies': [{'description': 'User '
                                                                                                        'account '
                                                                                                        'to '
                                                                                                        'delete '

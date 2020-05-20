@@ -24,7 +24,6 @@ _/ __ \|  |   / __ |/ __ \_  __ \ \/ \/ /  _ \ /  _ \ / __ |
 ## Aliases
 
 ```
-intentionally left blank
 Elderwood
 Elderwood Gang
 Beijing Group

@@ -26,7 +26,6 @@ MITRE has also developed an APT3 Adversary Emulation Plan.(Citation: APT3 Advers
 ## Aliases
 
 ```
-intentionally left blank
 APT3
 Gothic Panda
 Pirpi

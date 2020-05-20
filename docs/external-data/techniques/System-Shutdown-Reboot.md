@@ -9,14 +9,20 @@
 
 Adversaries may attempt to shutdown/reboot a system after impacting it in other ways, such as [Disk Structure Wipe](https://attack.mitre.org/techniques/T1487) or [Inhibit System Recovery](https://attack.mitre.org/techniques/T1490), to hasten the intended effects on system availability.(Citation: Talos Nyetya June 2017)(Citation: Talos Olympic Destroyer 2018)
 
+## Aliases
+
+```
+
+```
+
 ## Additional Attributes
 
 * Bypass: None
 * Effective Permissions: None
-* Network: intentionally left blank
+* Network: None
 * Permissions: ['User', 'Administrator', 'root', 'SYSTEM']
 * Platforms: ['Linux', 'macOS', 'Windows']
-* Remote: intentionally left blank
+* Remote: None
 * Type: attack-pattern
 * Wiki: https://attack.mitre.org/techniques/T1529
 
@@ -78,7 +84,8 @@ poweroff --reboot
 ## Raw Dataset
 
 ```json
-[{'Atomic Red Team Test - System Shutdown/Reboot': {'atomic_tests': [{'description': 'This '
+[{'Atomic Red Team Test - System Shutdown/Reboot': {'atomic_tests': [{'auto_generated_guid': 'ad254fa8-45c0-403b-8c77-e00b3d3e7a64',
+                                                                      'description': 'This '
                                                                                      'test '
                                                                                      'shuts '
                                                                                      'down '
@@ -103,7 +110,8 @@ poweroff --reboot
                                                                               '- '
                                                                               'Windows',
                                                                       'supported_platforms': ['windows']},
-                                                                     {'description': 'This '
+                                                                     {'auto_generated_guid': 'f4648f0d-bf78-483c-bafc-3ec99cd1c302',
+                                                                      'description': 'This '
                                                                                      'test '
                                                                                      'restarts '
                                                                                      'a '
@@ -127,7 +135,8 @@ poweroff --reboot
                                                                               '- '
                                                                               'Windows',
                                                                       'supported_platforms': ['windows']},
-                                                                     {'description': 'This '
+                                                                     {'auto_generated_guid': '6326dbc4-444b-4c04-88f4-27e94d0327cb',
+                                                                      'description': 'This '
                                                                                      'test '
                                                                                      'restarts '
                                                                                      'a '
@@ -157,7 +166,8 @@ poweroff --reboot
                                                                               'macOS/Linux',
                                                                       'supported_platforms': ['macos',
                                                                                               'linux']},
-                                                                     {'description': 'This '
+                                                                     {'auto_generated_guid': '4963a81e-a3ad-4f02-adda-812343b351de',
+                                                                      'description': 'This '
                                                                                      'test '
                                                                                      'shuts '
                                                                                      'down '
@@ -191,7 +201,8 @@ poweroff --reboot
                                                                               'macOS/Linux',
                                                                       'supported_platforms': ['macos',
                                                                                               'linux']},
-                                                                     {'description': 'This '
+                                                                     {'auto_generated_guid': '47d0b042-a918-40ab-8cf9-150ffe919027',
+                                                                      'description': 'This '
                                                                                      'test '
                                                                                      'restarts '
                                                                                      'a '
@@ -210,7 +221,8 @@ poweroff --reboot
                                                                               'macOS/Linux',
                                                                       'supported_platforms': ['macos',
                                                                                               'linux']},
-                                                                     {'description': 'This '
+                                                                     {'auto_generated_guid': '918f70ab-e1ef-49ff-bc57-b27021df84dd',
+                                                                      'description': 'This '
                                                                                      'test '
                                                                                      'shuts '
                                                                                      'down '
@@ -230,7 +242,8 @@ poweroff --reboot
                                                                               '- '
                                                                               'Linux',
                                                                       'supported_platforms': ['linux']},
-                                                                     {'description': 'This '
+                                                                     {'auto_generated_guid': '78f92e14-f1e9-4446-b3e9-f1b921f2459e',
+                                                                      'description': 'This '
                                                                                      'test '
                                                                                      'restarts '
                                                                                      'a '
@@ -249,7 +262,8 @@ poweroff --reboot
                                                                               '- '
                                                                               'Linux',
                                                                       'supported_platforms': ['linux']},
-                                                                     {'description': 'This '
+                                                                     {'auto_generated_guid': '73a90cd2-48a2-4ac5-8594-2af35fa909fa',
+                                                                      'description': 'This '
                                                                                      'test '
                                                                                      'shuts '
                                                                                      'down '
@@ -268,7 +282,8 @@ poweroff --reboot
                                                                               '- '
                                                                               'Linux',
                                                                       'supported_platforms': ['linux']},
-                                                                     {'description': 'This '
+                                                                     {'auto_generated_guid': '61303105-ff60-427b-999e-efb90b314e41',
+                                                                      'description': 'This '
                                                                                      'test '
                                                                                      'restarts '
                                                                                      'a '

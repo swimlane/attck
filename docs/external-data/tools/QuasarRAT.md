@@ -10,7 +10,8 @@
 ## Aliases
 
 ```
-intentionally left blank
+QuasarRAT
+xRAT
 ```
 
 ## Additional Attributes
@@ -21,7 +22,7 @@ intentionally left blank
 # C2 Matrix Dataset
 
 ```json
-{"QuasarRAT": {"Name": "QuasarRAT", "License": "MIT", "Price": "NA", "GitHub": "https://github.com/quasar/QuasarRAT", "Site": "", "Twitter": "", "Evaluator": "", "Date": "", "Version": "", "Implementation": "", "How-To": "", "Slingshot": "", "Kali": "", "Server": "", "Agent": "", "Multi-User": "", "UI": "", "API": "", "Windows": "", "Linux": "", "macOS": "", "TCP": "", "HTTP": "", "HTTP2": "", "HTTP3": "", "DNS": "", "DoH": "", "ICMP": "", "FTP": "", "IMAP": "", "MAPI": "", "SMB": "", "Key Exchange": "", "Stego": "", "Proxy Aware": "", "DomainFront": "", "Custom Profile": "", "Jitter": "", "Working Hours": "", "Kill Date": "", "Chaining": "", "Logging": "", "ATT&CK Mapping": "Yes", "Dashboard": "", "NetWitness": "", "Actively Maint.": "Yes", "Slack": "No", "Slack Members": "NA", "GH Issues": "529", "Notes": ""}}
+{"QuasarRAT": {"Name": "QuasarRAT", "License": "MIT", "Price": "NA", "GitHub": "https://github.com/quasar/QuasarRAT", "Site": "", "Twitter": "", "Evaluator": "Contribute", "Date": "", "Version": "", "Implementation": "", "How-To": "", "Slingshot": "", "Kali": "", "Server": "", "Agent": "", "Multi-User": "", "UI": "", "API": "", "Windows": "", "Linux": "", "macOS": "", "TCP": "", "HTTP": "", "HTTP2": "", "HTTP3": "", "DNS": "", "DoH": "", "ICMP": "", "FTP": "", "IMAP": "", "MAPI": "", "SMB": "", "Key Exchange": "", "Stego": "", "Proxy Aware": "", "DomainFront": "", "Custom Profile": "", "Jitter": "", "Working Hours": "", "Kill Date": "", "Chaining": "", "Logging": "", "ATT&CK Mapping": "Yes", "Dashboard": "", "NetWitness": "", "Actively Maint.": "Yes", "Slack": "No", "Slack Members": "NA", "GH Issues": "529", "Notes": ""}}
 ```
 
 # C2 Matrix Properties
@@ -30,6 +31,8 @@ intentionally left blank
 * GitHub: https://github.com/quasar/QuasarRAT
 
 * Price: NA
+
+* Evaluator: Contribute
 
 * Slack: No
 

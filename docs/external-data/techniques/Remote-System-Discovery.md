@@ -24,14 +24,20 @@ Utilities such as "ping" and others can be used to gather information about remo
 In cloud environments, the above techniques may be used to discover remote systems depending upon the host operating system. In addition, cloud environments often provide APIs with information about remote systems and services.
 
 
+## Aliases
+
+```
+
+```
+
 ## Additional Attributes
 
 * Bypass: None
 * Effective Permissions: None
-* Network: intentionally left blank
+* Network: None
 * Permissions: ['User', 'Administrator', 'SYSTEM']
 * Platforms: ['Linux', 'macOS', 'Windows', 'GCP', 'Azure', 'AWS']
-* Remote: intentionally left blank
+* Remote: None
 * Type: attack-pattern
 * Wiki: https://attack.mitre.org/techniques/T1018
 
@@ -299,7 +305,14 @@ List is empty.
 ## Potential Detections
 
 ```json
-
+[{'data_source': ['4688', 'Process Execution']},
+ {'data_source': ['4688 ', 'Process CMD Line']},
+ {'data_source': ['5156', 'Win Firewall']},
+ {'data_source': ['Network protocol analysis']},
+ {'data_source': ['4688', 'Process Execution']},
+ {'data_source': ['4688 ', 'Process CMD Line']},
+ {'data_source': ['5156', 'Windows Firewall']},
+ {'data_source': ['Network protocol analysis']}]
 ```
 
 ## Potential Queries
@@ -411,7 +424,8 @@ List is empty.
                                                                  'of the '
                                                                  'workstation ',
                                                   'Metasploit': ''}},
- {'Atomic Red Team Test - Remote System Discovery': {'atomic_tests': [{'description': 'Identify '
+ {'Atomic Red Team Test - Remote System Discovery': {'atomic_tests': [{'auto_generated_guid': '85321a9c-897f-4a60-9f20-29788e50bccd',
+                                                                       'description': 'Identify '
                                                                                       'remote '
                                                                                       'systems '
                                                                                       'with '
@@ -454,7 +468,8 @@ List is empty.
                                                                                '- '
                                                                                'net',
                                                                        'supported_platforms': ['windows']},
-                                                                      {'description': 'Identify '
+                                                                      {'auto_generated_guid': 'f1bf6c8f-9016-4edf-aff9-80b65f5d711f',
+                                                                       'description': 'Identify '
                                                                                       'remote '
                                                                                       'systems '
                                                                                       'with '
@@ -504,7 +519,8 @@ List is empty.
                                                                                'Domain '
                                                                                'Computers',
                                                                        'supported_platforms': ['windows']},
-                                                                      {'description': 'Identify '
+                                                                      {'auto_generated_guid': '52ab5108-3f6f-42fb-8ba3-73bc054f22c8',
+                                                                       'description': 'Identify '
                                                                                       'domain '
                                                                                       'controllers '
                                                                                       'for '
@@ -552,7 +568,8 @@ List is empty.
                                                                                '- '
                                                                                'nltest',
                                                                        'supported_platforms': ['windows']},
-                                                                      {'description': 'Identify '
+                                                                      {'auto_generated_guid': '6db1f57f-d1d5-4223-8a66-55c9c65a9592',
+                                                                       'description': 'Identify '
                                                                                       'remote '
                                                                                       'systems '
                                                                                       'via '
@@ -598,7 +615,8 @@ List is empty.
                                                                                'ping '
                                                                                'sweep',
                                                                        'supported_platforms': ['windows']},
-                                                                      {'description': 'Identify '
+                                                                      {'auto_generated_guid': '2d5a61f5-0447-4be4-944a-1f8530ed6574',
+                                                                       'description': 'Identify '
                                                                                       'remote '
                                                                                       'systems '
                                                                                       'via '
@@ -632,7 +650,8 @@ List is empty.
                                                                                '- '
                                                                                'arp',
                                                                        'supported_platforms': ['windows']},
-                                                                      {'dependencies': [{'description': 'Check '
+                                                                      {'auto_generated_guid': 'acb6b1ff-e2ad-4d64-806c-6c35fe73b951',
+                                                                       'dependencies': [{'description': 'Check '
                                                                                                         'if '
                                                                                                         'arp '
                                                                                                         'command '
@@ -702,7 +721,8 @@ List is empty.
                                                                                'nix',
                                                                        'supported_platforms': ['linux',
                                                                                                'macos']},
-                                                                      {'description': 'Identify '
+                                                                      {'auto_generated_guid': '96db2632-8417-4dbb-b8bb-a8b92ba391de',
+                                                                       'description': 'Identify '
                                                                                       'remote '
                                                                                       'systems '
                                                                                       'via '
@@ -784,7 +804,8 @@ List is empty.
                                                                                'sweep',
                                                                        'supported_platforms': ['linux',
                                                                                                'macos']},
-                                                                      {'description': 'Powershell '
+                                                                      {'auto_generated_guid': 'baa01aaa-5e13-45ec-8a0d-e46c93c9760f',
+                                                                       'description': 'Powershell '
                                                                                       'script '
                                                                                       'that '
                                                                                       'runs '

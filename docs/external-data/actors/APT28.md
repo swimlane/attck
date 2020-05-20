@@ -24,7 +24,6 @@ _____  _______/  |_\_____  \ /  __  \
 ## Aliases
 
 ```
-intentionally left blank
 APT28
 SNAKEMACKEREL
 Swallowtail

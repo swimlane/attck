@@ -12,7 +12,8 @@ Cmd.exe contains native functionality to perform many operations to interact wit
 ## Aliases
 
 ```
-intentionally left blank
+cmd
+cmd.exe
 ```
 
 ## Additional Attributes

@@ -11,14 +11,20 @@ Scripts can be embedded inside Office documents as macros that can be set to exe
 
 Many popular offensive frameworks exist which use forms of scripting for security testers and adversaries alike. Metasploit (Citation: Metasploit_Ref), Veil (Citation: Veil_Ref), and PowerSploit (Citation: Powersploit) are three examples that are popular among penetration testers for exploit and post-compromise operations and include many features for evading defenses. Some adversaries are known to use PowerShell. (Citation: Alperovitch 2014)
 
+## Aliases
+
+```
+
+```
+
 ## Additional Attributes
 
 * Bypass: ['Process whitelisting', 'Data Execution Prevention', 'Exploit Prevention']
 * Effective Permissions: None
-* Network: intentionally left blank
+* Network: None
 * Permissions: ['User']
 * Platforms: ['Linux', 'macOS', 'Windows']
-* Remote: intentionally left blank
+* Remote: None
 * Type: attack-pattern
 * Wiki: https://attack.mitre.org/techniques/T1064
 
@@ -596,7 +602,15 @@ Creates and executes a simple bash script.
                   'tags': ['attack.execution',
                            'attack.defense_evasion',
                            'attack.t1064'],
-                  'title': 'WMI Spawning Windows PowerShell'}}]
+                  'title': 'WMI Spawning Windows PowerShell'}},
+ {'data_source': ['4688 ', 'Process CMD Line']},
+ {'data_source': ['4688', 'Process Execution']},
+ {'data_source': ['4663', 'File monitoring']},
+ {'data_source': ['LMD - Hash Compare']},
+ {'data_source': ['4688 ', 'Process CMD Line']},
+ {'data_source': ['4688', 'Process Execution']},
+ {'data_source': ['4663', 'File monitoring']},
+ {'data_source': ['LOG-MD - Hash Compare']}]
 ```
 
 ## Potential Queries
@@ -614,7 +628,8 @@ Creates and executes a simple bash script.
 ## Raw Dataset
 
 ```json
-[{'Atomic Red Team Test - Scripting': {'atomic_tests': [{'description': 'Creates '
+[{'Atomic Red Team Test - Scripting': {'atomic_tests': [{'auto_generated_guid': '7e7ac3ed-f795-4fa5-b711-09d6fbe9b873',
+                                                         'description': 'Creates '
                                                                         'and '
                                                                         'executes '
                                                                         'a '
@@ -654,7 +669,8 @@ Creates and executes a simple bash script.
                                                                  'Shell Script',
                                                          'supported_platforms': ['macos',
                                                                                  'linux']},
-                                                        {'dependencies': [{'description': 'Batch '
+                                                        {'auto_generated_guid': '9e8894c0-50bd-4525-a96c-d4ac78ece388',
+                                                         'dependencies': [{'description': 'Batch '
                                                                                           'file '
                                                                                           'must '
                                                                                           'exist '

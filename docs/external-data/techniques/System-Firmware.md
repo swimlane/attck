@@ -9,14 +9,20 @@
 
 System firmware like BIOS and (U)EFI underly the functionality of a computer and may be modified by an adversary to perform or assist in malicious activity. Capabilities exist to overwrite the system firmware, which may give sophisticated adversaries a means to install malicious firmware updates as a means of persistence on a system that may be difficult to detect.
 
+## Aliases
+
+```
+
+```
+
 ## Additional Attributes
 
 * Bypass: None
 * Effective Permissions: None
-* Network: intentionally left blank
+* Network: None
 * Permissions: ['Administrator', 'SYSTEM']
 * Platforms: ['Windows']
-* Remote: intentionally left blank
+* Remote: None
 * Type: attack-pattern
 * Wiki: https://attack.mitre.org/techniques/T1019
 
@@ -35,7 +41,12 @@ System firmware like BIOS and (U)EFI underly the functionality of a computer and
 ## Potential Detections
 
 ```json
-
+[{'data_source': ['BIOS']},
+ {'data_source': ['EFI']},
+ {'data_source': ['API monitoring']},
+ {'data_source': ['BIOS']},
+ {'data_source': ['EFI']},
+ {'data_source': ['API monitoring']}]
 ```
 
 ## Potential Queries

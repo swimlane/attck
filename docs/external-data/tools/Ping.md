@@ -10,7 +10,8 @@
 ## Aliases
 
 ```
-intentionally left blank
+ping.exe
+Ping
 ```
 
 ## Additional Attributes

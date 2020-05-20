@@ -24,7 +24,6 @@ _/ __ \/ ____/  |  \__  \\   __\  |/  _ \ /    \
 ## Aliases
 
 ```
-intentionally left blank
 Equation
 ```
 

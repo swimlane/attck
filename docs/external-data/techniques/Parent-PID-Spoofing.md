@@ -11,14 +11,20 @@ Adversaries may abuse these mechanisms to evade defenses, such as those blocking
 
 Explicitly assigning the PPID may also enable [Privilege Escalation](https://attack.mitre.org/tactics/TA0004) (given appropriate access rights to the parent process). For example, an adversary in a privileged user context (i.e. administrator) may spawn a new process and assign the parent as a process running as SYSTEM (such as <code>lsass.exe</code>), causing the new process to be elevated via the inherited access token.(Citation: XPNSec PPID Nov 2017)
 
+## Aliases
+
+```
+
+```
+
 ## Additional Attributes
 
 * Bypass: ['Host forensic analysis', 'Heuristic Detection']
 * Effective Permissions: None
-* Network: intentionally left blank
+* Network: None
 * Permissions: ['User', 'Administrator']
 * Platforms: ['Windows']
-* Remote: intentionally left blank
+* Remote: None
 * Type: attack-pattern
 * Wiki: https://attack.mitre.org/techniques/T1502
 
@@ -97,7 +103,8 @@ PPID-Spoof -ppid $ppid -spawnto "#{spawnto_process_path}" -dllpath "#{dll_path}"
 ## Raw Dataset
 
 ```json
-[{'Atomic Red Team Test - Parent PID Spoofing': {'atomic_tests': [{'dependencies': [{'description': 'DLL '
+[{'Atomic Red Team Test - Parent PID Spoofing': {'atomic_tests': [{'auto_generated_guid': '069258f4-2162-46e9-9a25-c9c6c56150d2',
+                                                                   'dependencies': [{'description': 'DLL '
                                                                                                     'to '
                                                                                                     'inject '
                                                                                                     'must '

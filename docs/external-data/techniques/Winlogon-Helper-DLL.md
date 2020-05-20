@@ -15,14 +15,20 @@ Malicious modifications to these Registry keys may cause Winlogon to load and ex
 
 Adversaries may take advantage of these features to repeatedly execute malicious code and establish Persistence.
 
+## Aliases
+
+```
+
+```
+
 ## Additional Attributes
 
 * Bypass: None
 * Effective Permissions: None
-* Network: intentionally left blank
+* Network: None
 * Permissions: ['Administrator', 'SYSTEM']
 * Platforms: ['Windows']
-* Remote: intentionally left blank
+* Remote: None
 * Type: attack-pattern
 * Wiki: https://attack.mitre.org/techniques/T1004
 
@@ -114,7 +120,17 @@ winlogon.exe
                   'references': ['https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1004/T1004.yaml'],
                   'status': 'experimental',
                   'tags': ['attack.persistence', 'attack.t1004'],
-                  'title': 'Winlogon Helper DLL'}}]
+                  'title': 'Winlogon Helper DLL'}},
+ {'data_source': ['4688', 'Process Execution']},
+ {'data_source': ['4657', 'Windows Registry']},
+ {'data_source': ['4663', 'File monitoring']},
+ {'data_source': ['LOG-MD', 'Hash Compare']},
+ {'data_source': ['AutoRuns']},
+ {'data_source': ['4688', 'Process Execution']},
+ {'data_source': ['LOG-MD', 'AutoRuns']},
+ {'data_source': ['4657', 'Windows Registry']},
+ {'data_source': ['4663', 'File monitoring']},
+ {'data_source': ['LOG-MD', 'Hash Compare']}]
 ```
 
 ## Potential Queries
@@ -135,7 +151,8 @@ winlogon.exe
 ## Raw Dataset
 
 ```json
-[{'Atomic Red Team Test - Winlogon Helper DLL': {'atomic_tests': [{'description': 'PowerShell '
+[{'Atomic Red Team Test - Winlogon Helper DLL': {'atomic_tests': [{'auto_generated_guid': 'bf9f9d65-ee4d-4c3e-a843-777d04f19c38',
+                                                                   'description': 'PowerShell '
                                                                                   'code '
                                                                                   'to '
                                                                                   'set '
@@ -198,7 +215,8 @@ winlogon.exe
                                                                            '- '
                                                                            'PowerShell',
                                                                    'supported_platforms': ['windows']},
-                                                                  {'description': 'PowerShell '
+                                                                  {'auto_generated_guid': 'fb32c935-ee2e-454b-8fa3-1c46b42e8dfb',
+                                                                   'description': 'PowerShell '
                                                                                   'code '
                                                                                   'to '
                                                                                   'set '
@@ -261,7 +279,8 @@ winlogon.exe
                                                                            '- '
                                                                            'PowerShell',
                                                                    'supported_platforms': ['windows']},
-                                                                  {'description': 'PowerShell '
+                                                                  {'auto_generated_guid': 'd40da266-e073-4e5a-bb8b-2b385023e5f9',
+                                                                   'description': 'PowerShell '
                                                                                   'code '
                                                                                   'to '
                                                                                   'set '

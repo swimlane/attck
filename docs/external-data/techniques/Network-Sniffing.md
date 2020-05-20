@@ -11,14 +11,20 @@ Data captured via this technique may include user credentials, especially those 
 
 Network sniffing may also reveal configuration details, such as running services, version numbers, and other network characteristics (ex: IP addressing, hostnames, VLAN IDs) necessary for follow-on Lateral Movement and/or Defense Evasion activities.
 
+## Aliases
+
+```
+
+```
+
 ## Additional Attributes
 
 * Bypass: None
 * Effective Permissions: None
-* Network: intentionally left blank
+* Network: None
 * Permissions: ['Administrator', 'SYSTEM']
 * Platforms: ['Linux', 'macOS', 'Windows']
-* Remote: intentionally left blank
+* Remote: None
 * Type: attack-pattern
 * Wiki: https://attack.mitre.org/techniques/T1040
 
@@ -202,7 +208,13 @@ tshark -c 5 -i #{interface}
                   'tags': ['attack.credential_access',
                            'attack.discovery',
                            'attack.t1040'],
-                  'title': 'Network Sniffing'}}]
+                  'title': 'Network Sniffing'}},
+ {'data_source': ['Network device logs']},
+ {'data_source': ['Host network interface']},
+ {'data_source': ['Netflow/Enclave netflow']},
+ {'data_source': ['Network device logs']},
+ {'data_source': ['Host network interface']},
+ {'data_source': ['Netflow/Enclave netflow']}]
 ```
 
 ## Potential Queries
@@ -228,7 +240,8 @@ tshark -c 5 -i #{interface}
 ## Raw Dataset
 
 ```json
-[{'Atomic Red Team Test - Network Sniffing': {'atomic_tests': [{'description': 'Perform '
+[{'Atomic Red Team Test - Network Sniffing': {'atomic_tests': [{'auto_generated_guid': '7fe741f7-b265-4951-a7c7-320889083b3e',
+                                                                'description': 'Perform '
                                                                                'a '
                                                                                'PCAP. '
                                                                                'Wireshark '
@@ -282,7 +295,8 @@ tshark -c 5 -i #{interface}
                                                                         'Capture '
                                                                         'Linux',
                                                                 'supported_platforms': ['linux']},
-                                                               {'description': 'Perform '
+                                                               {'auto_generated_guid': '9d04efee-eff5-4240-b8d2-07792b873608',
+                                                                'description': 'Perform '
                                                                                'a '
                                                                                'PCAP '
                                                                                'on '
@@ -339,7 +353,8 @@ tshark -c 5 -i #{interface}
                                                                         'Capture '
                                                                         'macOS',
                                                                 'supported_platforms': ['macos']},
-                                                               {'description': 'Perform '
+                                                               {'auto_generated_guid': 'a5b2f6a0-24b4-493e-9590-c699f75723ca',
+                                                                'description': 'Perform '
                                                                                'a '
                                                                                'packet '
                                                                                'capture '
@@ -403,7 +418,8 @@ tshark -c 5 -i #{interface}
                                                                         'Command '
                                                                         'Prompt',
                                                                 'supported_platforms': ['windows']},
-                                                               {'description': 'Perform '
+                                                               {'auto_generated_guid': '2bf62970-013a-4c74-b0a8-64030874e89a',
+                                                                'description': 'Perform '
                                                                                'a '
                                                                                'packet '
                                                                                'capture '

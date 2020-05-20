@@ -19,14 +19,20 @@ The module loader can load DLLs:
 
 Adversaries can use this functionality as a way to execute arbitrary code on a system.
 
+## Aliases
+
+```
+
+```
+
 ## Additional Attributes
 
 * Bypass: None
 * Effective Permissions: None
-* Network: intentionally left blank
+* Network: None
 * Permissions: ['User']
 * Platforms: ['Windows']
-* Remote: intentionally left blank
+* Remote: None
 * Type: attack-pattern
 * Wiki: https://attack.mitre.org/techniques/T1129
 
@@ -55,7 +61,14 @@ rundll32.exe
 ## Potential Detections
 
 ```json
-
+[{'data_source': ['4688', 'Process Execution']},
+ {'data_source': ['4663', 'File monitoring']},
+ {'data_source': ['DLL monitoring']},
+ {'data_source': ['API monitoring']},
+ {'data_source': ['4688', 'Process Execution']},
+ {'data_source': ['4663', 'File monitoring']},
+ {'data_source': ['Sysmon ID 7', 'DLL monitoring']},
+ {'data_source': ['API monitoring']}]
 ```
 
 ## Potential Queries

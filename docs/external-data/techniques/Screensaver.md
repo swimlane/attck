@@ -16,14 +16,20 @@ The following screensaver settings are stored in the Registry (<code>HKCU\Contro
 
 Adversaries can use screensaver settings to maintain persistence by setting the screensaver to run malware after a certain timeframe of user inactivity. (Citation: ESET Gazer Aug 2017)
 
+## Aliases
+
+```
+
+```
+
 ## Additional Attributes
 
 * Bypass: None
 * Effective Permissions: None
-* Network: intentionally left blank
+* Network: None
 * Permissions: ['User']
 * Platforms: ['Windows']
-* Remote: intentionally left blank
+* Remote: None
 * Type: attack-pattern
 * Wiki: https://attack.mitre.org/techniques/T1180
 
@@ -69,7 +75,14 @@ Control Panel\Desktop\SCRNSAVE.EXE
 ## Potential Detections
 
 ```json
-
+[{'data_source': ['4688', 'Process Execution']},
+ {'data_source': ['4688 ', 'Process CMD Line']},
+ {'data_source': ['4657', 'Windows Registry']},
+ {'data_source': ['4663', 'File monitoring']},
+ {'data_source': ['4688', 'Process Execution']},
+ {'data_source': ['4688 ', 'Process CMD Line']},
+ {'data_source': ['4657', 'Windows Registry']},
+ {'data_source': ['4663', 'File monitoring']}]
 ```
 
 ## Potential Queries
@@ -88,7 +101,8 @@ Control Panel\Desktop\SCRNSAVE.EXE
 ## Raw Dataset
 
 ```json
-[{'Atomic Red Team Test - Screensaver': {'atomic_tests': [{'description': 'This '
+[{'Atomic Red Team Test - Screensaver': {'atomic_tests': [{'auto_generated_guid': '281201e7-de41-4dc9-b73d-f288938cbb64',
+                                                           'description': 'This '
                                                                           'test '
                                                                           'copies '
                                                                           'a '

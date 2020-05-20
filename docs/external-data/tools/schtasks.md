@@ -10,7 +10,8 @@
 ## Aliases
 
 ```
-intentionally left blank
+schtasks
+schtasks.exe
 ```
 
 ## Additional Attributes

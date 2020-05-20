@@ -9,14 +9,20 @@
 
 Adversaries can take advantage of these configurations to execute commands as other users or spawn processes with higher privileges. You must have elevated privileges to edit this file though.
 
+## Aliases
+
+```
+
+```
+
 ## Additional Attributes
 
 * Bypass: None
 * Effective Permissions: ['root']
-* Network: intentionally left blank
+* Network: None
 * Permissions: ['User']
 * Platforms: ['Linux', 'macOS']
-* Remote: intentionally left blank
+* Remote: None
 * Type: attack-pattern
 * Wiki: https://attack.mitre.org/techniques/T1169
 
@@ -126,7 +132,8 @@ vim /etc/sudoers
 ## Raw Dataset
 
 ```json
-[{'Atomic Red Team Test - SUDO': {'atomic_tests': [{'description': 'Common '
+[{'Atomic Red Team Test - SUDO': {'atomic_tests': [{'auto_generated_guid': '150c3a08-ee6e-48a6-aeaf-3659d24ceb4e',
+                                                    'description': 'Common '
                                                                    'Sudo '
                                                                    'enumeration '
                                                                    'methods.\n',

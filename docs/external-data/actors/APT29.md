@@ -88,7 +88,6 @@
 ## Aliases
 
 ```
-intentionally left blank
 APT29
 YTTRIUM
 The Dukes

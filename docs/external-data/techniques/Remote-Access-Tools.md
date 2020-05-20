@@ -11,6 +11,12 @@ Remote access tools may be established and used post-compromise as alternate com
 
 Admin tools such as TeamViewer have been used by several groups targeting institutions in countries of interest to the Russian state and criminal campaigns. (Citation: CrowdStrike 2015 Global Threat Report) (Citation: CrySyS Blog TeamSpy)
 
+## Aliases
+
+```
+
+```
+
 ## Additional Attributes
 
 * Bypass: None
@@ -18,7 +24,7 @@ Admin tools such as TeamViewer have been used by several groups targeting instit
 * Network: True
 * Permissions: ['User']
 * Platforms: ['Linux', 'Windows', 'macOS']
-* Remote: intentionally left blank
+* Remote: None
 * Type: attack-pattern
 * Wiki: https://attack.mitre.org/techniques/T1219
 
@@ -119,7 +125,15 @@ python/management/osx/screen_sharing
                                  'https://medium.com/@networksecurity/rdp-hijacking-how-to-hijack-rds-and-remoteapp-sessions-transparently-to-move-through-an-da2a1e73a5f6'],
                   'status': 'experimental',
                   'tags': ['attack.command_and_control', 'attack.t1219'],
-                  'title': 'Suspicious TSCON Start'}}]
+                  'title': 'Suspicious TSCON Start'}},
+ {'data_source': ['5156', 'Windows Firewall']},
+ {'data_source': ['4688', 'Process Execution']},
+ {'data_source': ['Network intrusion detection system']},
+ {'data_source': ['Network protocol analysis']},
+ {'data_source': ['5156', 'Windows Firewall']},
+ {'data_source': ['4688', 'Process Execution']},
+ {'data_source': ['Network intrusion detection system']},
+ {'data_source': ['Network protocol analysis']}]
 ```
 
 ## Potential Queries
@@ -131,7 +145,8 @@ python/management/osx/screen_sharing
 ## Raw Dataset
 
 ```json
-[{'Atomic Red Team Test - Remote Access Tools': {'atomic_tests': [{'description': 'An '
+[{'Atomic Red Team Test - Remote Access Tools': {'atomic_tests': [{'auto_generated_guid': '8ca3b96d-8983-4a7f-b125-fc98cc0a2aa0',
+                                                                   'description': 'An '
                                                                                   'adversary '
                                                                                   'may '
                                                                                   'attempt '
@@ -178,7 +193,8 @@ python/management/osx/screen_sharing
                                                                            'on '
                                                                            'Windows',
                                                                    'supported_platforms': ['windows']},
-                                                                  {'description': 'An '
+                                                                  {'auto_generated_guid': '6b8b7391-5c0a-4f8c-baee-78d8ce0ce330',
+                                                                   'description': 'An '
                                                                                   'adversary '
                                                                                   'may '
                                                                                   'attempt '
@@ -223,7 +239,8 @@ python/management/osx/screen_sharing
                                                                            'on '
                                                                            'Windows',
                                                                    'supported_platforms': ['windows']},
-                                                                  {'description': 'An '
+                                                                  {'auto_generated_guid': 'd03683ec-aae0-42f9-9b4c-534780e0f8e1',
+                                                                   'description': 'An '
                                                                                   'adversary '
                                                                                   'may '
                                                                                   'attempt '

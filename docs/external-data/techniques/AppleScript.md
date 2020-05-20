@@ -10,11 +10,17 @@ AppleEvent messages can be sent independently or as part of a script. These even
 
 Adversaries can use this to interact with open SSH connection, move to remote machines, and even present users with fake dialog boxes. These events cannot start applications remotely (they can start them locally though), but can interact with applications if they're already running remotely. Since this is a scripting language, it can be used to launch more common techniques as well such as a reverse shell via python  (Citation: Macro Malware Targets Macs). Scripts can be run from the command-line via <code>osascript /path/to/script</code> or <code>osascript -e "script here"</code>.
 
+## Aliases
+
+```
+
+```
+
 ## Additional Attributes
 
 * Bypass: None
 * Effective Permissions: None
-* Network: intentionally left blank
+* Network: None
 * Permissions: ['User']
 * Platforms: ['macOS']
 * Remote: True
@@ -77,7 +83,8 @@ python/persistence/osx/mail
 ## Raw Dataset
 
 ```json
-[{'Atomic Red Team Test - AppleScript': {'atomic_tests': [{'description': 'Shell '
+[{'Atomic Red Team Test - AppleScript': {'atomic_tests': [{'auto_generated_guid': '3600d97d-81b9-4171-ab96-e4386506e2c2',
+                                                           'description': 'Shell '
                                                                           'Script '
                                                                           'with '
                                                                           'AppleScript. '

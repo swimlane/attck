@@ -10,7 +10,8 @@
 ## Aliases
 
 ```
-intentionally left blank
+ipconfig
+ipconfig.exe
 ```
 
 ## Additional Attributes

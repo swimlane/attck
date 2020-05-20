@@ -13,14 +13,20 @@ Adversaries may abuse BITS to download, execute, and even clean up after running
 
 BITS upload functionalities can also be used to perform [Exfiltration Over Alternative Protocol](https://attack.mitre.org/techniques/T1048). (Citation: CTU BITS Malware June 2016)
 
+## Aliases
+
+```
+
+```
+
 ## Additional Attributes
 
 * Bypass: ['Firewall', 'Host forensic analysis']
 * Effective Permissions: None
-* Network: intentionally left blank
+* Network: None
 * Permissions: ['User', 'Administrator', 'SYSTEM']
 * Platforms: ['Windows']
-* Remote: intentionally left blank
+* Remote: None
 * Type: attack-pattern
 * Wiki: https://attack.mitre.org/techniques/T1197
 
@@ -162,7 +168,15 @@ bitsadmin.exe
                            'attack.persistence',
                            'attack.t1197',
                            'attack.s0190'],
-                  'title': 'Bitsadmin Download'}}]
+                  'title': 'Bitsadmin Download'}},
+ {'data_source': ['BITS Logs', 'Windows event logs']},
+ {'data_source': ['4688 Process CMD Line']},
+ {'data_source': ['API monitoring']},
+ {'data_source': ['Packet capture']},
+ {'data_source': ['BITS Logs', 'Windows event logs']},
+ {'data_source': ['4688 ', 'Process CMD Line']},
+ {'data_source': ['API monitoring']},
+ {'data_source': ['Packet capture']}]
 ```
 
 ## Potential Queries
@@ -182,7 +196,8 @@ bitsadmin.exe
 ## Raw Dataset
 
 ```json
-[{'Atomic Red Team Test - BITS Jobs': {'atomic_tests': [{'description': 'This '
+[{'Atomic Red Team Test - BITS Jobs': {'atomic_tests': [{'auto_generated_guid': '3c73d728-75fb-4180-a12f-6712864d7421',
+                                                         'description': 'This '
                                                                         'test '
                                                                         'simulates '
                                                                         'an '
@@ -226,7 +241,8 @@ bitsadmin.exe
                                                                  'Download '
                                                                  '(cmd)',
                                                          'supported_platforms': ['windows']},
-                                                        {'description': 'This '
+                                                        {'auto_generated_guid': 'f63b8bc4-07e5-4112-acba-56f646f3f0bc',
+                                                         'description': 'This '
                                                                         'test '
                                                                         'simulates '
                                                                         'an '
@@ -287,7 +303,8 @@ bitsadmin.exe
                                                                  'Download '
                                                                  '(PowerShell)',
                                                          'supported_platforms': ['windows']},
-                                                        {'description': 'This '
+                                                        {'auto_generated_guid': '62a06ec5-5754-47d2-bcfc-123d8314c6ae',
+                                                         'description': 'This '
                                                                         'test '
                                                                         'simulates '
                                                                         'an '

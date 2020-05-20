@@ -7,14 +7,20 @@
 
 > Process hollowing occurs when a process is created in a suspended state then its memory is unmapped and replaced with malicious code. Similar to [Process Injection](https://attack.mitre.org/techniques/T1055), execution of the malicious code is masked under a legitimate process and may evade defenses and detection analysis. (Citation: Leitch Hollowing) (Citation: Endgame Process Injection July 2017)
 
+## Aliases
+
+```
+
+```
+
 ## Additional Attributes
 
 * Bypass: ['Process whitelisting', 'Whitelisting by file name or path', 'Signature-based detection', 'Anti-virus']
 * Effective Permissions: None
-* Network: intentionally left blank
+* Network: None
 * Permissions: ['User']
 * Platforms: ['Windows']
-* Remote: intentionally left blank
+* Remote: None
 * Type: attack-pattern
 * Wiki: https://attack.mitre.org/techniques/T1093
 
@@ -71,7 +77,14 @@ Start-Hollow -Sponsor "#{sponsor_binary_path}" -Hollow "#{hollow_binary_path}" -
 ## Potential Detections
 
 ```json
-
+[{'data_source': ['4688', 'Process Execution']},
+ {'data_source': ['LMD - B9']},
+ {'data_source': ['API monitoring']},
+ {'data_source': ['Check with Fred']},
+ {'data_source': ['4688', 'Process Execution']},
+ {'data_source': ['LOG-MD - B9', 'Binary file metadata']},
+ {'data_source': ['API monitoring']},
+ {'data_source': ['Check with Fred']}]
 ```
 
 ## Potential Queries
@@ -109,7 +122,8 @@ Start-Hollow -Sponsor "#{sponsor_binary_path}" -Hollow "#{hollow_binary_path}" -
 ## Raw Dataset
 
 ```json
-[{'Atomic Red Team Test - Process Hollowing': {'atomic_tests': [{'description': 'This '
+[{'Atomic Red Team Test - Process Hollowing': {'atomic_tests': [{'auto_generated_guid': '562427b4-39ef-4e8c-af88-463a78e70b9c',
+                                                                 'description': 'This '
                                                                                 'test '
                                                                                 'uses '
                                                                                 'PowerShell '

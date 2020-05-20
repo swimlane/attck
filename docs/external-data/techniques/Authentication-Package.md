@@ -9,14 +9,20 @@
 
 Adversaries can use the autostart mechanism provided by LSA Authentication Packages for persistence by placing a reference to a binary in the Windows Registry location <code>HKLM\SYSTEM\CurrentControlSet\Control\Lsa\</code> with the key value of <code>"Authentication Packages"=<target binary></code>. The binary will then be executed by the system when the authentication packages are loaded.
 
+## Aliases
+
+```
+
+```
+
 ## Additional Attributes
 
 * Bypass: None
 * Effective Permissions: None
-* Network: intentionally left blank
+* Network: None
 * Permissions: ['Administrator']
 * Platforms: ['Windows']
-* Remote: intentionally left blank
+* Remote: None
 * Type: attack-pattern
 * Wiki: https://attack.mitre.org/techniques/T1131
 
@@ -43,7 +49,12 @@ Adversaries can use the autostart mechanism provided by LSA Authentication Packa
 ## Potential Detections
 
 ```json
-
+[{'data_source': ['4657', 'Windows Registry']},
+ {'data_source': ['Loaded DLLs']},
+ {'data_source': ['DLL monitoring']},
+ {'data_source': ['DLL monitoring']},
+ {'data_source': ['4657', 'Windows Registry']},
+ {'data_source': ['Sysmon ID 7', 'Loaded DLLs']}]
 ```
 
 ## Potential Queries

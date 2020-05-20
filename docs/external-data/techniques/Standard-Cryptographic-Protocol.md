@@ -7,6 +7,12 @@
 
 > Adversaries may explicitly employ a known encryption algorithm to conceal command and control traffic rather than relying on any inherent protections provided by a communication protocol. Despite the use of a secure algorithm, these implementations may be vulnerable to reverse engineering if necessary secret keys are encoded and/or generated within malware samples/configuration files.
 
+## Aliases
+
+```
+
+```
+
 ## Additional Attributes
 
 * Bypass: None
@@ -14,7 +20,7 @@
 * Network: True
 * Permissions: None
 * Platforms: ['Linux', 'macOS', 'Windows']
-* Remote: intentionally left blank
+* Remote: None
 * Type: attack-pattern
 * Wiki: https://attack.mitre.org/techniques/T1032
 
@@ -73,7 +79,18 @@ None
 ## Potential Detections
 
 ```json
-
+[{'data_source': ['5156', 'Windows Firewall']},
+ {'data_source': ['4688', 'Process Execution']},
+ {'data_source': ['Malware reverse engineering']},
+ {'data_source': ['SSL/TLS inspection']},
+ {'data_source': ['Packet capture']},
+ {'data_source': ['Netflow/Enclave netflow']},
+ {'data_source': ['5156', 'Windows Firewall']},
+ {'data_source': ['4688', 'Process Execution']},
+ {'data_source': ['Malware reverse engineering']},
+ {'data_source': ['SSL/TLS inspection']},
+ {'data_source': ['Packet capture']},
+ {'data_source': ['Netflow/Enclave netflow']}]
 ```
 
 ## Potential Queries
@@ -85,7 +102,8 @@ None
 ## Raw Dataset
 
 ```json
-[{'Atomic Red Team Test - Standard Cryptographic Protocol': {'atomic_tests': [{'description': 'Thanks '
+[{'Atomic Red Team Test - Standard Cryptographic Protocol': {'atomic_tests': [{'auto_generated_guid': '21caf58e-87ad-440c-a6b8-3ac259964003',
+                                                                               'description': 'Thanks '
                                                                                               'to '
                                                                                               '@OrOneEqualsOne '
                                                                                               'for '

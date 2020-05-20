@@ -24,14 +24,20 @@ For example, "example.exe" runs "cmd.exe" with the command-line argument <code>n
 
 Search order hijacking is also a common practice for hijacking DLL loads and is covered in [DLL Search Order Hijacking](https://attack.mitre.org/techniques/T1038).
 
+## Aliases
+
+```
+
+```
+
 ## Additional Attributes
 
 * Bypass: None
 * Effective Permissions: ['User', 'Administrator', 'SYSTEM']
-* Network: intentionally left blank
+* Network: None
 * Permissions: ['User', 'Administrator', 'SYSTEM']
 * Platforms: ['Windows']
-* Remote: intentionally left blank
+* Remote: None
 * Type: attack-pattern
 * Wiki: https://attack.mitre.org/techniques/T1034
 
@@ -76,7 +82,12 @@ powershell/privesc/powerup/allchecks
 ## Potential Detections
 
 ```json
-
+[{'data_source': ['4688', 'Process Execution']},
+ {'data_source': ['4663', 'File monitoring']},
+ {'data_source': ['8000-8027', ' 866', 'Whitelist Failures']},
+ {'data_source': ['4688', 'Process Execution']},
+ {'data_source': ['4663', 'File monitoring']},
+ {'data_source': ['IDs ???', 'Whitelist Failures']}]
 ```
 
 ## Potential Queries

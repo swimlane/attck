@@ -9,14 +9,20 @@
 
 Adversaries may accomplish this by disabling individual services of high importance to an organization, such as <code>MSExchangeIS</code>, which will make Exchange content inaccessible (Citation: Novetta Blockbuster). In some cases, adversaries may stop or disable many or all services to render systems unusable.(Citation: Talos Olympic Destroyer 2018) Services may not allow for modification of their data stores while running. Adversaries may stop services in order to conduct [Data Destruction](https://attack.mitre.org/techniques/T1485) or [Data Encrypted for Impact](https://attack.mitre.org/techniques/T1486) on the data stores of services like Exchange and SQL Server.(Citation: SecureWorks WannaCry Analysis)
 
+## Aliases
+
+```
+
+```
+
 ## Additional Attributes
 
 * Bypass: None
 * Effective Permissions: None
-* Network: intentionally left blank
+* Network: None
 * Permissions: ['Administrator', 'SYSTEM', 'User']
 * Platforms: ['Windows']
-* Remote: intentionally left blank
+* Remote: None
 * Type: attack-pattern
 * Wiki: https://attack.mitre.org/techniques/T1489
 
@@ -60,7 +66,8 @@ taskkill.exe /f /im spoolsv.exe
 ## Raw Dataset
 
 ```json
-[{'Atomic Red Team Test - Service Stop': {'atomic_tests': [{'description': 'Stops '
+[{'Atomic Red Team Test - Service Stop': {'atomic_tests': [{'auto_generated_guid': '21dfb440-830d-4c86-a3e5-2a491d5a8d04',
+                                                            'description': 'Stops '
                                                                            'a '
                                                                            'specified '
                                                                            'service '
@@ -140,7 +147,8 @@ taskkill.exe /f /im spoolsv.exe
                                                                     'Service '
                                                                     'Controller',
                                                             'supported_platforms': ['windows']},
-                                                           {'description': 'Stops '
+                                                           {'auto_generated_guid': '41274289-ec9c-4213-bea4-e43c4aa57954',
+                                                            'description': 'Stops '
                                                                            'a '
                                                                            'specified '
                                                                            'service '
@@ -215,7 +223,8 @@ taskkill.exe /f /im spoolsv.exe
                                                                     'using '
                                                                     'net.exe',
                                                             'supported_platforms': ['windows']},
-                                                           {'description': 'Stops '
+                                                           {'auto_generated_guid': 'f3191b84-c38b-400b-867e-3a217a27795f',
+                                                            'description': 'Stops '
                                                                            'a '
                                                                            'specified '
                                                                            'service '

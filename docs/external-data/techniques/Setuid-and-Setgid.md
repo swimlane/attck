@@ -9,14 +9,20 @@
 
 An adversary can take advantage of this to either do a shell escape or exploit a vulnerability in an application with the setsuid or setgid bits to get code running in a different user’s context. Additionally, adversaries can use this mechanism on their own malware to make sure they're able to execute in elevated contexts in the future  (Citation: OSX Keydnap malware).
 
+## Aliases
+
+```
+
+```
+
 ## Additional Attributes
 
 * Bypass: None
 * Effective Permissions: ['Administrator', 'root']
-* Network: intentionally left blank
+* Network: None
 * Permissions: ['User']
 * Platforms: ['Linux', 'macOS']
-* Remote: intentionally left blank
+* Remote: None
 * Type: attack-pattern
 * Wiki: https://attack.mitre.org/techniques/T1166
 
@@ -105,7 +111,8 @@ sudo chmod g+s #{file_to_setuid}
 ## Raw Dataset
 
 ```json
-[{'Atomic Red Team Test - Setuid and Setgid': {'atomic_tests': [{'description': 'Make, '
+[{'Atomic Red Team Test - Setuid and Setgid': {'atomic_tests': [{'auto_generated_guid': '896dfe97-ae43-4101-8e96-9a7996555d80',
+                                                                 'description': 'Make, '
                                                                                 'change '
                                                                                 'owner, '
                                                                                 'and '
@@ -158,7 +165,8 @@ sudo chmod g+s #{file_to_setuid}
                                                                          'source',
                                                                  'supported_platforms': ['macos',
                                                                                          'linux']},
-                                                                {'description': 'This '
+                                                                {'auto_generated_guid': '759055b3-3885-4582-a8ec-c00c9d64dd79',
+                                                                 'description': 'This '
                                                                                 'test '
                                                                                 'sets '
                                                                                 'the '
@@ -204,7 +212,8 @@ sudo chmod g+s #{file_to_setuid}
                                                                          'file',
                                                                  'supported_platforms': ['macos',
                                                                                          'linux']},
-                                                                {'description': 'This '
+                                                                {'auto_generated_guid': 'db55f666-7cba-46c6-9fe6-205a05c3242c',
+                                                                 'description': 'This '
                                                                                 'test '
                                                                                 'sets '
                                                                                 'the '

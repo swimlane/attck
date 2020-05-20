@@ -21,14 +21,20 @@ The at program is another means on POSIX-based systems, including macOS and Linu
 
 Each launchd job is described by a different configuration property list (plist) file similar to [Launch Daemon](https://attack.mitre.org/techniques/T1160) or [Launch Agent](https://attack.mitre.org/techniques/T1159), except there is an additional key called <code>StartCalendarInterval</code> with a dictionary of time values. (Citation: AppleDocs Scheduling Timed Jobs) This only works on macOS and OS X.
 
+## Aliases
+
+```
+
+```
+
 ## Additional Attributes
 
 * Bypass: None
 * Effective Permissions: None
-* Network: intentionally left blank
+* Network: None
 * Permissions: ['Administrator', 'User', 'root']
 * Platforms: ['Linux', 'macOS']
-* Remote: intentionally left blank
+* Remote: None
 * Type: attack-pattern
 * Wiki: https://attack.mitre.org/techniques/T1168
 
@@ -138,7 +144,8 @@ at now + 1 minute | ping -c 4 google.com > /home/ec2-user/google6.txt
 ## Raw Dataset
 
 ```json
-[{'Atomic Red Team Test - Local Job Scheduling': {'atomic_tests': [{'description': 'This '
+[{'Atomic Red Team Test - Local Job Scheduling': {'atomic_tests': [{'auto_generated_guid': '435057fb-74b1-410e-9403-d81baf194f75',
+                                                                    'description': 'This '
                                                                                    'test '
                                                                                    'replaces '
                                                                                    'the '
@@ -200,7 +207,8 @@ at now + 1 minute | ping -c 4 google.com > /home/ec2-user/google6.txt
                                                                             'file',
                                                                     'supported_platforms': ['macos',
                                                                                             'linux']},
-                                                                   {'description': 'This '
+                                                                   {'auto_generated_guid': 'b7d42afa-9086-4c8a-b7b0-8ea3faa6ebb0',
+                                                                    'description': 'This '
                                                                                    'test '
                                                                                    'adds '
                                                                                    'a '
@@ -267,7 +275,8 @@ at now + 1 minute | ping -c 4 google.com > /home/ec2-user/google6.txt
                                                                             'folder',
                                                                     'supported_platforms': ['macos',
                                                                                             'linux']},
-                                                                   {'description': 'This '
+                                                                   {'auto_generated_guid': '11979f23-9b9d-482a-9935-6fc9cd022c3e',
+                                                                    'description': 'This '
                                                                                    'test '
                                                                                    'adds '
                                                                                    'persistence '

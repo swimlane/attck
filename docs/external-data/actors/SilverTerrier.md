@@ -24,7 +24,6 @@
 ## Aliases
 
 ```
-intentionally left blank
 SilverTerrier
 ```
 
@@ -59,6 +58,7 @@ DarkComet and NanoCore
 
 ```
 https://www.paloaltonetworks.com/resources/whitepapers/unit42-silverterrier-rise-of-nigerian-business-email-compromise.html
+https://unit42.paloaltonetworks.com/silverterrier-covid-19-themed-business-email-compromise/
 ```
 
 ## Country

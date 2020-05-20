@@ -24,7 +24,6 @@ _/  |_  ____   _____ ______   ___  __ ____ |  |   ____   ______
 ## Aliases
 
 ```
-intentionally left blank
 TEMP.Veles
 XENOTIME
 ```

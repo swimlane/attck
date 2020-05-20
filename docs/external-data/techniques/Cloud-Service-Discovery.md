@@ -9,14 +9,20 @@
 
 Pacu, an open source AWS exploitation framework, supports several methods for discovering cloud services.(Citation: GitHub Pacu)
 
+## Aliases
+
+```
+
+```
+
 ## Additional Attributes
 
 * Bypass: None
 * Effective Permissions: None
-* Network: intentionally left blank
+* Network: None
 * Permissions: ['User']
 * Platforms: ['AWS', 'GCP', 'Azure', 'Azure AD', 'Office 365', 'SaaS']
-* Remote: intentionally left blank
+* Remote: None
 * Type: attack-pattern
 * Wiki: https://attack.mitre.org/techniques/T1526
 

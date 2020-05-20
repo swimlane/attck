@@ -9,6 +9,12 @@
 
 When automated exfiltration is used, other exfiltration techniques likely apply as well to transfer the information out of the network, such as [Exfiltration Over Command and Control Channel](https://attack.mitre.org/techniques/T1041) and [Exfiltration Over Alternative Protocol](https://attack.mitre.org/techniques/T1048).
 
+## Aliases
+
+```
+
+```
+
 ## Additional Attributes
 
 * Bypass: None
@@ -16,7 +22,7 @@ When automated exfiltration is used, other exfiltration techniques likely apply 
 * Network: True
 * Permissions: None
 * Platforms: ['Linux', 'macOS', 'Windows']
-* Remote: intentionally left blank
+* Remote: None
 * Type: attack-pattern
 * Wiki: https://attack.mitre.org/techniques/T1020
 
@@ -41,7 +47,14 @@ powershell/exfiltration/egresscheck
 ## Potential Detections
 
 ```json
-
+[{'data_source': ['4688', 'Process Execution']},
+ {'data_source': ['4688 ', 'Process CMD Line']},
+ {'data_source': ['5156', 'Windows Firewall']},
+ {'data_source': ['4663', 'File monitoring']},
+ {'data_source': ['4688', 'Process Execution']},
+ {'data_source': ['4688 ', 'Process CMD Line']},
+ {'data_source': ['5156', 'Windows Firewall']},
+ {'data_source': ['4663', 'File monitoring']}]
 ```
 
 ## Potential Queries

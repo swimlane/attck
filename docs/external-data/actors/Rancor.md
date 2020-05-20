@@ -24,7 +24,6 @@ ____________    ____   ____  ___________
 ## Aliases
 
 ```
-intentionally left blank
 Rancor
 ```
 

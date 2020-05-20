@@ -86,7 +86,6 @@
 ## Aliases
 
 ```
-intentionally left blank
 APT18
 TG-0416
 Dynamite Panda

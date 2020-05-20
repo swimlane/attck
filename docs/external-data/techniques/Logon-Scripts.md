@@ -15,14 +15,20 @@ If adversaries can access these scripts, they may insert additional code into th
 
 Mac allows login and logoff hooks to be run as root whenever a specific user logs into or out of a system. A login hook tells Mac OS X to execute a certain script when a user logs in, but unlike startup items, a login hook executes as root (Citation: creating login hook). There can only be one login hook at a time though. If adversaries can access these scripts, they can insert additional code to the script to execute their tools when a user logs in.
 
+## Aliases
+
+```
+
+```
+
 ## Additional Attributes
 
 * Bypass: None
 * Effective Permissions: None
-* Network: intentionally left blank
+* Network: None
 * Permissions: None
 * Platforms: ['macOS', 'Windows']
-* Remote: intentionally left blank
+* Remote: None
 * Type: attack-pattern
 * Wiki: https://attack.mitre.org/techniques/T1037
 
@@ -174,7 +180,11 @@ python/persistence/osx/loginhook
                                                                      12,
                                                                      13,
                                                                      14]}},
-                  'logsource': {'product': 'windows', 'service': 'sysmon'}}}]
+                  'logsource': {'product': 'windows', 'service': 'sysmon'}}},
+ {'data_source': ['4688', 'Process Execution']},
+ {'data_source': ['4663', 'File monitoring']},
+ {'data_source': ['4688', 'Process Execution']},
+ {'data_source': ['4663', 'File monitoring']}]
 ```
 
 ## Potential Queries
@@ -189,7 +199,8 @@ python/persistence/osx/loginhook
 ## Raw Dataset
 
 ```json
-[{'Atomic Red Team Test - Logon Scripts': {'atomic_tests': [{'description': 'Adds '
+[{'Atomic Red Team Test - Logon Scripts': {'atomic_tests': [{'auto_generated_guid': 'd6042746-07d4-4c92-9ad8-e644c114a231',
+                                                             'description': 'Adds '
                                                                             'a '
                                                                             'registry '
                                                                             'value '
@@ -278,7 +289,8 @@ python/persistence/osx/loginhook
                                                              'name': 'Logon '
                                                                      'Scripts',
                                                              'supported_platforms': ['windows']},
-                                                            {'description': 'Run '
+                                                            {'auto_generated_guid': 'fec27f65-db86-4c2d-b66c-61945aee87c2',
+                                                             'description': 'Run '
                                                                             'an '
                                                                             'exe '
                                                                             'on '
@@ -357,7 +369,8 @@ python/persistence/osx/loginhook
                                                                      'Startup '
                                                                      'Script',
                                                              'supported_platforms': ['windows']},
-                                                            {'description': 'Mac '
+                                                            {'auto_generated_guid': 'f047c7de-a2d9-406e-a62b-12a09d9516f4',
+                                                             'description': 'Mac '
                                                                             'logon '
                                                                             'script\n',
                                                              'executor': {'name': 'manual',
@@ -432,7 +445,8 @@ python/persistence/osx/loginhook
                                                                      'Scripts '
                                                                      '- Mac',
                                                              'supported_platforms': ['macos']},
-                                                            {'description': 'vbs '
+                                                            {'auto_generated_guid': '2cb98256-625e-4da9-9d44-f2e5f90b8bd5',
+                                                             'description': 'vbs '
                                                                             'files '
                                                                             'can '
                                                                             'be '
@@ -515,7 +529,8 @@ python/persistence/osx/loginhook
                                                                      'startup '
                                                                      'Folder',
                                                              'supported_platforms': ['windows']},
-                                                            {'description': 'jse '
+                                                            {'auto_generated_guid': 'dade9447-791e-4c8f-b04b-3a35855dfa06',
+                                                             'description': 'jse '
                                                                             'files '
                                                                             'can '
                                                                             'be '
@@ -600,7 +615,8 @@ python/persistence/osx/loginhook
                                                                      'startup '
                                                                      'Folder',
                                                              'supported_platforms': ['windows']},
-                                                            {'description': 'bat '
+                                                            {'auto_generated_guid': '5b6768e4-44d2-44f0-89da-a01d1430fd5e',
+                                                             'description': 'bat '
                                                                             'files '
                                                                             'can '
                                                                             'be '

@@ -30,7 +30,6 @@
 ## Aliases
 
 ```
-intentionally left blank
 Lotus Blossom
 DRAGONFISH
 Spring Dragon

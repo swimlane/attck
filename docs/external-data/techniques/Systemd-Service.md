@@ -17,14 +17,20 @@ Adversaries have used systemd functionality to establish persistent access to vi
 
 While adversaries typically require root privileges to create/modify service unit files in the <code>/etc/systemd/system</code> and <code>/usr/lib/systemd/system</code> directories, low privilege users can create/modify service unit files in directories such as <code>~/.config/systemd/user/</code> to achieve user-level persistence.(Citation: Rapid7 Service Persistence 22JUNE2016)
 
+## Aliases
+
+```
+
+```
+
 ## Additional Attributes
 
 * Bypass: None
 * Effective Permissions: None
-* Network: intentionally left blank
+* Network: None
 * Permissions: ['root', 'User']
 * Platforms: ['Linux']
-* Remote: intentionally left blank
+* Remote: None
 * Type: attack-pattern
 * Wiki: https://attack.mitre.org/techniques/T1501
 
@@ -431,7 +437,8 @@ systemctl start art-systemd-service.service
 ## Raw Dataset
 
 ```json
-[{'Atomic Red Team Test - Systemd Service': {'atomic_tests': [{'description': 'This '
+[{'Atomic Red Team Test - Systemd Service': {'atomic_tests': [{'auto_generated_guid': 'd9e4f24f-aa67-4c6e-bcbf-85622b697a7c',
+                                                               'description': 'This '
                                                                               'test '
                                                                               'creates '
                                                                               'a '

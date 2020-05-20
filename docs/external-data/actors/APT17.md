@@ -24,7 +24,6 @@ _____  _______/  |/_   \______  \
 ## Aliases
 
 ```
-intentionally left blank
 APT17
 Deputy Dog
 ```

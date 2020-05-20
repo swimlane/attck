@@ -24,7 +24,6 @@ _____  ___  __|__| ____   _____
 ## Aliases
 
 ```
-intentionally left blank
 Axiom
 Group 72
 ```

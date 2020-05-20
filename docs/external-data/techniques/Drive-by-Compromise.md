@@ -28,14 +28,20 @@ Unlike [Exploit Public-Facing Application](https://attack.mitre.org/techniques/T
 
 Adversaries may also use compromised websites to deliver a user to a malicious application designed to [Steal Application Access Token](https://attack.mitre.org/techniques/T1528)s, like OAuth tokens, to gain access to protected applications and information. These malicious applications have been delivered through popups on legitimate websites.(Citation: Volexity OceanLotus Nov 2017)
 
+## Aliases
+
+```
+
+```
+
 ## Additional Attributes
 
 * Bypass: None
 * Effective Permissions: None
-* Network: intentionally left blank
+* Network: None
 * Permissions: ['User']
 * Platforms: ['Windows', 'Linux', 'macOS', 'SaaS']
-* Remote: intentionally left blank
+* Remote: None
 * Type: attack-pattern
 * Wiki: https://attack.mitre.org/techniques/T1189
 
@@ -54,7 +60,20 @@ Adversaries may also use compromised websites to deliver a user to a malicious a
 ## Potential Detections
 
 ```json
-
+[{'data_source': ['4688', 'Process Execution']},
+ {'data_source': ['5156', 'Windows Firewall']},
+ {'data_source': ['Web proxy']},
+ {'data_source': ['Network intrusion detection system']},
+ {'data_source': ['SSL/TLS inspection']},
+ {'data_source': ['Packet capture']},
+ {'data_source': ['Network device logs']},
+ {'data_source': ['4688', 'Process Execution']},
+ {'data_source': ['5156', 'Windows Firewall']},
+ {'data_source': ['Web proxy']},
+ {'data_source': ['Network intrusion detection system']},
+ {'data_source': ['SSL/TLS inspection']},
+ {'data_source': ['Packet capture']},
+ {'data_source': ['Network device logs']}]
 ```
 
 ## Potential Queries

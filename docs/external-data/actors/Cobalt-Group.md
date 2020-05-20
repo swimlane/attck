@@ -24,7 +24,6 @@ _/ ___\/  _ \| __ \\__  \ |  |\   __\    / ___\_  __ \/  _ \|  |  \____ \
 ## Aliases
 
 ```
-intentionally left blank
 Cobalt Group
 Cobalt Gang
 Cobalt Spider

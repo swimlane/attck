@@ -10,7 +10,7 @@
 ## Aliases
 
 ```
-intentionally left blank
+meek
 ```
 
 ## Additional Attributes

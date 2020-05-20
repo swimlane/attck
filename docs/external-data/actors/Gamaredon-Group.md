@@ -30,7 +30,6 @@ _______  ____  __ ________
 ## Aliases
 
 ```
-intentionally left blank
 Gamaredon Group
 ```
 

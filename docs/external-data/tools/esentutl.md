@@ -10,7 +10,8 @@
 ## Aliases
 
 ```
-intentionally left blank
+esentutl
+esentutl.exe
 ```
 
 ## Additional Attributes

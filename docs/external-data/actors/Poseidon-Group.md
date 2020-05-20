@@ -30,7 +30,6 @@ ______   ____  ______ ____ |__| __| _/____   ____         ___________  ____
 ## Aliases
 
 ```
-intentionally left blank
 Poseidon Group
 ```
 

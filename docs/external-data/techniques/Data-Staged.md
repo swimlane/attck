@@ -9,14 +9,20 @@
 
 Interactive command shells may be used, and common functionality within [cmd](https://attack.mitre.org/software/S0106) and bash may be used to copy data into a staging location.
 
+## Aliases
+
+```
+
+```
+
 ## Additional Attributes
 
 * Bypass: None
 * Effective Permissions: None
-* Network: intentionally left blank
+* Network: None
 * Permissions: None
 * Platforms: ['Linux', 'macOS', 'Windows', 'AWS', 'GCP', 'Azure']
-* Remote: intentionally left blank
+* Remote: None
 * Type: attack-pattern
 * Wiki: https://attack.mitre.org/techniques/T1074
 
@@ -94,7 +100,12 @@ Compress-Archive -Path #{input_file} -DestinationPath $env:TEMP\Folder_to_zip.zi
 ## Potential Detections
 
 ```json
-
+[{'data_source': ['4688 ', 'Process CMD Line']},
+ {'data_source': ['4688', 'Process Execution']},
+ {'data_source': ['4663', 'File monitoring']},
+ {'data_source': ['4688 ', 'Process CMD Line']},
+ {'data_source': ['4688', 'Process Execution']},
+ {'data_source': ['4663', 'File monitoring']}]
 ```
 
 ## Potential Queries
@@ -111,7 +122,8 @@ Compress-Archive -Path #{input_file} -DestinationPath $env:TEMP\Folder_to_zip.zi
 ## Raw Dataset
 
 ```json
-[{'Atomic Red Team Test - Data Staged': {'atomic_tests': [{'description': 'Utilize '
+[{'Atomic Red Team Test - Data Staged': {'atomic_tests': [{'auto_generated_guid': '107706a5-6f9f-451a-adae-bab8c667829f',
+                                                           'description': 'Utilize '
                                                                           'powershell '
                                                                           'to '
                                                                           'download '
@@ -168,7 +180,8 @@ Compress-Archive -Path #{input_file} -DestinationPath $env:TEMP\Folder_to_zip.zi
                                                                    'from '
                                                                    'Discovery.bat',
                                                            'supported_platforms': ['windows']},
-                                                          {'description': 'Utilize '
+                                                          {'auto_generated_guid': '39ce0303-ae16-4b9e-bb5b-4f53e8262066',
+                                                           'description': 'Utilize '
                                                                           'curl '
                                                                           'to '
                                                                           'download '
@@ -203,7 +216,8 @@ Compress-Archive -Path #{input_file} -DestinationPath $env:TEMP\Folder_to_zip.zi
                                                                    'Discovery.sh',
                                                            'supported_platforms': ['linux',
                                                                                    'macos']},
-                                                          {'description': 'Use '
+                                                          {'auto_generated_guid': 'a57fbe4b-3440-452a-88a7-943531ac872a',
+                                                           'description': 'Use '
                                                                           'living '
                                                                           'off '
                                                                           'the '

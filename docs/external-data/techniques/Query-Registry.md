@@ -9,14 +9,20 @@
 
 The Registry contains a significant amount of information about the operating system, configuration, software, and security. (Citation: Wikipedia Windows Registry) Some of the information may help adversaries to further their operation within a network. Adversaries may use the information from [Query Registry](https://attack.mitre.org/techniques/T1012) during automated discovery to shape follow-on behaviors, including whether or not the adversary fully infects the target and/or attempts specific actions.
 
+## Aliases
+
+```
+
+```
+
 ## Additional Attributes
 
 * Bypass: None
 * Effective Permissions: None
-* Network: intentionally left blank
+* Network: None
 * Permissions: ['User', 'Administrator', 'SYSTEM']
 * Platforms: ['Windows']
-* Remote: intentionally left blank
+* Remote: None
 * Type: attack-pattern
 * Wiki: https://attack.mitre.org/techniques/T1012
 
@@ -277,7 +283,12 @@ Error: The system can not find the specified registry key or value.
 ## Potential Detections
 
 ```json
-
+[{'data_source': ['4688', 'Process Execution']},
+ {'data_source': ['4688 ', 'Process CMD Line']},
+ {'data_source': ['Windows Registry']},
+ {'data_source': ['4688', 'Process Execution']},
+ {'data_source': ['4688 ', 'Process CMD Line']},
+ {'data_source': ['LOG-MD Reg Compare', 'Windows Registry']}]
 ```
 
 ## Potential Queries
@@ -353,7 +364,8 @@ Error: The system can not find the specified registry key or value.
                                                                 'Server" -v '
                                                                 'fDenyTSConnections\n'
                                                                 'post/windows/gather/enum_termserv'}},
- {'Atomic Red Team Test - Query Registry': {'atomic_tests': [{'description': 'Query '
+ {'Atomic Red Team Test - Query Registry': {'atomic_tests': [{'auto_generated_guid': '8f7578c4-9863-4d83-875c-a565573bbdf0',
+                                                              'description': 'Query '
                                                                              'Windows '
                                                                              'Registry.\n'
                                                                              '\n'

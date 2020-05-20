@@ -11,14 +11,20 @@ External connection proxies are used to mask the destination of C2 traffic and a
 
 Internal connection proxies can be used to consolidate internal connections from compromised systems. Adversaries may use a compromised internal system as a proxy in order to conceal the true destination of C2 traffic. The proxy can redirect traffic from compromised systems inside the network to an external C2 server making discovery of malicious traffic difficult. Additionally, the network can be used to relay information from one system to another in order to avoid broadcasting traffic to all systems.
 
+## Aliases
+
+```
+
+```
+
 ## Additional Attributes
 
 * Bypass: ['Log Analysis', 'Firewall']
 * Effective Permissions: None
-* Network: intentionally left blank
+* Network: None
 * Permissions: None
 * Platforms: ['Linux', 'macOS', 'Windows']
-* Remote: intentionally left blank
+* Remote: None
 * Type: attack-pattern
 * Wiki: https://attack.mitre.org/techniques/T1090
 
@@ -100,7 +106,15 @@ python/management/multi/socks
                   'tags': ['attack.lateral_movement',
                            'attack.command_and_control',
                            'attack.t1090'],
-                  'title': 'Netsh Port Forwarding'}}]
+                  'title': 'Netsh Port Forwarding'}},
+ {'data_source': ['5156', 'Windows Firewall']},
+ {'data_source': ['4688', 'Process Execution']},
+ {'data_source': ['Netflow/Enclave netflow']},
+ {'data_source': ['Packet capture']},
+ {'data_source': ['5156', 'Windows Firewall']},
+ {'data_source': ['4688', 'Process Execution']},
+ {'data_source': ['Netflow/Enclave netflow']},
+ {'data_source': ['Packet capture']}]
 ```
 
 ## Potential Queries
@@ -135,7 +149,8 @@ python/management/multi/socks
 ## Raw Dataset
 
 ```json
-[{'Atomic Red Team Test - Connection Proxy': {'atomic_tests': [{'description': 'Enable '
+[{'Atomic Red Team Test - Connection Proxy': {'atomic_tests': [{'auto_generated_guid': '0ac21132-4485-4212-a681-349e8a6637cd',
+                                                                'description': 'Enable '
                                                                                'traffic '
                                                                                'redirection.\n'
                                                                                '\n'
@@ -174,7 +189,8 @@ python/management/multi/socks
                                                                         'Proxy',
                                                                 'supported_platforms': ['macos',
                                                                                         'linux']},
-                                                               {'description': 'Adds '
+                                                               {'auto_generated_guid': 'b8223ea9-4be2-44a6-b50a-9657a3d4e72a',
+                                                                'description': 'Adds '
                                                                                'a '
                                                                                'registry '
                                                                                'key '

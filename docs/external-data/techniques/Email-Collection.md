@@ -17,21 +17,29 @@ Adversaries may also abuse email-forwarding rules to monitor the activities of a
 
 Any user or administrator within the organization (or adversary with valid credentials) can create rules to automatically forward all received messages to another recipient, forward emails to different locations based on the sender, and more. 
 
+## Aliases
+
+```
+
+```
+
 ## Additional Attributes
 
 * Bypass: None
 * Effective Permissions: None
-* Network: intentionally left blank
+* Network: None
 * Permissions: ['User']
 * Platforms: ['Windows', 'Office 365']
-* Remote: intentionally left blank
+* Remote: None
 * Type: attack-pattern
 * Wiki: https://attack.mitre.org/techniques/T1114
 
 ## Potential Commands
 
 ```
-powershell -executionpolicy bypass -command $PathToAtomicsFolder\T1114\Get-Inbox.ps1 -file $home\desktop\mail.csv
+powershell -executionpolicy bypass -command PathToAtomicsFolder\T1114\src\Get-Inbox.ps1 -file #{output_file}
+
+powershell -executionpolicy bypass -command #{file_path}\Get-Inbox.ps1 -file $env:TEMP\mail.csv
 
 powershell/management/mailraider/disable_security
 powershell/management/mailraider/disable_security
@@ -55,8 +63,12 @@ python/collection/osx/search_email
 
 ```
 [{'command': 'powershell -executionpolicy bypass -command '
-             '$PathToAtomicsFolder\\T1114\\Get-Inbox.ps1 -file '
-             '$home\\desktop\\mail.csv\n',
+             'PathToAtomicsFolder\\T1114\\src\\Get-Inbox.ps1 -file '
+             '#{output_file}\n',
+  'name': None,
+  'source': 'atomics/T1114/T1114.yaml'},
+ {'command': 'powershell -executionpolicy bypass -command '
+             '#{file_path}\\Get-Inbox.ps1 -file $env:TEMP\\mail.csv\n',
   'name': None,
   'source': 'atomics/T1114/T1114.yaml'},
  {'command': 'powershell/management/mailraider/disable_security',
@@ -112,7 +124,14 @@ python/collection/osx/search_email
 ## Potential Detections
 
 ```json
-
+[{'data_source': ['4688', 'Process Execution']},
+ {'data_source': ['5156', 'Firewall Logs']},
+ {'data_source': ['4624', 'Authentication logs']},
+ {'data_source': ['4663', 'File monitoring']},
+ {'data_source': ['4688', 'Process Execution']},
+ {'data_source': ['5156', 'Firewall Logs']},
+ {'data_source': ['4624', 'Authentication logs']},
+ {'data_source': ['4663', 'File monitoring']}]
 ```
 
 ## Potential Queries
@@ -124,7 +143,27 @@ python/collection/osx/search_email
 ## Raw Dataset
 
 ```json
-[{'Atomic Red Team Test - Email Collection': {'atomic_tests': [{'description': 'Search '
+[{'Atomic Red Team Test - Email Collection': {'atomic_tests': [{'auto_generated_guid': '3f1b5096-0139-4736-9b78-19bcb02bb1cb',
+                                                                'dependencies': [{'description': 'Get-Inbox.ps1 '
+                                                                                                 'must '
+                                                                                                 'be '
+                                                                                                 'located '
+                                                                                                 'at '
+                                                                                                 '#{file_path}\n',
+                                                                                  'get_prereq_command': 'Invoke-WebRequest '
+                                                                                                        '"https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1114/src/Get-Inbox.ps1" '
+                                                                                                        '-OutFile '
+                                                                                                        '"#{file_path}\\Get-Inbox.ps1"\n',
+                                                                                  'prereq_command': 'if '
+                                                                                                    '(Test-Path '
+                                                                                                    '#{file_path}\\Get-Inbox.ps1) '
+                                                                                                    '{exit '
+                                                                                                    '0} '
+                                                                                                    'else '
+                                                                                                    '{exit '
+                                                                                                    '1}\n'}],
+                                                                'dependency_executor_name': 'powershell',
+                                                                'description': 'Search '
                                                                                'through '
                                                                                'local '
                                                                                'Outlook '
@@ -142,30 +181,74 @@ python/collection/osx/search_email
                                                                                'directory '
                                                                                'for '
                                                                                'later '
-                                                                               'exfiltration.\n',
-                                                                'executor': {'cleanup_command': 'del '
+                                                                               'exfiltration.\n'
+                                                                               'Successful '
+                                                                               'execution '
+                                                                               'will '
+                                                                               'produce '
+                                                                               'stdout '
+                                                                               'message '
+                                                                               'stating '
+                                                                               '"Please '
+                                                                               'be '
+                                                                               'patient, '
+                                                                               'this '
+                                                                               'may '
+                                                                               'take '
+                                                                               'some '
+                                                                               'time...". '
+                                                                               'Upon '
+                                                                               'completion, '
+                                                                               'final '
+                                                                               'output '
+                                                                               'will '
+                                                                               'be '
+                                                                               'a '
+                                                                               'mail.csv '
+                                                                               'file.\n'
+                                                                               '\n'
+                                                                               'Note: '
+                                                                               'Outlook '
+                                                                               'is '
+                                                                               'required, '
+                                                                               'but '
+                                                                               'no '
+                                                                               'email '
+                                                                               'account '
+                                                                               'necessary '
+                                                                               'to '
+                                                                               'produce '
+                                                                               'artifacts.\n',
+                                                                'executor': {'cleanup_command': 'Remove-Item '
                                                                                                 '#{output_file} '
-                                                                                                '>nul '
-                                                                                                '2>&1\n',
+                                                                                                '-Force '
+                                                                                                '-ErrorAction '
+                                                                                                'Ignore\n',
                                                                              'command': 'powershell '
                                                                                         '-executionpolicy '
                                                                                         'bypass '
                                                                                         '-command '
-                                                                                        '$PathToAtomicsFolder\\T1114\\Get-Inbox.ps1 '
+                                                                                        '#{file_path}\\Get-Inbox.ps1 '
                                                                                         '-file '
                                                                                         '#{output_file}\n',
                                                                              'elevation_required': False,
-                                                                             'name': 'command_prompt'},
-                                                                'input_arguments': {'output_file': {'default': '$home\\desktop\\mail.csv',
+                                                                             'name': 'powershell'},
+                                                                'input_arguments': {'file_path': {'default': 'PathToAtomicsFolder\\T1114\\src',
+                                                                                                  'description': 'File '
+                                                                                                                 'path '
+                                                                                                                 'for '
+                                                                                                                 'Get-Inbox.ps1',
+                                                                                                  'type': 'String'},
+                                                                                    'output_file': {'default': '$env:TEMP\\mail.csv',
                                                                                                     'description': 'Output '
                                                                                                                    'file '
                                                                                                                    'path',
                                                                                                     'type': 'String'}},
-                                                                'name': 'T1114 '
-                                                                        'Email '
+                                                                'name': 'Email '
                                                                         'Collection '
                                                                         'with '
-                                                                        'PowerShell',
+                                                                        'PowerShell '
+                                                                        'Get-Inbox',
                                                                 'supported_platforms': ['windows']}],
                                               'attack_link': 'https://attack.mitre.org/wiki/Technique/T1114',
                                               'attack_technique': 'T1114',

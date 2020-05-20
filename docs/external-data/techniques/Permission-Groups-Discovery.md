@@ -25,14 +25,20 @@ With authenticated access there are several tools that can be used to find permi
 
 Azure CLI (AZ CLI) also provides an interface to obtain permissions groups with authenticated access to a domain. The command <code>az ad user get-member-groups</code> will list groups associated to a user account.(Citation: Microsoft AZ CLI)(Citation: Black Hills Red Teaming MS AD Azure, 2018)
 
+## Aliases
+
+```
+
+```
+
 ## Additional Attributes
 
 * Bypass: None
 * Effective Permissions: None
-* Network: intentionally left blank
+* Network: None
 * Permissions: ['User']
 * Platforms: ['Linux', 'macOS', 'Windows', 'Office 365', 'Azure AD']
-* Remote: intentionally left blank
+* Remote: None
 * Type: attack-pattern
 * Wiki: https://attack.mitre.org/techniques/T1069
 
@@ -192,7 +198,13 @@ powershell/situational_awareness/host/get_uaclevel
                            'attack.t1087',
                            'attack.t1069',
                            'attack.s0039'],
-                  'title': 'Reconnaissance Activity'}}]
+                  'title': 'Reconnaissance Activity'}},
+ {'data_source': ['4688 ', 'Process CMD Line']},
+ {'data_source': ['4688', 'Process Execution']},
+ {'data_source': ['API monitoring']},
+ {'data_source': ['4688 ', 'Process CMD Line']},
+ {'data_source': ['4688', 'Process Execution']},
+ {'data_source': ['API monitoring']}]
 ```
 
 ## Potential Queries
@@ -249,7 +261,8 @@ powershell/situational_awareness/host/get_uaclevel
                                                                  'accounts',
                                                   'Metasploit': 'domain_list_gen.rb\n'
                                                                 'post/windows/gather/enum_domain_group_users'}},
- {'Atomic Red Team Test - Permission Groups Discovery': {'atomic_tests': [{'description': 'Permission '
+ {'Atomic Red Team Test - Permission Groups Discovery': {'atomic_tests': [{'auto_generated_guid': '952931a4-af0b-4335-bbbe-73c8c5b327ae',
+                                                                           'description': 'Permission '
                                                                                           'Groups '
                                                                                           'Discovery\n',
                                                                            'executor': {'command': 'if '
@@ -321,7 +334,8 @@ powershell/situational_awareness/host/get_uaclevel
                                                                                    'Discovery',
                                                                            'supported_platforms': ['macos',
                                                                                                    'linux']},
-                                                                          {'description': 'Basic '
+                                                                          {'auto_generated_guid': '1f454dd6-e134-44df-bebb-67de70fb6cd8',
+                                                                           'description': 'Basic '
                                                                                           'Permission '
                                                                                           'Groups '
                                                                                           'Discovery '
@@ -368,7 +382,8 @@ powershell/situational_awareness/host/get_uaclevel
                                                                                    'Discovery '
                                                                                    'Windows',
                                                                            'supported_platforms': ['windows']},
-                                                                          {'description': 'Permission '
+                                                                          {'auto_generated_guid': '53d91444-6225-4e67-9df1-747dd74550f9',
+                                                                           'description': 'Permission '
                                                                                           'Groups '
                                                                                           'Discovery '
                                                                                           'utilizing '
@@ -422,7 +437,8 @@ powershell/situational_awareness/host/get_uaclevel
                                                                                    'Discovery '
                                                                                    'PowerShell',
                                                                            'supported_platforms': ['windows']},
-                                                                          {'description': 'Runs '
+                                                                          {'auto_generated_guid': '0afb5163-8181-432e-9405-4322710c0c37',
+                                                                           'description': 'Runs '
                                                                                           '"net '
                                                                                           'group" '
                                                                                           'command '

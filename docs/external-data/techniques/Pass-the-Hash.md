@@ -9,14 +9,20 @@
 
 Windows 7 and higher with KB2871997 require valid domain user credentials or RID 500 administrator hashes. (Citation: NSA Spotting)
 
+## Aliases
+
+```
+
+```
+
 ## Additional Attributes
 
 * Bypass: None
 * Effective Permissions: None
-* Network: intentionally left blank
+* Network: None
 * Permissions: None
 * Platforms: ['Windows']
-* Remote: intentionally left blank
+* Remote: None
 * Type: attack-pattern
 * Wiki: https://attack.mitre.org/techniques/T1075
 
@@ -195,7 +201,9 @@ powershell/credentials/mimikatz/pth
                                  'https://goo.gl/PsqrhT'],
                   'status': 'experimental',
                   'tags': ['attack.lateral_movement', 'attack.t1075'],
-                  'title': 'NTLM Logon'}}]
+                  'title': 'NTLM Logon'}},
+ {'data_source': ['4624', 'Authentication logs']},
+ {'data_source': ['4624', 'Authentication logs']}]
 ```
 
 ## Potential Queries
@@ -207,7 +215,8 @@ powershell/credentials/mimikatz/pth
 ## Raw Dataset
 
 ```json
-[{'Atomic Red Team Test - Pass the Hash': {'atomic_tests': [{'description': 'Note: '
+[{'Atomic Red Team Test - Pass the Hash': {'atomic_tests': [{'auto_generated_guid': 'ec23cef9-27d9-46e4-a68d-6f75f7b86908',
+                                                             'description': 'Note: '
                                                                             'must '
                                                                             'dump '
                                                                             'hashes '
@@ -234,7 +243,8 @@ powershell/credentials/mimikatz/pth
                                                                      'Pass the '
                                                                      'Hash',
                                                              'supported_platforms': ['windows']},
-                                                            {'dependencies': [{'description': 'CrackMapExec '
+                                                            {'auto_generated_guid': 'eb05b028-16c8-4ad8-adea-6f5b219da9a9',
+                                                             'dependencies': [{'description': 'CrackMapExec '
                                                                                               'executor '
                                                                                               'must '
                                                                                               'exist '

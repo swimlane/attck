@@ -11,14 +11,20 @@ Code signing to verify software on first run can be used on modern Windows and m
 
 Code signing certificates may be used to bypass security policies that require signed code to execute on a system.
 
+## Aliases
+
+```
+
+```
+
 ## Additional Attributes
 
 * Bypass: ['Windows User Account Control']
 * Effective Permissions: None
-* Network: intentionally left blank
+* Network: None
 * Permissions: None
 * Platforms: ['macOS', 'Windows']
-* Remote: intentionally left blank
+* Remote: None
 * Type: attack-pattern
 * Wiki: https://attack.mitre.org/techniques/T1116
 
@@ -37,7 +43,10 @@ Code signing certificates may be used to bypass security policies that require s
 ## Potential Detections
 
 ```json
-
+[{'data_source': ['B9', 'Binary file metadata']},
+ {'data_source': ['LMD - File Hash']},
+ {'data_source': ['LOG-MD - B9', 'Binary file metadata']},
+ {'data_source': ['LOG-MD', ' - File Hash']}]
 ```
 
 ## Potential Queries

@@ -12,7 +12,8 @@ Utilities such as [Reg](https://attack.mitre.org/software/S0075) are known to be
 ## Aliases
 
 ```
-intentionally left blank
+Reg
+reg.exe
 ```
 
 ## Additional Attributes

@@ -24,7 +24,6 @@ ______ |  | _____ _/  |_|__| ____  __ __  _____
 ## Aliases
 
 ```
-intentionally left blank
 PLATINUM
 ```
 

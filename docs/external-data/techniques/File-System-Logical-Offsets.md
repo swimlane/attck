@@ -9,14 +9,20 @@
 
 Utilities, such as NinjaCopy, exist to perform these actions in PowerShell. (Citation: Github PowerSploit Ninjacopy)
 
+## Aliases
+
+```
+
+```
+
 ## Additional Attributes
 
 * Bypass: ['File monitoring', 'File system access controls']
 * Effective Permissions: None
-* Network: intentionally left blank
+* Network: None
 * Permissions: ['Administrator']
 * Platforms: ['Windows']
-* Remote: intentionally left blank
+* Remote: None
 * Type: attack-pattern
 * Wiki: https://attack.mitre.org/techniques/T1006
 
@@ -35,7 +41,16 @@ Utilities, such as NinjaCopy, exist to perform these actions in PowerShell. (Cit
 ## Potential Detections
 
 ```json
-
+[{'data_source': ['4688', 'Process Execution']},
+ {'data_source': ['4688 ', 'Process CMD Line']},
+ {'data_source': ['200-500', ' 4100-4104', 'PowerShell logs']},
+ {'data_source': ['4663', 'File monitoring']},
+ {'data_source': ['API monitoring']},
+ {'data_source': ['4688', 'Process Execution']},
+ {'data_source': ['4688 ', 'Process CMD Line']},
+ {'data_source': ['200-500', ' 4100-4104', 'PowerShell logs']},
+ {'data_source': ['4663', 'File monitoring']},
+ {'data_source': ['API monitoring']}]
 ```
 
 ## Potential Queries

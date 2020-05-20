@@ -7,6 +7,12 @@
 
 > Command and control (C2) information is encoded using a standard data encoding system. Use of data encoding may be to adhere to existing protocol specifications and includes use of ASCII, Unicode, Base64,  MIME, UTF-8, or other binary-to-text and character encoding systems. (Citation: Wikipedia Binary-to-text Encoding) (Citation: Wikipedia Character Encoding) Some data encoding systems may also result in data compression, such as gzip.
 
+## Aliases
+
+```
+
+```
+
 ## Additional Attributes
 
 * Bypass: None
@@ -14,7 +20,7 @@
 * Network: True
 * Permissions: ['User']
 * Platforms: ['Linux', 'macOS', 'Windows']
-* Remote: intentionally left blank
+* Remote: None
 * Type: attack-pattern
 * Wiki: https://attack.mitre.org/techniques/T1132
 
@@ -45,7 +51,14 @@ curl -XPOST MTExLTExLTExMTE=.#{destination_url}
 ## Potential Detections
 
 ```json
-
+[{'data_source': ['5156', 'Windows Firewall']},
+ {'data_source': ['4688', 'Process Execution']},
+ {'data_source': ['Packet capture']},
+ {'data_source': ['Network protocol analysis']},
+ {'data_source': ['5156', 'Windows Firewall']},
+ {'data_source': ['4688', 'Process Execution']},
+ {'data_source': ['Packet capture']},
+ {'data_source': ['Network protocol analysis']}]
 ```
 
 ## Potential Queries
@@ -57,7 +70,8 @@ curl -XPOST MTExLTExLTExMTE=.#{destination_url}
 ## Raw Dataset
 
 ```json
-[{'Atomic Red Team Test - Data Encoding': {'atomic_tests': [{'description': 'Utilizing '
+[{'Atomic Red Team Test - Data Encoding': {'atomic_tests': [{'auto_generated_guid': '1164f70f-9a88-4dff-b9ff-dc70e7bf0c25',
+                                                             'description': 'Utilizing '
                                                                             'a '
                                                                             'common '
                                                                             'technique '

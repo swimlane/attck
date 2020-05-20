@@ -10,7 +10,8 @@
 ## Aliases
 
 ```
-intentionally left blank
+at
+at.exe
 ```
 
 ## Additional Attributes

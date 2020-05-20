@@ -9,14 +9,20 @@
 
 Adversaries may abuse this technology to conceal malicious code. A custom CHM file containing embedded payloads could be delivered to a victim then triggered by [User Execution](https://attack.mitre.org/techniques/T1204). CHM execution may also bypass application whitelisting on older and/or unpatched systems that do not account for execution of binaries through hh.exe. (Citation: MsitPros CHM Aug 2017) (Citation: Microsoft CVE-2017-8625 Aug 2017)
 
+## Aliases
+
+```
+
+```
+
 ## Additional Attributes
 
 * Bypass: ['Application whitelisting', 'Digital Certificate Validation']
 * Effective Permissions: None
-* Network: intentionally left blank
+* Network: None
 * Permissions: ['User']
 * Platforms: ['Windows']
-* Remote: intentionally left blank
+* Remote: None
 * Type: attack-pattern
 * Wiki: https://attack.mitre.org/techniques/T1223
 
@@ -66,7 +72,8 @@ hh.exe|.chm
 ## Raw Dataset
 
 ```json
-[{'Atomic Red Team Test - Compiled HTML File': {'atomic_tests': [{'dependencies': [{'description': 'The '
+[{'Atomic Red Team Test - Compiled HTML File': {'atomic_tests': [{'auto_generated_guid': '5cb87818-0d7c-4469-b7ef-9224107aebe8',
+                                                                  'dependencies': [{'description': 'The '
                                                                                                    'payload '
                                                                                                    'must '
                                                                                                    'exist '
@@ -128,7 +135,8 @@ hh.exe|.chm
                                                                           'Local '
                                                                           'Payload',
                                                                   'supported_platforms': ['windows']},
-                                                                 {'description': 'Uses '
+                                                                 {'auto_generated_guid': '0f8af516-9818-4172-922b-42986ef1e81d',
+                                                                  'description': 'Uses '
                                                                                  'hh.exe '
                                                                                  'to '
                                                                                  'execute '

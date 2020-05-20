@@ -30,7 +30,6 @@ _______
 ## Aliases
 
 ```
-intentionally left blank
 Dragonfly 2.0
 Berserk Bear
 ```

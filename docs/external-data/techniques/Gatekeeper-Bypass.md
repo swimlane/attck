@@ -11,14 +11,20 @@ Apps loaded onto the system from USB flash drive, optical disk, external hard dr
  
 In typical operation, a file will be downloaded from the internet and given a quarantine flag before being saved to disk. When the user tries to open the file or application, macOS’s gatekeeper will step in and check for the presence of this flag. If it exists, then macOS will then prompt the user to confirmation that they want to run the program and will even provide the URL where the application came from. However, this is all based on the file being downloaded from a quarantine-savvy application. (Citation: Bypassing Gatekeeper)
 
+## Aliases
+
+```
+
+```
+
 ## Additional Attributes
 
 * Bypass: ['Application whitelisting', 'Anti-virus']
 * Effective Permissions: None
-* Network: intentionally left blank
+* Network: None
 * Permissions: ['User', 'Administrator']
 * Platforms: ['macOS']
-* Remote: intentionally left blank
+* Remote: None
 * Type: attack-pattern
 * Wiki: https://attack.mitre.org/techniques/T1144
 
@@ -54,7 +60,8 @@ sudo spctl --master-disable
 ## Raw Dataset
 
 ```json
-[{'Atomic Red Team Test - Gatekeeper Bypass': {'atomic_tests': [{'description': 'Gatekeeper '
+[{'Atomic Red Team Test - Gatekeeper Bypass': {'atomic_tests': [{'auto_generated_guid': 'fb3d46c6-9480-4803-8d7d-ce676e1f1a9b',
+                                                                 'description': 'Gatekeeper '
                                                                                 'Bypass '
                                                                                 'via '
                                                                                 'command '

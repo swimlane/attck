@@ -13,14 +13,20 @@ Keylogging is likely to be used to acquire credentials for new access opportunit
 
 Adversaries may also install code on externally facing portals, such as a VPN login page, to capture and transmit credentials of users who attempt to log into the service. This variation on input capture may be conducted post-compromise using legitimate administrative access as a backup measure to maintain network access through [External Remote Services](https://attack.mitre.org/techniques/T1133) and [Valid Accounts](https://attack.mitre.org/techniques/T1078) or as part of the initial compromise by exploitation of the externally facing web service. (Citation: Volexity Virtual Private Keylogging)
 
+## Aliases
+
+```
+
+```
+
 ## Additional Attributes
 
 * Bypass: None
 * Effective Permissions: None
-* Network: intentionally left blank
+* Network: None
 * Permissions: ['Administrator', 'SYSTEM']
 * Platforms: ['Linux', 'macOS', 'Windows']
-* Remote: intentionally left blank
+* Remote: None
 * Type: attack-pattern
 * Wiki: https://attack.mitre.org/techniques/T1056
 
@@ -118,7 +124,14 @@ python/collection/osx/keylogger
 ## Potential Detections
 
 ```json
-
+[{'data_source': ['4657', 'Windows Registry']},
+ {'data_source': ['4688', 'Process Execution']},
+ {'data_source': ['Kernel drivers']},
+ {'data_source': ['API monitoring']},
+ {'data_source': ['4657', 'Windows Registry']},
+ {'data_source': ['4688', 'Process Execution']},
+ {'data_source': ['Kernel drivers']},
+ {'data_source': ['API monitoring']}]
 ```
 
 ## Potential Queries
@@ -214,7 +227,8 @@ python/collection/osx/keylogger
                                                                 'done '
                                                                 'keylogging:\n'
                                                                 'keyscan_stop'}},
- {'Atomic Red Team Test - Input Capture': {'atomic_tests': [{'description': 'Utilize '
+ {'Atomic Red Team Test - Input Capture': {'atomic_tests': [{'auto_generated_guid': 'd9b633ca-8efb-45e6-b838-70f595c6ae26',
+                                                             'description': 'Utilize '
                                                                             'PowerShell '
                                                                             'and '
                                                                             'external '

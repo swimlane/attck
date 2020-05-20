@@ -14,14 +14,20 @@ A number of native Windows utilities have been used by adversaries to disable or
 * <code>wbadmin.exe</code> can be used to delete the Windows Backup Catalog - <code>wbadmin.exe delete catalog -quiet</code>
 * <code>bcdedit.exe</code> can be used to disable automatic Windows recovery features by modifying boot configuration data - <code>bcdedit.exe /set {default} bootstatuspolicy ignoreallfailures & bcdedit /set {default} recoveryenabled no</code>
 
+## Aliases
+
+```
+
+```
+
 ## Additional Attributes
 
 * Bypass: None
 * Effective Permissions: None
-* Network: intentionally left blank
+* Network: None
 * Permissions: ['Administrator', 'root', 'SYSTEM', 'User']
 * Platforms: ['Windows', 'macOS', 'Linux']
-* Remote: intentionally left blank
+* Remote: None
 * Type: attack-pattern
 * Wiki: https://attack.mitre.org/techniques/T1490
 
@@ -83,7 +89,8 @@ del /s /f /q c:\*.VHD c:\*.bac c:\*.bak c:\*.wbcat c:\*.bkf c:\Backup*.* c:\back
 ## Raw Dataset
 
 ```json
-[{'Atomic Red Team Test - Inhibit System Recovery': {'atomic_tests': [{'dependencies': [{'description': 'Create '
+[{'Atomic Red Team Test - Inhibit System Recovery': {'atomic_tests': [{'auto_generated_guid': '43819286-91a9-4369-90ed-d31fb4da2c01',
+                                                                       'dependencies': [{'description': 'Create '
                                                                                                         'volume '
                                                                                                         'shadow '
                                                                                                         'copy '
@@ -224,7 +231,8 @@ del /s /f /q c:\*.VHD c:\*.bac c:\*.bak c:\*.wbcat c:\*.bkf c:\Backup*.* c:\back
                                                                                'Shadow '
                                                                                'Copies',
                                                                        'supported_platforms': ['windows']},
-                                                                      {'description': 'Deletes '
+                                                                      {'auto_generated_guid': '6a3ff8dd-f49c-4272-a658-11c2fe58bd88',
+                                                                       'description': 'Deletes '
                                                                                       'Windows '
                                                                                       'Volume '
                                                                                       'Shadow '
@@ -272,7 +280,8 @@ del /s /f /q c:\*.VHD c:\*.bac c:\*.bak c:\*.wbcat c:\*.bkf c:\Backup*.* c:\back
                                                                                'via '
                                                                                'WMI',
                                                                        'supported_platforms': ['windows']},
-                                                                      {'description': 'Deletes '
+                                                                      {'auto_generated_guid': '263ba6cb-ea2b-41c9-9d4e-b652dadd002c',
+                                                                       'description': 'Deletes '
                                                                                       'Windows '
                                                                                       'Backup '
                                                                                       'Catalog. '
@@ -320,7 +329,8 @@ del /s /f /q c:\*.VHD c:\*.bac c:\*.bak c:\*.wbcat c:\*.bkf c:\Backup*.* c:\back
                                                                                'Backup '
                                                                                'Catalog',
                                                                        'supported_platforms': ['windows']},
-                                                                      {'description': 'Disables '
+                                                                      {'auto_generated_guid': 'cf21060a-80b3-4238-a595-22525de4ab81',
+                                                                       'description': 'Disables '
                                                                                       'repair '
                                                                                       'by '
                                                                                       'the '
@@ -387,7 +397,8 @@ del /s /f /q c:\*.VHD c:\*.bac c:\*.bak c:\*.wbcat c:\*.bkf c:\Backup*.* c:\back
                                                                                'Console '
                                                                                'Repair',
                                                                        'supported_platforms': ['windows']},
-                                                                      {'description': 'Deletes '
+                                                                      {'auto_generated_guid': '39a295ca-7059-4a88-86f6-09556c1211e7',
+                                                                       'description': 'Deletes '
                                                                                       'Windows '
                                                                                       'Volume '
                                                                                       'Shadow '
@@ -449,7 +460,8 @@ del /s /f /q c:\*.VHD c:\*.bac c:\*.bak c:\*.wbcat c:\*.bkf c:\Backup*.* c:\back
                                                                                'with '
                                                                                'PowerShell',
                                                                        'supported_platforms': ['windows']},
-                                                                      {'description': 'Deletes '
+                                                                      {'auto_generated_guid': '6b1dbaf6-cc8a-4ea6-891f-6058569653bf',
+                                                                       'description': 'Deletes '
                                                                                       'backup '
                                                                                       'files '
                                                                                       'in '

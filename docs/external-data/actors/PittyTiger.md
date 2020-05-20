@@ -24,7 +24,6 @@ ______ |__|/  |__/  |_ ___.__._/  |_|__| ____   ___________
 ## Aliases
 
 ```
-intentionally left blank
 PittyTiger
 ```
 

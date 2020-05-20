@@ -19,14 +19,20 @@ Custom databases are stored in:
 
 To keep shims secure, Windows designed them to run in user mode so they cannot modify the kernel and you must have administrator privileges to install a shim. However, certain shims can be used to [Bypass User Account Control](https://attack.mitre.org/techniques/T1088) (UAC) (RedirectEXE), inject DLLs into processes (InjectDLL), disable Data Execution Prevention (DisableNX) and Structure Exception Handling (DisableSEH), and intercept memory addresses (GetProcAddress). Similar to [Hooking](https://attack.mitre.org/techniques/T1179), utilizing these shims may allow an adversary to perform several malicious acts such as elevate privileges, install backdoors, disable defenses like Windows Defender, etc.
 
+## Aliases
+
+```
+
+```
+
 ## Additional Attributes
 
 * Bypass: None
 * Effective Permissions: None
-* Network: intentionally left blank
+* Network: None
 * Permissions: ['Administrator']
 * Platforms: ['Windows']
-* Remote: intentionally left blank
+* Remote: None
 * Type: attack-pattern
 * Wiki: https://attack.mitre.org/techniques/T1138
 
@@ -112,7 +118,17 @@ sdbinst.exe\SOFTWARE\Microsoft\Windows NT\CurrentVersion\AppCompatFlags\Custom|\
                   'status': 'experimental',
                   'tags': ['attack.persistence', 'attack.t1138'],
                   'title': 'Possible Shim Database Persistence via '
-                           'sdbinst.exe'}}]
+                           'sdbinst.exe'}},
+ {'data_source': ['4688 ', 'Process CMD Line']},
+ {'data_source': ['4688', 'Process Execution']},
+ {'data_source': ['4657', 'Windows Registry']},
+ {'data_source': ['Loaded DLLs']},
+ {'data_source': ['System calls']},
+ {'data_source': ['Sysmon ID 7', 'Loaded DLLs']},
+ {'data_source': ['4688 ', 'Process CMD Line']},
+ {'data_source': ['4688', 'Process Execution']},
+ {'data_source': ['4657', 'Windows Registry']},
+ {'data_source': ['System calls']}]
 ```
 
 ## Potential Queries
@@ -135,7 +151,8 @@ sdbinst.exe\SOFTWARE\Microsoft\Windows NT\CurrentVersion\AppCompatFlags\Custom|\
 ## Raw Dataset
 
 ```json
-[{'Atomic Red Team Test - Application Shimming': {'atomic_tests': [{'dependencies': [{'description': 'Shim '
+[{'Atomic Red Team Test - Application Shimming': {'atomic_tests': [{'auto_generated_guid': '9ab27e22-ee62-4211-962b-d36d9a0e6a18',
+                                                                    'dependencies': [{'description': 'Shim '
                                                                                                      'database '
                                                                                                      'file '
                                                                                                      'must '
@@ -282,7 +299,8 @@ sdbinst.exe\SOFTWARE\Microsoft\Windows NT\CurrentVersion\AppCompatFlags\Custom|\
                                                                             'Shim '
                                                                             'Installation',
                                                                     'supported_platforms': ['windows']},
-                                                                   {'description': 'Upon '
+                                                                   {'auto_generated_guid': 'aefd6866-d753-431f-a7a4-215ca7e3f13d',
+                                                                    'description': 'Upon '
                                                                                    'execution, '
                                                                                    'check '
                                                                                    'the '
@@ -323,7 +341,8 @@ sdbinst.exe\SOFTWARE\Microsoft\Windows NT\CurrentVersion\AppCompatFlags\Custom|\
                                                                             'database '
                                                                             'directory',
                                                                     'supported_platforms': ['windows']},
-                                                                   {'description': 'Create '
+                                                                   {'auto_generated_guid': '9b6a06f9-ab5e-4e8d-8289-1df4289db02f',
+                                                                    'description': 'Create '
                                                                                    'registry '
                                                                                    'keys '
                                                                                    'in '

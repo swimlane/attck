@@ -24,7 +24,6 @@ _____     __| _/_____ |__| ____   / ___ \_____  \\_____  \  /  __  \
 ## Aliases
 
 ```
-intentionally left blank
 admin@338
 ```
 

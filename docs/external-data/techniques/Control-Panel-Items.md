@@ -11,14 +11,20 @@ For ease of use, Control Panel items typically include graphical menus available
 
 Adversaries can use Control Panel items as execution payloads to execute arbitrary commands. Malicious Control Panel items can be delivered via [Spearphishing Attachment](https://attack.mitre.org/techniques/T1193) campaigns (Citation: TrendMicro CPL Malware Jan 2014) (Citation: TrendMicro CPL Malware Dec 2013) or executed as part of multi-stage malware. (Citation: Palo Alto Reaver Nov 2017) Control Panel items, specifically CPL files, may also bypass application and/or file extension whitelisting.
 
+## Aliases
+
+```
+
+```
+
 ## Additional Attributes
 
 * Bypass: ['Application whitelisting', 'Process whitelisting']
 * Effective Permissions: None
-* Network: intentionally left blank
+* Network: None
 * Permissions: ['User', 'Administrator', 'SYSTEM']
 * Platforms: ['Windows']
-* Remote: intentionally left blank
+* Remote: None
 * Type: attack-pattern
 * Wiki: https://attack.mitre.org/techniques/T1196
 
@@ -66,7 +72,21 @@ Shell32.dll,Control_RunDLLAsUser|.cpl
                   'tags': ['attack.execution',
                            'attack.t1196',
                            'attack.defense_evasion'],
-                  'title': 'Control Panel Items'}}]
+                  'title': 'Control Panel Items'}},
+ {'data_source': ['4688 ', 'Process CMD Line']},
+ {'data_source': ['4688', 'Process Execution']},
+ {'data_source': ['4657', 'Windows Registry']},
+ {'data_source': ['Windows event logs']},
+ {'data_source': ['API monitoring']},
+ {'data_source': ['Binary file metadata']},
+ {'data_source': ['DLL monitoring']},
+ {'data_source': ['4688 ', 'Process CMD Line']},
+ {'data_source': ['4688', 'Process Execution']},
+ {'data_source': ['4657', 'Windows Registry']},
+ {'data_source': ['Windows event logs']},
+ {'data_source': ['LOG-MD - B9', 'Binary file metadata']},
+ {'data_source': ['Sysmon ID 7', 'DLL monitoring']},
+ {'data_source': ['API monitoring']}]
 ```
 
 ## Potential Queries
@@ -93,7 +113,8 @@ Shell32.dll,Control_RunDLLAsUser|.cpl
 ## Raw Dataset
 
 ```json
-[{'Atomic Red Team Test - Control Panel Items': {'atomic_tests': [{'dependencies': [{'description': 'Cpl '
+[{'Atomic Red Team Test - Control Panel Items': {'atomic_tests': [{'auto_generated_guid': '037e9d8a-9e46-4255-8b33-2ae3b545ca6f',
+                                                                   'dependencies': [{'description': 'Cpl '
                                                                                                     'file '
                                                                                                     'must '
                                                                                                     'exist '
