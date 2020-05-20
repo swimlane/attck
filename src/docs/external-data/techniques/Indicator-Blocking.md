@@ -11,14 +11,20 @@ ETW interruption can be achieved multiple ways, however most directly by definin
 
 In the case of network-based reporting of indicators, an adversary may block traffic associated with reporting to prevent central analysis. This may be accomplished by many means, such as stopping a local process responsible for forwarding telemetry and/or creating a host-based firewall rule to block traffic to specific hosts responsible for aggregating events, such as security information and event management (SIEM) products. 
 
+## Aliases
+
+```
+
+```
+
 ## Additional Attributes
 
 * Bypass: ['Anti-virus', 'Log analysis', 'Host intrusion prevention systems']
 * Effective Permissions: None
-* Network: intentionally left blank
+* Network: None
 * Permissions: None
 * Platforms: ['Windows']
-* Remote: intentionally left blank
+* Remote: None
 * Type: attack-pattern
 * Wiki: https://attack.mitre.org/techniques/T1054
 
@@ -75,7 +81,13 @@ In the case of network-based reporting of indicators, an adversary may block tra
                                 'service': 'security'},
                   'references': ['https://bit.ly/WinLogsZero2Hero'],
                   'tags': ['attack.defense_evasion', 'attack.t1054'],
-                  'title': 'Disabling Windows Event Auditing'}}]
+                  'title': 'Disabling Windows Event Auditing'}},
+ {'data_source': ['4688 ', 'Process CMD Line']},
+ {'data_source': ['4688.0']},
+ {'data_source': ['Sensor health and status']},
+ {'data_source': ['4688 ', 'Process CMD Line']},
+ {'data_source': ['4688', 'Process Execution']},
+ {'data_source': ['Sensor health and status']}]
 ```
 
 ## Potential Queries

@@ -29,14 +29,20 @@ Azure CLI (AZ CLI) also provides an interface to obtain user accounts with authe
 
 The <code>Get-GlobalAddressList</code> PowerShell cmdlet can be used to obtain email addresses and accounts from a domain using an authenticated session.(Citation: Microsoft getglobaladdresslist)(Citation: Black Hills Attacking Exchange MailSniper, 2016)
 
+## Aliases
+
+```
+
+```
+
 ## Additional Attributes
 
 * Bypass: None
 * Effective Permissions: None
-* Network: intentionally left blank
+* Network: None
 * Permissions: ['User']
 * Platforms: ['Linux', 'macOS', 'Windows', 'Office 365', 'Azure AD']
-* Remote: intentionally left blank
+* Remote: None
 * Type: attack-pattern
 * Wiki: https://attack.mitre.org/techniques/T1087
 
@@ -635,7 +641,13 @@ id
                                 'product': 'windows'},
                   'status': 'experimental',
                   'tags': ['attack.discovery', 'attack.t1087'],
-                  'title': 'Suspicious Reconnaissance Activity'}}]
+                  'title': 'Suspicious Reconnaissance Activity'}},
+ {'data_source': ['4688 ', 'Process CMD Line']},
+ {'data_source': ['4688', 'Process Execution']},
+ {'data_source': ['API monitoring']},
+ {'data_source': ['4688 ', 'Process CMD Line']},
+ {'data_source': ['4688', 'Process Execution']},
+ {'data_source': ['API monitoring']}]
 ```
 
 ## Potential Queries
@@ -798,7 +810,8 @@ id
                                                                  'include '
                                                                  '"dc=subdomain,dc=domain,dc=tld"',
                                                   'Metasploit': ''}},
- {'Atomic Red Team Test - Account Discovery': {'atomic_tests': [{'description': 'Enumerate '
+ {'Atomic Red Team Test - Account Discovery': {'atomic_tests': [{'auto_generated_guid': 'f8aab3dd-5990-4bf8-b8ab-2226c951696f',
+                                                                 'description': 'Enumerate '
                                                                                 'all '
                                                                                 'accounts '
                                                                                 'by '
@@ -831,7 +844,8 @@ id
                                                                          'accounts',
                                                                  'supported_platforms': ['linux',
                                                                                          'macos']},
-                                                                {'description': '(requires '
+                                                                {'auto_generated_guid': 'fed9be70-0186-4bde-9f8a-20945f9370c2',
+                                                                 'description': '(requires '
                                                                                 'root)\n',
                                                                  'executor': {'cleanup_command': 'rm '
                                                                                                  '-f '
@@ -858,7 +872,8 @@ id
                                                                          'access',
                                                                  'supported_platforms': ['linux',
                                                                                          'macos']},
-                                                                {'description': 'View '
+                                                                {'auto_generated_guid': 'c955a599-3653-4fe5-b631-f11c00eb0397',
+                                                                 'description': 'View '
                                                                                 'accounts '
                                                                                 'wtih '
                                                                                 'UID '
@@ -892,7 +907,8 @@ id
                                                                          '0',
                                                                  'supported_platforms': ['linux',
                                                                                          'macos']},
-                                                                {'description': 'List '
+                                                                {'auto_generated_guid': '7e46c7a5-0142-45be-a858-1a3ecb4fd3cb',
+                                                                 'description': 'List '
                                                                                 'opened '
                                                                                 'files '
                                                                                 'by '
@@ -916,7 +932,8 @@ id
                                                                          'user',
                                                                  'supported_platforms': ['linux',
                                                                                          'macos']},
-                                                                {'dependencies': [{'description': 'Check '
+                                                                {'auto_generated_guid': '0f0b6a29-08c3-44ad-a30b-47fd996b2110',
+                                                                 'dependencies': [{'description': 'Check '
                                                                                                   'if '
                                                                                                   'lastlog '
                                                                                                   'command '
@@ -988,7 +1005,8 @@ id
                                                                          'in '
                                                                          'remotely',
                                                                  'supported_platforms': ['linux']},
-                                                                {'description': 'Utilize '
+                                                                {'auto_generated_guid': 'e6f36545-dc1e-47f0-9f48-7f730f54a02e',
+                                                                 'description': 'Utilize '
                                                                                 'groups '
                                                                                 'and '
                                                                                 'id '
@@ -1006,7 +1024,8 @@ id
                                                                          'groups',
                                                                  'supported_platforms': ['linux',
                                                                                          'macos']},
-                                                                {'description': 'Utilize '
+                                                                {'auto_generated_guid': '319e9f6c-7a9e-432e-8c62-9385c803b6f2',
+                                                                 'description': 'Utilize '
                                                                                 'local '
                                                                                 'utilities '
                                                                                 'to '
@@ -1042,7 +1061,8 @@ id
                                                                          'and '
                                                                          'groups',
                                                                  'supported_platforms': ['macos']},
-                                                                {'description': 'Enumerate '
+                                                                {'auto_generated_guid': '80887bec-5a9b-4efc-a81d-f83eb2eb32ab',
+                                                                 'description': 'Enumerate '
                                                                                 'all '
                                                                                 'accounts\n'
                                                                                 'Upon '
@@ -1081,7 +1101,8 @@ id
                                                                          'all '
                                                                          'accounts',
                                                                  'supported_platforms': ['windows']},
-                                                                {'description': 'Enumerate '
+                                                                {'auto_generated_guid': 'd91af77c-7c61-4fdf-b890-1cc7328fa318',
+                                                                 'description': 'Enumerate '
                                                                                 'all '
                                                                                 'accounts '
                                                                                 'via '
@@ -1129,7 +1150,8 @@ id
                                                                          'via '
                                                                          'PowerShell',
                                                                  'supported_platforms': ['windows']},
-                                                                {'description': 'Enumerate '
+                                                                {'auto_generated_guid': 'a138085e-bfe5-46ba-a242-74a6fb884af3',
+                                                                 'description': 'Enumerate '
                                                                                 'logged '
                                                                                 'on '
                                                                                 'users. '
@@ -1152,7 +1174,8 @@ id
                                                                          'via '
                                                                          'CMD',
                                                                  'supported_platforms': ['windows']},
-                                                                {'description': 'Enumerate '
+                                                                {'auto_generated_guid': '2bdc42c7-8907-40c2-9c2b-42919a00fe03',
+                                                                 'description': 'Enumerate '
                                                                                 'logged '
                                                                                 'on '
                                                                                 'users '

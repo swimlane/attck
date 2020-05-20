@@ -13,14 +13,20 @@ This same attack could be executed using service tickets captured from network t
 
 Cracked hashes may enable Persistence, Privilege Escalation, and  Lateral Movement via access to [Valid Accounts](https://attack.mitre.org/techniques/T1078). (Citation: SANS Attacking Kerberos Nov 2014)
 
+## Aliases
+
+```
+
+```
+
 ## Additional Attributes
 
 * Bypass: None
 * Effective Permissions: None
-* Network: intentionally left blank
+* Network: None
 * Permissions: ['User']
 * Platforms: ['Windows']
-* Remote: intentionally left blank
+* Remote: None
 * Type: attack-pattern
 * Wiki: https://attack.mitre.org/techniques/T1208
 
@@ -93,7 +99,9 @@ powershell/credentials/invoke_kerberoast
                                  'https://www.trimarcsecurity.com/single-post/TrimarcResearch/Detecting-Kerberoasting-Activity'],
                   'status': 'experimental',
                   'tags': ['attack.credential_access', 'attack.t1208'],
-                  'title': 'Suspicious Kerberos RC4 Ticket Encryption'}}]
+                  'title': 'Suspicious Kerberos RC4 Ticket Encryption'}},
+ {'data_source': ['4769', 'Windows event logs']},
+ {'data_source': ['4769', 'Windows event logs']}]
 ```
 
 ## Potential Queries
@@ -128,7 +136,8 @@ powershell/credentials/invoke_kerberoast
 ## Raw Dataset
 
 ```json
-[{'Atomic Red Team Test - Kerberoasting': {'atomic_tests': [{'description': 'This '
+[{'Atomic Red Team Test - Kerberoasting': {'atomic_tests': [{'auto_generated_guid': '3f987809-3681-43c8-bcd8-b3ff3a28533a',
+                                                             'description': 'This '
                                                                             'test '
                                                                             'uses '
                                                                             'the '

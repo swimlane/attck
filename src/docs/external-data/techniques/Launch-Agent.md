@@ -9,14 +9,20 @@
  
 Adversaries may install a new launch agent that can be configured to execute at login by using launchd or launchctl to load a plist into the appropriate directories  (Citation: Sofacy Komplex Trojan)  (Citation: Methods of Mac Malware Persistence). The agent name may be disguised by using a name from a related operating system or benign software. Launch Agents are created with user level privileges and are executed with the privileges of the user when they log in (Citation: OSX Malware Detection) (Citation: OceanLotus for OS X). They can be set up to execute when a specific user logs in (in the specific user’s directory structure) or when any user logs in (which requires administrator privileges).
 
+## Aliases
+
+```
+
+```
+
 ## Additional Attributes
 
 * Bypass: None
 * Effective Permissions: None
-* Network: intentionally left blank
+* Network: None
 * Permissions: ['User', 'Administrator']
 * Platforms: ['macOS']
-* Remote: intentionally left blank
+* Remote: None
 * Type: attack-pattern
 * Wiki: https://attack.mitre.org/techniques/T1159
 
@@ -47,7 +53,8 @@ Adversaries may install a new launch agent that can be configured to execute at 
 ## Raw Dataset
 
 ```json
-[{'Atomic Red Team Test - Launch Agent': {'atomic_tests': [{'description': 'Create '
+[{'Atomic Red Team Test - Launch Agent': {'atomic_tests': [{'auto_generated_guid': 'a5983dee-bf6c-4eaf-951c-dbc1a7b90900',
+                                                            'description': 'Create '
                                                                            'a '
                                                                            'plist '
                                                                            'and '

@@ -15,14 +15,20 @@ Applications can access clipboard data by using the Windows API. (Citation: MSDN
 
 OSX provides a native command, <code>pbpaste</code>, to grab clipboard contents  (Citation: Operating with EmPyre).
 
+## Aliases
+
+```
+
+```
+
 ## Additional Attributes
 
 * Bypass: None
 * Effective Permissions: None
-* Network: intentionally left blank
+* Network: None
 * Permissions: None
 * Platforms: ['Linux', 'Windows', 'macOS']
-* Remote: intentionally left blank
+* Remote: None
 * Type: attack-pattern
 * Wiki: https://attack.mitre.org/techniques/T1115
 
@@ -92,7 +98,7 @@ python/collection/osx/clipboard
 ## Potential Detections
 
 ```json
-
+[{'data_source': ['API monitoring']}, {'data_source': ['API monitoring']}]
 ```
 
 ## Potential Queries
@@ -107,7 +113,8 @@ python/collection/osx/clipboard
 ## Raw Dataset
 
 ```json
-[{'Atomic Red Team Test - Clipboard Data': {'atomic_tests': [{'description': 'Add '
+[{'Atomic Red Team Test - Clipboard Data': {'atomic_tests': [{'auto_generated_guid': '0cd14633-58d4-4422-9ede-daa2c9474ae7',
+                                                              'description': 'Add '
                                                                              'data '
                                                                              'to '
                                                                              'clipboard '
@@ -143,7 +150,8 @@ python/collection/osx/clipboard
                                                                       'commands '
                                                                       'from',
                                                               'supported_platforms': ['windows']},
-                                                             {'description': 'Utilize '
+                                                             {'auto_generated_guid': 'd6dc21af-bec9-4152-be86-326b6babd416',
+                                                              'description': 'Utilize '
                                                                              'PowerShell '
                                                                              'to '
                                                                              'echo '

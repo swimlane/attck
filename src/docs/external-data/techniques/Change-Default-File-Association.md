@@ -14,14 +14,20 @@ System file associations are listed under <code>HKEY_CLASSES_ROOT\.[extension]</
 
 The values of the keys listed are commands that are executed when the handler opens the file extension. Adversaries can modify these values to continually execute arbitrary commands. (Citation: TrendMicro TROJ-FAKEAV OCT 2012)
 
+## Aliases
+
+```
+
+```
+
 ## Additional Attributes
 
 * Bypass: None
 * Effective Permissions: None
-* Network: intentionally left blank
+* Network: None
 * Permissions: ['User', 'Administrator', 'SYSTEM']
 * Platforms: ['Windows']
-* Remote: intentionally left blank
+* Remote: None
 * Type: attack-pattern
 * Wiki: https://attack.mitre.org/techniques/T1042
 
@@ -89,7 +95,13 @@ assoc.exe
                   'references': ['https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1042/T1042.yaml'],
                   'status': 'experimental',
                   'tags': ['attack.persistence', 'attack.t1042'],
-                  'title': 'Change Default File Association'}}]
+                  'title': 'Change Default File Association'}},
+ {'data_source': ['4657', 'Windows Registry']},
+ {'data_source': ['4688 ', 'Process CMD Line']},
+ {'data_source': ['4688', 'Process Execution']},
+ {'data_source': ['4657', 'Windows Registry']},
+ {'data_source': ['4688 ', 'Process CMD Line']},
+ {'data_source': ['4688', 'Process Execution']}]
 ```
 
 ## Potential Queries
@@ -106,7 +118,8 @@ assoc.exe
 ## Raw Dataset
 
 ```json
-[{'Atomic Red Team Test - Change Default File Association': {'atomic_tests': [{'description': 'Change '
+[{'Atomic Red Team Test - Change Default File Association': {'atomic_tests': [{'auto_generated_guid': '10a08978-2045-4d62-8c42-1957bbbea102',
+                                                                               'description': 'Change '
                                                                                               'Default '
                                                                                               'File '
                                                                                               'Association '

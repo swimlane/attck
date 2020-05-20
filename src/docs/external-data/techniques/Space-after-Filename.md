@@ -9,14 +9,20 @@
 
 Adversaries can use this feature to trick users into double clicking benign-looking files of any format and ultimately executing something malicious.
 
+## Aliases
+
+```
+
+```
+
 ## Additional Attributes
 
 * Bypass: None
 * Effective Permissions: None
-* Network: intentionally left blank
+* Network: None
 * Permissions: ['User']
 * Platforms: ['Linux', 'macOS']
-* Remote: intentionally left blank
+* Remote: None
 * Type: attack-pattern
 * Wiki: https://attack.mitre.org/techniques/T1151
 
@@ -47,7 +53,8 @@ Adversaries can use this feature to trick users into double clicking benign-look
 ## Raw Dataset
 
 ```json
-[{'Atomic Red Team Test - Space After Filename': {'atomic_tests': [{'description': 'Space '
+[{'Atomic Red Team Test - Space After Filename': {'atomic_tests': [{'auto_generated_guid': '89a7dd26-e510-4c9f-9b15-f3bae333360f',
+                                                                    'description': 'Space '
                                                                                    'After '
                                                                                    'Filename\n',
                                                                     'executor': {'name': 'manual',

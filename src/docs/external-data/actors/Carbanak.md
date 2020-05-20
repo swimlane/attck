@@ -24,7 +24,6 @@ _/ ___\\__  \\_  __ \ __ \\__  \  /    \\__  \ |  |/ /
 ## Aliases
 
 ```
-intentionally left blank
 Carbanak
 Anunak
 Carbon Spider

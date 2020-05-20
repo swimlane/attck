@@ -17,14 +17,20 @@ On Mac, the currently logged in user can be identified with <code>users</code>,<
 
 On Linux, the currently logged in user can be identified with <code>w</code> and <code>who</code>.
 
+## Aliases
+
+```
+
+```
+
 ## Additional Attributes
 
 * Bypass: None
 * Effective Permissions: None
-* Network: intentionally left blank
+* Network: None
 * Permissions: ['User', 'Administrator']
 * Platforms: ['Linux', 'macOS', 'Windows']
-* Remote: intentionally left blank
+* Remote: None
 * Type: attack-pattern
 * Wiki: https://attack.mitre.org/techniques/T1033
 
@@ -177,7 +183,17 @@ powershell/situational_awareness/network/powerview/get_session
                   'tags': ['attack.discovery',
                            'attack.t1033',
                            'car.2016-03-001'],
-                  'title': 'Whoami Execution'}}]
+                  'title': 'Whoami Execution'}},
+ {'data_source': ['4688 ', 'Process CMD Line']},
+ {'data_source': ['4688', 'Process Execution']},
+ {'data_source': ['4663', 'File monitoring']},
+ {'data_source': ['PowerShell']},
+ {'data_source': ['4624', 'WMI Auth']},
+ {'data_source': ['4688 ', 'Process CMD Line']},
+ {'data_source': ['4688', 'Process Execution']},
+ {'data_source': ['4663', 'File monitoring']},
+ {'data_source': ['200-500', ' 4100-4104', 'PowerShell']},
+ {'data_source': ['', '4624', 'WMI Auth']}]
 ```
 
 ## Potential Queries
@@ -263,7 +279,8 @@ powershell/situational_awareness/network/powerview/get_session
                                                                  'privs of the '
                                                                  'user',
                                                   'Metasploit': 'getuid'}},
- {'Atomic Red Team Test - System Owner/User Discovery': {'atomic_tests': [{'description': 'Identify '
+ {'Atomic Red Team Test - System Owner/User Discovery': {'atomic_tests': [{'auto_generated_guid': '4c4959bf-addf-4b4a-be86-8d09cc1857aa',
+                                                                           'description': 'Identify '
                                                                                           'System '
                                                                                           'owner '
                                                                                           'or '
@@ -389,7 +406,8 @@ powershell/situational_awareness/network/powerview/get_session
                                                                                    'Owner/User '
                                                                                    'Discovery',
                                                                            'supported_platforms': ['windows']},
-                                                                          {'description': 'Identify '
+                                                                          {'auto_generated_guid': '2a9b677d-a230-44f4-ad86-782df1ef108c',
+                                                                           'description': 'Identify '
                                                                                           'System '
                                                                                           'owner '
                                                                                           'or '

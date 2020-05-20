@@ -12,14 +12,20 @@ Example commands to find Registry keys related to password information: (Citatio
 * Local Machine Hive: <code>reg query HKLM /f password /t REG_SZ /s</code>
 * Current User Hive: <code>reg query HKCU /f password /t REG_SZ /s</code>
 
+## Aliases
+
+```
+
+```
+
 ## Additional Attributes
 
 * Bypass: None
 * Effective Permissions: None
-* Network: intentionally left blank
+* Network: None
 * Permissions: ['User', 'Administrator']
 * Platforms: ['Windows']
-* Remote: intentionally left blank
+* Remote: None
 * Type: attack-pattern
 * Wiki: https://attack.mitre.org/techniques/T1214
 
@@ -54,7 +60,12 @@ reg query HKCU\Software\SimonTatham\PuTTY\Sessions /t REG_SZ /s
 ## Potential Detections
 
 ```json
-
+[{'data_source': ['4657', 'Windows Registry']},
+ {'data_source': ['4688 ', 'Process CMD Line']},
+ {'data_source': ['4688', 'Process Execution']},
+ {'data_source': ['4657', 'Windows Registry']},
+ {'data_source': ['4688 ', 'Process CMD Line']},
+ {'data_source': ['4688', 'Process Execution']}]
 ```
 
 ## Potential Queries
@@ -101,7 +112,8 @@ reg query HKCU\Software\SimonTatham\PuTTY\Sessions /t REG_SZ /s
 ## Raw Dataset
 
 ```json
-[{'Atomic Red Team Test - Credentials in Registry': {'atomic_tests': [{'description': 'Queries '
+[{'Atomic Red Team Test - Credentials in Registry': {'atomic_tests': [{'auto_generated_guid': 'b6ec082c-7384-46b3-a111-9a9b8b14e5e7',
+                                                                       'description': 'Queries '
                                                                                       'to '
                                                                                       'enumerate '
                                                                                       'for '
@@ -145,7 +157,8 @@ reg query HKCU\Software\SimonTatham\PuTTY\Sessions /t REG_SZ /s
                                                                                'in '
                                                                                'Registry',
                                                                        'supported_platforms': ['windows']},
-                                                                      {'description': 'Queries '
+                                                                      {'auto_generated_guid': 'af197fd7-e868-448e-9bd5-05d1bcd9d9e5',
+                                                                       'description': 'Queries '
                                                                                       'to '
                                                                                       'enumerate '
                                                                                       'for '

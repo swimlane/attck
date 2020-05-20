@@ -15,14 +15,20 @@ On OSX, the native command <code>screencapture</code> is used to capture screens
 
 On Linux, there is the native command <code>xwd</code>. (Citation: Antiquated Mac Malware)
 
+## Aliases
+
+```
+
+```
+
 ## Additional Attributes
 
 * Bypass: None
 * Effective Permissions: None
-* Network: intentionally left blank
+* Network: None
 * Permissions: None
 * Platforms: ['Linux', 'macOS', 'Windows']
-* Remote: intentionally left blank
+* Remote: None
 * Type: attack-pattern
 * Wiki: https://attack.mitre.org/techniques/T1113
 
@@ -124,7 +130,12 @@ python/collection/osx/screenshot
 ## Potential Detections
 
 ```json
-
+[{'data_source': ['4688', 'Process Execution']},
+ {'data_source': ['4663', 'File monitoring']},
+ {'data_source': ['API monitoring']},
+ {'data_source': ['4688', 'Process Execution']},
+ {'data_source': ['4663', 'File monitoring']},
+ {'data_source': ['API monitoring']}]
 ```
 
 ## Potential Queries
@@ -136,7 +147,8 @@ python/collection/osx/screenshot
 ## Raw Dataset
 
 ```json
-[{'Atomic Red Team Test - Screen Capture': {'atomic_tests': [{'description': 'Use '
+[{'Atomic Red Team Test - Screen Capture': {'atomic_tests': [{'auto_generated_guid': '0f47ceb1-720f-4275-96b8-21f0562217ac',
+                                                              'description': 'Use '
                                                                              'screencapture '
                                                                              'command '
                                                                              'to '
@@ -158,7 +170,8 @@ python/collection/osx/screenshot
                                                                                                   'type': 'Path'}},
                                                               'name': 'Screencapture',
                                                               'supported_platforms': ['macos']},
-                                                             {'description': 'Use '
+                                                             {'auto_generated_guid': 'deb7d358-5fbd-4dc4-aecc-ee0054d2d9a4',
+                                                              'description': 'Use '
                                                                              'screencapture '
                                                                              'command '
                                                                              'to '
@@ -182,7 +195,8 @@ python/collection/osx/screenshot
                                                               'name': 'Screencapture '
                                                                       '(silent)',
                                                               'supported_platforms': ['macos']},
-                                                             {'description': 'Use '
+                                                             {'auto_generated_guid': '8206dd0c-faf6-4d74-ba13-7fbe13dce6ac',
+                                                              'description': 'Use '
                                                                              'xwd '
                                                                              'command '
                                                                              'to '
@@ -215,7 +229,8 @@ python/collection/osx/screenshot
                                                                       'Windows '
                                                                       'Capture',
                                                               'supported_platforms': ['linux']},
-                                                             {'description': 'Use '
+                                                             {'auto_generated_guid': '9cd1cccb-91e4-4550-9139-e20a586fcea1',
+                                                              'description': 'Use '
                                                                              'import '
                                                                              'command '
                                                                              'to '

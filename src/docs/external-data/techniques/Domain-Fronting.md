@@ -9,6 +9,12 @@
 
 For example, if domain-x and domain-y are customers of the same CDN, it is possible to place domain-x in the TLS header and domain-y in the HTTP header. Traffic will appear to be going to domain-x, however the CDN may route it to domain-y.
 
+## Aliases
+
+```
+
+```
+
 ## Additional Attributes
 
 * Bypass: None
@@ -16,7 +22,7 @@ For example, if domain-x and domain-y are customers of the same CDN, it is possi
 * Network: True
 * Permissions: None
 * Platforms: ['Linux', 'macOS', 'Windows']
-* Remote: intentionally left blank
+* Remote: None
 * Type: attack-pattern
 * Wiki: https://attack.mitre.org/techniques/T1172
 
@@ -35,7 +41,10 @@ For example, if domain-x and domain-y are customers of the same CDN, it is possi
 ## Potential Detections
 
 ```json
-
+[{'data_source': ['SSL/TLS inspection']},
+ {'data_source': ['Packet capture']},
+ {'data_source': ['SSL/TLS inspection']},
+ {'data_source': ['Packet capture']}]
 ```
 
 ## Potential Queries

@@ -7,6 +7,12 @@
 
 > Adversaries may conduct C2 communications over a non-standard port to bypass proxies and firewalls that have been improperly configured.
 
+## Aliases
+
+```
+
+```
+
 ## Additional Attributes
 
 * Bypass: None
@@ -14,7 +20,7 @@
 * Network: True
 * Permissions: None
 * Platforms: ['Linux', 'macOS', 'Windows']
-* Remote: intentionally left blank
+* Remote: None
 * Type: attack-pattern
 * Wiki: https://attack.mitre.org/techniques/T1065
 
@@ -51,7 +57,12 @@ telnet google.com #{port}
 ## Potential Detections
 
 ```json
-
+[{'data_source': ['5156', 'Windows Firewall']},
+ {'data_source': ['4688', 'Process Execution']},
+ {'data_source': ['Netflow/Enclave netflow']},
+ {'data_source': ['5156', 'Windows Firewall']},
+ {'data_source': ['4688', 'Process Execution']},
+ {'data_source': ['Netflow/Enclave netflow']}]
 ```
 
 ## Potential Queries
@@ -63,7 +74,8 @@ telnet google.com #{port}
 ## Raw Dataset
 
 ```json
-[{'Atomic Red Team Test - Adversaries may conduct C2 communications over a non-standard port to bypass proxies and firewalls.': {'atomic_tests': [{'description': 'Testing '
+[{'Atomic Red Team Test - Adversaries may conduct C2 communications over a non-standard port to bypass proxies and firewalls.': {'atomic_tests': [{'auto_generated_guid': '21fe622f-8e53-4b31-ba83-6d333c2583f4',
+                                                                                                                                                   'description': 'Testing '
                                                                                                                                                                   'uncommonly '
                                                                                                                                                                   'used '
                                                                                                                                                                   'port '
@@ -117,7 +129,8 @@ telnet google.com #{port}
                                                                                                                                                            'with '
                                                                                                                                                            'PowerShell',
                                                                                                                                                    'supported_platforms': ['windows']},
-                                                                                                                                                  {'description': 'Testing '
+                                                                                                                                                  {'auto_generated_guid': '5db21e1d-dd9c-4a50-b885-b1e748912767',
+                                                                                                                                                   'description': 'Testing '
                                                                                                                                                                   'uncommonly '
                                                                                                                                                                   'used '
                                                                                                                                                                   'port '

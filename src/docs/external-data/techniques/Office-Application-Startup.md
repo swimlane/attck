@@ -45,14 +45,20 @@ Outlook Home Page is a legacy feature used to customize the presentation of Outl
 
 To abuse these features, an adversary requires prior access to the user’s Outlook mailbox, either via an Exchange/OWA server or via the client application. Once malicious rules, forms, or Home Pages have been added to the user’s mailbox, they will be loaded when Outlook is started. Malicious Home Pages will execute when the right Outlook folder is loaded/reloaded while malicious rules and forms will execute when an adversary sends a specifically crafted email to the user.(Citation: SilentBreak Outlook Rules)(Citation: SensePost Outlook Forms)(Citation: SensePost Outlook Home Page)
 
+## Aliases
+
+```
+
+```
+
 ## Additional Attributes
 
 * Bypass: None
 * Effective Permissions: None
-* Network: intentionally left blank
+* Network: None
 * Permissions: ['User', 'Administrator']
 * Platforms: ['Windows', 'Office 365']
-* Remote: intentionally left blank
+* Remote: None
 * Type: attack-pattern
 * Wiki: https://attack.mitre.org/techniques/T1137
 
@@ -71,7 +77,14 @@ To abuse these features, an adversary requires prior access to the user’s Outl
 ## Potential Detections
 
 ```json
-
+[{'data_source': ['4688', 'Process Execution']},
+ {'data_source': ['4688 ', 'Process CMD Line']},
+ {'data_source': ['4657', 'Windows Registry']},
+ {'data_source': ['4663', 'File monitoring']},
+ {'data_source': ['4688', 'Process Execution']},
+ {'data_source': ['4688 ', 'Process CMD Line']},
+ {'data_source': ['4657', 'Windows Registry']},
+ {'data_source': ['4663', 'File monitoring']}]
 ```
 
 ## Potential Queries
@@ -83,7 +96,8 @@ To abuse these features, an adversary requires prior access to the user’s Outl
 ## Raw Dataset
 
 ```json
-[{'Atomic Red Team Test - Office Application Startup': {'atomic_tests': [{'description': '\n'
+[{'Atomic Red Team Test - Office Application Startup': {'atomic_tests': [{'auto_generated_guid': 'cf91174c-4e74-414e-bec0-8d60a104d181',
+                                                                          'description': '\n'
                                                                                          'TrustedSec '
                                                                                          '- '
                                                                                          'Unicorn '

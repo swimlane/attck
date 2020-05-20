@@ -7,14 +7,20 @@
 
 > Shortcuts or symbolic links are ways of referencing other files or programs that will be opened or executed when the shortcut is clicked or executed by a system startup process. Adversaries could use shortcuts to execute their tools for persistence. They may create a new shortcut as a means of indirection that may use [Masquerading](https://attack.mitre.org/techniques/T1036) to look like a legitimate program. Adversaries could also edit the target path or entirely replace an existing shortcut so their tools will be executed instead of the intended legitimate program.
 
+## Aliases
+
+```
+
+```
+
 ## Additional Attributes
 
 * Bypass: None
 * Effective Permissions: None
-* Network: intentionally left blank
+* Network: None
 * Permissions: ['User', 'Administrator']
 * Platforms: ['Windows']
-* Remote: intentionally left blank
+* Remote: None
 * Type: attack-pattern
 * Wiki: https://attack.mitre.org/techniques/T1023
 
@@ -86,7 +92,12 @@ powershell/persistence/userland/backdoor_lnk
 ## Potential Detections
 
 ```json
-
+[{'data_source': ['4688', 'Process Execution']},
+ {'data_source': ['4688 ', 'Process CMD Line']},
+ {'data_source': ['4663', 'File monitoring']},
+ {'data_source': ['4688', 'Process Execution']},
+ {'data_source': ['4688 ', 'Process CMD Line']},
+ {'data_source': ['4663', 'File monitoring']}]
 ```
 
 ## Potential Queries
@@ -98,7 +109,8 @@ powershell/persistence/userland/backdoor_lnk
 ## Raw Dataset
 
 ```json
-[{'Atomic Red Team Test - Shortcut Modification': {'atomic_tests': [{'description': 'This '
+[{'Atomic Red Team Test - Shortcut Modification': {'atomic_tests': [{'auto_generated_guid': 'ce4fc678-364f-4282-af16-2fb4c78005ce',
+                                                                     'description': 'This '
                                                                                     'test '
                                                                                     'to '
                                                                                     'simulate '
@@ -161,7 +173,8 @@ powershell/persistence/userland/backdoor_lnk
                                                                      'name': 'Shortcut '
                                                                              'Modification',
                                                                      'supported_platforms': ['windows']},
-                                                                    {'description': 'LNK '
+                                                                    {'auto_generated_guid': 'cfdc954d-4bb0-4027-875b-a1893ce406f2',
+                                                                     'description': 'LNK '
                                                                                     'file '
                                                                                     'to '
                                                                                     'launch '

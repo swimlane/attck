@@ -24,7 +24,6 @@
 ## Aliases
 
 ```
-intentionally left blank
 Leviathan
 TEMP.Jumper
 APT40

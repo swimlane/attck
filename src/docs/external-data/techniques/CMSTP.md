@@ -11,14 +11,20 @@ Adversaries may supply CMSTP.exe with INF files infected with malicious commands
 
 CMSTP.exe can also be abused to [Bypass User Account Control](https://attack.mitre.org/techniques/T1088) and execute arbitrary commands from a malicious INF through an auto-elevated COM interface. (Citation: MSitPros CMSTP Aug 2017) (Citation: GitHub Ultimate AppLocker Bypass List) (Citation: Endurant CMSTP July 2018)
 
+## Aliases
+
+```
+
+```
+
 ## Additional Attributes
 
 * Bypass: ['Application whitelisting', 'Anti-virus']
 * Effective Permissions: None
-* Network: intentionally left blank
+* Network: None
 * Permissions: ['User']
 * Platforms: ['Windows']
-* Remote: intentionally left blank
+* Remote: None
 * Type: attack-pattern
 * Wiki: https://attack.mitre.org/techniques/T1191
 
@@ -191,7 +197,11 @@ ShortSvcName = "Micropoor"
                            'attack.t1191',
                            'attack.g0069',
                            'car.2019-04-001'],
-                  'title': 'CMSTP UAC Bypass via COM Object Access'}}]
+                  'title': 'CMSTP UAC Bypass via COM Object Access'}},
+ {'data_source': ['4688', 'Process Execution']},
+ {'data_source': ['4688 ', 'Process CMD Line']},
+ {'data_source': ['4688', 'Process Execution']},
+ {'data_source': ['4688 ', 'Process CMD Line']}]
 ```
 
 ## Potential Queries
@@ -205,7 +215,8 @@ ShortSvcName = "Micropoor"
 ## Raw Dataset
 
 ```json
-[{'Atomic Red Team Test - CMSTP': {'atomic_tests': [{'dependencies': [{'description': 'INF '
+[{'Atomic Red Team Test - CMSTP': {'atomic_tests': [{'auto_generated_guid': '34e63321-9683-496b-bbc1-7566bc55e624',
+                                                     'dependencies': [{'description': 'INF '
                                                                                       'file '
                                                                                       'must '
                                                                                       'exist '
@@ -262,7 +273,8 @@ ShortSvcName = "Micropoor"
                                                      'name': 'CMSTP Executing '
                                                              'Remote Scriptlet',
                                                      'supported_platforms': ['windows']},
-                                                    {'dependencies': [{'description': 'INF '
+                                                    {'auto_generated_guid': '748cb4f6-2fb3-4e97-b7ad-b22635a09ab0',
+                                                     'dependencies': [{'description': 'INF '
                                                                                       'file '
                                                                                       'must '
                                                                                       'exist '

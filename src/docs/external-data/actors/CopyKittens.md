@@ -24,7 +24,6 @@ _/ ___\/  _ \\____ <   |  ||  |/ /  \   __\   __\/ __ \ /    \ /  ___/
 ## Aliases
 
 ```
-intentionally left blank
 CopyKittens
 ```
 

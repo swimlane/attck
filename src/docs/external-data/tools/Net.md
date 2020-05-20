@@ -12,7 +12,8 @@
 ## Aliases
 
 ```
-intentionally left blank
+Net
+net.exe
 ```
 
 ## Additional Attributes

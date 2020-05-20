@@ -13,14 +13,20 @@ Another example is using the Windows <code>copy /b</code> command to reassemble 
 
 Payloads may be compressed, archived, or encrypted in order to avoid detection.  These payloads may be used with [Obfuscated Files or Information](https://attack.mitre.org/techniques/T1027) during Initial Access or later to mitigate detection. Sometimes a user's action may be required to open it for deobfuscation or decryption as part of [User Execution](https://attack.mitre.org/techniques/T1204). The user may also be required to input a password to open a password protected compressed/encrypted file that was provided by the adversary. (Citation: Volexity PowerDuke November 2016) Adversaries may also used compressed or archived scripts, such as Javascript.
 
+## Aliases
+
+```
+
+```
+
 ## Additional Attributes
 
 * Bypass: ['Anti-virus', 'Host intrusion prevention systems', 'Signature-based detection', 'Network intrusion detection system']
 * Effective Permissions: None
-* Network: intentionally left blank
+* Network: None
 * Permissions: ['User']
 * Platforms: ['Windows']
-* Remote: intentionally left blank
+* Remote: None
 * Type: attack-pattern
 * Wiki: https://attack.mitre.org/techniques/T1140
 
@@ -164,7 +170,13 @@ certutil.exe|-decode|-urlcache
                                  'https://medium.com/tsscyber/pentesting-and-hta-bypassing-powershell-constrained-language-mode-53a42856c997'],
                   'status': 'experimental',
                   'tags': ['attack.defense_evasion', 'attack.t1140'],
-                  'title': 'MSHTA Suspicious Execution 01'}}]
+                  'title': 'MSHTA Suspicious Execution 01'}},
+ {'data_source': ['4688 ', 'Process CMD Line']},
+ {'data_source': ['4688', 'Process Execution']},
+ {'data_source': ['4663', 'File monitoring']},
+ {'data_source': ['4688 ', 'Process CMD Line']},
+ {'data_source': ['4688', 'Process Execution']},
+ {'data_source': ['4663', 'File monitoring']}]
 ```
 
 ## Potential Queries
@@ -179,7 +191,8 @@ certutil.exe|-decode|-urlcache
 ## Raw Dataset
 
 ```json
-[{'Atomic Red Team Test - Deobfuscate/Decode Files Or Information': {'atomic_tests': [{'description': 'Encode/Decode '
+[{'Atomic Red Team Test - Deobfuscate/Decode Files Or Information': {'atomic_tests': [{'auto_generated_guid': 'dc6fe391-69e6-4506-bd06-ea5eeb4082f8',
+                                                                                       'description': 'Encode/Decode '
                                                                                                       'executable\n'
                                                                                                       'Upon '
                                                                                                       'execution '
@@ -222,7 +235,8 @@ certutil.exe|-decode|-urlcache
                                                                                                'Or '
                                                                                                'Information',
                                                                                        'supported_platforms': ['windows']},
-                                                                                      {'description': 'Rename '
+                                                                                      {'auto_generated_guid': '71abc534-3c05-4d0c-80f7-cbe93cb2aa94',
+                                                                                       'description': 'Rename '
                                                                                                       'certutil '
                                                                                                       'and '
                                                                                                       'decode '

@@ -7,14 +7,20 @@
 
 > The Component Object Model (COM) is a system within Windows to enable interaction between software components through the operating system. (Citation: Microsoft Component Object Model) Adversaries can use this system to insert malicious code that can be executed in place of legitimate software through hijacking the COM references and relationships as a means for persistence. Hijacking a COM object requires a change in the Windows Registry to replace a reference to a legitimate system component which may cause that component to not work when executed. When that system component is executed through normal system operation the adversary's code will be executed instead. (Citation: GDATA COM Hijacking) An adversary is likely to hijack objects that are used frequently enough to maintain a consistent level of persistence, but are unlikely to break noticeable functionality within the system as to avoid system instability that could lead to detection.
 
+## Aliases
+
+```
+
+```
+
 ## Additional Attributes
 
 * Bypass: ['Autoruns Analysis']
 * Effective Permissions: None
-* Network: intentionally left blank
+* Network: None
 * Permissions: ['User']
 * Platforms: ['Windows']
-* Remote: intentionally left blank
+* Remote: None
 * Type: attack-pattern
 * Wiki: https://attack.mitre.org/techniques/T1122
 
@@ -179,7 +185,15 @@ POWERSHELL -c 'Start-Sleep 1'
                   'references': ['https://bohops.com/2018/08/18/abusing-the-com-registry-structure-part-2-loading-techniques-for-evasion-and-persistence/'],
                   'status': 'experimental',
                   'tags': ['attack.persistence', 'attack.t1122'],
-                  'title': 'Windows Registry Persistence - COM key linking'}}]
+                  'title': 'Windows Registry Persistence - COM key linking'}},
+ {'data_source': ['4688 ', 'Process CMD Line']},
+ {'data_source': ['DLL monitoring']},
+ {'data_source': ['Loaded DLLs']},
+ {'data_source': ['LOG-MD', 'Windows Registry', 'Compare']},
+ {'data_source': ['LOG-MD', 'Windows Registry', 'Compare']},
+ {'data_source': ['4688 ', 'Process CMD Line']},
+ {'data_source': ['Sysmon - ID 7', 'DLL monitoring']},
+ {'data_source': ['Sysmon - ID 7', 'Loaded DLLs']}]
 ```
 
 ## Potential Queries
@@ -194,7 +208,8 @@ POWERSHELL -c 'Start-Sleep 1'
 ## Raw Dataset
 
 ```json
-[{'Atomic Red Team Test - Component Object Model (COM) Hijacking': {'atomic_tests': [{'dependencies': [{'description': '#{file_name} '
+[{'Atomic Red Team Test - Component Object Model (COM) Hijacking': {'atomic_tests': [{'auto_generated_guid': '9d5f89dc-c3a5-4f8a-a4fc-a6ed02e7cb5a',
+                                                                                      'dependencies': [{'description': '#{file_name} '
                                                                                                                        'must '
                                                                                                                        'be '
                                                                                                                        'present\n',
@@ -419,7 +434,8 @@ POWERSHELL -c 'Start-Sleep 1'
                                                                                               'scope '
                                                                                               'COR_PROFILER',
                                                                                       'supported_platforms': ['windows']},
-                                                                                     {'dependencies': [{'description': '#{file_name} '
+                                                                                     {'auto_generated_guid': 'f373b482-48c8-4ce4-85ed-d40c8b3f7310',
+                                                                                      'dependencies': [{'description': '#{file_name} '
                                                                                                                        'must '
                                                                                                                        'be '
                                                                                                                        'present\n',
@@ -633,7 +649,8 @@ POWERSHELL -c 'Start-Sleep 1'
                                                                                               'Scope '
                                                                                               'COR_PROFILER',
                                                                                       'supported_platforms': ['windows']},
-                                                                                     {'dependencies': [{'description': '#{file_name} '
+                                                                                     {'auto_generated_guid': '79d57242-bbef-41db-b301-9d01d9f6e817',
+                                                                                      'dependencies': [{'description': '#{file_name} '
                                                                                                                        'must '
                                                                                                                        'be '
                                                                                                                        'present\n',

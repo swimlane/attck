@@ -31,7 +31,6 @@ _____    _____
 ## Aliases
 
 ```
-intentionally left blank
 Sandworm Team
 Quedagh
 VOODOO BEAR

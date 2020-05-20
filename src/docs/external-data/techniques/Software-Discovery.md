@@ -7,14 +7,20 @@
 
 > Adversaries may attempt to get a listing of non-security related software that is installed on the system. Adversaries may use the information from [Software Discovery](https://attack.mitre.org/techniques/T1518) during automated discovery to shape follow-on behaviors, including whether or not the adversary fully infects the target and/or attempts specific actions.
 
+## Aliases
+
+```
+
+```
+
 ## Additional Attributes
 
 * Bypass: None
 * Effective Permissions: None
-* Network: intentionally left blank
+* Network: None
 * Permissions: ['User', 'Administrator']
 * Platforms: ['Linux', 'macOS', 'Windows']
-* Remote: intentionally left blank
+* Remote: None
 * Type: attack-pattern
 * Wiki: https://attack.mitre.org/techniques/T1518
 
@@ -68,7 +74,8 @@ Get-ItemProperty HKLM:\Software\Wow6432Node\Microsoft\Windows\CurrentVersion\Uni
 ## Raw Dataset
 
 ```json
-[{'Atomic Red Team Test - Software Discovery': {'atomic_tests': [{'description': 'Query '
+[{'Atomic Red Team Test - Software Discovery': {'atomic_tests': [{'auto_generated_guid': '68981660-6670-47ee-a5fa-7e74806420a4',
+                                                                  'description': 'Query '
                                                                                  'the '
                                                                                  'registry '
                                                                                  'to '
@@ -108,7 +115,8 @@ Get-ItemProperty HKLM:\Software\Wow6432Node\Microsoft\Windows\CurrentVersion\Uni
                                                                           'Browser '
                                                                           'Version',
                                                                   'supported_platforms': ['windows']},
-                                                                 {'description': 'Query '
+                                                                 {'auto_generated_guid': 'c49978f6-bd6e-4221-ad2c-9e3e30cc1e3b',
+                                                                  'description': 'Query '
                                                                                  'the '
                                                                                  'registry '
                                                                                  'to '

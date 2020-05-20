@@ -11,14 +11,20 @@ Adversaries may modify these profiles to include arbitrary commands, functions, 
 
 An adversary may also be able to escalate privileges if a script in a PowerShell profile is loaded and executed by an account with higher privileges, such as a domain administrator. (Citation: Wits End and Shady PowerShell Profiles)
 
+## Aliases
+
+```
+
+```
+
 ## Additional Attributes
 
 * Bypass: None
 * Effective Permissions: None
-* Network: intentionally left blank
+* Network: None
 * Permissions: ['User', 'Administrator']
 * Platforms: ['Windows']
-* Remote: intentionally left blank
+* Remote: None
 * Type: attack-pattern
 * Wiki: https://attack.mitre.org/techniques/T1504
 
@@ -65,7 +71,8 @@ powershell -Command exit
 ## Raw Dataset
 
 ```json
-[{'Atomic Red Team Test - PowerShell Profile': {'atomic_tests': [{'dependencies': [{'description': 'Ensure '
+[{'Atomic Red Team Test - PowerShell Profile': {'atomic_tests': [{'auto_generated_guid': '090e5aa5-32b6-473b-a49b-21e843a56896',
+                                                                  'dependencies': [{'description': 'Ensure '
                                                                                                    'a '
                                                                                                    'powershell '
                                                                                                    'profile '

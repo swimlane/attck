@@ -15,14 +15,20 @@ Example utilities used to obtain this information are <code>dir</code> and <code
 
 In Mac and Linux, this kind of discovery is accomplished with the <code>ls</code>, <code>find</code>, and <code>locate</code> commands.
 
+## Aliases
+
+```
+
+```
+
 ## Additional Attributes
 
 * Bypass: None
 * Effective Permissions: None
-* Network: intentionally left blank
+* Network: None
 * Permissions: ['User', 'Administrator', 'SYSTEM']
 * Platforms: ['Linux', 'macOS', 'Windows']
-* Remote: intentionally left blank
+* Remote: None
 * Type: attack-pattern
 * Wiki: https://attack.mitre.org/techniques/T1083
 
@@ -137,7 +143,12 @@ powershell/situational_awareness/network/powerview/get_fileserver
 ## Potential Detections
 
 ```json
-
+[{'data_source': ['4663', 'File monitoring']},
+ {'data_source': ['4688 ', 'Process CMD Line']},
+ {'data_source': ['4688', 'Process Execution']},
+ {'data_source': ['4663', 'File monitoring']},
+ {'data_source': ['4688 ', 'Process CMD Line']},
+ {'data_source': ['4688', 'Process Execution']}]
 ```
 
 ## Potential Queries
@@ -172,7 +183,8 @@ powershell/situational_awareness/network/powerview/get_fileserver
 ## Raw Dataset
 
 ```json
-[{'Atomic Red Team Test - File and Directory Discovery': {'atomic_tests': [{'description': 'Find '
+[{'Atomic Red Team Test - File and Directory Discovery': {'atomic_tests': [{'auto_generated_guid': '0e36303b-6762-4500-b003-127743b80ba6',
+                                                                            'description': 'Find '
                                                                                            'or '
                                                                                            'discover '
                                                                                            'files '
@@ -245,7 +257,8 @@ powershell/situational_awareness/network/powerview/get_fileserver
                                                                                     'Discovery '
                                                                                     '(cmd.exe)',
                                                                             'supported_platforms': ['windows']},
-                                                                           {'description': 'Find '
+                                                                           {'auto_generated_guid': '2158908e-b7ef-4c21-8a83-3ce4dd05a924',
+                                                                            'description': 'Find '
                                                                                            'or '
                                                                                            'discover '
                                                                                            'files '
@@ -276,7 +289,8 @@ powershell/situational_awareness/network/powerview/get_fileserver
                                                                                     'Discovery '
                                                                                     '(PowerShell)',
                                                                             'supported_platforms': ['windows']},
-                                                                           {'description': 'Find '
+                                                                           {'auto_generated_guid': 'ffc8b249-372a-4b74-adcd-e4c0430842de',
+                                                                            'description': 'Find '
                                                                                            'or '
                                                                                            'discover '
                                                                                            'files '
@@ -356,7 +370,8 @@ powershell/situational_awareness/network/powerview/get_fileserver
                                                                                     'Discovery',
                                                                             'supported_platforms': ['macos',
                                                                                                     'linux']},
-                                                                           {'description': 'Find '
+                                                                           {'auto_generated_guid': '13c5e1ae-605b-46c4-a79f-db28c77ff24e',
+                                                                            'description': 'Find '
                                                                                            'or '
                                                                                            'discover '
                                                                                            'files '

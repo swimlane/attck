@@ -13,14 +13,20 @@ Adversaries may also employ a keylogger to similarly target other hardware token
 
 Other methods of 2FA may be intercepted and used by an adversary to authenticate. It is common for one-time codes to be sent via out-of-band communications (email, SMS). If the device and/or service is not secured, then it may be vulnerable to interception. Although primarily focused on by cyber criminals, these authentication mechanisms have been targeted by advanced actors. (Citation: Operation Emmental)
 
+## Aliases
+
+```
+
+```
+
 ## Additional Attributes
 
 * Bypass: None
 * Effective Permissions: None
-* Network: intentionally left blank
+* Network: None
 * Permissions: ['Administrator', 'SYSTEM']
 * Platforms: ['Linux', 'Windows', 'macOS']
-* Remote: intentionally left blank
+* Remote: None
 * Type: attack-pattern
 * Wiki: https://attack.mitre.org/techniques/T1111
 
@@ -39,7 +45,7 @@ Other methods of 2FA may be intercepted and used by an adversary to authenticate
 ## Potential Detections
 
 ```json
-
+[{'data_source': ['MFA']}]
 ```
 
 ## Potential Queries

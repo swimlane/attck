@@ -9,14 +9,20 @@
 
 Adversaries may use InstallUtil to proxy execution of code through a trusted Windows utility. InstallUtil may also be used to bypass process whitelisting through use of attributes within the binary that execute the class decorated with the attribute <code>[System.ComponentModel.RunInstaller(true)]</code>. (Citation: LOLBAS Installutil)
 
+## Aliases
+
+```
+
+```
+
 ## Additional Attributes
 
 * Bypass: ['Process whitelisting', 'Digital Certificate Validation']
 * Effective Permissions: None
-* Network: intentionally left blank
+* Network: None
 * Permissions: ['User']
 * Platforms: ['Windows']
-* Remote: intentionally left blank
+* Remote: None
 * Type: attack-pattern
 * Wiki: https://attack.mitre.org/techniques/T1118
 
@@ -1779,7 +1785,11 @@ EventID: 4688 # security logs, windows server 2012 above configuration audit pol
 ## Potential Detections
 
 ```json
-
+[{'data_source': ['4688', 'Process Execution']},
+ {'data_source': ['4688 ', 'Process CMD Line']},
+ {'data_source': ['ID 1 & 7', 'Sysmon']},
+ {'data_source': ['4688', 'Process Execution']},
+ {'data_source': ['4688 ', 'Process CMD Line']}]
 ```
 
 ## Potential Queries
@@ -1795,7 +1805,8 @@ EventID: 4688 # security logs, windows server 2012 above configuration audit pol
 ## Raw Dataset
 
 ```json
-[{'Atomic Red Team Test - InstallUtil': {'atomic_tests': [{'dependencies': [{'description': 'InstallUtil '
+[{'Atomic Red Team Test - InstallUtil': {'atomic_tests': [{'auto_generated_guid': 'ffd9c807-d402-47d2-879d-f915cf2a3a94',
+                                                           'dependencies': [{'description': 'InstallUtil '
                                                                                             'test '
                                                                                             'harness '
                                                                                             'script '
@@ -2000,7 +2011,8 @@ EventID: 4688 # security logs, windows server 2012 above configuration audit pol
                                                                    'method '
                                                                    'call',
                                                            'supported_platforms': ['windows']},
-                                                          {'dependencies': [{'description': 'InstallUtil '
+                                                          {'auto_generated_guid': 'd43a5bde-ae28-4c55-a850-3f4c80573503',
+                                                           'dependencies': [{'description': 'InstallUtil '
                                                                                             'test '
                                                                                             'harness '
                                                                                             'script '
@@ -2208,7 +2220,8 @@ EventID: 4688 # security logs, windows server 2012 above configuration audit pol
                                                                    'method '
                                                                    'call',
                                                            'supported_platforms': ['windows']},
-                                                          {'dependencies': [{'description': 'InstallUtil '
+                                                          {'auto_generated_guid': '9b7a7cfc-dd2e-43f5-a885-c0a3c270dd93',
+                                                           'dependencies': [{'description': 'InstallUtil '
                                                                                             'test '
                                                                                             'harness '
                                                                                             'script '
@@ -2415,7 +2428,8 @@ EventID: 4688 # security logs, windows server 2012 above configuration audit pol
                                                                    'method '
                                                                    'call',
                                                            'supported_platforms': ['windows']},
-                                                          {'dependencies': [{'description': 'InstallUtil '
+                                                          {'auto_generated_guid': '9f9968a6-601a-46ca-b7b7-6d4fe0f98f0b',
+                                                           'dependencies': [{'description': 'InstallUtil '
                                                                                             'test '
                                                                                             'harness '
                                                                                             'script '
@@ -2620,7 +2634,8 @@ EventID: 4688 # security logs, windows server 2012 above configuration audit pol
                                                                    'method '
                                                                    'call',
                                                            'supported_platforms': ['windows']},
-                                                          {'dependencies': [{'description': 'InstallUtil '
+                                                          {'auto_generated_guid': '34428cfa-8e38-41e5-aff4-9e1f8f3a7b4b',
+                                                           'dependencies': [{'description': 'InstallUtil '
                                                                                             'test '
                                                                                             'harness '
                                                                                             'script '
@@ -2825,7 +2840,8 @@ EventID: 4688 # security logs, windows server 2012 above configuration audit pol
                                                                    'call - /U '
                                                                    'variant',
                                                            'supported_platforms': ['windows']},
-                                                          {'dependencies': [{'description': 'InstallUtil '
+                                                          {'auto_generated_guid': '06d9deba-f732-48a8-af8e-bdd6e4d98c1d',
+                                                           'dependencies': [{'description': 'InstallUtil '
                                                                                             'test '
                                                                                             'harness '
                                                                                             'script '
@@ -3033,7 +3049,8 @@ EventID: 4688 # security logs, windows server 2012 above configuration audit pol
                                                                    "/action=uninstall' "
                                                                    'variant',
                                                            'supported_platforms': ['windows']},
-                                                          {'dependencies': [{'description': 'InstallUtil '
+                                                          {'auto_generated_guid': '5a683850-1145-4326-a0e5-e91ced3c6022',
+                                                           'dependencies': [{'description': 'InstallUtil '
                                                                                             'test '
                                                                                             'harness '
                                                                                             'script '
@@ -3232,7 +3249,8 @@ EventID: 4688 # security logs, windows server 2012 above configuration audit pol
                                                                    'method '
                                                                    'call',
                                                            'supported_platforms': ['windows']},
-                                                          {'dependencies': [{'description': 'InstallUtil '
+                                                          {'auto_generated_guid': '559e6d06-bb42-4307-bff7-3b95a8254bad',
+                                                           'dependencies': [{'description': 'InstallUtil '
                                                                                             'test '
                                                                                             'harness '
                                                                                             'script '

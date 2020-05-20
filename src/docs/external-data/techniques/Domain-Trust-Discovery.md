@@ -7,14 +7,20 @@
 
 > Adversaries may attempt to gather information on domain trust relationships that may be used to identify [Lateral Movement](https://attack.mitre.org/tactics/TA0008) opportunities in Windows multi-domain/forest environments. Domain trusts provide a mechanism for a domain to allow access to resources based on the authentication procedures of another domain.(Citation: Microsoft Trusts) Domain trusts allow the users of the trusted domain to access resources in the trusting domain. The information discovered may help the adversary conduct [SID-History Injection](https://attack.mitre.org/techniques/T1178), [Pass the Ticket](https://attack.mitre.org/techniques/T1097), and [Kerberoasting](https://attack.mitre.org/techniques/T1208).(Citation: AdSecurity Forging Trust Tickets)(Citation: Harmj0y Domain Trusts) Domain trusts can be enumerated using the DSEnumerateDomainTrusts() Win32 API call, .NET methods, and LDAP.(Citation: Harmj0y Domain Trusts) The Windows utility [Nltest](https://attack.mitre.org/software/S0359) is known to be used by adversaries to enumerate domain trusts.(Citation: Microsoft Operation Wilysupply)
 
+## Aliases
+
+```
+
+```
+
 ## Additional Attributes
 
 * Bypass: None
 * Effective Permissions: None
-* Network: intentionally left blank
+* Network: None
 * Permissions: ['User']
 * Platforms: ['Windows']
-* Remote: intentionally left blank
+* Remote: None
 * Type: attack-pattern
 * Wiki: https://attack.mitre.org/techniques/T1482
 
@@ -78,7 +84,8 @@ Get-ADGroupMember Administrators -Recursive
 ## Raw Dataset
 
 ```json
-[{'Atomic Red Team Test - Domain Trust Discovery': {'atomic_tests': [{'description': 'Uses '
+[{'Atomic Red Team Test - Domain Trust Discovery': {'atomic_tests': [{'auto_generated_guid': '4700a710-c821-4e17-a3ec-9e4c81d6845f',
+                                                                      'description': 'Uses '
                                                                                      'the '
                                                                                      'dsquery '
                                                                                      'command '
@@ -116,7 +123,8 @@ Get-ADGroupMember Administrators -Recursive
                                                                               'with '
                                                                               'dsquery',
                                                                       'supported_platforms': ['windows']},
-                                                                     {'description': 'Uses '
+                                                                     {'auto_generated_guid': '2e22641d-0498-48d2-b9ff-c71e496ccdbe',
+                                                                      'description': 'Uses '
                                                                                      'the '
                                                                                      'nltest '
                                                                                      'command '
@@ -160,7 +168,8 @@ Get-ADGroupMember Administrators -Recursive
                                                                               'with '
                                                                               'nltest',
                                                                       'supported_platforms': ['windows']},
-                                                                     {'description': 'Use '
+                                                                     {'auto_generated_guid': 'c58fbc62-8a62-489e-8f2d-3565d7d96f30',
+                                                                      'description': 'Use '
                                                                                      'powershell '
                                                                                      'to '
                                                                                      'enumerate '

@@ -30,7 +30,6 @@ _______
 ## Aliases
 
 ```
-intentionally left blank
 BRONZE BUTLER
 REDBALDKNIGHT
 Tick

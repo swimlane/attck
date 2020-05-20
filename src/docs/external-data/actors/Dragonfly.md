@@ -26,7 +26,6 @@ A similar group emerged in 2015 and was identified by Symantec as [Dragonfly 2.0
 ## Aliases
 
 ```
-intentionally left blank
 Dragonfly
 Energetic Bear
 ```

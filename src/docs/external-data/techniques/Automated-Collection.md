@@ -9,14 +9,20 @@
 
 This technique may incorporate use of other techniques such as [File and Directory Discovery](https://attack.mitre.org/techniques/T1083) and [Remote File Copy](https://attack.mitre.org/techniques/T1105) to identify and move files.
 
+## Aliases
+
+```
+
+```
+
 ## Additional Attributes
 
 * Bypass: None
 * Effective Permissions: None
-* Network: intentionally left blank
+* Network: None
 * Permissions: ['User']
 * Platforms: ['Linux', 'macOS', 'Windows']
-* Remote: intentionally left blank
+* Remote: None
 * Type: attack-pattern
 * Wiki: https://attack.mitre.org/techniques/T1119
 
@@ -76,7 +82,12 @@ cmd.exe dir c: /b /s .docx | findstr /e .docx
 ## Potential Detections
 
 ```json
-
+[{'data_source': ['4688 ', 'Process CMD Line']},
+ {'data_source': ['4663', 'File monitoring']},
+ {'data_source': ['Data loss prevention']},
+ {'data_source': ['4688 ', 'Process CMD Line']},
+ {'data_source': ['4663', 'File monitoring']},
+ {'data_source': ['Data loss prevention']}]
 ```
 
 ## Potential Queries
@@ -88,7 +99,8 @@ cmd.exe dir c: /b /s .docx | findstr /e .docx
 ## Raw Dataset
 
 ```json
-[{'Atomic Red Team Test - Automated Collection': {'atomic_tests': [{'description': 'Automated '
+[{'Atomic Red Team Test - Automated Collection': {'atomic_tests': [{'auto_generated_guid': 'cb379146-53f1-43e0-b884-7ce2c635ff5b',
+                                                                    'description': 'Automated '
                                                                                    'Collection. '
                                                                                    'Upon '
                                                                                    'execution, '
@@ -142,7 +154,8 @@ cmd.exe dir c: /b /s .docx | findstr /e .docx
                                                                             'Command '
                                                                             'Prompt',
                                                                     'supported_platforms': ['windows']},
-                                                                   {'description': 'Automated '
+                                                                   {'auto_generated_guid': '634bd9b9-dc83-4229-b19f-7f83ba9ad313',
+                                                                    'description': 'Automated '
                                                                                    'Collection. '
                                                                                    'Upon '
                                                                                    'execution, '
@@ -190,7 +203,8 @@ cmd.exe dir c: /b /s .docx | findstr /e .docx
                                                                             'Collection '
                                                                             'PowerShell',
                                                                     'supported_platforms': ['windows']},
-                                                                   {'description': 'collect '
+                                                                   {'auto_generated_guid': 'c3f6d794-50dd-482f-b640-0384fbb7db26',
+                                                                    'description': 'collect '
                                                                                    'information '
                                                                                    'for '
                                                                                    'exfiltration. '
@@ -241,7 +255,8 @@ cmd.exe dir c: /b /s .docx | findstr /e .docx
                                                                             'with '
                                                                             'PowerShell',
                                                                     'supported_platforms': ['windows']},
-                                                                   {'description': 'collect '
+                                                                   {'auto_generated_guid': 'aa1180e2-f329-4e1e-8625-2472ec0bfaf3',
+                                                                    'description': 'collect '
                                                                                    'information '
                                                                                    'for '
                                                                                    'exfiltration. '

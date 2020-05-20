@@ -11,14 +11,20 @@ As an example, an adversary may weaponize Windows Shortcut Files (.lnk) to bait 
 
 While User Execution frequently occurs shortly after Initial Access it may occur at other phases of an intrusion, such as when an adversary places a file in a shared directory or on a user's desktop hoping that a user will click on it.
 
+## Aliases
+
+```
+
+```
+
 ## Additional Attributes
 
 * Bypass: None
 * Effective Permissions: None
-* Network: intentionally left blank
+* Network: None
 * Permissions: ['User']
 * Platforms: ['Linux', 'Windows', 'macOS']
-* Remote: intentionally left blank
+* Remote: None
 * Type: attack-pattern
 * Wiki: https://attack.mitre.org/techniques/T1204
 
@@ -163,7 +169,12 @@ Invoke-MalDoc $macrocode "#{ms_office_version}" "#{ms_product}"
 ## Potential Detections
 
 ```json
-
+[{'data_source': ['4688 ', 'Process CMD Line']},
+ {'data_source': ['4688', 'Process Execution']},
+ {'data_source': ['Anti-virus']},
+ {'data_source': ['4688 ', 'Process CMD Line']},
+ {'data_source': ['4688', 'Process Execution']},
+ {'data_source': ['Anti-virus']}]
 ```
 
 ## Potential Queries
@@ -175,7 +186,8 @@ Invoke-MalDoc $macrocode "#{ms_office_version}" "#{ms_product}"
 ## Raw Dataset
 
 ```json
-[{'Atomic Red Team Test - User Execution': {'atomic_tests': [{'dependencies': [{'description': 'Test '
+[{'Atomic Red Team Test - User Execution': {'atomic_tests': [{'auto_generated_guid': '8bebc690-18c7-4549-bc98-210f7019efff',
+                                                              'dependencies': [{'description': 'Test '
                                                                                                'Requires '
                                                                                                'MS '
                                                                                                'Office '
@@ -348,7 +360,8 @@ Invoke-MalDoc $macrocode "#{ms_office_version}" "#{ms_product}"
                                                                       'Macro '
                                                                       'Execution',
                                                               'supported_platforms': ['windows']},
-                                                             {'description': 'Uses '
+                                                             {'auto_generated_guid': '3f3af983-118a-4fa1-85d3-ba4daa739d80',
+                                                              'description': 'Uses '
                                                                              'cscript '
                                                                              '//E:jscript '
                                                                              'to '
@@ -424,7 +437,8 @@ Invoke-MalDoc $macrocode "#{ms_office_version}" "#{ms_product}"
                                                                       'Payload '
                                                                       'Download',
                                                               'supported_platforms': ['windows']},
-                                                             {'dependencies': [{'description': 'Test '
+                                                             {'auto_generated_guid': '0330a5d2-a45a-4272-a9ee-e364411c4b18',
+                                                              'dependencies': [{'description': 'Test '
                                                                                                'Requires '
                                                                                                'MS '
                                                                                                'Office '
@@ -562,7 +576,8 @@ Invoke-MalDoc $macrocode "#{ms_office_version}" "#{ms_product}"
                                                                       'command '
                                                                       'execution',
                                                               'supported_platforms': ['windows']},
-                                                             {'dependencies': [{'description': 'Test '
+                                                             {'auto_generated_guid': 'add560ef-20d6-4011-a937-2c340f930911',
+                                                              'dependencies': [{'description': 'Test '
                                                                                                'Requires '
                                                                                                'MS '
                                                                                                'Office '

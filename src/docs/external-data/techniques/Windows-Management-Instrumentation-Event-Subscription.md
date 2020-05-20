@@ -7,14 +7,20 @@
 
 > Windows Management Instrumentation (WMI) can be used to install event filters, providers, consumers, and bindings that execute code when a defined event occurs. Adversaries may use the capabilities of WMI to subscribe to an event and execute arbitrary code when that event occurs, providing persistence on a system. Adversaries may attempt to evade detection of this technique by compiling WMI scripts into Windows Management Object (MOF) files (.mof extension). (Citation: Dell WMI Persistence) Examples of events that may be subscribed to are the wall clock time or the computer's uptime. (Citation: Kazanciyan 2014) Several threat groups have reportedly used this technique to maintain persistence. (Citation: Mandiant M-Trends 2015)
 
+## Aliases
+
+```
+
+```
+
 ## Additional Attributes
 
 * Bypass: None
 * Effective Permissions: None
-* Network: intentionally left blank
+* Network: None
 * Permissions: ['Administrator', 'SYSTEM']
 * Platforms: ['Windows']
-* Remote: intentionally left blank
+* Remote: None
 * Type: attack-pattern
 * Wiki: https://attack.mitre.org/techniques/T1084
 
@@ -144,7 +150,9 @@ powershell/persistence/elevated/wmi_updater
                                  'https://twitter.com/cglyer/status/1182391019633029120'],
                   'status': 'experimental',
                   'tags': ['attack.persistence', 'attack.t1084'],
-                  'title': 'WMI Backdoor Exchange Transport Agent'}}]
+                  'title': 'WMI Backdoor Exchange Transport Agent'}},
+ {'data_source': ['5861', 'WMI Objects']},
+ {'data_source': ['5861', 'WMI Objects']}]
 ```
 
 ## Potential Queries
@@ -156,7 +164,8 @@ powershell/persistence/elevated/wmi_updater
 ## Raw Dataset
 
 ```json
-[{'Atomic Red Team Test - Windows Management Instrumentation Event Subscription': {'atomic_tests': [{'description': 'Run '
+[{'Atomic Red Team Test - Windows Management Instrumentation Event Subscription': {'atomic_tests': [{'auto_generated_guid': '3c64f177-28e2-49eb-a799-d767b24dd1e0',
+                                                                                                     'description': 'Run '
                                                                                                                     'from '
                                                                                                                     'an '
                                                                                                                     'administrator '

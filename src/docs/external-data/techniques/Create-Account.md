@@ -17,14 +17,20 @@ The <code>net user</code> commands can be used to create a local or domain accou
 
 An adversary with access to a Global Admin account can create another account and assign it the Global Admin role for persistent access to the Office 365 tenant.(Citation: Microsoft O365 Admin Roles)(Citation: Microsoft Support O365 Add Another Admin, October 2019)
 
+## Aliases
+
+```
+
+```
+
 ## Additional Attributes
 
 * Bypass: None
 * Effective Permissions: None
-* Network: intentionally left blank
+* Network: None
 * Permissions: ['Administrator']
 * Platforms: ['Linux', 'macOS', 'Windows', 'AWS', 'GCP', 'Azure AD', 'Azure', 'Office 365']
-* Remote: intentionally left blank
+* Remote: None
 * Type: attack-pattern
 * Wiki: https://attack.mitre.org/techniques/T1136
 
@@ -212,7 +218,15 @@ useradd -o -u 0 -g 0 -M -d /root -s /bin/bash #{username}
                   'references': ['https://patrick-bareiss.com/detecting-local-user-creation-in-ad-with-sigma/'],
                   'status': 'experimental',
                   'tags': ['attack.persistence', 'attack.t1136'],
-                  'title': 'Detects local user creation'}}]
+                  'title': 'Detects local user creation'}},
+ {'data_source': ['4688', 'Process Execution']},
+ {'data_source': ['4688 ', 'Process CMD Line']},
+ {'data_source': ['4624', 'Authentication logs']},
+ {'data_source': ['Windows event logs']},
+ {'data_source': ['4688', 'Process Execution']},
+ {'data_source': ['4688 ', 'Process CMD Line']},
+ {'data_source': ['4624', 'Authentication logs']},
+ {'data_source': ['Windows event logs']}]
 ```
 
 ## Potential Queries
@@ -365,7 +379,8 @@ useradd -o -u 0 -g 0 -M -d /root -s /bin/bash #{username}
                                                                  'necessary '
                                                                  'groups.',
                                                   'Metasploit': ''}},
- {'Atomic Red Team Test - Create Account': {'atomic_tests': [{'description': 'Create '
+ {'Atomic Red Team Test - Create Account': {'atomic_tests': [{'auto_generated_guid': '40d8eabd-e394-46f6-8785-b9bfa1d011d2',
+                                                              'description': 'Create '
                                                                              'a '
                                                                              'user '
                                                                              'via '
@@ -398,7 +413,8 @@ useradd -o -u 0 -g 0 -M -d /root -s /bin/bash #{username}
                                                                       'Linux '
                                                                       'system',
                                                               'supported_platforms': ['linux']},
-                                                             {'description': 'Creates '
+                                                             {'auto_generated_guid': '01993ba5-1da3-4e15-a719-b690d4f0f0b2',
+                                                              'description': 'Creates '
                                                                              'a '
                                                                              'user '
                                                                              'on '
@@ -472,7 +488,8 @@ useradd -o -u 0 -g 0 -M -d /root -s /bin/bash #{username}
                                                                       'MacOS '
                                                                       'system',
                                                               'supported_platforms': ['macos']},
-                                                             {'description': 'Creates '
+                                                             {'auto_generated_guid': '6657864e-0323-4206-9344-ac9cd7265a4f',
+                                                              'description': 'Creates '
                                                                              'a '
                                                                              'new '
                                                                              'user '
@@ -547,7 +564,8 @@ useradd -o -u 0 -g 0 -M -d /root -s /bin/bash #{username}
                                                                       'command '
                                                                       'prompt',
                                                               'supported_platforms': ['windows']},
-                                                             {'description': 'Creates '
+                                                             {'auto_generated_guid': 'bc8be0ac-475c-4fbf-9b1d-9fffd77afbde',
+                                                              'description': 'Creates '
                                                                              'a '
                                                                              'new '
                                                                              'user '
@@ -613,7 +631,8 @@ useradd -o -u 0 -g 0 -M -d /root -s /bin/bash #{username}
                                                                       'user in '
                                                                       'PowerShell',
                                                               'supported_platforms': ['windows']},
-                                                             {'description': 'Creates '
+                                                             {'auto_generated_guid': 'a1040a30-d28b-4eda-bd99-bb2861a4616c',
+                                                              'description': 'Creates '
                                                                              'a '
                                                                              'new '
                                                                              'user '

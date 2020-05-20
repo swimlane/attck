@@ -9,14 +9,20 @@
 
 Adversaries likely use this technique as a means of masking actions they perform under a legitimate, trusted system or software process.
 
+## Aliases
+
+```
+
+```
+
 ## Additional Attributes
 
 * Bypass: ['Process whitelisting', 'Anti-virus']
 * Effective Permissions: None
-* Network: intentionally left blank
+* Network: None
 * Permissions: None
 * Platforms: ['Windows']
-* Remote: intentionally left blank
+* Remote: None
 * Type: attack-pattern
 * Wiki: https://attack.mitre.org/techniques/T1073
 
@@ -270,7 +276,13 @@ PathToAtomicsFolder\T1073\bin\GUP.exe
                   'references': ['https://www.fireeye.com/blog/threat-research/2018/09/apt10-targeting-japanese-corporations-using-updated-ttps.html'],
                   'status': 'experimental',
                   'tags': ['attack.defense_evasion', 'attack.t1073'],
-                  'title': 'Suspicious GUP Usage'}}]
+                  'title': 'Suspicious GUP Usage'}},
+ {'data_source': ['5156', 'Windows Firewall']},
+ {'data_source': ['4688', 'Process Execution']},
+ {'data_source': ['Sysmon - ID 7', 'Loaded DLLs']},
+ {'data_source': ['Sysmon - ID 7', 'Loaded DLLs']},
+ {'data_source': ['5156', 'Windows Firewall']},
+ {'data_source': ['4688', 'Process Execution']}]
 ```
 
 ## Potential Queries
@@ -282,7 +294,8 @@ PathToAtomicsFolder\T1073\bin\GUP.exe
 ## Raw Dataset
 
 ```json
-[{'Atomic Red Team Test - DLL Side-Loading': {'atomic_tests': [{'dependencies': [{'description': 'Gup.exe '
+[{'Atomic Red Team Test - DLL Side-Loading': {'atomic_tests': [{'auto_generated_guid': '65526037-7079-44a9-bda1-2cb624838040',
+                                                                'dependencies': [{'description': 'Gup.exe '
                                                                                                  'binary '
                                                                                                  'must '
                                                                                                  'exist '

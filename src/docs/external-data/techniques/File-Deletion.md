@@ -9,14 +9,20 @@
 
 There are tools available from the host operating system to perform cleanup, but adversaries may use other tools as well. Examples include native [cmd](https://attack.mitre.org/software/S0106) functions such as DEL, secure deletion tools such as Windows Sysinternals SDelete, or other third-party file deletion tools. (Citation: Trend Micro APT Attack Tools)
 
+## Aliases
+
+```
+
+```
+
 ## Additional Attributes
 
 * Bypass: ['Host forensic analysis']
 * Effective Permissions: None
-* Network: intentionally left blank
+* Network: None
 * Permissions: ['User']
 * Platforms: ['Linux', 'macOS', 'Windows']
-* Remote: intentionally left blank
+* Remote: None
 * Type: attack-pattern
 * Wiki: https://attack.mitre.org/techniques/T1107
 
@@ -131,7 +137,13 @@ shred -u test1.txt
                                  'https://www.hybrid-analysis.com/sample/ed01ebfbc9eb5bbea545af4d01bf5f1071661840480439c6e5babe8e080e41aa?environmentId=100'],
                   'status': 'experimental',
                   'tags': ['attack.defense_evasion', 'attack.t1107'],
-                  'title': 'Backup Catalog Deleted'}}]
+                  'title': 'Backup Catalog Deleted'}},
+ {'data_source': ['4688 ', 'Process CMD Line']},
+ {'data_source': ['4663', 'File monitoring']},
+ {'data_source': ['B9', 'Binary file metadata']},
+ {'data_source': ['4688 ', 'Process CMD Line']},
+ {'data_source': ['4663', 'File monitoring']},
+ {'data_source': ['LOG-MD - B9', 'Binary file metadata']}]
 ```
 
 ## Potential Queries
@@ -194,7 +206,8 @@ shred -u test1.txt
 ## Raw Dataset
 
 ```json
-[{'Atomic Red Team Test - File Deletion': {'atomic_tests': [{'description': 'Delete '
+[{'Atomic Red Team Test - File Deletion': {'atomic_tests': [{'auto_generated_guid': '562d737f-2fc6-4b09-8c2a-7f8ff0828480',
+                                                             'description': 'Delete '
                                                                             'a '
                                                                             'single '
                                                                             'file '
@@ -219,7 +232,8 @@ shred -u test1.txt
                                                                      'Linux/macOS',
                                                              'supported_platforms': ['linux',
                                                                                      'macos']},
-                                                            {'description': 'Recursively '
+                                                            {'auto_generated_guid': 'a415f17e-ce8d-4ce2-a8b4-83b674e7017e',
+                                                             'description': 'Recursively '
                                                                             'delete '
                                                                             'the '
                                                                             'temporary '
@@ -248,7 +262,8 @@ shred -u test1.txt
                                                                      'Linux/macOS',
                                                              'supported_platforms': ['linux',
                                                                                      'macos']},
-                                                            {'description': 'Use '
+                                                            {'auto_generated_guid': '039b4b10-2900-404b-b67f-4b6d49aa6499',
+                                                             'description': 'Use '
                                                                             'the '
                                                                             '`shred` '
                                                                             'command '
@@ -279,7 +294,8 @@ shred -u test1.txt
                                                                      'with '
                                                                      'shred',
                                                              'supported_platforms': ['linux']},
-                                                            {'dependencies': [{'description': 'The '
+                                                            {'auto_generated_guid': '861ea0b4-708a-4d17-848d-186c9c7f17e3',
+                                                             'dependencies': [{'description': 'The '
                                                                                               'file '
                                                                                               'to '
                                                                                               'delete '
@@ -362,7 +378,8 @@ shred -u test1.txt
                                                                      'Windows '
                                                                      'cmd',
                                                              'supported_platforms': ['windows']},
-                                                            {'dependencies': [{'description': 'The '
+                                                            {'auto_generated_guid': 'ded937c4-2add-42f7-9c2c-c742b7a98698',
+                                                             'dependencies': [{'description': 'The '
                                                                                               'file '
                                                                                               'to '
                                                                                               'delete '
@@ -445,7 +462,8 @@ shred -u test1.txt
                                                                      'Windows '
                                                                      'cmd',
                                                              'supported_platforms': ['windows']},
-                                                            {'dependencies': [{'description': 'The '
+                                                            {'auto_generated_guid': '9dee89bd-9a98-4c4f-9e2d-4256690b0e72',
+                                                             'dependencies': [{'description': 'The '
                                                                                               'file '
                                                                                               'to '
                                                                                               'delete '
@@ -525,7 +543,8 @@ shred -u test1.txt
                                                                      'Windows '
                                                                      'PowerShell',
                                                              'supported_platforms': ['windows']},
-                                                            {'dependencies': [{'description': 'The '
+                                                            {'auto_generated_guid': 'edd779e4-a509-4cba-8dfa-a112543dbfb1',
+                                                             'dependencies': [{'description': 'The '
                                                                                               'folder '
                                                                                               'to '
                                                                                               'delete '
@@ -609,7 +628,8 @@ shred -u test1.txt
                                                                      'Windows '
                                                                      'PowerShell',
                                                              'supported_platforms': ['windows']},
-                                                            {'description': 'This '
+                                                            {'auto_generated_guid': 'f3aa95fe-4f10-4485-ad26-abf22a764c52',
+                                                             'description': 'This '
                                                                             'test '
                                                                             'deletes '
                                                                             'the '
@@ -656,7 +676,8 @@ shred -u test1.txt
                                                                      'Filesystem '
                                                                      '- Linux',
                                                              'supported_platforms': ['linux']},
-                                                            {'description': 'Delete '
+                                                            {'auto_generated_guid': '36f96049-0ad7-4a5f-8418-460acaeb92fb',
+                                                             'description': 'Delete '
                                                                             'a '
                                                                             'single '
                                                                             'prefetch '
@@ -707,7 +728,8 @@ shred -u test1.txt
                                                                           'name': 'powershell'},
                                                              'name': 'Delete-PrefetchFile',
                                                              'supported_platforms': ['windows']},
-                                                            {'dependencies': [{'description': 'The '
+                                                            {'auto_generated_guid': '69f50a5f-967c-4327-a5bb-e1a9a9983785',
+                                                             'dependencies': [{'description': 'The '
                                                                                               'folder '
                                                                                               'to '
                                                                                               'delete '

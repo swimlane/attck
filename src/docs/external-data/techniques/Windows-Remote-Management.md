@@ -7,11 +7,17 @@
 
 > Windows Remote Management (WinRM) is the name of both a Windows service and a protocol that allows a user to interact with a remote system (e.g., run an executable, modify the Registry, modify services). (Citation: Microsoft WinRM) It may be called with the <code>winrm</code> command or by any number of programs such as PowerShell. (Citation: Jacobsen 2014)
 
+## Aliases
+
+```
+
+```
+
 ## Additional Attributes
 
 * Bypass: None
 * Effective Permissions: None
-* Network: intentionally left blank
+* Network: None
 * Permissions: ['User', 'Administrator']
 * Platforms: ['Windows']
 * Remote: True
@@ -134,7 +140,21 @@ winrm.exe
                            'attack.t1003',
                            'attack.t1028',
                            'attack.s0005'],
-                  'title': 'Mimikatz through Windows Remote Management'}}]
+                  'title': 'Mimikatz through Windows Remote Management'}},
+ {'data_source': ['4688 ', 'Process CMD Line']},
+ {'data_source': ['4688', 'Process Execution']},
+ {'data_source': ['5156', 'Windows Firewall']},
+ {'data_source': ['5140/5145', 'Net Shares']},
+ {'data_source': ['4663', 'File monitoring']},
+ {'data_source': ['4624', 'Authentication logs']},
+ {'data_source': ['Netflow/Enclave netflow']},
+ {'data_source': ['4688 ', 'Process CMD Line']},
+ {'data_source': ['4688', 'Process Execution']},
+ {'data_source': ['5156', 'Windows Firewall']},
+ {'data_source': ['5140/5145', 'Net Shares']},
+ {'data_source': ['4663', 'File monitoring']},
+ {'data_source': ['4624', 'Authentication logs']},
+ {'data_source': ['Netflow/Enclave netflow']}]
 ```
 
 ## Potential Queries
@@ -184,7 +204,8 @@ winrm.exe
 ## Raw Dataset
 
 ```json
-[{'Atomic Red Team Test - Windows Remote Management': {'atomic_tests': [{'description': 'Powershell '
+[{'Atomic Red Team Test - Windows Remote Management': {'atomic_tests': [{'auto_generated_guid': '9059e8de-3d7d-4954-a322-46161880b9cf',
+                                                                         'description': 'Powershell '
                                                                                         'Enable '
                                                                                         'WinRM\n'
                                                                                         '\n'
@@ -208,7 +229,8 @@ winrm.exe
                                                                                  'Remote '
                                                                                  'Management',
                                                                          'supported_platforms': ['windows']},
-                                                                        {'description': 'Powershell '
+                                                                        {'auto_generated_guid': '6dc74eb1-c9d6-4c53-b3b5-6f50ae339673',
+                                                                         'description': 'Powershell '
                                                                                         'lateral '
                                                                                         'movement '
                                                                                         'using '
@@ -247,7 +269,8 @@ winrm.exe
                                                                                  'Lateral '
                                                                                  'Movement',
                                                                          'supported_platforms': ['windows']},
-                                                                        {'description': 'Utilize '
+                                                                        {'auto_generated_guid': '5cd59c3b-1375-4edf-9bac-5851c9915fca',
+                                                                         'description': 'Utilize '
                                                                                         'WMIC '
                                                                                         'to '
                                                                                         'start '
@@ -312,7 +335,8 @@ winrm.exe
                                                                                  'Call '
                                                                                  'Create',
                                                                          'supported_platforms': ['windows']},
-                                                                        {'dependencies': [{'description': 'PsExec '
+                                                                        {'auto_generated_guid': '9bab84a1-08fd-4245-b681-e62c78283002',
+                                                                         'dependencies': [{'description': 'PsExec '
                                                                                                           'tool '
                                                                                                           'from '
                                                                                                           'Sysinternals '
@@ -345,7 +369,7 @@ winrm.exe
                                                                                                                  '-Force\n',
                                                                                            'prereq_command': 'if '
                                                                                                              '(Test-Path '
-                                                                                                             '"#{psexec_exe}"") '
+                                                                                                             '"#{psexec_exe}") '
                                                                                                              '{ '
                                                                                                              'exit '
                                                                                                              '0} '
@@ -401,7 +425,8 @@ winrm.exe
                                                                                                            'type': 'String'}},
                                                                          'name': 'Psexec',
                                                                          'supported_platforms': ['windows']},
-                                                                        {'description': 'Execute '
+                                                                        {'auto_generated_guid': '5295bd61-bd7e-4744-9d52-85962a4cf2d6',
+                                                                         'description': 'Execute '
                                                                                         'Invoke-command '
                                                                                         'on '
                                                                                         'remote '

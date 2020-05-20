@@ -10,7 +10,8 @@
 ## Aliases
 
 ```
-intentionally left blank
+HTRAN
+HUC Packet Transmit Tool
 ```
 
 ## Additional Attributes
@@ -26,12 +27,17 @@ HTran
 CTran
 ONHAT (similar)
 Xdoor
+HTran
+CTran
+ONHAT (similar)
+Xdoor
 ```
 
 
 # Attribution Links
 
 ```
+http://www.secureworks.com/cyber-threat-intelligence/threats/htran/
 http://www.secureworks.com/cyber-threat-intelligence/threats/htran/
 ```
 
@@ -40,6 +46,7 @@ http://www.secureworks.com/cyber-threat-intelligence/threats/htran/
 
 ```
 Chinese Tunneling Tool
+[]
 ```
 
 # Techniques

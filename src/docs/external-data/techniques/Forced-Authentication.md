@@ -14,14 +14,20 @@ There are several different ways this can occur. (Citation: Osanda Stealing NetN
 * A spearphishing attachment containing a document with a resource that is automatically loaded when the document is opened (i.e. [Template Injection](https://attack.mitre.org/techniques/T1221)). The document can include, for example, a request similar to <code>file[:]//[remote address]/Normal.dotm</code> to trigger the SMB request. (Citation: US-CERT APT Energy Oct 2017)
 * A modified .LNK or .SCF file with the icon filename pointing to an external reference such as <code>\\[remote address]\pic.png</code> that will force the system to load the resource when the icon is rendered to repeatedly gather credentials. (Citation: US-CERT APT Energy Oct 2017)
 
+## Aliases
+
+```
+
+```
+
 ## Additional Attributes
 
 * Bypass: None
 * Effective Permissions: None
-* Network: intentionally left blank
+* Network: None
 * Permissions: ['User']
 * Platforms: ['Windows']
-* Remote: intentionally left blank
+* Remote: None
 * Type: attack-pattern
 * Wiki: https://attack.mitre.org/techniques/T1187
 
@@ -46,7 +52,14 @@ powershell/lateral_movement/invoke_smbexec
 ## Potential Detections
 
 ```json
-
+[{'data_source': ['5156', 'Windows Firewall']},
+ {'data_source': ['4663', 'File monitoring']},
+ {'data_source': ['Network protocol analysis']},
+ {'data_source': ['Network device logs']},
+ {'data_source': ['5156', 'Windows Firewall']},
+ {'data_source': ['4663', 'File monitoring']},
+ {'data_source': ['Network protocol analysis']},
+ {'data_source': ['Network device logs']}]
 ```
 
 ## Potential Queries

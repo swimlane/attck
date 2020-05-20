@@ -23,14 +23,20 @@ Other accessibility features exist that may also be leveraged in a similar fashi
 * Display Switcher: <code>C:\Windows\System32\DisplaySwitch.exe</code>
 * App Switcher: <code>C:\Windows\System32\AtBroker.exe</code>
 
+## Aliases
+
+```
+
+```
+
 ## Additional Attributes
 
 * Bypass: None
 * Effective Permissions: ['SYSTEM']
-* Network: intentionally left blank
+* Network: None
 * Permissions: ['Administrator']
 * Platforms: ['Windows']
-* Remote: intentionally left blank
+* Remote: None
 * Type: attack-pattern
 * Wiki: https://attack.mitre.org/techniques/T1015
 
@@ -358,7 +364,15 @@ powershell/persistence/misc/debugger
                   'tags': ['attack.persistence',
                            'attack.privilege_escalation',
                            'attack.t1015'],
-                  'title': 'Suspicious Debugger Registration Cmdline'}}]
+                  'title': 'Suspicious Debugger Registration Cmdline'}},
+ {'data_source': ['4688', 'Process Execution']},
+ {'data_source': ['4657', 'Windows Registry']},
+ {'data_source': ['4663', 'File monitoring']},
+ {'data_source': ['AutoRuns']},
+ {'data_source': ['4688', 'Process Execution']},
+ {'data_source': ['LOG-MD', 'AutoRuns']},
+ {'data_source': ['4657', 'Windows Registry']},
+ {'data_source': ['4663', 'File monitoring']}]
 ```
 
 ## Potential Queries
@@ -474,7 +488,8 @@ powershell/persistence/misc/debugger
                                                                  "don't want "
                                                                  'to delete it',
                                                   'Metasploit': ''}},
- {'Atomic Red Team Test - Accessibility Features': {'atomic_tests': [{'description': 'Attaches '
+ {'Atomic Red Team Test - Accessibility Features': {'atomic_tests': [{'auto_generated_guid': '3309f53e-b22b-4eb6-8fd2-a6cf58b355a9',
+                                                                      'description': 'Attaches '
                                                                                      'cmd.exe '
                                                                                      'to '
                                                                                      'a '

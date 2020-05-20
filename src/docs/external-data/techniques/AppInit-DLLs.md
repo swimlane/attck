@@ -9,14 +9,20 @@
 
 The AppInit DLL functionality is disabled in Windows 8 and later versions when secure boot is enabled. (Citation: AppInit Secure Boot)
 
+## Aliases
+
+```
+
+```
+
 ## Additional Attributes
 
 * Bypass: None
 * Effective Permissions: ['Administrator', 'SYSTEM']
-* Network: intentionally left blank
+* Network: None
 * Permissions: ['Administrator']
 * Platforms: ['Windows']
-* Remote: intentionally left blank
+* Remote: None
 * Type: attack-pattern
 * Wiki: https://attack.mitre.org/techniques/T1103
 
@@ -49,7 +55,12 @@ Microsoft\Windows NT\CurrentVersion\Windows\AppInit_DLLs|Microsoft\Windows NT\Cu
 ## Potential Detections
 
 ```json
-
+[{'data_source': ['4688', 'Process Execution']},
+ {'data_source': ['4657', 'Windows Registry']},
+ {'data_source': ['Loaded DLLs']},
+ {'data_source': ['4688', 'Process Execution']},
+ {'data_source': ['4657', 'Windows Registry']},
+ {'data_source': ['Sysmon ID 7', 'Loaded DLLs']}]
 ```
 
 ## Potential Queries
@@ -68,7 +79,8 @@ Microsoft\Windows NT\CurrentVersion\Windows\AppInit_DLLs|Microsoft\Windows NT\Cu
 ## Raw Dataset
 
 ```json
-[{'Atomic Red Team Test - AppInit DLLs': {'atomic_tests': [{'dependencies': [{'description': 'Reg '
+[{'Atomic Red Team Test - AppInit DLLs': {'atomic_tests': [{'auto_generated_guid': 'a58d9386-3080-4242-ab5f-454c16503d18',
+                                                            'dependencies': [{'description': 'Reg '
                                                                                              'files '
                                                                                              'must '
                                                                                              'exist '

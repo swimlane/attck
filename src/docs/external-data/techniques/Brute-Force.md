@@ -33,14 +33,20 @@ In addition to management services, adversaries may "target single sign-on (SSO)
 
 In default environments, LDAP and Kerberos connection attempts are less likely to trigger events over SMB, which creates Windows "logon failure" event ID 4625.
 
+## Aliases
+
+```
+
+```
+
 ## Additional Attributes
 
 * Bypass: None
 * Effective Permissions: None
-* Network: intentionally left blank
+* Network: None
 * Permissions: ['User']
 * Platforms: ['Linux', 'macOS', 'Windows', 'Office 365', 'Azure AD', 'SaaS']
-* Remote: intentionally left blank
+* Remote: None
 * Type: attack-pattern
 * Wiki: https://attack.mitre.org/techniques/T1110
 
@@ -188,7 +194,9 @@ type = USER_AUTH msg = audit (1572163129.581: 316): pid = 2165 uid = 0 auid = 42
 ## Potential Detections
 
 ```json
-[{'data_source': '/var/log/secure'}]
+[{'data_source': '/var/log/secure'},
+ {'data_source': ['4624', 'Authentication logs']},
+ {'data_source': ['4624', 'Authentication logs']}]
 ```
 
 ## Potential Queries
@@ -219,7 +227,8 @@ type = USER_AUTH msg = audit (1572163129.581: 316): pid = 2165 uid = 0 auid = 42
 ## Raw Dataset
 
 ```json
-[{'Atomic Red Team Test - Brute Force Credential Access': {'atomic_tests': [{'description': 'Creates '
+[{'Atomic Red Team Test - Brute Force Credential Access': {'atomic_tests': [{'auto_generated_guid': '09480053-2f98-4854-be6e-71ae5f672224',
+                                                                             'description': 'Creates '
                                                                                             'username '
                                                                                             'and '
                                                                                             'password '

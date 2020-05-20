@@ -17,14 +17,20 @@ SQL stored procedures are code that can be saved and reused so that database use
 
 Microsoft SQL Server can enable common language runtime (CLR) integration. With CLR integration enabled, application developers can write stored procedures using any .NET framework language (e.g. VB .NET, C#, etc.).(Citation: Microsoft CLR Integration 2017) Adversaries may craft or modify CLR assemblies that are linked to stored procedures, these CLR assemblies can be made to execute arbitrary commands.(Citation: NetSPI SQL Server CLR)
 
+## Aliases
+
+```
+
+```
+
 ## Additional Attributes
 
 * Bypass: None
 * Effective Permissions: None
-* Network: intentionally left blank
+* Network: None
 * Permissions: ['Administrator', 'SYSTEM', 'root']
 * Platforms: ['Windows', 'Linux']
-* Remote: intentionally left blank
+* Remote: None
 * Type: attack-pattern
 * Wiki: https://attack.mitre.org/techniques/T1505
 
@@ -88,7 +94,8 @@ Get-TransportAgent | Format-List Name,Enabled
 ## Raw Dataset
 
 ```json
-[{'Atomic Red Team Test - Server Software Component': {'atomic_tests': [{'dependencies': [{'description': 'Microsoft '
+[{'Atomic Red Team Test - Server Software Component': {'atomic_tests': [{'auto_generated_guid': '43e92449-ff60-46e9-83a3-1a38089df94d',
+                                                                         'dependencies': [{'description': 'Microsoft '
                                                                                                           'Exchange '
                                                                                                           'SnapIn '
                                                                                                           'must '

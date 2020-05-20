@@ -24,7 +24,6 @@
 ## Aliases
 
 ```
-intentionally left blank
 OilRig
 IRN2
 HELIX KITTEN

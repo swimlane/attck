@@ -107,7 +107,6 @@
 ## Aliases
 
 ```
-intentionally left blank
 APT33
 Elfin
 ```

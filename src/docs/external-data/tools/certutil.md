@@ -10,7 +10,8 @@
 ## Aliases
 
 ```
-intentionally left blank
+certutil
+certutil.exe
 ```
 
 ## Additional Attributes

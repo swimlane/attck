@@ -21,14 +21,20 @@ Similar to [Process Injection](https://attack.mitre.org/techniques/T1055), these
 
 Malware may also use IFEO for Defense Evasion by registering invalid debuggers that redirect and effectively disable various system and security applications. (Citation: FSecure Hupigon) (Citation: Symantec Ushedix June 2008)
 
+## Aliases
+
+```
+
+```
+
 ## Additional Attributes
 
 * Bypass: ['Autoruns Analysis']
 * Effective Permissions: None
-* Network: intentionally left blank
+* Network: None
 * Permissions: ['Administrator', 'SYSTEM']
 * Platforms: ['Windows']
-* Remote: intentionally left blank
+* Remote: None
 * Type: attack-pattern
 * Wiki: https://attack.mitre.org/techniques/T1183
 
@@ -129,7 +135,15 @@ Microsoft\Windows NT\CurrentVersion\Image File Execution Options\|SOFTWARE\Micro
                            'attack.defense_evasion',
                            'attack.t1183',
                            'car.2013-01-002'],
-                  'title': 'Registry Persistence Mechanisms'}}]
+                  'title': 'Registry Persistence Mechanisms'}},
+ {'data_source': ['4688', 'Process Execution']},
+ {'data_source': ['4657', 'Windows Registry']},
+ {'data_source': ['Windows event logs']},
+ {'data_source': ['LMD - Autoruns']},
+ {'data_source': ['4688', 'Process Execution']},
+ {'data_source': ['Windows Registry']},
+ {'data_source': ['Windows event logs']},
+ {'data_source': ['LOG-MD - Autoruns']}]
 ```
 
 ## Potential Queries
@@ -148,7 +162,8 @@ Microsoft\Windows NT\CurrentVersion\Image File Execution Options\|SOFTWARE\Micro
 ## Raw Dataset
 
 ```json
-[{'Atomic Red Team Test - Image File Execution Options': {'atomic_tests': [{'description': 'Leverage '
+[{'Atomic Red Team Test - Image File Execution Options': {'atomic_tests': [{'auto_generated_guid': 'fdda2626-5234-4c90-b163-60849a24c0b8',
+                                                                            'description': 'Leverage '
                                                                                            'Global '
                                                                                            'Flags '
                                                                                            'Settings\n',
@@ -192,7 +207,8 @@ Microsoft\Windows NT\CurrentVersion\Image File Execution Options\|SOFTWARE\Micro
                                                                                     'Add '
                                                                                     'Debugger',
                                                                             'supported_platforms': ['windows']},
-                                                                           {'description': 'Leverage '
+                                                                           {'auto_generated_guid': '46b1f278-c8ee-4aa5-acce-65e77b11f3c1',
+                                                                            'description': 'Leverage '
                                                                                            'Global '
                                                                                            'Flags '
                                                                                            'Settings\n',

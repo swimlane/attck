@@ -9,14 +9,20 @@
 
 An adversary can modify one of these files directly to include a link to their malicious executable to provide a persistence mechanism each time the user reboots their machine (Citation: Methods of Mac Malware Persistence).
 
+## Aliases
+
+```
+
+```
+
 ## Additional Attributes
 
 * Bypass: None
 * Effective Permissions: None
-* Network: intentionally left blank
+* Network: None
 * Permissions: ['User']
 * Platforms: ['macOS']
-* Remote: intentionally left blank
+* Remote: None
 * Type: attack-pattern
 * Wiki: https://attack.mitre.org/techniques/T1164
 
@@ -53,7 +59,8 @@ sudo defaults delete com.apple.loginwindow LoginHook
 ## Raw Dataset
 
 ```json
-[{'Atomic Red Team Test - Re-Opened Applications': {'atomic_tests': [{'description': 'Plist '
+[{'Atomic Red Team Test - Re-Opened Applications': {'atomic_tests': [{'auto_generated_guid': '5fefd767-ef54-4ac6-84d3-751ab85e8aba',
+                                                                      'description': 'Plist '
                                                                                      'Method\n'
                                                                                      '\n'
                                                                                      '[Reference](https://developer.apple.com/library/content/documentation/MacOSX/Conceptual/BPSystemStartup/Chapters/CustomLogin.html)\n',
@@ -74,7 +81,8 @@ sudo defaults delete com.apple.loginwindow LoginHook
                                                                       'name': 'Re-Opened '
                                                                               'Applications',
                                                                       'supported_platforms': ['macos']},
-                                                                     {'description': 'Mac '
+                                                                     {'auto_generated_guid': '5f5b71da-e03f-42e7-ac98-d63f9e0465cb',
+                                                                      'description': 'Mac '
                                                                                      'Defaults\n'
                                                                                      '\n'
                                                                                      '[Reference](https://developer.apple.com/library/content/documentation/MacOSX/Conceptual/BPSystemStartup/Chapters/CustomLogin.html)\n',

@@ -13,14 +13,20 @@ Private keys should require a password or passphrase for operation, so an advers
 
 Adversary tools have been discovered that search compromised systems for file extensions relating to cryptographic keys and certificates. (Citation: Kaspersky Careto) (Citation: Palo Alto Prince of Persia)
 
+## Aliases
+
+```
+
+```
+
 ## Additional Attributes
 
 * Bypass: None
 * Effective Permissions: None
-* Network: intentionally left blank
+* Network: None
 * Permissions: ['User']
 * Platforms: ['Linux', 'macOS', 'Windows']
-* Remote: intentionally left blank
+* Remote: None
 * Type: attack-pattern
 * Wiki: https://attack.mitre.org/techniques/T1145
 
@@ -142,7 +148,9 @@ find / -name id_dsa -exec rsync -R {} #{output_folder} \;
 ## Potential Detections
 
 ```json
-[{'data_source': 'bash_history logs'}]
+[{'data_source': 'bash_history logs'},
+ {'data_source': ['4657', 'File monitoring']},
+ {'data_source': ['4657', 'File monitoring']}]
 ```
 
 ## Potential Queries
@@ -183,7 +191,8 @@ find / -name id_dsa -exec rsync -R {} #{output_folder} \;
 ## Raw Dataset
 
 ```json
-[{'Atomic Red Team Test - Private Keys': {'atomic_tests': [{'description': 'Find '
+[{'Atomic Red Team Test - Private Keys': {'atomic_tests': [{'auto_generated_guid': '520ce462-7ca7-441e-b5a5-f8347f632696',
+                                                            'description': 'Find '
                                                                            'private '
                                                                            'keys '
                                                                            'on '
@@ -218,7 +227,8 @@ find / -name id_dsa -exec rsync -R {} #{output_folder} \;
                                                             'name': 'Private '
                                                                     'Keys',
                                                             'supported_platforms': ['windows']},
-                                                           {'description': 'Discover '
+                                                           {'auto_generated_guid': '46959285-906d-40fa-9437-5a439accd878',
+                                                            'description': 'Discover '
                                                                            'private '
                                                                            'SSH '
                                                                            'keys '
@@ -256,7 +266,8 @@ find / -name id_dsa -exec rsync -R {} #{output_folder} \;
                                                                     'SSH Keys',
                                                             'supported_platforms': ['macos',
                                                                                     'linux']},
-                                                           {'description': 'Copy '
+                                                           {'auto_generated_guid': '7c247dc7-5128-4643-907b-73a76d9135c3',
+                                                            'description': 'Copy '
                                                                            'private '
                                                                            'SSH '
                                                                            'keys '
@@ -311,7 +322,8 @@ find / -name id_dsa -exec rsync -R {} #{output_folder} \;
                                                                     'SSH Keys '
                                                                     'with CP',
                                                             'supported_platforms': ['linux']},
-                                                           {'description': 'Copy '
+                                                           {'auto_generated_guid': '864bb0b2-6bb5-489a-b43b-a77b3a16d68a',
+                                                            'description': 'Copy '
                                                                            'private '
                                                                            'SSH '
                                                                            'keys '

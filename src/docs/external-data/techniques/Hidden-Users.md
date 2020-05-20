@@ -7,14 +7,20 @@
 
 > Every user account in macOS has a userID associated with it. When creating a user, you can specify the userID for that account. There is a property value in <code>/Library/Preferences/com.apple.loginwindow</code> called <code>Hide500Users</code> that prevents users with userIDs 500 and lower from appearing at the login screen. By using the [Create Account](https://attack.mitre.org/techniques/T1136) technique with a userID under 500 and enabling this property (setting it to Yes), an adversary can hide their user accounts much more easily: <code>sudo dscl . -create /Users/username UniqueID 401</code> (Citation: Cybereason OSX Pirrit).
 
+## Aliases
+
+```
+
+```
+
 ## Additional Attributes
 
 * Bypass: None
 * Effective Permissions: None
-* Network: intentionally left blank
+* Network: None
 * Permissions: ['Administrator', 'root']
 * Platforms: ['macOS']
-* Remote: intentionally left blank
+* Remote: None
 * Type: attack-pattern
 * Wiki: https://attack.mitre.org/techniques/T1147
 
@@ -52,7 +58,8 @@ bash sudo xattr -r -d com.apple.quarantine /path/to/*.app
 ## Raw Dataset
 
 ```json
-[{'Atomic Red Team Test - Hidden Users': {'atomic_tests': [{'description': 'Add '
+[{'Atomic Red Team Test - Hidden Users': {'atomic_tests': [{'auto_generated_guid': '4238a7f0-a980-4fff-98a2-dfc0a363d507',
+                                                            'description': 'Add '
                                                                            'a '
                                                                            'hidden '
                                                                            'user '

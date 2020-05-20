@@ -9,14 +9,20 @@
 
 Adversaries may use rootkits to hide the presence of programs, files, network connections, services, drivers, and other system components. Rootkits have been seen for Windows, Linux, and Mac OS X systems. (Citation: CrowdStrike Linux Rootkit) (Citation: BlackHat Mac OSX Rootkit)
 
+## Aliases
+
+```
+
+```
+
 ## Additional Attributes
 
 * Bypass: ['File monitoring', 'Host intrusion prevention systems', 'Process whitelisting', 'Signature-based detection', 'System access controls', 'Whitelisting by file name or path', 'Anti-virus']
 * Effective Permissions: None
-* Network: intentionally left blank
+* Network: None
 * Permissions: ['Administrator', 'SYSTEM', 'root']
 * Platforms: ['Linux', 'macOS', 'Windows']
-* Remote: intentionally left blank
+* Remote: None
 * Type: attack-pattern
 * Wiki: https://attack.mitre.org/techniques/T1014
 
@@ -78,7 +84,20 @@ puppetstrings C:\Drivers\driver.sys
 ## Potential Detections
 
 ```json
-
+[{'data_source': ['4688', 'Process Execution']},
+ {'data_source': ['LOG-MD', 'AutoRuns']},
+ {'data_source': ['LOG-MD', 'Windows Registry', 'Compare']},
+ {'data_source': ['LOG-MD', 'File Hash', 'Compare']},
+ {'data_source': ['BIOS']},
+ {'data_source': ['MBR']},
+ {'data_source': ['System calls']},
+ {'data_source': ['4688', 'Process Execution']},
+ {'data_source': ['LOG-MD', 'AutoRuns']},
+ {'data_source': ['LOG-MD', 'Windows Registry', 'Compare']},
+ {'data_source': ['LOG-MD', 'File Hash', 'Compare']},
+ {'data_source': ['BIOS']},
+ {'data_source': ['MBR']},
+ {'data_source': ['System calls']}]
 ```
 
 ## Potential Queries
@@ -90,7 +109,8 @@ puppetstrings C:\Drivers\driver.sys
 ## Raw Dataset
 
 ```json
-[{'Atomic Red Team Test - Loadable Kernel Module based Rootkit': {'atomic_tests': [{'dependencies': [{'description': 'The '
+[{'Atomic Red Team Test - Loadable Kernel Module based Rootkit': {'atomic_tests': [{'auto_generated_guid': 'dfb50072-e45a-4c75-a17e-a484809c8553',
+                                                                                    'dependencies': [{'description': 'The '
                                                                                                                      'kernel '
                                                                                                                      'module '
                                                                                                                      'must '
@@ -197,7 +217,8 @@ puppetstrings C:\Drivers\driver.sys
                                                                                             'based '
                                                                                             'Rootkit',
                                                                                     'supported_platforms': ['linux']},
-                                                                                   {'dependencies': [{'description': 'The '
+                                                                                   {'auto_generated_guid': '75483ef8-f10f-444a-bf02-62eb0e48db6f',
+                                                                                    'dependencies': [{'description': 'The '
                                                                                                                      'kernel '
                                                                                                                      'module '
                                                                                                                      'must '
@@ -318,7 +339,8 @@ puppetstrings C:\Drivers\driver.sys
                                                                                             'based '
                                                                                             'Rootkit',
                                                                                     'supported_platforms': ['linux']},
-                                                                                   {'description': 'This '
+                                                                                   {'auto_generated_guid': '8e4e1985-9a19-4529-b4b8-b7a49ff87fae',
+                                                                                    'description': 'This '
                                                                                                    'test '
                                                                                                    'exploits '
                                                                                                    'a '

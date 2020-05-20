@@ -11,14 +11,20 @@ Object Linking and Embedding (OLE), or the ability to link data between document
 
 Adversaries may use DDE to execute arbitrary commands. Microsoft Office documents can be poisoned with DDE commands (Citation: SensePost PS DDE May 2016) (Citation: Kettle CSV DDE Aug 2014), directly or through embedded files (Citation: Enigma Reviving DDE Jan 2018), and used to deliver execution via phishing campaigns or hosted Web content, avoiding the use of Visual Basic for Applications (VBA) macros. (Citation: SensePost MacroLess DDE Oct 2017) DDE could also be leveraged by an adversary operating on a compromised machine who does not have direct access to command line execution.
 
+## Aliases
+
+```
+
+```
+
 ## Additional Attributes
 
 * Bypass: None
 * Effective Permissions: None
-* Network: intentionally left blank
+* Network: None
 * Permissions: ['User']
 * Platforms: ['Windows']
-* Remote: intentionally left blank
+* Remote: None
 * Type: attack-pattern
 * Wiki: https://attack.mitre.org/techniques/T1173
 
@@ -40,7 +46,16 @@ start $PathToAtomicsFolder\T1173\bin\DDE_Document.docx
 ## Potential Detections
 
 ```json
-
+[{'data_source': ['4688', 'Process Execution']},
+ {'data_source': ['4657', 'Windows Registry']},
+ {'data_source': ['Windows event logs']},
+ {'data_source': ['DLL monitoring']},
+ {'data_source': ['API monitoring']},
+ {'data_source': ['4688', 'Process Execution']},
+ {'data_source': ['Windows Registry']},
+ {'data_source': ['Sysmon ID 7', 'DLL monitoring']},
+ {'data_source': ['Windows event logs']},
+ {'data_source': ['API monitoring']}]
 ```
 
 ## Potential Queries
@@ -52,7 +67,8 @@ start $PathToAtomicsFolder\T1173\bin\DDE_Document.docx
 ## Raw Dataset
 
 ```json
-[{'Atomic Red Team Test - Dynamic Data Exchange': {'atomic_tests': [{'description': 'Executes '
+[{'Atomic Red Team Test - Dynamic Data Exchange': {'atomic_tests': [{'auto_generated_guid': 'f592ba2a-e9e8-4d62-a459-ef63abd819fd',
+                                                                     'description': 'Executes '
                                                                                     'commands '
                                                                                     'via '
                                                                                     'DDE '
@@ -128,7 +144,8 @@ start $PathToAtomicsFolder\T1173\bin\DDE_Document.docx
                                                                      'name': 'Execute '
                                                                              'Commands',
                                                                      'supported_platforms': ['windows']},
-                                                                    {'description': 'When '
+                                                                    {'auto_generated_guid': '47c21fb6-085e-4b0d-b4d2-26d72c3830b3',
+                                                                     'description': 'When '
                                                                                     'the '
                                                                                     'word '
                                                                                     'document '

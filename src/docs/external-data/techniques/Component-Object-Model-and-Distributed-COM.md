@@ -15,11 +15,17 @@ Adversaries may abuse COM for local command and/or payload execution. Various CO
 
 Adversaries may use DCOM for lateral movement. Through DCOM, adversaries operating in the context of an appropriately privileged user can remotely obtain arbitrary and even direct shellcode execution through Office applications (Citation: Enigma Outlook DCOM Lateral Movement Nov 2017) as well as other Windows objects that contain insecure methods.(Citation: Enigma MMC20 COM Jan 2017)(Citation: Enigma DCOM Lateral Movement Jan 2017) DCOM can also execute macros in existing documents (Citation: Enigma Excel DCOM Sept 2017) and may also invoke [Dynamic Data Exchange](https://attack.mitre.org/techniques/T1173) (DDE) execution directly through a COM created instance of a Microsoft Office application (Citation: Cyberreason DCOM DDE Lateral Movement Nov 2017), bypassing the need for a malicious document.
 
+## Aliases
+
+```
+
+```
+
 ## Additional Attributes
 
 * Bypass: None
 * Effective Permissions: None
-* Network: intentionally left blank
+* Network: None
 * Permissions: ['Administrator', 'SYSTEM', 'User']
 * Platforms: ['Windows']
 * Remote: True
@@ -102,7 +108,21 @@ powershell/lateral_movement/invoke_dcom
                                 'product': 'windows'},
                   'status': 'experimental',
                   'tags': ['attack.lateral_movement', 'attack.t1175'],
-                  'title': 'MMC Spawning Windows Shell'}}]
+                  'title': 'MMC Spawning Windows Shell'}},
+ {'data_source': ['4688', 'Process Execution']},
+ {'data_source': ['4657', 'Windows Registry']},
+ {'data_source': ['Authentication logs']},
+ {'data_source': ['Windows event logs']},
+ {'data_source': ['DLL monitoring']},
+ {'data_source': ['API monitoring']},
+ {'data_source': ['Packet capture']},
+ {'data_source': ['4688', 'Process Execution']},
+ {'data_source': ['4657', 'Windows Registry']},
+ {'data_source': ['4624', 'Authentication logs']},
+ {'data_source': ['Sysmon ID 7', 'DLL monitoring']},
+ {'data_source': ['Windows event logs']},
+ {'data_source': ['API monitoring']},
+ {'data_source': ['Packet capture']}]
 ```
 
 ## Potential Queries

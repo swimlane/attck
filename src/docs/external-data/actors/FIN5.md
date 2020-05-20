@@ -24,7 +24,6 @@ _/ ____\__| ____  |   ____/
 ## Aliases
 
 ```
-intentionally left blank
 FIN5
 ```
 

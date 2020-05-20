@@ -39,14 +39,20 @@ The file tracker utility, tracker.exe, is included with the .NET framework as pa
 
 An adversary can use tracker.exe to proxy execution of an arbitrary DLL into another process. Since tracker.exe is also signed it can be used to bypass application whitelisting solutions. (Citation: LOLBAS Tracker)
 
+## Aliases
+
+```
+
+```
+
 ## Additional Attributes
 
 * Bypass: ['Application whitelisting']
 * Effective Permissions: None
-* Network: intentionally left blank
+* Network: None
 * Permissions: ['User']
 * Platforms: ['Windows']
-* Remote: intentionally left blank
+* Remote: None
 * Type: attack-pattern
 * Wiki: https://attack.mitre.org/techniques/T1127
 
@@ -146,7 +152,11 @@ Process the command line: C: \ Windows \ Microsoft.NET \ Framework64 \ v4.0.3031
                   'tags': ['attack.defense_evasion',
                            'attack.execution',
                            'attack.t1127'],
-                  'title': 'Microsoft Workflow Compiler'}}]
+                  'title': 'Microsoft Workflow Compiler'}},
+ {'data_source': ['4688', 'Process Execution']},
+ {'data_source': ['4688 ', 'Process CMD Line']},
+ {'data_source': ['4688', 'Process Execution']},
+ {'data_source': ['4688 ', 'Process CMD Line']}]
 ```
 
 ## Potential Queries
@@ -161,7 +171,8 @@ Process the command line: C: \ Windows \ Microsoft.NET \ Framework64 \ v4.0.3031
 ## Raw Dataset
 
 ```json
-[{'Atomic Red Team Test - Trusted Developer Utilities': {'atomic_tests': [{'dependencies': [{'description': 'Project '
+[{'Atomic Red Team Test - Trusted Developer Utilities': {'atomic_tests': [{'auto_generated_guid': '58742c0f-cb01-44cd-a60b-fb26e8871c93',
+                                                                           'dependencies': [{'description': 'Project '
                                                                                                             'file '
                                                                                                             'must '
                                                                                                             'exist '

@@ -9,11 +9,17 @@
 
 An adversary can use WMI to interact with local and remote systems and use it as a means to perform many tactic functions, such as gathering information for Discovery and remote Execution of files as part of Lateral Movement. (Citation: FireEye WMI 2015)
 
+## Aliases
+
+```
+
+```
+
 ## Additional Attributes
 
 * Bypass: None
 * Effective Permissions: None
-* Network: intentionally left blank
+* Network: None
 * Permissions: ['User', 'Administrator']
 * Platforms: ['Windows']
 * Remote: True
@@ -331,7 +337,15 @@ New Process name: 'C: \ Windows \ System32 \ wbem \ WMIC.exe'
                   'tags': ['attack.execution',
                            'attack.persistence',
                            'attack.t1047'],
-                  'title': 'WMI Persistence - Script Event Consumer'}}]
+                  'title': 'WMI Persistence - Script Event Consumer'}},
+ {'data_source': ['4688 ', 'Process CMD Line']},
+ {'data_source': ['4688', 'Process Execution']},
+ {'data_source': ['4624', 'Authentication logs']},
+ {'data_source': ['Netflow/Enclave netflow']},
+ {'data_source': ['4688 ', 'Process CMD Line']},
+ {'data_source': ['4688', 'Process Execution']},
+ {'data_source': ['4624', 'Authentication logs']},
+ {'data_source': ['Netflow/Enclave netflow']}]
 ```
 
 ## Potential Queries
@@ -388,7 +402,8 @@ New Process name: 'C: \ Windows \ System32 \ wbem \ WMIC.exe'
 ## Raw Dataset
 
 ```json
-[{'Atomic Red Team Test - Windows Management Instrumentation': {'atomic_tests': [{'description': 'An '
+[{'Atomic Red Team Test - Windows Management Instrumentation': {'atomic_tests': [{'auto_generated_guid': 'c107778c-dcf5-47c5-af2e-1d058a3df3ea',
+                                                                                  'description': 'An '
                                                                                                  'adversary '
                                                                                                  'might '
                                                                                                  'use '
@@ -427,7 +442,8 @@ New Process name: 'C: \ Windows \ System32 \ wbem \ WMIC.exe'
                                                                                           'Reconnaissance '
                                                                                           'Users',
                                                                                   'supported_platforms': ['windows']},
-                                                                                 {'description': 'An '
+                                                                                 {'auto_generated_guid': '5750aa16-0e59-4410-8b9a-8a47ca2788e2',
+                                                                                  'description': 'An '
                                                                                                  'adversary '
                                                                                                  'might '
                                                                                                  'use '
@@ -466,7 +482,8 @@ New Process name: 'C: \ Windows \ System32 \ wbem \ WMIC.exe'
                                                                                           'Reconnaissance '
                                                                                           'Processes',
                                                                                   'supported_platforms': ['windows']},
-                                                                                 {'description': 'An '
+                                                                                 {'auto_generated_guid': '718aebaa-d0e0-471a-8241-c5afa69c7414',
+                                                                                  'description': 'An '
                                                                                                  'adversary '
                                                                                                  'might '
                                                                                                  'use '
@@ -506,7 +523,8 @@ New Process name: 'C: \ Windows \ System32 \ wbem \ WMIC.exe'
                                                                                           'Reconnaissance '
                                                                                           'Software',
                                                                                   'supported_platforms': ['windows']},
-                                                                                 {'description': 'An '
+                                                                                 {'auto_generated_guid': '0fd48ef7-d890-4e93-a533-f7dedd5191d3',
+                                                                                  'description': 'An '
                                                                                                  'adversary '
                                                                                                  'might '
                                                                                                  'use '
@@ -605,7 +623,8 @@ New Process name: 'C: \ Windows \ System32 \ wbem \ WMIC.exe'
                                                                                           'Remote '
                                                                                           'Services',
                                                                                   'supported_platforms': ['windows']},
-                                                                                 {'description': 'This '
+                                                                                 {'auto_generated_guid': 'b3bdfc91-b33e-4c6d-a5c8-d64bee0276b3',
+                                                                                  'description': 'This '
                                                                                                  'test '
                                                                                                  'uses '
                                                                                                  'wmic.exe '
@@ -669,7 +688,8 @@ New Process name: 'C: \ Windows \ System32 \ wbem \ WMIC.exe'
                                                                                           'Local '
                                                                                           'Process',
                                                                                   'supported_platforms': ['windows']},
-                                                                                 {'description': 'This '
+                                                                                 {'auto_generated_guid': '9c8ef159-c666-472f-9874-90c8d60d136b',
+                                                                                  'description': 'This '
                                                                                                  'test '
                                                                                                  'uses '
                                                                                                  'wmic.exe '

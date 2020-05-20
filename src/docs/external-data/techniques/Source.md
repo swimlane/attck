@@ -9,14 +9,20 @@
 
 Adversaries can abuse this functionality to execute programs. The file executed with this technique does not need to be marked executable beforehand.
 
+## Aliases
+
+```
+
+```
+
 ## Additional Attributes
 
 * Bypass: None
 * Effective Permissions: None
-* Network: intentionally left blank
+* Network: None
 * Permissions: ['User']
 * Platforms: ['Linux', 'macOS']
-* Remote: intentionally left blank
+* Remote: None
 * Type: attack-pattern
 * Wiki: https://attack.mitre.org/techniques/T1153
 
@@ -65,7 +71,8 @@ chmod +x /tmp/art.sh
 ## Raw Dataset
 
 ```json
-[{'Atomic Red Team Test - Source': {'atomic_tests': [{'description': 'Creates '
+[{'Atomic Red Team Test - Source': {'atomic_tests': [{'auto_generated_guid': '52b61a5a-513f-42f5-987a-d5646eed5533',
+                                                      'description': 'Creates '
                                                                      'a script '
                                                                      'and '
                                                                      'executes '
@@ -95,7 +102,8 @@ chmod +x /tmp/art.sh
                                                               'using Source',
                                                       'supported_platforms': ['macos',
                                                                               'linux']},
-                                                     {'description': 'Creates '
+                                                     {'auto_generated_guid': 'c94c9742-2c70-4634-a101-7a22ec1884b3',
+                                                      'description': 'Creates '
                                                                      'a script '
                                                                      'and '
                                                                      'executes '

@@ -25,7 +25,6 @@
 ## Aliases
 
 ```
-intentionally left blank
 Ke3chang
 APT15
 Mirage

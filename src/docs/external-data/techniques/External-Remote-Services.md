@@ -9,14 +9,20 @@
 
 Adversaries may use remote services to initially access and/or persist within a network. (Citation: Volexity Virtual Private Keylogging) Access to [Valid Accounts](https://attack.mitre.org/techniques/T1078) to use the service is often a requirement, which could be obtained through credential pharming or by obtaining the credentials from users after compromising the enterprise network. Access to remote services may be used as part of [Redundant Access](https://attack.mitre.org/techniques/T1108) during an operation.
 
+## Aliases
+
+```
+
+```
+
 ## Additional Attributes
 
 * Bypass: None
 * Effective Permissions: None
-* Network: intentionally left blank
+* Network: None
 * Permissions: ['User']
 * Platforms: ['Windows']
-* Remote: intentionally left blank
+* Remote: None
 * Type: attack-pattern
 * Wiki: https://attack.mitre.org/techniques/T1133
 
@@ -35,7 +41,8 @@ Adversaries may use remote services to initially access and/or persist within a 
 ## Potential Detections
 
 ```json
-
+[{'data_source': ['4624', 'Authentication logs']},
+ {'data_source': ['4624', 'Authentication logs']}]
 ```
 
 ## Potential Queries

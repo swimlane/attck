@@ -20,6 +20,12 @@ For connections that occur internally within an enclave (such as those between a
 * TCP/UDP:22 (SSH)
 * TCP/UDP:3389 (RDP)
 
+## Aliases
+
+```
+
+```
+
 ## Additional Attributes
 
 * Bypass: None
@@ -27,7 +33,7 @@ For connections that occur internally within an enclave (such as those between a
 * Network: True
 * Permissions: None
 * Platforms: ['Linux', 'macOS', 'Windows']
-* Remote: intentionally left blank
+* Remote: None
 * Type: attack-pattern
 * Wiki: https://attack.mitre.org/techniques/T1043
 
@@ -185,7 +191,15 @@ powershell/lateral_movement/invoke_sshcommand
                   'references': ['https://docs.google.com/spreadsheets/d/17pSTDNpa0sf6pHeRhusvWG6rThciE8CsXTSlDUAZDyo'],
                   'status': 'experimental',
                   'tags': ['attack.command_and_control', 'attack.t1043'],
-                  'title': 'Suspicious Typical Malware Back Connect Ports'}}]
+                  'title': 'Suspicious Typical Malware Back Connect Ports'}},
+ {'data_source': ['5156', 'Windows Firewall']},
+ {'data_source': ['4688', 'Process Execution']},
+ {'data_source': ['Packet capture']},
+ {'data_source': ['Netflow/Enclave netflow']},
+ {'data_source': ['5156', 'Windows Firewall']},
+ {'data_source': ['4688', 'Process Execution']},
+ {'data_source': ['Packet capture']},
+ {'data_source': ['Netflow/Enclave netflow']}]
 ```
 
 ## Potential Queries

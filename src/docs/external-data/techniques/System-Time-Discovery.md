@@ -9,14 +9,20 @@
 
 An adversary may gather the system time and/or time zone from a local or remote system. This information may be gathered in a number of ways, such as with [Net](https://attack.mitre.org/software/S0039) on Windows by performing <code>net time \\hostname</code> to gather the system time on a remote system. The victim's time zone may also be inferred from the current system time or gathered by using <code>w32tm /tz</code>. (Citation: Technet Windows Time Service) The information could be useful for performing other techniques, such as executing a file with a [Scheduled Task](https://attack.mitre.org/techniques/T1053) (Citation: RSA EU12 They're Inside), or to discover locality information based on time zone to assist in victim targeting.
 
+## Aliases
+
+```
+
+```
+
 ## Additional Attributes
 
 * Bypass: None
 * Effective Permissions: None
-* Network: intentionally left blank
+* Network: None
 * Permissions: ['User']
 * Platforms: ['Windows']
-* Remote: intentionally left blank
+* Remote: None
 * Type: attack-pattern
 * Wiki: https://attack.mitre.org/techniques/T1124
 
@@ -85,7 +91,12 @@ Time zone: Current: TIME_ZONE_ID_UNKNOWN deviating: -480 minutes (UTC = local ti
 ## Potential Detections
 
 ```json
-
+[{'data_source': ['4688', 'Process Execution']},
+ {'data_source': ['4688 ', 'Process CMD Line']},
+ {'data_source': ['API monitoring']},
+ {'data_source': ['4688', 'Process Execution']},
+ {'data_source': ['4688 ', 'Process CMD Line']},
+ {'data_source': ['API monitoring']}]
 ```
 
 ## Potential Queries
@@ -179,7 +190,8 @@ Time zone: Current: TIME_ZONE_ID_UNKNOWN deviating: -480 minutes (UTC = local ti
 ## Raw Dataset
 
 ```json
-[{'Atomic Red Team Test - System Time Discovery': {'atomic_tests': [{'description': 'Identify '
+[{'Atomic Red Team Test - System Time Discovery': {'atomic_tests': [{'auto_generated_guid': '20aba24b-e61f-4b26-b4ce-4784f763ca20',
+                                                                     'description': 'Identify '
                                                                                     'the '
                                                                                     'system '
                                                                                     'time. '
@@ -212,7 +224,8 @@ Time zone: Current: TIME_ZONE_ID_UNKNOWN deviating: -480 minutes (UTC = local ti
                                                                              'Time '
                                                                              'Discovery',
                                                                      'supported_platforms': ['windows']},
-                                                                    {'description': 'Identify '
+                                                                    {'auto_generated_guid': '1d5711d6-655c-4a47-ae9c-6503c74fa877',
+                                                                     'description': 'Identify '
                                                                                     'the '
                                                                                     'system '
                                                                                     'time '

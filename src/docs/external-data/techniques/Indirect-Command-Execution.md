@@ -9,14 +9,20 @@
 
 Adversaries may abuse these features for [Defense Evasion](https://attack.mitre.org/tactics/TA0005), specifically to perform arbitrary execution while subverting detections and/or mitigation controls (such as Group Policy) that limit/prevent the usage of [cmd](https://attack.mitre.org/software/S0106) or file extensions more commonly associated with malicious payloads.
 
+## Aliases
+
+```
+
+```
+
 ## Additional Attributes
 
 * Bypass: ['Static File Analysis', 'Application whitelisting', 'Process whitelisting', 'Whitelisting by file name or path']
 * Effective Permissions: None
-* Network: intentionally left blank
+* Network: None
 * Permissions: ['User']
 * Platforms: ['Windows']
-* Remote: intentionally left blank
+* Remote: None
 * Type: attack-pattern
 * Wiki: https://attack.mitre.org/techniques/T1202
 
@@ -376,7 +382,14 @@ Destination Port: 6666
                                  'https://www.fireeye.com/blog/threat-research/2018/12/overruled-containing-a-potentially-destructive-adversary.html'],
                   'status': 'experimental',
                   'tags': ['attack.execution', 'attack.t1059', 'attack.t1202'],
-                  'title': 'Suspicious Execution from Outlook'}}]
+                  'title': 'Suspicious Execution from Outlook'}},
+ {'data_source': ['4688 ', 'Process CMD Line']},
+ {'data_source': ['4688', 'Process Execution']},
+ {'data_source': ['Windows event logs']},
+ {'data_source': ['ID 1 & 7', 'Sysmon']},
+ {'data_source': ['4688 ', 'Process CMD Line']},
+ {'data_source': ['4688', 'Process Execution']},
+ {'data_source': ['Windows event logs']}]
 ```
 
 ## Potential Queries
@@ -393,7 +406,8 @@ Destination Port: 6666
 ## Raw Dataset
 
 ```json
-[{'Atomic Red Team Test - Indirect Command Execution': {'atomic_tests': [{'description': 'The '
+[{'Atomic Red Team Test - Indirect Command Execution': {'atomic_tests': [{'auto_generated_guid': 'cecfea7a-5f03-4cdd-8bc8-6f7c22862440',
+                                                                          'description': 'The '
                                                                                          'Program '
                                                                                          'Compatibility '
                                                                                          'Assistant '
@@ -440,7 +454,8 @@ Destination Port: 6666
                                                                                   '- '
                                                                                   'pcalua.exe',
                                                                           'supported_platforms': ['windows']},
-                                                                         {'description': 'forfiles.exe '
+                                                                         {'auto_generated_guid': '8b34a448-40d9-4fc3-a8c8-4bb286faf7dc',
+                                                                          'description': 'forfiles.exe '
                                                                                          'may '
                                                                                          'invoke '
                                                                                          'the '

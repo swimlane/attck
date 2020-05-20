@@ -15,11 +15,17 @@ A number of PowerShell-based offensive testing tools are available, including [E
 
 PowerShell commands/scripts can also be executed without directly invoking the powershell.exe binary through interfaces to PowerShell's underlying System.Management.Automation assembly exposed through the .NET framework and Windows Common Language Interface (CLI). (Citation: Sixdub PowerPick Jan 2016)(Citation: SilentBreak Offensive PS Dec 2015) (Citation: Microsoft PSfromCsharp APR 2014)
 
+## Aliases
+
+```
+
+```
+
 ## Additional Attributes
 
 * Bypass: None
 * Effective Permissions: None
-* Network: intentionally left blank
+* Network: None
 * Permissions: ['User', 'Administrator']
 * Platforms: ['Windows']
 * Remote: True
@@ -1286,7 +1292,15 @@ python/management/multi/spawn
                                  'https://app.any.run/tasks/f87f1c4e-47e2-4c46-9cf4-31454c06ce03'],
                   'status': 'experimental',
                   'tags': ['attack.execution', 'attack.t1086'],
-                  'title': 'PowerShell Script Run in AppData'}}]
+                  'title': 'PowerShell Script Run in AppData'}},
+ {'data_source': ['4688 ', 'Process CMD Line']},
+ {'data_source': ['4688', 'Process Execution']},
+ {'data_source': ['4657', 'Windows Registry']},
+ {'data_source': ['4663', 'File monitoring']},
+ {'data_source': ['4688 ', 'Process CMD Line']},
+ {'data_source': ['4688', 'Process Execution']},
+ {'data_source': ['4657', 'Windows Registry']},
+ {'data_source': ['4663', 'File monitoring']}]
 ```
 
 ## Potential Queries
@@ -1329,7 +1343,8 @@ python/management/multi/spawn
 ## Raw Dataset
 
 ```json
-[{'Atomic Red Team Test - PowerShell': {'atomic_tests': [{'description': 'Download '
+[{'Atomic Red Team Test - PowerShell': {'atomic_tests': [{'auto_generated_guid': 'f3132740-55bc-48c4-bcc0-758a459cd027',
+                                                          'description': 'Download '
                                                                          'Mimikatz '
                                                                          'and '
                                                                          'dump '
@@ -1359,7 +1374,8 @@ python/management/multi/spawn
                                                                                          'type': 'url'}},
                                                           'name': 'Mimikatz',
                                                           'supported_platforms': ['windows']},
-                                                         {'dependencies': [{'description': 'SharpHound.ps1 '
+                                                         {'auto_generated_guid': 'a21bb23e-e677-4ee7-af90-6931b57b6350',
+                                                          'dependencies': [{'description': 'SharpHound.ps1 '
                                                                                            'must '
                                                                                            'be '
                                                                                            'located '
@@ -1481,7 +1497,8 @@ python/management/multi/spawn
                                                                   'from local '
                                                                   'disk',
                                                           'supported_platforms': ['windows']},
-                                                         {'description': 'Upon '
+                                                         {'auto_generated_guid': 'bf8c1441-4674-4dab-8e4e-39d93d08f9b7',
+                                                          'description': 'Upon '
                                                                          'execution '
                                                                          'SharpHound '
                                                                          'will '
@@ -1578,7 +1595,8 @@ python/management/multi/spawn
                                                                   'Download '
                                                                   'Cradle',
                                                           'supported_platforms': ['windows']},
-                                                         {'description': 'Different '
+                                                         {'auto_generated_guid': '4297c41a-8168-4138-972d-01f3ee92c804',
+                                                          'description': 'Different '
                                                                          'obfuscated '
                                                                          'methods '
                                                                          'to '
@@ -1632,7 +1650,8 @@ python/management/multi/spawn
                                                           'name': 'Obfuscation '
                                                                   'Tests',
                                                           'supported_platforms': ['windows']},
-                                                         {'description': 'Run '
+                                                         {'auto_generated_guid': 'af1800cf-9f9d-4fd1-a709-14b1e6de020d',
+                                                          'description': 'Run '
                                                                          'mimikatz '
                                                                          'via '
                                                                          'PsSendKeys. '
@@ -1698,7 +1717,8 @@ python/management/multi/spawn
                                                                   'Cradlecraft '
                                                                   'PsSendKeys',
                                                           'supported_platforms': ['windows']},
-                                                         {'description': 'Note: '
+                                                         {'auto_generated_guid': '06a220b6-7e29-4bd8-9d07-5b4d86742372',
+                                                          'description': 'Note: '
                                                                          'Windows '
                                                                          '10 '
                                                                          'only. '
@@ -1729,7 +1749,8 @@ python/management/multi/spawn
                                                                        'name': 'command_prompt'},
                                                           'name': 'Invoke-AppPathBypass',
                                                           'supported_platforms': ['windows']},
-                                                         {'description': 'Powershell '
+                                                         {'auto_generated_guid': '388a7340-dbc1-4c9d-8e59-b75ad8c6d5da',
+                                                          'description': 'Powershell '
                                                                          'MsXml '
                                                                          'COM '
                                                                          'object. '
@@ -1782,7 +1803,8 @@ python/management/multi/spawn
                                                                   'object - '
                                                                   'with prompt',
                                                           'supported_platforms': ['windows']},
-                                                         {'description': 'Powershell '
+                                                         {'auto_generated_guid': '4396927f-e503-427b-b023-31049b9b09a6',
+                                                          'description': 'Powershell '
                                                                          'xml '
                                                                          'download '
                                                                          'request. '
@@ -1822,7 +1844,8 @@ python/management/multi/spawn
                                                                   'XML '
                                                                   'requests',
                                                           'supported_platforms': ['windows']},
-                                                         {'description': 'Powershell '
+                                                         {'auto_generated_guid': '8a2ad40b-12c7-4b25-8521-2737b0a415af',
+                                                          'description': 'Powershell '
                                                                          'invoke '
                                                                          'mshta '
                                                                          'to '
@@ -1866,7 +1889,8 @@ python/management/multi/spawn
                                                                   'mshta.exe '
                                                                   'download',
                                                           'supported_platforms': ['windows']},
-                                                         {'description': 'Provided '
+                                                         {'auto_generated_guid': 'cc50fa2a-a4be-42af-a88f-e347ba0bf4d7',
+                                                          'description': 'Provided '
                                                                          'by '
                                                                          'https://github.com/mgreen27/mgreen27.github.io\n'
                                                                          'Invoke-DownloadCradle '
@@ -1891,7 +1915,8 @@ python/management/multi/spawn
                                                           'name': 'Powershell '
                                                                   'Invoke-DownloadCradle',
                                                           'supported_platforms': ['windows']},
-                                                         {'description': 'Execution '
+                                                         {'auto_generated_guid': 'fa050f5e-bc75-4230-af73-b6fd7852cd73',
+                                                          'description': 'Execution '
                                                                          'of a '
                                                                          'PowerShell '
                                                                          'payload '
@@ -1968,7 +1993,8 @@ python/management/multi/spawn
                                                                   'Script '
                                                                   'Execution',
                                                           'supported_platforms': ['windows']},
-                                                         {'dependencies': [{'description': 'PowerShell '
+                                                         {'auto_generated_guid': '9148e7c4-9356-420e-a416-e896e9c0f73e',
+                                                          'dependencies': [{'description': 'PowerShell '
                                                                                            'version '
                                                                                            '2 '
                                                                                            'must '
@@ -2024,7 +2050,8 @@ python/management/multi/spawn
                                                                   'Downgrade '
                                                                   'Attack',
                                                           'supported_platforms': ['windows']},
-                                                         {'dependencies': [{'description': 'Homedrive '
+                                                         {'auto_generated_guid': '8e5c5532-1181-4c1d-bb79-b3a9f5dbd680',
+                                                          'dependencies': [{'description': 'Homedrive '
                                                                                            'must '
                                                                                            'be '
                                                                                            'an '

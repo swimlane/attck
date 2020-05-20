@@ -7,6 +7,12 @@
 
 > An adversary may exfiltrate data in fixed size chunks instead of whole files or limit packet sizes below certain thresholds. This approach may be used to avoid triggering network data transfer threshold alerts.
 
+## Aliases
+
+```
+
+```
+
 ## Additional Attributes
 
 * Bypass: None
@@ -14,7 +20,7 @@
 * Network: True
 * Permissions: None
 * Platforms: ['Linux', 'macOS', 'Windows']
-* Remote: intentionally left blank
+* Remote: None
 * Type: attack-pattern
 * Wiki: https://attack.mitre.org/techniques/T1030
 
@@ -44,7 +50,14 @@ ls -l #{folder_path}
 ## Potential Detections
 
 ```json
-
+[{'data_source': ['5156', 'Windows Firewall']},
+ {'data_source': ['4688', 'Process Execution']},
+ {'data_source': ['Packet capture']},
+ {'data_source': ['Netflow/Enclave netflow']},
+ {'data_source': ['5156', 'Windows Firewall']},
+ {'data_source': ['4688', 'Process Execution']},
+ {'data_source': ['Packet capture']},
+ {'data_source': ['Netflow/Enclave netflow']}]
 ```
 
 ## Potential Queries
@@ -56,7 +69,8 @@ ls -l #{folder_path}
 ## Raw Dataset
 
 ```json
-[{'Atomic Red Team Test - Data Transfer Size Limits': {'atomic_tests': [{'dependencies': [{'description': 'The '
+[{'Atomic Red Team Test - Data Transfer Size Limits': {'atomic_tests': [{'auto_generated_guid': 'ab936c51-10f4-46ce-9144-e02137b2016a',
+                                                                         'dependencies': [{'description': 'The '
                                                                                                           'file '
                                                                                                           'must '
                                                                                                           'exist '

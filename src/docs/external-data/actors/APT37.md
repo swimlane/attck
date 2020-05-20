@@ -94,7 +94,6 @@ North Korean group definitions are known to have significant overlap, and the na
 ## Aliases
 
 ```
-intentionally left blank
 APT37
 ScarCruft
 Reaper

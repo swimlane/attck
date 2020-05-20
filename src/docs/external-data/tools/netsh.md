@@ -10,7 +10,8 @@
 ## Aliases
 
 ```
-intentionally left blank
+netsh
+netsh.exe
 ```
 
 ## Additional Attributes

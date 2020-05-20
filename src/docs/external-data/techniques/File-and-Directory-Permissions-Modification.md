@@ -9,14 +9,20 @@
 
 Adversaries may modify file or directory permissions/attributes to evade intended DACLs. (Citation: Hybrid Analysis Icacls1 June 2018) (Citation: Hybrid Analysis Icacls2 May 2018) Modifications may include changing specific access rights, which may require taking ownership of a file or directory and/or elevated permissions such as Administrator/root depending on the file or directory's existing permissions to enable malicious activity such as modifying, replacing, or deleting specific files/directories. Specific file and directory modifications may be a required step for many techniques, such as establishing Persistence via [Accessibility Features](https://attack.mitre.org/techniques/T1015), [Logon Scripts](https://attack.mitre.org/techniques/T1037), or tainting/hijacking other instrumental binary/configuration files.
 
+## Aliases
+
+```
+
+```
+
 ## Additional Attributes
 
 * Bypass: ['File system access controls']
 * Effective Permissions: None
-* Network: intentionally left blank
+* Network: None
 * Permissions: ['User', 'Administrator', 'SYSTEM', 'root']
 * Platforms: ['Linux', 'Windows', 'macOS']
-* Remote: intentionally left blank
+* Remote: None
 * Type: attack-pattern
 * Wiki: https://attack.mitre.org/techniques/T1222
 
@@ -216,7 +222,8 @@ chown ec2-user:ec2-user test1.txt
 ## Raw Dataset
 
 ```json
-[{'Atomic Red Team Test - File Permissions Modification': {'atomic_tests': [{'dependencies': [{'description': 'Test '
+[{'Atomic Red Team Test - File Permissions Modification': {'atomic_tests': [{'auto_generated_guid': '98d34bb4-6e75-42ad-9c41-1dae7dc6a001',
+                                                                             'dependencies': [{'description': 'Test '
                                                                                                               'requrires '
                                                                                                               'a '
                                                                                                               'file '
@@ -307,7 +314,8 @@ chown ec2-user:ec2-user test1.txt
                                                                                      'takeown '
                                                                                      'utility',
                                                                              'supported_platforms': ['windows']},
-                                                                            {'dependencies': [{'description': 'Test '
+                                                                            {'auto_generated_guid': 'a8206bcc-f282-40a9-a389-05d9c0263485',
+                                                                             'dependencies': [{'description': 'Test '
                                                                                                               'requrires '
                                                                                                               'a '
                                                                                                               'file '
@@ -428,7 +436,8 @@ chown ec2-user:ec2-user test1.txt
                                                                                      'group '
                                                                                      'recursively',
                                                                              'supported_platforms': ['windows']},
-                                                                            {'dependencies': [{'description': 'Test '
+                                                                            {'auto_generated_guid': 'bec1e95c-83aa-492e-ab77-60c71bbd21b0',
+                                                                             'dependencies': [{'description': 'Test '
                                                                                                               'requrires '
                                                                                                               'a '
                                                                                                               'file '
@@ -529,7 +538,8 @@ chown ec2-user:ec2-user test1.txt
                                                                                      'read-only '
                                                                                      'attribute',
                                                                              'supported_platforms': ['windows']},
-                                                                            {'description': 'Changes '
+                                                                            {'auto_generated_guid': '34ca1464-de9d-40c6-8c77-690adf36a135',
+                                                                             'description': 'Changes '
                                                                                             'a '
                                                                                             'file '
                                                                                             'or '
@@ -571,7 +581,8 @@ chown ec2-user:ec2-user test1.txt
                                                                                      'mode)',
                                                                              'supported_platforms': ['macos',
                                                                                                      'linux']},
-                                                                            {'description': 'Changes '
+                                                                            {'auto_generated_guid': 'fc9d6695-d022-4a80-91b1-381f5c35aff3',
+                                                                             'description': 'Changes '
                                                                                             'a '
                                                                                             'file '
                                                                                             'or '
@@ -613,7 +624,8 @@ chown ec2-user:ec2-user test1.txt
                                                                                      'mode)',
                                                                              'supported_platforms': ['macos',
                                                                                                      'linux']},
-                                                                            {'description': 'Changes '
+                                                                            {'auto_generated_guid': 'ea79f937-4a4d-4348-ace6-9916aec453a4',
+                                                                             'description': 'Changes '
                                                                                             'a '
                                                                                             'file '
                                                                                             'or '
@@ -658,7 +670,8 @@ chown ec2-user:ec2-user test1.txt
                                                                                      'recursively',
                                                                              'supported_platforms': ['macos',
                                                                                                      'linux']},
-                                                                            {'description': 'Changes '
+                                                                            {'auto_generated_guid': '0451125c-b5f6-488f-993b-5a32b09f7d8f',
+                                                                             'description': 'Changes '
                                                                                             'a '
                                                                                             'file '
                                                                                             'or '
@@ -703,7 +716,8 @@ chown ec2-user:ec2-user test1.txt
                                                                                      'recursively',
                                                                              'supported_platforms': ['macos',
                                                                                                      'linux']},
-                                                                            {'description': 'Changes '
+                                                                            {'auto_generated_guid': 'd169e71b-85f9-44ec-8343-27093ff3dfc0',
+                                                                             'description': 'Changes '
                                                                                             'a '
                                                                                             'file '
                                                                                             'or '
@@ -750,7 +764,8 @@ chown ec2-user:ec2-user test1.txt
                                                                                      'group',
                                                                              'supported_platforms': ['macos',
                                                                                                      'linux']},
-                                                                            {'description': 'Changes '
+                                                                            {'auto_generated_guid': 'b78598be-ff39-448f-a463-adbf2a5b7848',
+                                                                             'description': 'Changes '
                                                                                             'a '
                                                                                             'file '
                                                                                             'or '
@@ -800,7 +815,8 @@ chown ec2-user:ec2-user test1.txt
                                                                                      'recursively',
                                                                              'supported_platforms': ['macos',
                                                                                                      'linux']},
-                                                                            {'description': 'Changes '
+                                                                            {'auto_generated_guid': '967ba79d-f184-4e0e-8d09-6362b3162e99',
+                                                                             'description': 'Changes '
                                                                                             'a '
                                                                                             'file '
                                                                                             'or '
@@ -838,7 +854,8 @@ chown ec2-user:ec2-user test1.txt
                                                                                      'only',
                                                                              'supported_platforms': ['macos',
                                                                                                      'linux']},
-                                                                            {'description': 'Changes '
+                                                                            {'auto_generated_guid': '3b015515-b3d8-44e9-b8cd-6fa84faf30b2',
+                                                                             'description': 'Changes '
                                                                                             'a '
                                                                                             'file '
                                                                                             'or '
@@ -877,7 +894,8 @@ chown ec2-user:ec2-user test1.txt
                                                                                      'recursively',
                                                                              'supported_platforms': ['macos',
                                                                                                      'linux']},
-                                                                            {'description': "Remove's "
+                                                                            {'auto_generated_guid': 'e7469fe2-ad41-4382-8965-99b94dd3c13f',
+                                                                             'description': "Remove's "
                                                                                             'a '
                                                                                             "file's "
                                                                                             '`immutable` '

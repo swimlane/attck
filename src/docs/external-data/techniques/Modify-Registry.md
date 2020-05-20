@@ -13,14 +13,20 @@ Registry modifications may also include actions to hide keys, such as prepending
 
 The Registry of a remote system may be modified to aid in execution of files as part of Lateral Movement. It requires the remote Registry service to be running on the target system. (Citation: Microsoft Remote) Often [Valid Accounts](https://attack.mitre.org/techniques/T1078) are required, along with access to the remote system's [Windows Admin Shares](https://attack.mitre.org/techniques/T1077) for RPC communication.
 
+## Aliases
+
+```
+
+```
+
 ## Additional Attributes
 
 * Bypass: ['Host forensic analysis']
 * Effective Permissions: None
-* Network: intentionally left blank
+* Network: None
 * Permissions: ['User', 'Administrator', 'SYSTEM']
 * Platforms: ['Windows']
-* Remote: intentionally left blank
+* Remote: None
 * Type: attack-pattern
 * Wiki: https://attack.mitre.org/techniques/T1112
 
@@ -232,7 +238,17 @@ powershell/persistence/misc/disable_machine_acct_change
                                  'https://blog.trendmicro.com/trendlabs-security-intelligence/phishing-campaign-uses-hijacked-emails-to-deliver-ursnif-by-replying-to-ongoing-threads/'],
                   'status': 'experimental',
                   'tags': ['attack.execution', 'attack.t1112'],
-                  'title': 'Ursnif'}}]
+                  'title': 'Ursnif'}},
+ {'data_source': ['4657', 'Windows Registry']},
+ {'data_source': ['4663', 'File monitoring']},
+ {'data_source': ['4688', 'Process Execution']},
+ {'data_source': ['4688 ', 'Process CMD Line']},
+ {'data_source': ['LMD', 'Reg Compare']},
+ {'data_source': ['4657', 'Windows Registry']},
+ {'data_source': ['4663', 'File monitoring']},
+ {'data_source': ['4688', 'Process Execution']},
+ {'data_source': ['4688 ', 'Process CMD Line']},
+ {'data_source': ['LOG-MD', 'Reg Compare']}]
 ```
 
 ## Potential Queries
@@ -247,7 +263,8 @@ powershell/persistence/misc/disable_machine_acct_change
 ## Raw Dataset
 
 ```json
-[{'Atomic Red Team Test - Modify Registry': {'atomic_tests': [{'description': 'Modify '
+[{'Atomic Red Team Test - Modify Registry': {'atomic_tests': [{'auto_generated_guid': '1324796b-d0f6-455a-b4ae-21ffee6aa6b9',
+                                                               'description': 'Modify '
                                                                               'the '
                                                                               'registry '
                                                                               'of '
@@ -311,7 +328,8 @@ powershell/persistence/misc/disable_machine_acct_change
                                                                        'Profile '
                                                                        '- cmd',
                                                                'supported_platforms': ['windows']},
-                                                              {'description': 'Modify '
+                                                              {'auto_generated_guid': '282f929a-6bc5-42b8-bd93-960c3ba35afe',
+                                                               'description': 'Modify '
                                                                               'the '
                                                                               'Local '
                                                                               'Machine '
@@ -402,7 +420,8 @@ powershell/persistence/misc/disable_machine_acct_change
                                                                        'Machine '
                                                                        '- cmd',
                                                                'supported_platforms': ['windows']},
-                                                              {'description': 'Sets '
+                                                              {'auto_generated_guid': 'c0413fb5-33e2-40b7-9b6f-60b29f4a7a18',
+                                                               'description': 'Sets '
                                                                               'registry '
                                                                               'key '
                                                                               'that '
@@ -477,7 +496,8 @@ powershell/persistence/misc/disable_machine_acct_change
                                                                        'logon '
                                                                        'credentials',
                                                                'supported_platforms': ['windows']},
-                                                              {'description': 'Attackers '
+                                                              {'auto_generated_guid': 'cf447677-5a4e-4937-a82c-e47d254afd57',
+                                                               'description': 'Attackers '
                                                                               'may '
                                                                               'add '
                                                                               'a '
@@ -585,7 +605,8 @@ powershell/persistence/misc/disable_machine_acct_change
                                                                        'sites '
                                                                        'Zone',
                                                                'supported_platforms': ['windows']},
-                                                              {'description': 'Upon '
+                                                              {'auto_generated_guid': '15f44ea9-4571-4837-be9e-802431a7bfae',
+                                                               'description': 'Upon '
                                                                               'execution, '
                                                                               'a '
                                                                               'javascript '

@@ -11,14 +11,20 @@ Time providers are implemented as dynamic-link libraries (DLLs) that are registe
 
 Adversaries may abuse this architecture to establish Persistence, specifically by registering and enabling a malicious DLL as a time provider. Administrator privileges are required for time provider registration, though execution will run in context of the Local Service account. (Citation: Github W32Time Oct 2017)
 
+## Aliases
+
+```
+
+```
+
 ## Additional Attributes
 
 * Bypass: None
 * Effective Permissions: None
-* Network: intentionally left blank
+* Network: None
 * Permissions: ['Administrator', 'SYSTEM']
 * Platforms: ['Windows']
-* Remote: intentionally left blank
+* Remote: None
 * Type: attack-pattern
 * Wiki: https://attack.mitre.org/techniques/T1209
 
@@ -37,7 +43,18 @@ Adversaries may abuse this architecture to establish Persistence, specifically b
 ## Potential Detections
 
 ```json
-
+[{'data_source': ['4688', 'Process Execution']},
+ {'data_source': ['4663', 'File monitoring']},
+ {'data_source': ['DLL monitoring']},
+ {'data_source': ['Loaded DLLs']},
+ {'data_source': ['API monitoring']},
+ {'data_source': ['Binary file metadata']},
+ {'data_source': ['4688', 'Process Execution']},
+ {'data_source': ['4663', 'File monitoring']},
+ {'data_source': ['Sysmon ID 7', 'DLL monitoring']},
+ {'data_source': ['Sysmon ID 7', 'Loaded DLLs']},
+ {'data_source': ['API monitoring']},
+ {'data_source': ['LOG-MD - B9', 'Binary file metadata']}]
 ```
 
 ## Potential Queries

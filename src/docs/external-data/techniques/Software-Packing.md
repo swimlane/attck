@@ -11,14 +11,20 @@ Utilities used to perform software packing are called packers. Example packers a
 
 Adversaries may use virtual machine software protection as a form of software packing to protect their code. Virtual machine software protection translates an executable's original code into a special format that only a special virtual machine can run. A virtual machine is then called to run this code.(Citation: ESET FinFisher Jan 2018)
 
+## Aliases
+
+```
+
+```
+
 ## Additional Attributes
 
 * Bypass: ['Signature-based detection', 'Anti-virus', 'Heuristic detection']
 * Effective Permissions: None
-* Network: intentionally left blank
+* Network: None
 * Permissions: None
 * Platforms: ['Windows', 'macOS']
-* Remote: intentionally left blank
+* Remote: None
 * Type: attack-pattern
 * Wiki: https://attack.mitre.org/techniques/T1045
 
@@ -59,7 +65,8 @@ cp PathToAtomicsFolder/T1045/bin/darwin/test_upx_header_changed /tmp/packed_bin 
 ## Potential Detections
 
 ```json
-
+[{'data_source': ['LOG-MD - B9', 'Binary file metadata']},
+ {'data_source': ['LOG-MD - B9', 'Binary file metadata']}]
 ```
 
 ## Potential Queries
@@ -71,7 +78,8 @@ cp PathToAtomicsFolder/T1045/bin/darwin/test_upx_header_changed /tmp/packed_bin 
 ## Raw Dataset
 
 ```json
-[{'Atomic Red Team Test - Software Packing': {'atomic_tests': [{'description': 'Copies '
+[{'Atomic Red Team Test - Software Packing': {'atomic_tests': [{'auto_generated_guid': '11c46cd8-e471-450e-acb8-52a1216ae6a4',
+                                                                'description': 'Copies '
                                                                                'and '
                                                                                'then '
                                                                                'runs '
@@ -115,7 +123,8 @@ cp PathToAtomicsFolder/T1045/bin/darwin/test_upx_header_changed /tmp/packed_bin 
                                                                         'UPX '
                                                                         '(linux)',
                                                                 'supported_platforms': ['linux']},
-                                                               {'description': 'Copies '
+                                                               {'auto_generated_guid': 'f06197f8-ff46-48c2-a0c6-afc1b50665e1',
+                                                                'description': 'Copies '
                                                                                'and '
                                                                                'then '
                                                                                'runs '
@@ -189,7 +198,8 @@ cp PathToAtomicsFolder/T1045/bin/darwin/test_upx_header_changed /tmp/packed_bin 
                                                                         'headers '
                                                                         '(linux)',
                                                                 'supported_platforms': ['linux']},
-                                                               {'description': 'Copies '
+                                                               {'auto_generated_guid': 'b16ef901-00bb-4dda-b4fc-a04db5067e20',
+                                                                'description': 'Copies '
                                                                                'and '
                                                                                'then '
                                                                                'runs '
@@ -232,7 +242,8 @@ cp PathToAtomicsFolder/T1045/bin/darwin/test_upx_header_changed /tmp/packed_bin 
                                                                         'by '
                                                                         'UPX',
                                                                 'supported_platforms': ['macos']},
-                                                               {'description': 'Copies '
+                                                               {'auto_generated_guid': '4d46e16b-5765-4046-9f25-a600d3e65e4d',
+                                                                'description': 'Copies '
                                                                                'and '
                                                                                'then '
                                                                                'runs '

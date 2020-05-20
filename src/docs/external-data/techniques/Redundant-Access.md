@@ -11,14 +11,20 @@ If one type of tool is detected and blocked or removed as a response but the org
 
 Use of a [Web Shell](https://attack.mitre.org/techniques/T1100) is one such way to maintain access to a network through an externally accessible Web server.
 
+## Aliases
+
+```
+
+```
+
 ## Additional Attributes
 
 * Bypass: ['Network intrusion detection system', 'Anti-virus']
 * Effective Permissions: None
-* Network: intentionally left blank
+* Network: None
 * Permissions: ['User', 'Administrator', 'SYSTEM']
 * Platforms: ['Linux', 'macOS', 'Windows', 'AWS', 'GCP', 'Azure', 'Office 365', 'SaaS', 'Azure AD']
-* Remote: intentionally left blank
+* Remote: None
 * Type: attack-pattern
 * Wiki: https://attack.mitre.org/techniques/T1108
 
@@ -73,7 +79,20 @@ powershell/persistence/powerbreach/resolver
 ## Potential Detections
 
 ```json
-
+[{'data_source': ['4688', 'Process Execution']},
+ {'data_source': ['5156', 'Windows Firewall']},
+ {'data_source': ['4663', 'File monitoring']},
+ {'data_source': ['Login - 4624', 'Auth Logs']},
+ {'data_source': ['LMD - B9', 'Binary file metadata']},
+ {'data_source': ['Network protocol analysis']},
+ {'data_source': ['Packet capture']},
+ {'data_source': ['4688', 'Process Execution']},
+ {'data_source': ['5156', 'Windows Firewall']},
+ {'data_source': ['4663', 'File monitoring']},
+ {'data_source': ['Login - 4624', 'Auth Logs']},
+ {'data_source': ['LOG-MD - B9', 'Binary file metadata']},
+ {'data_source': ['Network protocol analysis']},
+ {'data_source': ['Packet capture']}]
 ```
 
 ## Potential Queries

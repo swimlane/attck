@@ -23,14 +23,20 @@ Another variation of this technique includes malicious binaries changing the nam
 
 An example of abuse of trusted locations in Linux  would be the <code>/bin</code> directory. Examples of trusted binary names that can be given to malicious binaries include "rsyncd" and "dbus-inotifier". (Citation: Fysbis Palo Alto Analysis)  (Citation: Fysbis Dr Web Analysis)
 
+## Aliases
+
+```
+
+```
+
 ## Additional Attributes
 
 * Bypass: ['Whitelisting by file name or path']
 * Effective Permissions: None
-* Network: intentionally left blank
+* Network: None
 * Permissions: None
 * Platforms: ['Linux', 'macOS', 'Windows']
-* Remote: intentionally left blank
+* Remote: None
 * Type: attack-pattern
 * Wiki: https://attack.mitre.org/techniques/T1036
 
@@ -70,6 +76,63 @@ Stop-Process -ID $myT1036
 
 copy C:\Windows\System32\cmd.exe C:\lsm.exe
 C:\lsm.exe /c echo T1036 > C:\T1036.txt
+
+Copy-Item C:\Windows\System32\calc.exe -Destination $env:TEMP\T1036_masquerading.docx.exe -Force
+Copy-Item C:\Windows\System32\calc.exe -Destination $env:TEMP\T1036_masquerading.pdf.exe -Force
+Copy-Item C:\Windows\System32\calc.exe -Destination $env:TEMP\T1036_masquerading.ps1.exe -Force
+Copy-Item #{vbs_path} -Destination $env:TEMP\T1036_masquerading.xls.vbs -Force
+Copy-Item #{vbs_path} -Destination $env:TEMP\T1036_masquerading.xlsx.vbs -Force
+Copy-Item #{vbs_path} -Destination $env:TEMP\T1036_masquerading.png.vbs -Force
+Copy-Item #{ps1_path} -Destination $env:TEMP\T1036_masquerading.vbs.ps1 -Force
+Copy-Item #{ps1_path} -Destination $env:TEMP\T1036_masquerading.exe.ps1 -Force
+Copy-Item #{ps1_path} -Destination $env:TEMP\T1036_masquerading.js.ps1 -Force
+Invoke-Expression $env:TEMP\T1036_masquerading.docx.exe
+Invoke-Expression $env:TEMP\T1036_masquerading.pdf.exe
+Invoke-Expression $env:TEMP\T1036_masquerading.ps1.exe
+Invoke-Expression $env:TEMP\T1036_masquerading.xls.vbs
+Invoke-Expression $env:TEMP\T1036_masquerading.xlsx.vbs
+Invoke-Expression $env:TEMP\T1036_masquerading.png.vbs
+Invoke-Expression $env:TEMP\T1036_masquerading.vbs.ps1
+Invoke-Expression $env:TEMP\T1036_masquerading.exe.ps1
+Invoke-Expression $env:TEMP\T1036_masquerading.js.ps1
+
+Copy-Item #{exe_path} -Destination $env:TEMP\T1036_masquerading.docx.exe -Force
+Copy-Item #{exe_path} -Destination $env:TEMP\T1036_masquerading.pdf.exe -Force
+Copy-Item #{exe_path} -Destination $env:TEMP\T1036_masquerading.ps1.exe -Force
+Copy-Item PathToAtomicsFolder\T1036\src\T1036_masquerading.vbs -Destination $env:TEMP\T1036_masquerading.xls.vbs -Force
+Copy-Item PathToAtomicsFolder\T1036\src\T1036_masquerading.vbs -Destination $env:TEMP\T1036_masquerading.xlsx.vbs -Force
+Copy-Item PathToAtomicsFolder\T1036\src\T1036_masquerading.vbs -Destination $env:TEMP\T1036_masquerading.png.vbs -Force
+Copy-Item #{ps1_path} -Destination $env:TEMP\T1036_masquerading.vbs.ps1 -Force
+Copy-Item #{ps1_path} -Destination $env:TEMP\T1036_masquerading.exe.ps1 -Force
+Copy-Item #{ps1_path} -Destination $env:TEMP\T1036_masquerading.js.ps1 -Force
+Invoke-Expression $env:TEMP\T1036_masquerading.docx.exe
+Invoke-Expression $env:TEMP\T1036_masquerading.pdf.exe
+Invoke-Expression $env:TEMP\T1036_masquerading.ps1.exe
+Invoke-Expression $env:TEMP\T1036_masquerading.xls.vbs
+Invoke-Expression $env:TEMP\T1036_masquerading.xlsx.vbs
+Invoke-Expression $env:TEMP\T1036_masquerading.png.vbs
+Invoke-Expression $env:TEMP\T1036_masquerading.vbs.ps1
+Invoke-Expression $env:TEMP\T1036_masquerading.exe.ps1
+Invoke-Expression $env:TEMP\T1036_masquerading.js.ps1
+
+Copy-Item #{exe_path} -Destination $env:TEMP\T1036_masquerading.docx.exe -Force
+Copy-Item #{exe_path} -Destination $env:TEMP\T1036_masquerading.pdf.exe -Force
+Copy-Item #{exe_path} -Destination $env:TEMP\T1036_masquerading.ps1.exe -Force
+Copy-Item #{vbs_path} -Destination $env:TEMP\T1036_masquerading.xls.vbs -Force
+Copy-Item #{vbs_path} -Destination $env:TEMP\T1036_masquerading.xlsx.vbs -Force
+Copy-Item #{vbs_path} -Destination $env:TEMP\T1036_masquerading.png.vbs -Force
+Copy-Item PathToAtomicsFolder\T1036\src\T1036_masquerading.ps1 -Destination $env:TEMP\T1036_masquerading.vbs.ps1 -Force
+Copy-Item PathToAtomicsFolder\T1036\src\T1036_masquerading.ps1 -Destination $env:TEMP\T1036_masquerading.exe.ps1 -Force
+Copy-Item PathToAtomicsFolder\T1036\src\T1036_masquerading.ps1 -Destination $env:TEMP\T1036_masquerading.js.ps1 -Force
+Invoke-Expression $env:TEMP\T1036_masquerading.docx.exe
+Invoke-Expression $env:TEMP\T1036_masquerading.pdf.exe
+Invoke-Expression $env:TEMP\T1036_masquerading.ps1.exe
+Invoke-Expression $env:TEMP\T1036_masquerading.xls.vbs
+Invoke-Expression $env:TEMP\T1036_masquerading.xlsx.vbs
+Invoke-Expression $env:TEMP\T1036_masquerading.png.vbs
+Invoke-Expression $env:TEMP\T1036_masquerading.vbs.ps1
+Invoke-Expression $env:TEMP\T1036_masquerading.exe.ps1
+Invoke-Expression $env:TEMP\T1036_masquerading.js.ps1
 
 *.exe
 \Recycle.bin
@@ -166,6 +229,99 @@ svchosts.exe
   'source': 'atomics/T1036/T1036.yaml'},
  {'command': 'copy C:\\Windows\\System32\\cmd.exe C:\\lsm.exe\n'
              'C:\\lsm.exe /c echo T1036 > C:\\T1036.txt\n',
+  'name': None,
+  'source': 'atomics/T1036/T1036.yaml'},
+ {'command': 'Copy-Item C:\\Windows\\System32\\calc.exe -Destination '
+             '$env:TEMP\\T1036_masquerading.docx.exe -Force\n'
+             'Copy-Item C:\\Windows\\System32\\calc.exe -Destination '
+             '$env:TEMP\\T1036_masquerading.pdf.exe -Force\n'
+             'Copy-Item C:\\Windows\\System32\\calc.exe -Destination '
+             '$env:TEMP\\T1036_masquerading.ps1.exe -Force\n'
+             'Copy-Item #{vbs_path} -Destination '
+             '$env:TEMP\\T1036_masquerading.xls.vbs -Force\n'
+             'Copy-Item #{vbs_path} -Destination '
+             '$env:TEMP\\T1036_masquerading.xlsx.vbs -Force\n'
+             'Copy-Item #{vbs_path} -Destination '
+             '$env:TEMP\\T1036_masquerading.png.vbs -Force\n'
+             'Copy-Item #{ps1_path} -Destination '
+             '$env:TEMP\\T1036_masquerading.vbs.ps1 -Force\n'
+             'Copy-Item #{ps1_path} -Destination '
+             '$env:TEMP\\T1036_masquerading.exe.ps1 -Force\n'
+             'Copy-Item #{ps1_path} -Destination '
+             '$env:TEMP\\T1036_masquerading.js.ps1 -Force\n'
+             'Invoke-Expression $env:TEMP\\T1036_masquerading.docx.exe\n'
+             'Invoke-Expression $env:TEMP\\T1036_masquerading.pdf.exe\n'
+             'Invoke-Expression $env:TEMP\\T1036_masquerading.ps1.exe\n'
+             'Invoke-Expression $env:TEMP\\T1036_masquerading.xls.vbs\n'
+             'Invoke-Expression $env:TEMP\\T1036_masquerading.xlsx.vbs\n'
+             'Invoke-Expression $env:TEMP\\T1036_masquerading.png.vbs\n'
+             'Invoke-Expression $env:TEMP\\T1036_masquerading.vbs.ps1\n'
+             'Invoke-Expression $env:TEMP\\T1036_masquerading.exe.ps1\n'
+             'Invoke-Expression $env:TEMP\\T1036_masquerading.js.ps1\n',
+  'name': None,
+  'source': 'atomics/T1036/T1036.yaml'},
+ {'command': 'Copy-Item #{exe_path} -Destination '
+             '$env:TEMP\\T1036_masquerading.docx.exe -Force\n'
+             'Copy-Item #{exe_path} -Destination '
+             '$env:TEMP\\T1036_masquerading.pdf.exe -Force\n'
+             'Copy-Item #{exe_path} -Destination '
+             '$env:TEMP\\T1036_masquerading.ps1.exe -Force\n'
+             'Copy-Item '
+             'PathToAtomicsFolder\\T1036\\src\\T1036_masquerading.vbs '
+             '-Destination $env:TEMP\\T1036_masquerading.xls.vbs -Force\n'
+             'Copy-Item '
+             'PathToAtomicsFolder\\T1036\\src\\T1036_masquerading.vbs '
+             '-Destination $env:TEMP\\T1036_masquerading.xlsx.vbs -Force\n'
+             'Copy-Item '
+             'PathToAtomicsFolder\\T1036\\src\\T1036_masquerading.vbs '
+             '-Destination $env:TEMP\\T1036_masquerading.png.vbs -Force\n'
+             'Copy-Item #{ps1_path} -Destination '
+             '$env:TEMP\\T1036_masquerading.vbs.ps1 -Force\n'
+             'Copy-Item #{ps1_path} -Destination '
+             '$env:TEMP\\T1036_masquerading.exe.ps1 -Force\n'
+             'Copy-Item #{ps1_path} -Destination '
+             '$env:TEMP\\T1036_masquerading.js.ps1 -Force\n'
+             'Invoke-Expression $env:TEMP\\T1036_masquerading.docx.exe\n'
+             'Invoke-Expression $env:TEMP\\T1036_masquerading.pdf.exe\n'
+             'Invoke-Expression $env:TEMP\\T1036_masquerading.ps1.exe\n'
+             'Invoke-Expression $env:TEMP\\T1036_masquerading.xls.vbs\n'
+             'Invoke-Expression $env:TEMP\\T1036_masquerading.xlsx.vbs\n'
+             'Invoke-Expression $env:TEMP\\T1036_masquerading.png.vbs\n'
+             'Invoke-Expression $env:TEMP\\T1036_masquerading.vbs.ps1\n'
+             'Invoke-Expression $env:TEMP\\T1036_masquerading.exe.ps1\n'
+             'Invoke-Expression $env:TEMP\\T1036_masquerading.js.ps1\n',
+  'name': None,
+  'source': 'atomics/T1036/T1036.yaml'},
+ {'command': 'Copy-Item #{exe_path} -Destination '
+             '$env:TEMP\\T1036_masquerading.docx.exe -Force\n'
+             'Copy-Item #{exe_path} -Destination '
+             '$env:TEMP\\T1036_masquerading.pdf.exe -Force\n'
+             'Copy-Item #{exe_path} -Destination '
+             '$env:TEMP\\T1036_masquerading.ps1.exe -Force\n'
+             'Copy-Item #{vbs_path} -Destination '
+             '$env:TEMP\\T1036_masquerading.xls.vbs -Force\n'
+             'Copy-Item #{vbs_path} -Destination '
+             '$env:TEMP\\T1036_masquerading.xlsx.vbs -Force\n'
+             'Copy-Item #{vbs_path} -Destination '
+             '$env:TEMP\\T1036_masquerading.png.vbs -Force\n'
+             'Copy-Item '
+             'PathToAtomicsFolder\\T1036\\src\\T1036_masquerading.ps1 '
+             '-Destination $env:TEMP\\T1036_masquerading.vbs.ps1 -Force\n'
+             'Copy-Item '
+             'PathToAtomicsFolder\\T1036\\src\\T1036_masquerading.ps1 '
+             '-Destination $env:TEMP\\T1036_masquerading.exe.ps1 -Force\n'
+             'Copy-Item '
+             'PathToAtomicsFolder\\T1036\\src\\T1036_masquerading.ps1 '
+             '-Destination $env:TEMP\\T1036_masquerading.js.ps1 -Force\n'
+             'Invoke-Expression $env:TEMP\\T1036_masquerading.docx.exe\n'
+             'Invoke-Expression $env:TEMP\\T1036_masquerading.pdf.exe\n'
+             'Invoke-Expression $env:TEMP\\T1036_masquerading.ps1.exe\n'
+             'Invoke-Expression $env:TEMP\\T1036_masquerading.xls.vbs\n'
+             'Invoke-Expression $env:TEMP\\T1036_masquerading.xlsx.vbs\n'
+             'Invoke-Expression $env:TEMP\\T1036_masquerading.png.vbs\n'
+             'Invoke-Expression $env:TEMP\\T1036_masquerading.vbs.ps1\n'
+             'Invoke-Expression $env:TEMP\\T1036_masquerading.exe.ps1\n'
+             'Invoke-Expression $env:TEMP\\T1036_masquerading.js.ps1\n',
   'name': None,
   'source': 'atomics/T1036/T1036.yaml'},
  {'command': '*.exe',
@@ -753,7 +909,15 @@ svchosts.exe
                   'references': ['https://twitter.com/GelosSnake/status/934900723426439170'],
                   'status': 'experimental',
                   'tags': ['attack.defense_evasion', 'attack.t1036'],
-                  'title': 'System File Execution Location Anomaly'}}]
+                  'title': 'System File Execution Location Anomaly'}},
+ {'data_source': ['4688', 'Process Execution']},
+ {'data_source': ['4663', 'File monitoring']},
+ {'data_source': ['File Hashing']},
+ {'data_source': ['B9', 'Binary file metadata']},
+ {'data_source': ['4688', 'Process Execution']},
+ {'data_source': ['4663', 'File monitoring']},
+ {'data_source': ['LOG-MD', 'File Hashing']},
+ {'data_source': ['LOG-MD - B9', 'Binary file metadata']}]
 ```
 
 ## Potential Queries
@@ -782,7 +946,8 @@ svchosts.exe
 ## Raw Dataset
 
 ```json
-[{'Atomic Red Team Test - Masquerading': {'atomic_tests': [{'description': 'Copies '
+[{'Atomic Red Team Test - Masquerading': {'atomic_tests': [{'auto_generated_guid': '5ba5a3d1-cf3c-4499-968a-a93155d1f717',
+                                                            'description': 'Copies '
                                                                            'cmd.exe, '
                                                                            'renames '
                                                                            'it, '
@@ -839,7 +1004,8 @@ svchosts.exe
                                                                     'LSASS '
                                                                     'process',
                                                             'supported_platforms': ['windows']},
-                                                           {'description': 'Copies '
+                                                           {'auto_generated_guid': 'a315bfff-7a98-403b-b442-2ea1b255e556',
+                                                            'description': 'Copies '
                                                                            'sh '
                                                                            'process, '
                                                                            'renames '
@@ -877,7 +1043,8 @@ svchosts.exe
                                                                     'crond '
                                                                     'process.',
                                                             'supported_platforms': ['linux']},
-                                                           {'description': 'Copies '
+                                                           {'auto_generated_guid': '3a2a578b-0a01-46e4-92e3-62e2859b42f0',
+                                                            'description': 'Copies '
                                                                            'cscript.exe, '
                                                                            'renames '
                                                                            'it, '
@@ -928,7 +1095,8 @@ svchosts.exe
                                                                     'as '
                                                                     'notepad.exe',
                                                             'supported_platforms': ['windows']},
-                                                           {'description': 'Copies '
+                                                           {'auto_generated_guid': '24136435-c91a-4ede-9da1-8b284a1c1a23',
+                                                            'description': 'Copies '
                                                                            'wscript.exe, '
                                                                            'renames '
                                                                            'it, '
@@ -988,7 +1156,8 @@ svchosts.exe
                                                                     'as '
                                                                     'svchost.exe',
                                                             'supported_platforms': ['windows']},
-                                                           {'description': 'Copies '
+                                                           {'auto_generated_guid': 'ac9d0fc3-8aa8-4ab5-b11f-682cd63b40aa',
+                                                            'description': 'Copies '
                                                                            'powershell.exe, '
                                                                            'renames '
                                                                            'it, '
@@ -1038,7 +1207,8 @@ svchosts.exe
                                                                     'as '
                                                                     'taskhostw.exe',
                                                             'supported_platforms': ['windows']},
-                                                           {'dependencies': [{'description': 'Exe '
+                                                           {'auto_generated_guid': 'bc15c13f-d121-4b1f-8c7d-28d95854d086',
+                                                            'dependencies': [{'description': 'Exe '
                                                                                              'file '
                                                                                              'to '
                                                                                              'copy '
@@ -1150,7 +1320,8 @@ svchosts.exe
                                                                     'windows '
                                                                     'exe',
                                                             'supported_platforms': ['windows']},
-                                                           {'description': 'Copies '
+                                                           {'auto_generated_guid': 'c3d24a39-2bfe-4c6a-b064-90cd73896cb0',
+                                                            'description': 'Copies '
                                                                            'a '
                                                                            'windows '
                                                                            'exe, '
@@ -1213,7 +1384,8 @@ svchosts.exe
                                                                     'windows '
                                                                     'exe',
                                                             'supported_platforms': ['windows']},
-                                                           {'description': 'Detect '
+                                                           {'auto_generated_guid': '83810c46-f45e-4485-9ab6-8ed0e9e6ed7f',
+                                                            'description': 'Detect '
                                                                            'LSM '
                                                                            'running '
                                                                            'from '
@@ -1283,6 +1455,200 @@ svchosts.exe
                                                                     'Masquerading '
                                                                     'as '
                                                                     'LSM.exe',
+                                                            'supported_platforms': ['windows']},
+                                                           {'auto_generated_guid': 'c7fa0c3b-b57f-4cba-9118-863bf4e653fc',
+                                                            'description': 'download '
+                                                                           'and '
+                                                                           'execute '
+                                                                           'a '
+                                                                           'file '
+                                                                           'masquerading '
+                                                                           'as '
+                                                                           'images '
+                                                                           'or '
+                                                                           'Office '
+                                                                           'files. '
+                                                                           'Upon '
+                                                                           'execution '
+                                                                           '3 '
+                                                                           'calc '
+                                                                           'instances '
+                                                                           'and '
+                                                                           '3 '
+                                                                           'vbs '
+                                                                           'windows '
+                                                                           'will '
+                                                                           'be '
+                                                                           'launched.\n'
+                                                                           '\n'
+                                                                           'e.g '
+                                                                           'SOME_LEGIT_NAME.[doc,docx,xls,xlsx,pdf,rtf,png,jpg,etc.].[exe,vbs,js,ps1,etc] '
+                                                                           '(Quartelyreport.docx.exe)\n',
+                                                            'executor': {'cleanup_command': 'Remove-Item '
+                                                                                            '$env:TEMP\\T1036_masquerading.docx.exe '
+                                                                                            '-Force '
+                                                                                            '-ErrorAction '
+                                                                                            'Ignore '
+                                                                                            '| '
+                                                                                            'Out-Null\n'
+                                                                                            'Remove-Item '
+                                                                                            '$env:TEMP\\T1036_masquerading.pdf.exe '
+                                                                                            '-Force '
+                                                                                            '-ErrorAction '
+                                                                                            'Ignore '
+                                                                                            '| '
+                                                                                            'Out-Null\n'
+                                                                                            'Remove-Item '
+                                                                                            '$env:TEMP\\T1036_masquerading.ps1.exe '
+                                                                                            '-Force '
+                                                                                            '-ErrorAction '
+                                                                                            'Ignore '
+                                                                                            '| '
+                                                                                            'Out-Null\n'
+                                                                                            'Remove-Item '
+                                                                                            '$env:TEMP\\T1036_masquerading.xls.vbs '
+                                                                                            '-Force '
+                                                                                            '-ErrorAction '
+                                                                                            'Ignore '
+                                                                                            '| '
+                                                                                            'Out-Null\n'
+                                                                                            'Remove-Item '
+                                                                                            '$env:TEMP\\T1036_masquerading.xlsx.vbs '
+                                                                                            '-Force '
+                                                                                            '-ErrorAction '
+                                                                                            'Ignore '
+                                                                                            '| '
+                                                                                            'Out-Null\n'
+                                                                                            'Remove-Item '
+                                                                                            '$env:TEMP\\T1036_masquerading.png.vbs '
+                                                                                            '-Force '
+                                                                                            '-ErrorAction '
+                                                                                            'Ignore '
+                                                                                            '| '
+                                                                                            'Out-Null\n'
+                                                                                            'Remove-Item '
+                                                                                            '$env:TEMP\\T1036_masquerading.vbs.ps1 '
+                                                                                            '-Force '
+                                                                                            '-ErrorAction '
+                                                                                            'Ignore '
+                                                                                            '| '
+                                                                                            'Out-Null\n'
+                                                                                            'Remove-Item '
+                                                                                            '$env:TEMP\\T1036_masquerading.exe.ps1 '
+                                                                                            '-Force '
+                                                                                            '-ErrorAction '
+                                                                                            'Ignore '
+                                                                                            '| '
+                                                                                            'Out-Null\n'
+                                                                                            'Remove-Item '
+                                                                                            '$env:TEMP\\T1036_masquerading.js.ps1 '
+                                                                                            '-Force '
+                                                                                            '-ErrorAction '
+                                                                                            'Ignore '
+                                                                                            '| '
+                                                                                            'Out-Null\n',
+                                                                         'command': 'Copy-Item '
+                                                                                    '#{exe_path} '
+                                                                                    '-Destination '
+                                                                                    '$env:TEMP\\T1036_masquerading.docx.exe '
+                                                                                    '-Force\n'
+                                                                                    'Copy-Item '
+                                                                                    '#{exe_path} '
+                                                                                    '-Destination '
+                                                                                    '$env:TEMP\\T1036_masquerading.pdf.exe '
+                                                                                    '-Force\n'
+                                                                                    'Copy-Item '
+                                                                                    '#{exe_path} '
+                                                                                    '-Destination '
+                                                                                    '$env:TEMP\\T1036_masquerading.ps1.exe '
+                                                                                    '-Force\n'
+                                                                                    'Copy-Item '
+                                                                                    '#{vbs_path} '
+                                                                                    '-Destination '
+                                                                                    '$env:TEMP\\T1036_masquerading.xls.vbs '
+                                                                                    '-Force\n'
+                                                                                    'Copy-Item '
+                                                                                    '#{vbs_path} '
+                                                                                    '-Destination '
+                                                                                    '$env:TEMP\\T1036_masquerading.xlsx.vbs '
+                                                                                    '-Force\n'
+                                                                                    'Copy-Item '
+                                                                                    '#{vbs_path} '
+                                                                                    '-Destination '
+                                                                                    '$env:TEMP\\T1036_masquerading.png.vbs '
+                                                                                    '-Force\n'
+                                                                                    'Copy-Item '
+                                                                                    '#{ps1_path} '
+                                                                                    '-Destination '
+                                                                                    '$env:TEMP\\T1036_masquerading.vbs.ps1 '
+                                                                                    '-Force\n'
+                                                                                    'Copy-Item '
+                                                                                    '#{ps1_path} '
+                                                                                    '-Destination '
+                                                                                    '$env:TEMP\\T1036_masquerading.exe.ps1 '
+                                                                                    '-Force\n'
+                                                                                    'Copy-Item '
+                                                                                    '#{ps1_path} '
+                                                                                    '-Destination '
+                                                                                    '$env:TEMP\\T1036_masquerading.js.ps1 '
+                                                                                    '-Force\n'
+                                                                                    'Invoke-Expression '
+                                                                                    '$env:TEMP\\T1036_masquerading.docx.exe\n'
+                                                                                    'Invoke-Expression '
+                                                                                    '$env:TEMP\\T1036_masquerading.pdf.exe\n'
+                                                                                    'Invoke-Expression '
+                                                                                    '$env:TEMP\\T1036_masquerading.ps1.exe\n'
+                                                                                    'Invoke-Expression '
+                                                                                    '$env:TEMP\\T1036_masquerading.xls.vbs\n'
+                                                                                    'Invoke-Expression '
+                                                                                    '$env:TEMP\\T1036_masquerading.xlsx.vbs\n'
+                                                                                    'Invoke-Expression '
+                                                                                    '$env:TEMP\\T1036_masquerading.png.vbs\n'
+                                                                                    'Invoke-Expression '
+                                                                                    '$env:TEMP\\T1036_masquerading.vbs.ps1\n'
+                                                                                    'Invoke-Expression '
+                                                                                    '$env:TEMP\\T1036_masquerading.exe.ps1\n'
+                                                                                    'Invoke-Expression '
+                                                                                    '$env:TEMP\\T1036_masquerading.js.ps1\n',
+                                                                         'elevation_required': False,
+                                                                         'name': 'powershell'},
+                                                            'input_arguments': {'exe_path': {'default': 'C:\\Windows\\System32\\calc.exe',
+                                                                                             'description': 'path '
+                                                                                                            'to '
+                                                                                                            'exe '
+                                                                                                            'to '
+                                                                                                            'use '
+                                                                                                            'when '
+                                                                                                            'creating '
+                                                                                                            'masquerading '
+                                                                                                            'files',
+                                                                                             'type': 'path'},
+                                                                                'ps1_path': {'default': 'PathToAtomicsFolder\\T1036\\src\\T1036_masquerading.ps1',
+                                                                                             'description': 'path '
+                                                                                                            'of '
+                                                                                                            'powershell '
+                                                                                                            'script '
+                                                                                                            'to '
+                                                                                                            'use '
+                                                                                                            'when '
+                                                                                                            'creating '
+                                                                                                            'masquerading '
+                                                                                                            'files',
+                                                                                             'type': 'path'},
+                                                                                'vbs_path': {'default': 'PathToAtomicsFolder\\T1036\\src\\T1036_masquerading.vbs',
+                                                                                             'description': 'path '
+                                                                                                            'of '
+                                                                                                            'vbs '
+                                                                                                            'to '
+                                                                                                            'use '
+                                                                                                            'when '
+                                                                                                            'creating '
+                                                                                                            'masquerading '
+                                                                                                            'files',
+                                                                                             'type': 'path'}},
+                                                            'name': 'File '
+                                                                    'Extension '
+                                                                    'Masquerading',
                                                             'supported_platforms': ['windows']}],
                                           'attack_technique': 'T1036',
                                           'display_name': 'Masquerading'}},

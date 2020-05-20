@@ -17,14 +17,20 @@ Manipulation of Windows service binaries is one variation of this technique. Adv
 
 Another variation of this technique can be performed by taking advantage of a weakness that is common in executable, self-extracting installers. During the installation process, it is common for installers to use a subdirectory within the <code>%TEMP%</code> directory to unpack binaries such as DLLs, EXEs, or other payloads. When installers create subdirectories and files they often do not set appropriate permissions to restrict write access, which allows for execution of untrusted code placed in the subdirectories or overwriting of binaries used in the installation process. This behavior is related to and may take advantage of [DLL Search Order Hijacking](https://attack.mitre.org/techniques/T1038). Some installers may also require elevated privileges that will result in privilege escalation when executing adversary controlled code. This behavior is related to [Bypass User Account Control](https://attack.mitre.org/techniques/T1088). Several examples of this weakness in existing common installers have been reported to software vendors. (Citation: Mozilla Firefox Installer DLL Hijack) (Citation: Seclists Kanthak 7zip Installer)
 
+## Aliases
+
+```
+
+```
+
 ## Additional Attributes
 
 * Bypass: None
 * Effective Permissions: ['SYSTEM', 'User', 'Administrator']
-* Network: intentionally left blank
+* Network: None
 * Permissions: ['Administrator', 'User']
 * Platforms: ['Windows']
-* Remote: intentionally left blank
+* Remote: None
 * Type: attack-pattern
 * Wiki: https://attack.mitre.org/techniques/T1044
 
@@ -122,7 +128,12 @@ python/situational_awareness/host/multi/WorldWriteableFileSearch
 ## Potential Detections
 
 ```json
-
+[{'data_source': ['4663', 'File monitoring']},
+ {'data_source': ['4688 ', 'Process CMD Line']},
+ {'data_source': ['7040', ' 7045', 'Services']},
+ {'data_source': ['4663', 'File monitoring']},
+ {'data_source': ['4688 ', 'Process CMD Line']},
+ {'data_source': ['7040', ' 7045', 'Services']}]
 ```
 
 ## Potential Queries
@@ -197,7 +208,8 @@ python/situational_awareness/host/multi/WorldWriteableFileSearch
                                                                  'of abusing '
                                                                  'it.',
                                                   'Metasploit': 'exploit/windows/local/trusted_service_path'}},
- {'Atomic Red Team Test - File System Permissions Weakness': {'atomic_tests': [{'dependencies': [{'description': 'A '
+ {'Atomic Red Team Test - File System Permissions Weakness': {'atomic_tests': [{'auto_generated_guid': '0cb5ad48-7d61-48ac-bd4e-503d5b519dac',
+                                                                                'dependencies': [{'description': 'A '
                                                                                                                  'file '
                                                                                                                  'must '
                                                                                                                  'exist '

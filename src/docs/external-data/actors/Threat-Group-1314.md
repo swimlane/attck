@@ -30,7 +30,6 @@ _/  |_|  |_________   ____ _____ _/  |_      ___________  ____  __ ________
 ## Aliases
 
 ```
-intentionally left blank
 Threat Group-1314
 TG-1314
 ```

@@ -86,7 +86,6 @@
 ## Aliases
 
 ```
-intentionally left blank
 APT32
 SeaLotus
 OceanLotus

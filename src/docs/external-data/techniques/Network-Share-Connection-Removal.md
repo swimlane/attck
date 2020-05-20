@@ -9,14 +9,20 @@
 
 Adversaries may remove share connections that are no longer useful in order to clean up traces of their operation.
 
+## Aliases
+
+```
+
+```
+
 ## Additional Attributes
 
 * Bypass: ['Host forensic analysis']
 * Effective Permissions: None
-* Network: intentionally left blank
+* Network: None
 * Permissions: ['Administrator', 'User']
 * Platforms: ['Windows']
-* Remote: intentionally left blank
+* Remote: None
 * Type: attack-pattern
 * Wiki: https://attack.mitre.org/techniques/T1126
 
@@ -52,7 +58,16 @@ Remove-FileShare -Name \\test\share
 ## Potential Detections
 
 ```json
-
+[{'data_source': ['4688', 'Process Execution']},
+ {'data_source': ['4688 ', 'Process CMD Line']},
+ {'data_source': ['5140/5145', 'Net Shares']},
+ {'data_source': ['4624', 'Authentication logs']},
+ {'data_source': ['Packet capture']},
+ {'data_source': ['4688', 'Process Execution']},
+ {'data_source': ['4688 ', 'Process CMD Line']},
+ {'data_source': ['5140/5145', 'Net Shares']},
+ {'data_source': ['4624', 'Authentication logs']},
+ {'data_source': ['Packet capture']}]
 ```
 
 ## Potential Queries
@@ -69,7 +84,8 @@ Remove-FileShare -Name \\test\share
 ## Raw Dataset
 
 ```json
-[{'Atomic Red Team Test - Remove Network Share': {'atomic_tests': [{'description': 'Add '
+[{'Atomic Red Team Test - Remove Network Share': {'atomic_tests': [{'auto_generated_guid': '14c38f32-6509-46d8-ab43-d53e32d2b131',
+                                                                    'description': 'Add '
                                                                                    'a '
                                                                                    'Network '
                                                                                    'Share '
@@ -97,7 +113,8 @@ Remove-FileShare -Name \\test\share
                                                                             'Network '
                                                                             'Share',
                                                                     'supported_platforms': ['windows']},
-                                                                   {'description': 'Removes '
+                                                                   {'auto_generated_guid': '09210ad5-1ef2-4077-9ad3-7351e13e9222',
+                                                                    'description': 'Removes '
                                                                                    'a '
                                                                                    'Network '
                                                                                    'Share '
@@ -119,7 +136,8 @@ Remove-FileShare -Name \\test\share
                                                                             'Network '
                                                                             'Share',
                                                                     'supported_platforms': ['windows']},
-                                                                   {'description': 'Removes '
+                                                                   {'auto_generated_guid': '0512d214-9512-4d22-bde7-f37e058259b3',
+                                                                    'description': 'Removes '
                                                                                    'a '
                                                                                    'Network '
                                                                                    'Share '

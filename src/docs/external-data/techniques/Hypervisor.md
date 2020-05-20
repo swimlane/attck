@@ -7,14 +7,20 @@
 
 > A type-1 hypervisor is a software layer that sits between the guest operating systems and system's hardware. (Citation: Wikipedia Hypervisor) It presents a virtual running environment to an operating system. An example of a common hypervisor is Xen. (Citation: Wikipedia Xen) A type-1 hypervisor operates at a level below the operating system and could be designed with [Rootkit](https://attack.mitre.org/techniques/T1014) functionality to hide its existence from the guest operating system. (Citation: Myers 2007) A malicious hypervisor of this nature could be used to persist on systems through interruption.
 
+## Aliases
+
+```
+
+```
+
 ## Additional Attributes
 
 * Bypass: None
 * Effective Permissions: None
-* Network: intentionally left blank
+* Network: None
 * Permissions: ['Administrator', 'SYSTEM']
 * Platforms: ['Windows']
-* Remote: intentionally left blank
+* Remote: None
 * Type: attack-pattern
 * Wiki: https://attack.mitre.org/techniques/T1062
 
@@ -64,7 +70,7 @@ New-VM -Name #{vm_name} -MemoryStartupBytes 1GB -NewVHDPath C:\Temp\test.vhdx -N
 ## Potential Detections
 
 ```json
-
+[{'data_source': ['System calls']}, {'data_source': ['System calls']}]
 ```
 
 ## Potential Queries
@@ -76,7 +82,8 @@ New-VM -Name #{vm_name} -MemoryStartupBytes 1GB -NewVHDPath C:\Temp\test.vhdx -N
 ## Raw Dataset
 
 ```json
-[{'Atomic Red Team Test - Hypervisor': {'atomic_tests': [{'description': 'PowerShell '
+[{'Atomic Red Team Test - Hypervisor': {'atomic_tests': [{'auto_generated_guid': '90b4a49c-815a-4fbe-8863-da5acd5ac1a5',
+                                                          'description': 'PowerShell '
                                                                          'command '
                                                                          'to '
                                                                          'check '

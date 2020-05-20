@@ -9,14 +9,20 @@
 
 Adversaries can use the rc.common file as a way to hide code for persistence that will execute on each reboot as the root user (Citation: Methods of Mac Malware Persistence).
 
+## Aliases
+
+```
+
+```
+
 ## Additional Attributes
 
 * Bypass: None
 * Effective Permissions: None
-* Network: intentionally left blank
+* Network: None
 * Permissions: ['root']
 * Platforms: ['macOS']
-* Remote: intentionally left blank
+* Remote: None
 * Type: attack-pattern
 * Wiki: https://attack.mitre.org/techniques/T1163
 
@@ -51,7 +57,8 @@ echo osascript -e 'tell app "Finder" to display dialog "Hello World"' >> /etc/rc
 ## Raw Dataset
 
 ```json
-[{'Atomic Red Team Test - rc.common': {'atomic_tests': [{'description': 'Modify '
+[{'Atomic Red Team Test - rc.common': {'atomic_tests': [{'auto_generated_guid': '97a48daa-8bca-4bc0-b1a9-c1d163e762de',
+                                                         'description': 'Modify '
                                                                         'rc.common\n'
                                                                         '\n'
                                                                         '[Reference](https://developer.apple.com/library/content/documentation/MacOSX/Conceptual/BPSystemStartup/Chapters/StartupItems.html)\n',

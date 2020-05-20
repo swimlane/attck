@@ -11,14 +11,20 @@ Adversaries can use netsh.exe with helper DLLs to proxy execution of arbitrary c
 
 Proof of concept code exists to load Cobalt Strike's payload using netsh.exe helper DLLs. (Citation: Github Netsh Helper CS Beacon)
 
+## Aliases
+
+```
+
+```
+
 ## Additional Attributes
 
 * Bypass: None
 * Effective Permissions: None
-* Network: intentionally left blank
+* Network: None
 * Permissions: ['Administrator', 'SYSTEM']
 * Platforms: ['Windows']
-* Remote: intentionally left blank
+* Remote: None
 * Type: attack-pattern
 * Wiki: https://attack.mitre.org/techniques/T1128
 
@@ -48,7 +54,12 @@ netsh.exe add helper C:\Path\file.dll
 ## Potential Detections
 
 ```json
-
+[{'data_source': ['4688', 'Process Execution']},
+ {'data_source': ['4657', 'Windows Registry']},
+ {'data_source': ['DLL monitoring']},
+ {'data_source': ['4688', 'Process Execution']},
+ {'data_source': ['4657', 'Windows Registry']},
+ {'data_source': ['Sysmon ID 7', 'DLL monitoring']}]
 ```
 
 ## Potential Queries
@@ -68,7 +79,8 @@ netsh.exe add helper C:\Path\file.dll
 ## Raw Dataset
 
 ```json
-[{'Atomic Red Team Test - Netsh Helper DLL': {'atomic_tests': [{'description': 'Netsh '
+[{'Atomic Red Team Test - Netsh Helper DLL': {'atomic_tests': [{'auto_generated_guid': '3244697d-5a3a-4dfc-941c-550f69f91a4d',
+                                                                'description': 'Netsh '
                                                                                'interacts '
                                                                                'with '
                                                                                'other '

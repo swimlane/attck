@@ -28,14 +28,20 @@ Found in many enterprise networks and often used to store and share significant 
 ### Atlassian Confluence
 Often found in development environments alongside Atlassian JIRA, Confluence is generally used to store development-related documentation.
 
+## Aliases
+
+```
+
+```
+
 ## Additional Attributes
 
 * Bypass: None
 * Effective Permissions: None
-* Network: intentionally left blank
+* Network: None
 * Permissions: ['User']
 * Platforms: ['Linux', 'Windows', 'macOS', 'SaaS', 'AWS', 'GCP', 'Azure']
-* Remote: intentionally left blank
+* Remote: None
 * Type: attack-pattern
 * Wiki: https://attack.mitre.org/techniques/T1213
 
@@ -60,7 +66,14 @@ powershell/situational_awareness/host/findtrusteddocuments
 ## Potential Detections
 
 ```json
-
+[{'data_source': ['Application Logs']},
+ {'data_source': ['Authentication logs']},
+ {'data_source': ['Data loss prevention']},
+ {'data_source': ['Third-party application logs']},
+ {'data_source': ['Application Logs']},
+ {'data_source': ['4624', 'Authentication logs']},
+ {'data_source': ['Data loss prevention']},
+ {'data_source': ['Third-party application logs']}]
 ```
 
 ## Potential Queries

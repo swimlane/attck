@@ -10,7 +10,8 @@
 ## Aliases
 
 ```
-intentionally left blank
+nbtstat
+nbtstat.exe
 ```
 
 ## Additional Attributes

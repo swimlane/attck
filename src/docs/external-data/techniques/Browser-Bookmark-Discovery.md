@@ -11,14 +11,20 @@ Browser bookmarks may also highlight additional targets after an adversary has a
 
 Specific storage locations vary based on platform and/or application, but browser bookmarks are typically stored in local files/databases.
 
+## Aliases
+
+```
+
+```
+
 ## Additional Attributes
 
 * Bypass: None
 * Effective Permissions: None
-* Network: intentionally left blank
+* Network: None
 * Permissions: ['User']
 * Platforms: ['Linux', 'Windows', 'macOS']
-* Remote: intentionally left blank
+* Remote: None
 * Type: attack-pattern
 * Wiki: https://attack.mitre.org/techniques/T1217
 
@@ -37,6 +43,8 @@ cat /tmp/T1217-Chrome.txt 2>/dev/null
 Get-ChildItem -Path C:\Users\ -Filter Bookmarks -Recurse -ErrorAction SilentlyContinue -Force
 
 where /R C:\Users\ Bookmarks
+
+where /R C:\Users\ places.sqlite
 
 {'darwin': {'sh': {'command': 'cat ~/Library/Application\\ Support/Google/Chrome/Default/Bookmarks\n', 'parsers': {'plugins.stockpile.app.parsers.bookmarks': [{'source': 'host.chrome.bookmark_title', 'edge': 'resolves_to', 'target': 'host.chrome.bookmark_url'}]}}}}
 powershell/collection/browser_data
@@ -68,6 +76,9 @@ powershell/collection/browser_data
  {'command': 'where /R C:\\Users\\ Bookmarks\n',
   'name': None,
   'source': 'atomics/T1217/T1217.yaml'},
+ {'command': 'where /R C:\\Users\\ places.sqlite\n',
+  'name': None,
+  'source': 'atomics/T1217/T1217.yaml'},
  {'command': {'darwin': {'sh': {'command': 'cat ~/Library/Application\\ '
                                            'Support/Google/Chrome/Default/Bookmarks\n',
                                 'parsers': {'plugins.stockpile.app.parsers.bookmarks': [{'edge': 'resolves_to',
@@ -86,7 +97,14 @@ powershell/collection/browser_data
 ## Potential Detections
 
 ```json
-
+[{'data_source': ['4663', 'File monitoring']},
+ {'data_source': ['4688 ', 'Process CMD Line']},
+ {'data_source': ['4688', 'Process Execution']},
+ {'data_source': ['API monitoring']},
+ {'data_source': ['4663', 'File monitoring']},
+ {'data_source': ['4688 ', 'Process CMD Line']},
+ {'data_source': ['4688', 'Process Execution']},
+ {'data_source': ['API monitoring']}]
 ```
 
 ## Potential Queries
@@ -101,7 +119,8 @@ powershell/collection/browser_data
 ## Raw Dataset
 
 ```json
-[{'Atomic Red Team Test - Browser Bookmark Discovery': {'atomic_tests': [{'description': 'Searches '
+[{'Atomic Red Team Test - Browser Bookmark Discovery': {'atomic_tests': [{'auto_generated_guid': '3a41f169-a5ab-407f-9269-abafdb5da6c2',
+                                                                          'description': 'Searches '
                                                                                          'for '
                                                                                          'Mozilla '
                                                                                          "Firefox's "
@@ -159,7 +178,8 @@ powershell/collection/browser_data
                                                                                   'on '
                                                                                   'Linux',
                                                                           'supported_platforms': ['linux']},
-                                                                         {'description': 'Searches '
+                                                                         {'auto_generated_guid': '1ca1f9c7-44bc-46bb-8c85-c50e2e94267b',
+                                                                          'description': 'Searches '
                                                                                          'for '
                                                                                          'Mozilla '
                                                                                          "Firefox's "
@@ -215,7 +235,8 @@ powershell/collection/browser_data
                                                                                   'on '
                                                                                   'macOS',
                                                                           'supported_platforms': ['macos']},
-                                                                         {'description': 'Searches '
+                                                                         {'auto_generated_guid': 'b789d341-154b-4a42-a071-9111588be9bc',
+                                                                          'description': 'Searches '
                                                                                          'for '
                                                                                          'Google '
                                                                                          "Chrome's "
@@ -274,7 +295,8 @@ powershell/collection/browser_data
                                                                                   'on '
                                                                                   'macOS',
                                                                           'supported_platforms': ['macos']},
-                                                                         {'description': 'Searches '
+                                                                         {'auto_generated_guid': 'faab755e-4299-48ec-8202-fc7885eb6545',
+                                                                          'description': 'Searches '
                                                                                          'for '
                                                                                          'Google '
                                                                                          "Chromes's "
@@ -315,10 +337,14 @@ powershell/collection/browser_data
                                                                                   'with '
                                                                                   'powershell',
                                                                           'supported_platforms': ['windows']},
-                                                                         {'description': 'Searches '
+                                                                         {'auto_generated_guid': '76f71e2f-480e-4bed-b61e-398fe17499d5',
+                                                                          'description': 'Searches '
                                                                                          'for '
                                                                                          'Google '
                                                                                          "Chromes's "
+                                                                                         'and '
+                                                                                         'Edge '
+                                                                                         "Chromium's "
                                                                                          'Bookmarks '
                                                                                          'file '
                                                                                          '(on '
@@ -345,7 +371,52 @@ powershell/collection/browser_data
                                                                           'name': 'List '
                                                                                   'Google '
                                                                                   'Chrome '
+                                                                                  '/ '
+                                                                                  'Edge '
+                                                                                  'Chromium '
                                                                                   'Bookmarks '
+                                                                                  'on '
+                                                                                  'Windows '
+                                                                                  'with '
+                                                                                  'command '
+                                                                                  'prompt.',
+                                                                          'supported_platforms': ['windows']},
+                                                                         {'auto_generated_guid': '4312cdbc-79fc-4a9c-becc-53d49c734bc5',
+                                                                          'description': 'Searches '
+                                                                                         'for '
+                                                                                         'Mozilla '
+                                                                                         'Firefox '
+                                                                                         'bookmarks '
+                                                                                         'file '
+                                                                                         '(on '
+                                                                                         'Windows '
+                                                                                         'distributions) '
+                                                                                         'that '
+                                                                                         'contains '
+                                                                                         'bookmarks '
+                                                                                         'in '
+                                                                                         'a '
+                                                                                         'SQLITE '
+                                                                                         'database.\n'
+                                                                                         'Upon '
+                                                                                         'execution, '
+                                                                                         'paths '
+                                                                                         'that '
+                                                                                         'contain '
+                                                                                         'bookmark '
+                                                                                         'files '
+                                                                                         'will '
+                                                                                         'be '
+                                                                                         'displayed.\n',
+                                                                          'executor': {'command': 'where '
+                                                                                                  '/R '
+                                                                                                  'C:\\Users\\ '
+                                                                                                  'places.sqlite\n',
+                                                                                       'name': 'command_prompt'},
+                                                                          'name': 'List '
+                                                                                  'Mozilla '
+                                                                                  'Firefox '
+                                                                                  'bookmarks '
                                                                                   'on '
                                                                                   'Windows '
                                                                                   'with '

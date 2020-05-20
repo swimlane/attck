@@ -9,14 +9,20 @@
 
 A good example of this is when malware is detected with a file signature and quarantined by anti-virus software. An adversary who can determine that the malware was quarantined because of its file signature may use [Software Packing](https://attack.mitre.org/techniques/T1045) or otherwise modify the file so it has a different signature, and then re-use the malware.
 
+## Aliases
+
+```
+
+```
+
 ## Additional Attributes
 
 * Bypass: ['Log analysis', 'Host intrusion prevention systems', 'Anti-virus']
 * Effective Permissions: None
-* Network: intentionally left blank
+* Network: None
 * Permissions: None
 * Platforms: ['Linux', 'macOS', 'Windows']
-* Remote: intentionally left blank
+* Remote: None
 * Type: attack-pattern
 * Wiki: https://attack.mitre.org/techniques/T1066
 
@@ -54,7 +60,17 @@ A good example of this is when malware is detected with a file signature and qua
                            'attack.t1107',
                            'attack.t1066',
                            'attack.s0195'],
-                  'title': 'Secure Deletion with SDelete'}}]
+                  'title': 'Secure Deletion with SDelete'}},
+ {'data_source': ['4688 ', 'Process CMD Line']},
+ {'data_source': ['4688', 'Process Execution']},
+ {'data_source': ['5156', 'Windows Firewall']},
+ {'data_source': ['Anti-virus']},
+ {'data_source': ['B9', 'Binary file metadata']},
+ {'data_source': ['4688 ', 'Process CMD Line']},
+ {'data_source': ['4688', 'Process Execution']},
+ {'data_source': ['5156', 'Windows Firewall']},
+ {'data_source': ['LOG-MD - B9', 'Binary file metadata']},
+ {'data_source': ['Anti-virus']}]
 ```
 
 ## Potential Queries

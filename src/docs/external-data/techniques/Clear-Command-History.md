@@ -7,14 +7,20 @@
 
 > macOS and Linux both keep track of the commands users type in their terminal so that users can easily remember what they've done. These logs can be accessed in a few different ways. While logged in, this command history is tracked in a file pointed to by the environment variable <code>HISTFILE</code>. When a user logs off a system, this information is flushed to a file in the user's home directory called <code>~/.bash_history</code>. The benefit of this is that it allows users to go back to commands they've used before in different sessions. Since everything typed on the command-line is saved, passwords passed in on the command line are also saved. Adversaries can abuse this by searching these files for cleartext passwords. Additionally, adversaries can use a variety of methods to prevent their own commands from appear in these logs such as <code>unset HISTFILE</code>, <code>export HISTFILESIZE=0</code>, <code>history -c</code>, <code>rm ~/.bash_history</code>.
 
+## Aliases
+
+```
+
+```
+
 ## Additional Attributes
 
 * Bypass: ['Log analysis', 'Host forensic analysis']
 * Effective Permissions: None
-* Network: intentionally left blank
+* Network: None
 * Permissions: ['User']
 * Platforms: ['Linux', 'macOS']
-* Remote: intentionally left blank
+* Remote: None
 * Type: attack-pattern
 * Wiki: https://attack.mitre.org/techniques/T1146
 
@@ -235,7 +241,8 @@ history -c
 ## Raw Dataset
 
 ```json
-[{'Atomic Red Team Test - Clear Command History': {'atomic_tests': [{'description': 'Clears '
+[{'Atomic Red Team Test - Clear Command History': {'atomic_tests': [{'auto_generated_guid': 'a934276e-2be5-4a36-93fd-98adbb5bd4fc',
+                                                                     'description': 'Clears '
                                                                                     'bash '
                                                                                     'history '
                                                                                     'via '
@@ -249,7 +256,8 @@ history -c
                                                                              '(rm)',
                                                                      'supported_platforms': ['linux',
                                                                                              'macos']},
-                                                                    {'description': 'Clears '
+                                                                    {'auto_generated_guid': 'cbf506a5-dd78-43e5-be7e-a46b7c7a0a11',
+                                                                     'description': 'Clears '
                                                                                     'bash '
                                                                                     'history '
                                                                                     'via '
@@ -265,7 +273,8 @@ history -c
                                                                              '(echo)',
                                                                      'supported_platforms': ['linux',
                                                                                              'macos']},
-                                                                    {'description': 'Clears '
+                                                                    {'auto_generated_guid': 'b1251c35-dcd3-4ea1-86da-36d27b54f31f',
+                                                                     'description': 'Clears '
                                                                                     'bash '
                                                                                     'history '
                                                                                     'via '
@@ -283,7 +292,8 @@ history -c
                                                                              'dev/null)',
                                                                      'supported_platforms': ['linux',
                                                                                              'macos']},
-                                                                    {'description': 'Clears '
+                                                                    {'auto_generated_guid': '23d348f3-cc5c-4ba9-bd0a-ae09069f0914',
+                                                                     'description': 'Clears '
                                                                                     'bash '
                                                                                     'history '
                                                                                     'via '
@@ -303,7 +313,8 @@ history -c
                                                                              'dev/null)',
                                                                      'supported_platforms': ['linux',
                                                                                              'macos']},
-                                                                    {'description': 'Clears '
+                                                                    {'auto_generated_guid': '47966a1d-df4f-4078-af65-db6d9aa20739',
+                                                                     'description': 'Clears '
                                                                                     'bash '
                                                                                     'history '
                                                                                     'via '
@@ -317,7 +328,8 @@ history -c
                                                                              'history '
                                                                              '(truncate)',
                                                                      'supported_platforms': ['linux']},
-                                                                    {'description': 'Clears '
+                                                                    {'auto_generated_guid': '7e6721df-5f08-4370-9255-f06d8a77af4c',
+                                                                     'description': 'Clears '
                                                                                     'the '
                                                                                     'history '
                                                                                     'of '

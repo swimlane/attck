@@ -24,7 +24,6 @@ _/  |_ __ _________|  | _____
 ## Aliases
 
 ```
-intentionally left blank
 Turla
 Waterbug
 WhiteBear

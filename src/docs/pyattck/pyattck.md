@@ -22,6 +22,7 @@
 ## Features
 
 The **pyattck** package retrieves all Tactics, Techniques, Actors, Malware, Tools, and Mitigations from the MITRE ATT&CK Frameworks as well as any defined relationships within the MITRE ATT&CK dataset.
+
 In addition, Techniques, Actors, and Tools (if applicable) now have collected data from third-party resources that are accessible via properties on a technique. For more detailed information about these features, see [External Datasets](dataset/dataset.md).
 
 The **pyattck** package allows you to:

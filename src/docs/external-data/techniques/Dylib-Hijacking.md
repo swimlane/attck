@@ -11,14 +11,20 @@ A common method is to see what dylibs an application uses, then plant a maliciou
 
 If the program is configured to run at a higher privilege level than the current user, then when the dylib is loaded into the application, the dylib will also run at that elevated level. This can be used by adversaries as a privilege escalation technique.
 
+## Aliases
+
+```
+
+```
+
 ## Additional Attributes
 
 * Bypass: None
 * Effective Permissions: ['Administrator', 'root']
-* Network: intentionally left blank
+* Network: None
 * Permissions: ['User']
 * Platforms: ['macOS']
-* Remote: intentionally left blank
+* Remote: None
 * Type: attack-pattern
 * Wiki: https://attack.mitre.org/techniques/T1157
 

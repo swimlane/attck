@@ -10,7 +10,7 @@
 ## Aliases
 
 ```
-intentionally left blank
+xCmd
 ```
 
 ## Additional Attributes
@@ -23,6 +23,7 @@ intentionally left blank
 
 ```
 xcmd
+xcmd
 ```
 
 
@@ -30,6 +31,7 @@ xcmd
 
 ```
 Similar to psexec. Used in OPM and Anthem breaches
+[]
 ```
 
 # Techniques

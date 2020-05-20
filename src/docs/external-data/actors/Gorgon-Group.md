@@ -30,7 +30,6 @@ ______
 ## Aliases
 
 ```
-intentionally left blank
 Gorgon Group
 ```
 

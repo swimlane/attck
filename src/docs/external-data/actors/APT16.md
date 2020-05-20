@@ -24,7 +24,6 @@ _____  _______/  |/_   |/  _____/
 ## Aliases
 
 ```
-intentionally left blank
 APT16
 ```
 

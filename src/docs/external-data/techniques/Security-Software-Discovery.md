@@ -16,14 +16,20 @@ Example commands that can be used to obtain security software information are [n
 
 It's becoming more common to see macOS malware perform checks for LittleSnitch and KnockKnock software.
 
+## Aliases
+
+```
+
+```
+
 ## Additional Attributes
 
 * Bypass: None
 * Effective Permissions: None
-* Network: intentionally left blank
+* Network: None
 * Permissions: ['User', 'Administrator', 'SYSTEM']
 * Platforms: ['macOS', 'Windows']
-* Remote: intentionally left blank
+* Remote: None
 * Type: attack-pattern
 * Wiki: https://attack.mitre.org/techniques/T1063
 
@@ -165,7 +171,12 @@ Action: Allow
 ## Potential Detections
 
 ```json
-
+[{'data_source': ['4663', 'File monitoring']},
+ {'data_source': ['4688 ', 'Process CMD Line']},
+ {'data_source': ['4688', 'Process Execution']},
+ {'data_source': ['4663', 'File monitoring']},
+ {'data_source': ['4688 ', 'Process CMD Line']},
+ {'data_source': ['4688', 'Process Execution']}]
 ```
 
 ## Potential Queries
@@ -210,7 +221,8 @@ Action: Allow
 ## Raw Dataset
 
 ```json
-[{'Atomic Red Team Test - Security Software Discovery': {'atomic_tests': [{'description': 'Methods '
+[{'Atomic Red Team Test - Security Software Discovery': {'atomic_tests': [{'auto_generated_guid': 'f92a380f-ced9-491f-b338-95a991418ce2',
+                                                                           'description': 'Methods '
                                                                                           'to '
                                                                                           'identify '
                                                                                           'Security '
@@ -270,7 +282,8 @@ Action: Allow
                                                                                    'Software '
                                                                                    'Discovery',
                                                                            'supported_platforms': ['windows']},
-                                                                          {'description': 'Methods '
+                                                                          {'auto_generated_guid': '7f566051-f033-49fb-89de-b6bacab730f0',
+                                                                           'description': 'Methods '
                                                                                           'to '
                                                                                           'identify '
                                                                                           'Security '
@@ -322,7 +335,8 @@ Action: Allow
                                                                                    '- '
                                                                                    'powershell',
                                                                            'supported_platforms': ['windows']},
-                                                                          {'description': 'Methods '
+                                                                          {'auto_generated_guid': 'ba62ce11-e820-485f-9c17-6f3c857cd840',
+                                                                           'description': 'Methods '
                                                                                           'to '
                                                                                           'identify '
                                                                                           'Security '
@@ -374,7 +388,8 @@ Action: Allow
                                                                                    'ps',
                                                                            'supported_platforms': ['linux',
                                                                                                    'macos']},
-                                                                          {'description': 'Discovery '
+                                                                          {'auto_generated_guid': 'fe613cf3-8009-4446-9a0f-bc78a15b66c9',
+                                                                           'description': 'Discovery '
                                                                                           'of '
                                                                                           'an '
                                                                                           'installed '
@@ -420,7 +435,8 @@ Action: Allow
                                                                                    'Sysmon '
                                                                                    'Service',
                                                                            'supported_platforms': ['windows']},
-                                                                          {'description': 'Discovery '
+                                                                          {'auto_generated_guid': '1553252f-14ea-4d3b-8a08-d7a4211aa945',
+                                                                           'description': 'Discovery '
                                                                                           'of '
                                                                                           'installed '
                                                                                           'antivirus '

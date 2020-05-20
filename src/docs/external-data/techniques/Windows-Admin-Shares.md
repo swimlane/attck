@@ -11,14 +11,20 @@ Adversaries may use this technique in conjunction with administrator-level [Vali
 
 The [Net](https://attack.mitre.org/software/S0039) utility can be used to connect to Windows admin shares on remote systems using <code>net use</code> commands with valid credentials. (Citation: Technet Net Use)
 
+## Aliases
+
+```
+
+```
+
 ## Additional Attributes
 
 * Bypass: None
 * Effective Permissions: None
-* Network: intentionally left blank
+* Network: None
 * Permissions: ['Administrator']
 * Platforms: ['Windows']
-* Remote: intentionally left blank
+* Remote: None
 * Type: attack-pattern
 * Wiki: https://attack.mitre.org/techniques/T1077
 
@@ -458,7 +464,15 @@ ParentCommandLine: C: \ Windows \ PSEXESVC.exe
                                 'service': 'security'},
                   'references': ['https://blog.menasec.net/2019/02/threat-hunting-3-detecting-psexec.html'],
                   'tags': ['attack.lateral_movement', 'attack.t1077'],
-                  'title': 'Suspicious PsExec execution'}}]
+                  'title': 'Suspicious PsExec execution'}},
+ {'data_source': ['5156', 'Windows Firewall']},
+ {'data_source': ['4624', 'Authentication logs']},
+ {'data_source': ['4688 ', 'Process CMD Line']},
+ {'data_source': ['4688', 'Process Execution']},
+ {'data_source': ['5156', 'Windows Firewall']},
+ {'data_source': ['4624', 'Authentication logs']},
+ {'data_source': ['4688 ', 'Process CMD Line']},
+ {'data_source': ['4688', 'Process Execution']}]
 ```
 
 ## Potential Queries
@@ -621,7 +635,8 @@ ParentCommandLine: C: \ Windows \ PSEXESVC.exe
                                                                  'dir '
                                                                  '\\\\COMP\\ADMIN$\\acachsrv.exe',
                                                   'Metasploit': ''}},
- {'Atomic Red Team Test - Windows Admin Shares': {'atomic_tests': [{'description': 'Connecting '
+ {'Atomic Red Team Test - Windows Admin Shares': {'atomic_tests': [{'auto_generated_guid': '3386975b-367a-4fbb-9d77-4dcf3639ffd3',
+                                                                    'description': 'Connecting '
                                                                                    'To '
                                                                                    'Remote '
                                                                                    'Shares\n',
@@ -655,7 +670,8 @@ ParentCommandLine: C: \ Windows \ PSEXESVC.exe
                                                                             'admin '
                                                                             'share',
                                                                     'supported_platforms': ['windows']},
-                                                                   {'description': 'Map '
+                                                                   {'auto_generated_guid': '514e9cd7-9207-4882-98b1-c8f791bae3c5',
+                                                                    'description': 'Map '
                                                                                    'Admin '
                                                                                    'share '
                                                                                    'utilizing '
@@ -690,7 +706,8 @@ ParentCommandLine: C: \ Windows \ PSEXESVC.exe
                                                                             'Share '
                                                                             'PowerShell',
                                                                     'supported_platforms': ['windows']},
-                                                                   {'description': 'Copies '
+                                                                   {'auto_generated_guid': '0eb03d41-79e4-4393-8e57-6344856be1cf',
+                                                                    'description': 'Copies '
                                                                                    'a '
                                                                                    'file '
                                                                                    'to '
@@ -741,7 +758,8 @@ ParentCommandLine: C: \ Windows \ PSEXESVC.exe
                                                                             'with '
                                                                             'PsExec',
                                                                     'supported_platforms': ['windows']},
-                                                                   {'description': 'Executes '
+                                                                   {'auto_generated_guid': 'd41aaab5-bdfe-431d-a3d5-c29e9136ff46',
+                                                                    'description': 'Executes '
                                                                                    'a '
                                                                                    'command, '
                                                                                    'writing '

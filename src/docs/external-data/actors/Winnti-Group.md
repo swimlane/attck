@@ -24,7 +24,6 @@ __  _  _|__| ____   _____/  |_|__|       ___________  ____  __ ________
 ## Aliases
 
 ```
-intentionally left blank
 Winnti Group
 Blackfly
 ```

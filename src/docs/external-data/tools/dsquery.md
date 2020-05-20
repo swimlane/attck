@@ -10,7 +10,8 @@
 ## Aliases
 
 ```
-intentionally left blank
+dsquery
+dsquery.exe
 ```
 
 ## Additional Attributes

@@ -9,14 +9,20 @@
 
 Adversaries may mimic this functionality to prompt users for credentials with a seemingly legitimate prompt for a number of reasons that mimic normal usage, such as a fake installer requiring additional access or a fake malware removal suite.(Citation: OSX Malware Exploits MacKeeper) This type of prompt can be used to collect credentials via various languages such as [AppleScript](https://attack.mitre.org/techniques/T1155)(Citation: LogRhythm Do You Trust Oct 2014)(Citation: OSX Keydnap malware) and [PowerShell](https://attack.mitre.org/techniques/T1086)(Citation: LogRhythm Do You Trust Oct 2014)(Citation: Enigma Phishing for Credentials Jan 2015).
 
+## Aliases
+
+```
+
+```
+
 ## Additional Attributes
 
 * Bypass: None
 * Effective Permissions: None
-* Network: intentionally left blank
+* Network: None
 * Permissions: ['User']
 * Platforms: ['macOS', 'Windows']
-* Remote: intentionally left blank
+* Remote: None
 * Type: attack-pattern
 * Wiki: https://attack.mitre.org/techniques/T1141
 
@@ -93,7 +99,8 @@ python/collection/osx/screensaver_alleyoop
 ## Raw Dataset
 
 ```json
-[{'Atomic Red Team Test - Input Prompt': {'atomic_tests': [{'description': 'Prompt '
+[{'Atomic Red Team Test - Input Prompt': {'atomic_tests': [{'auto_generated_guid': '76628574-0bc1-4646-8fe2-8f4427b47d15',
+                                                            'description': 'Prompt '
                                                                            'User '
                                                                            'for '
                                                                            'Password '
@@ -158,7 +165,8 @@ python/collection/osx/screensaver_alleyoop
                                                                     'User for '
                                                                     'Password',
                                                             'supported_platforms': ['macos']},
-                                                           {'description': 'Prompt '
+                                                           {'auto_generated_guid': '2b162bfd-0928-4d4c-9ec3-4d9f88374b52',
+                                                            'description': 'Prompt '
                                                                            'User '
                                                                            'for '
                                                                            'Password '

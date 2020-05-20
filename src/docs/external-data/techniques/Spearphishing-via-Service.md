@@ -11,14 +11,20 @@ All forms of spearphishing are electronically delivered social engineering targe
 
 A common example is to build rapport with a target via social media, then send content to a personal webmail service that the target uses on their work computer. This allows an adversary to bypass some email restrictions on the work account, and the target is more likely to open the file since it's something they were expecting. If the payload doesn't work as expected, the adversary can continue normal communications and troubleshoot with the target on how to get it working.
 
+## Aliases
+
+```
+
+```
+
 ## Additional Attributes
 
 * Bypass: None
 * Effective Permissions: None
-* Network: intentionally left blank
+* Network: None
 * Permissions: None
 * Platforms: ['Windows', 'macOS', 'Linux']
-* Remote: intentionally left blank
+* Remote: None
 * Type: attack-pattern
 * Wiki: https://attack.mitre.org/techniques/T1194
 
@@ -37,7 +43,12 @@ A common example is to build rapport with a target via social media, then send c
 ## Potential Detections
 
 ```json
-
+[{'data_source': ['SSL/TLS inspection']},
+ {'data_source': ['Anti-virus']},
+ {'data_source': ['Web proxy']},
+ {'data_source': ['SSL/TLS inspection']},
+ {'data_source': ['Anti-virus']},
+ {'data_source': ['Web proxy']}]
 ```
 
 ## Potential Queries

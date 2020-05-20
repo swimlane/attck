@@ -9,14 +9,20 @@
 
 All forms of spearphishing are electronically delivered social engineering targeted at a specific individual, company, or industry. In this case, the malicious emails contain links. Generally, the links will be accompanied by social engineering text and require the user to actively click or copy and paste a URL into a browser, leveraging [User Execution](https://attack.mitre.org/techniques/T1204). The visited website may compromise the web browser using an exploit, or the user will be prompted to download applications, documents, zip files, or even executables depending on the pretext for the email in the first place. Adversaries may also include links that are intended to interact directly with an email reader, including embedded images intended to exploit the end system directly or verify the receipt of an email (i.e. web bugs/web beacons). Links may also direct users to malicious applications  designed to [Steal Application Access Token](https://attack.mitre.org/techniques/T1528)s, like OAuth tokens, in order to gain access to protected applications and information.(Citation: Trend Micro Pawn Storm OAuth 2017)
 
+## Aliases
+
+```
+
+```
+
 ## Additional Attributes
 
 * Bypass: None
 * Effective Permissions: None
-* Network: intentionally left blank
+* Network: None
 * Permissions: None
 * Platforms: ['Windows', 'macOS', 'Linux', 'Office 365', 'SaaS']
-* Remote: intentionally left blank
+* Remote: None
 * Type: attack-pattern
 * Wiki: https://attack.mitre.org/techniques/T1192
 
@@ -35,7 +41,20 @@ All forms of spearphishing are electronically delivered social engineering targe
 ## Potential Detections
 
 ```json
-
+[{'data_source': ['Packet capture']},
+ {'data_source': ['Web proxy']},
+ {'data_source': ['Email gateway']},
+ {'data_source': ['Detonation chamber']},
+ {'data_source': ['SSL/TLS inspection']},
+ {'data_source': ['DNS records']},
+ {'data_source': ['Mail server']},
+ {'data_source': ['Packet capture']},
+ {'data_source': ['Web proxy']},
+ {'data_source': ['Email gateway']},
+ {'data_source': ['Detonation chamber']},
+ {'data_source': ['SSL/TLS inspection']},
+ {'data_source': ['DNS records']},
+ {'data_source': ['Mail server']}]
 ```
 
 ## Potential Queries

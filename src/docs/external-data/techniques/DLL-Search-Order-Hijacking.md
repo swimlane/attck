@@ -15,14 +15,20 @@ If a search order-vulnerable program is configured to run at a higher privilege 
 
 Programs that fall victim to path hijacking may appear to behave normally because malicious DLLs may be configured to also load the legitimate DLLs they were meant to replace.
 
+## Aliases
+
+```
+
+```
+
 ## Additional Attributes
 
 * Bypass: ['Process whitelisting']
 * Effective Permissions: ['User', 'Administrator', 'SYSTEM']
-* Network: intentionally left blank
+* Network: None
 * Permissions: ['User', 'Administrator', 'SYSTEM']
 * Platforms: ['Windows']
-* Remote: intentionally left blank
+* Remote: None
 * Type: attack-pattern
 * Wiki: https://attack.mitre.org/techniques/T1038
 
@@ -85,7 +91,14 @@ powershell/privesc/powerup/write_dllhijacker
 ## Potential Detections
 
 ```json
-
+[{'data_source': ['4688 ', 'Process CMD Line']},
+ {'data_source': ['4688', 'Process Execution']},
+ {'data_source': ['4663', 'File monitoring']},
+ {'data_source': ['Sysmon - ID 7', 'DLL monitoring']},
+ {'data_source': ['4688 ', 'Process CMD Line']},
+ {'data_source': ['4688', 'Process Execution']},
+ {'data_source': ['4663', 'File monitoring']},
+ {'data_source': ['Sysmon - ID 7', 'DLL monitoring']}]
 ```
 
 ## Potential Queries
@@ -156,7 +169,8 @@ powershell/privesc/powerup/write_dllhijacker
                                                                  'of abusing '
                                                                  'it.',
                                                   'Metasploit': 'exploit/windows/local/trusted_service_path'}},
- {'Atomic Red Team Test - DLL Search Order Hijacking': {'atomic_tests': [{'description': 'Adversaries '
+ {'Atomic Red Team Test - DLL Search Order Hijacking': {'atomic_tests': [{'auto_generated_guid': '8549ad4b-b5df-4a2d-a3d7-2aee9e7052a3',
+                                                                          'description': 'Adversaries '
                                                                                          'can '
                                                                                          'take '
                                                                                          'advantage '

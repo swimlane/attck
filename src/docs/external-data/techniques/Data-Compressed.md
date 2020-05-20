@@ -7,14 +7,20 @@
 
 > An adversary may compress data (e.g., sensitive documents) that is collected prior to exfiltration in order to make it portable and minimize the amount of data sent over the network. The compression is done separately from the exfiltration channel and is performed using a custom program or algorithm, or a more common compression library or utility such as 7zip, RAR, ZIP, or zlib.
 
+## Aliases
+
+```
+
+```
+
 ## Additional Attributes
 
 * Bypass: None
 * Effective Permissions: None
-* Network: intentionally left blank
+* Network: None
 * Permissions: None
 * Platforms: ['Linux', 'Windows', 'macOS']
-* Remote: intentionally left blank
+* Remote: None
 * Type: attack-pattern
 * Wiki: https://attack.mitre.org/techniques/T1002
 
@@ -281,7 +287,21 @@ powershell/management/zipfolder
                   'tags': ['attack.exfiltration',
                            'attack.t1020',
                            'attack.t1002'],
-                  'title': 'Suspicious Compression Tool Parameters'}}]
+                  'title': 'Suspicious Compression Tool Parameters'}},
+ {'data_source': ['4688', 'Process Execution']},
+ {'data_source': ['4688 ', 'Process CMD Line']},
+ {'data_source': ['4663', 'File Monitoring']},
+ {'data_source': ['5156', 'Windows Firewall']},
+ {'data_source': ['IDS/IPS']},
+ {'data_source': ['DLP']},
+ {'data_source': ['Binary file metadata']},
+ {'data_source': ['4688', 'Process Execution']},
+ {'data_source': ['4688 ', 'Process CMD Line']},
+ {'data_source': ['4663', 'File Monitoring']},
+ {'data_source': ['5156', 'Windows Firewall']},
+ {'data_source': ['IDS/IPS']},
+ {'data_source': ['DLP']},
+ {'data_source': ['LOG-MD B9', 'Binary file metadata']}]
 ```
 
 ## Potential Queries
@@ -298,7 +318,8 @@ powershell/management/zipfolder
 ## Raw Dataset
 
 ```json
-[{'Atomic Red Team Test - Data Compressed': {'atomic_tests': [{'description': 'An '
+[{'Atomic Red Team Test - Data Compressed': {'atomic_tests': [{'auto_generated_guid': '41410c60-614d-4b9d-b66e-b0192dd9c597',
+                                                               'description': 'An '
                                                                               'adversary '
                                                                               'may '
                                                                               'compress '
@@ -377,7 +398,8 @@ powershell/management/zipfolder
                                                                        'With '
                                                                        'PowerShell',
                                                                'supported_platforms': ['windows']},
-                                                              {'dependencies': [{'description': 'Rar '
+                                                              {'auto_generated_guid': '02ea31cb-3b4c-4a2d-9bf1-e4e70ebcf5d0',
+                                                               'dependencies': [{'description': 'Rar '
                                                                                                 'tool '
                                                                                                 'must '
                                                                                                 'be '
@@ -512,7 +534,8 @@ powershell/management/zipfolder
                                                                        'With '
                                                                        'Rar',
                                                                'supported_platforms': ['windows']},
-                                                              {'dependencies': [{'description': 'Files '
+                                                              {'auto_generated_guid': 'c51cec55-28dd-4ad2-9461-1eacbc82c3a0',
+                                                               'dependencies': [{'description': 'Files '
                                                                                                 'to '
                                                                                                 'zip '
                                                                                                 'must '
@@ -593,7 +616,8 @@ powershell/management/zipfolder
                                                                        '- zip',
                                                                'supported_platforms': ['linux',
                                                                                        'macos']},
-                                                              {'description': 'An '
+                                                              {'auto_generated_guid': 'cde3c2af-3485-49eb-9c1f-0ed60e9cc0af',
+                                                               'description': 'An '
                                                                               'adversary '
                                                                               'may '
                                                                               'compress '
@@ -677,7 +701,8 @@ powershell/management/zipfolder
                                                                        'File',
                                                                'supported_platforms': ['linux',
                                                                                        'macos']},
-                                                              {'dependencies': [{'description': 'Folder '
+                                                              {'auto_generated_guid': '7af2b51e-ad1c-498c-aca8-d3290c19535a',
+                                                               'dependencies': [{'description': 'Folder '
                                                                                                 'to '
                                                                                                 'zip '
                                                                                                 'must '

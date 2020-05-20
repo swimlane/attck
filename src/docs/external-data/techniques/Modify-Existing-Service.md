@@ -11,14 +11,20 @@ Adversaries can modify an existing service to persist malware on a system by usi
 
 Adversaries may also intentionally corrupt or kill services to execute malicious recovery programs/commands. (Citation: Twitter Service Recovery Nov 2017) (Citation: Microsoft Service Recovery Feb 2013)
 
+## Aliases
+
+```
+
+```
+
 ## Additional Attributes
 
 * Bypass: None
 * Effective Permissions: None
-* Network: intentionally left blank
+* Network: None
 * Permissions: ['Administrator', 'SYSTEM']
 * Platforms: ['Windows']
-* Remote: intentionally left blank
+* Remote: None
 * Type: attack-pattern
 * Wiki: https://attack.mitre.org/techniques/T1031
 
@@ -80,7 +86,16 @@ sc.exe
 ## Potential Detections
 
 ```json
-
+[{'data_source': ['4688 ', 'Process CMD Line']},
+ {'data_source': ['4688', 'Process Execution']},
+ {'data_source': ['4657', 'Windows Registry']},
+ {'data_source': ['4663', 'File monitoring']},
+ {'data_source': ['7040', 'Service Change']},
+ {'data_source': ['4688 ', 'Process CMD Line']},
+ {'data_source': ['4688', 'Process Execution']},
+ {'data_source': ['4657', 'Windows Registry']},
+ {'data_source': ['4663', 'File monitoring']},
+ {'data_source': ['7040/7045', 'Service Change']}]
 ```
 
 ## Potential Queries
@@ -96,7 +111,8 @@ sc.exe
 ## Raw Dataset
 
 ```json
-[{'Atomic Red Team Test - Modify Existing Service': {'atomic_tests': [{'description': 'This '
+[{'Atomic Red Team Test - Modify Existing Service': {'atomic_tests': [{'auto_generated_guid': 'ed366cde-7d12-49df-a833-671904770b9f',
+                                                                       'description': 'This '
                                                                                       'test '
                                                                                       'will '
                                                                                       'temporarily '

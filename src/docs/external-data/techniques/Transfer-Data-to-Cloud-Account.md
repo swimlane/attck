@@ -11,6 +11,12 @@ A defender who is monitoring for large transfers to outside the cloud environmen
 
 Incidents have been observed where adversaries have created backups of cloud instances and transferred them to separate accounts.(Citation: DOJ GRU Indictment Jul 2018) 
 
+## Aliases
+
+```
+
+```
+
 ## Additional Attributes
 
 * Bypass: None
@@ -18,7 +24,7 @@ Incidents have been observed where adversaries have created backups of cloud ins
 * Network: True
 * Permissions: ['User']
 * Platforms: ['Azure', 'AWS', 'GCP']
-* Remote: intentionally left blank
+* Remote: None
 * Type: attack-pattern
 * Wiki: https://attack.mitre.org/techniques/T1537
 

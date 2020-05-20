@@ -9,14 +9,20 @@
 
 In Mac, this can be done natively with a small [AppleScript](https://attack.mitre.org/techniques/T1155) script.
 
+## Aliases
+
+```
+
+```
+
 ## Additional Attributes
 
 * Bypass: None
 * Effective Permissions: None
-* Network: intentionally left blank
+* Network: None
 * Permissions: ['User']
 * Platforms: ['macOS', 'Windows']
-* Remote: intentionally left blank
+* Remote: None
 * Type: attack-pattern
 * Wiki: https://attack.mitre.org/techniques/T1010
 
@@ -64,7 +70,12 @@ $env:TEMP\T1010.exe
 ## Potential Detections
 
 ```json
-
+[{'data_source': ['4688', 'Process Execution']},
+ {'data_source': ['4688 ', 'Process CMD Line']},
+ {'data_source': ['API monitoring']},
+ {'data_source': ['4688', 'Process Execution']},
+ {'data_source': ['4688 ', 'Process CMD Line']},
+ {'data_source': ['API monitoring']}]
 ```
 
 ## Potential Queries
@@ -103,7 +114,8 @@ $env:TEMP\T1010.exe
 ## Raw Dataset
 
 ```json
-[{'Atomic Red Team Test - Application Window Discovery': {'atomic_tests': [{'dependencies': [{'description': 'T1010.cs '
+[{'Atomic Red Team Test - Application Window Discovery': {'atomic_tests': [{'auto_generated_guid': 'fe94a1c3-3e22-4dc9-9fdf-3a8bdbc10dc4',
+                                                                            'dependencies': [{'description': 'T1010.cs '
                                                                                                              'must '
                                                                                                              'exist '
                                                                                                              'on '

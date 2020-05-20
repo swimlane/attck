@@ -8,14 +8,20 @@
 > Windows Security Support Provider (SSP) DLLs are loaded into the Local Security Authority (LSA) process at system start. Once loaded into the LSA, SSP DLLs have access to encrypted and plaintext passwords that are stored in Windows, such as any logged-on user's Domain password or smart card PINs. The SSP configuration is stored in two Registry keys: <code>HKLM\SYSTEM\CurrentControlSet\Control\Lsa\Security Packages</code> and <code>HKLM\SYSTEM\CurrentControlSet\Control\Lsa\OSConfig\Security Packages</code>. An adversary may modify these Registry keys to add new SSPs, which will be loaded the next time the system boots, or when the AddSecurityPackage Windows API function is called.
  (Citation: Graeber 2014)
 
+## Aliases
+
+```
+
+```
+
 ## Additional Attributes
 
 * Bypass: None
 * Effective Permissions: None
-* Network: intentionally left blank
+* Network: None
 * Permissions: ['Administrator']
 * Platforms: ['Windows']
-* Remote: intentionally left blank
+* Remote: None
 * Type: attack-pattern
 * Wiki: https://attack.mitre.org/techniques/T1101
 
@@ -95,7 +101,12 @@ powershell/persistence/misc/memssp
 ## Potential Detections
 
 ```json
-
+[{'data_source': ['4657', 'Windows Registry']},
+ {'data_source': ['Loaded DLLs']},
+ {'data_source': ['DLL monitoring']},
+ {'data_source': ['Sysmon ID 7', 'DLL monitoring']},
+ {'data_source': ['4657', 'Windows Registry']},
+ {'data_source': ['Sysmon ID 7', 'Loaded DLLs']}]
 ```
 
 ## Potential Queries
@@ -107,7 +118,8 @@ powershell/persistence/misc/memssp
 ## Raw Dataset
 
 ```json
-[{'Atomic Red Team Test - Security Support Provider': {'atomic_tests': [{'description': 'Add '
+[{'Atomic Red Team Test - Security Support Provider': {'atomic_tests': [{'auto_generated_guid': 'afdfd7e3-8a0b-409f-85f7-886fdf249c9e',
+                                                                         'description': 'Add '
                                                                                         'a '
                                                                                         'value '
                                                                                         'to '

@@ -32,7 +32,6 @@ North Korean group definitions are known to have significant overlap, and the na
 ## Aliases
 
 ```
-intentionally left blank
 Lazarus Group
 HIDDEN COBRA
 Guardians of Peace

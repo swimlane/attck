@@ -9,14 +9,20 @@
 
 Within cloud environments, adversaries may attempt to discover services running on other cloud hosts or cloud services enabled within the environment. Additionally, if the cloud environment is connected to a on-premises environment, adversaries may be able to identify services running on non-cloud systems.
 
+## Aliases
+
+```
+
+```
+
 ## Additional Attributes
 
 * Bypass: None
 * Effective Permissions: None
-* Network: intentionally left blank
+* Network: None
 * Permissions: ['Administrator', 'SYSTEM', 'User']
 * Platforms: ['Linux', 'Windows', 'macOS', 'AWS', 'GCP', 'Azure']
-* Remote: intentionally left blank
+* Remote: None
 * Type: attack-pattern
 * Wiki: https://attack.mitre.org/techniques/T1046
 
@@ -187,7 +193,17 @@ python/situational_awareness/network/port_scan
                   'logsource': {'category': 'process_creation',
                                 'product': 'windows'},
                   'tags': ['attack.discovery', 'attack.t1046'],
-                  'title': 'Java Running with Remote Debugging'}}]
+                  'title': 'Java Running with Remote Debugging'}},
+ {'data_source': ['4688 ', 'Process CMD Line']},
+ {'data_source': ['5156', 'Windows Firewall']},
+ {'data_source': ['Netflow/Enclave netflow']},
+ {'data_source': ['Network protocol analysis']},
+ {'data_source': ['Packet capture']},
+ {'data_source': ['4688 ', 'Process CMD Line']},
+ {'data_source': ['5156', 'Windows Firewall']},
+ {'data_source': ['Netflow/Enclave netflow']},
+ {'data_source': ['Network protocol analysis']},
+ {'data_source': ['Packet capture']}]
 ```
 
 ## Potential Queries
@@ -199,7 +215,8 @@ python/situational_awareness/network/port_scan
 ## Raw Dataset
 
 ```json
-[{'Atomic Red Team Test - Network Service Scanning': {'atomic_tests': [{'description': 'Scan '
+[{'Atomic Red Team Test - Network Service Scanning': {'atomic_tests': [{'auto_generated_guid': '68e907da-2539-48f6-9fc9-257a78c05540',
+                                                                        'description': 'Scan '
                                                                                        'ports '
                                                                                        'to '
                                                                                        'check '
@@ -266,7 +283,8 @@ python/situational_awareness/network/port_scan
                                                                                 'Scan',
                                                                         'supported_platforms': ['linux',
                                                                                                 'macos']},
-                                                                       {'dependencies': [{'description': 'Check '
+                                                                       {'auto_generated_guid': '515942b0-a09f-4163-a7bb-22fefb6f185f',
+                                                                        'dependencies': [{'description': 'Check '
                                                                                                          'if '
                                                                                                          'nmap '
                                                                                                          'command '

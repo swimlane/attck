@@ -12,7 +12,7 @@ In addition to its own capabilities, [Cobalt Strike](https://attack.mitre.org/so
 ## Aliases
 
 ```
-intentionally left blank
+Cobalt Strike
 ```
 
 ## Additional Attributes

@@ -11,14 +11,20 @@ Adversaries can spoof an authoritative source for name resolution on a victim ne
 
 Several tools exist that can be used to poison name services within local networks such as NBNSpoof, Metasploit, and [Responder](https://attack.mitre.org/software/S0174). (Citation: GitHub NBNSpoof) (Citation: Rapid7 LLMNR Spoofer) (Citation: GitHub Responder)
 
+## Aliases
+
+```
+
+```
+
 ## Additional Attributes
 
 * Bypass: None
 * Effective Permissions: None
-* Network: intentionally left blank
+* Network: None
 * Permissions: ['User']
 * Platforms: ['Windows']
-* Remote: intentionally left blank
+* Remote: None
 * Type: attack-pattern
 * Wiki: https://attack.mitre.org/techniques/T1171
 
@@ -71,7 +77,15 @@ powershell/lateral_movement/inveigh_relay
                   'tags': ['attack.privilege_escalation',
                            'attack.credential_access',
                            'attack.t1171'],
-                  'title': 'RottenPotato Like Attack Pattern'}}]
+                  'title': 'RottenPotato Like Attack Pattern'}},
+ {'data_source': ['4657', 'Windows Registry']},
+ {'data_source': ['5156', 'Windows Firewall']},
+ {'data_source': ['Packet capture']},
+ {'data_source': ['Netflow/Enclave netflow']},
+ {'data_source': ['4657', 'Windows Registry']},
+ {'data_source': ['5156', 'Windows Firewall']},
+ {'data_source': ['Packet capture']},
+ {'data_source': ['Netflow/Enclave netflow']}]
 ```
 
 ## Potential Queries

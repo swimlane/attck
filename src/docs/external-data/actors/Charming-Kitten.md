@@ -30,7 +30,6 @@ _/ __ \ /    \
 ## Aliases
 
 ```
-intentionally left blank
 Charming Kitten
 ```
 

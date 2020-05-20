@@ -24,7 +24,6 @@ _____________  ____   _____   _____/  |_|  |__ |__|__ __  _____
 ## Aliases
 
 ```
-intentionally left blank
 PROMETHIUM
 ```
 

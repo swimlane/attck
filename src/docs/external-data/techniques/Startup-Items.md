@@ -9,14 +9,20 @@
 
 An adversary can create the appropriate folders/files in the StartupItems directory to register their own persistence mechanism (Citation: Methods of Mac Malware Persistence). Additionally, since StartupItems run during the bootup phase of macOS, they will run as root. If an adversary is able to modify an existing Startup Item, then they will be able to Privilege Escalate as well.
 
+## Aliases
+
+```
+
+```
+
 ## Additional Attributes
 
 * Bypass: None
 * Effective Permissions: ['root']
-* Network: intentionally left blank
+* Network: None
 * Permissions: ['Administrator']
 * Platforms: ['macOS']
-* Remote: intentionally left blank
+* Remote: None
 * Type: attack-pattern
 * Wiki: https://attack.mitre.org/techniques/T1165
 
@@ -50,7 +56,8 @@ sudo touch /Library/StartupItems/EvilStartup.plist
 ## Raw Dataset
 
 ```json
-[{'Atomic Red Team Test - Startup Items': {'atomic_tests': [{'description': 'Modify '
+[{'Atomic Red Team Test - Startup Items': {'atomic_tests': [{'auto_generated_guid': '134627c3-75db-410e-bff8-7a920075f198',
+                                                             'description': 'Modify '
                                                                             'or '
                                                                             'create '
                                                                             'an '

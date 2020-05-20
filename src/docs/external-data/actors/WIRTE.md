@@ -24,7 +24,6 @@ __  _  _|__|_______/  |_  ____
 ## Aliases
 
 ```
-intentionally left blank
 WIRTE
 ```
 

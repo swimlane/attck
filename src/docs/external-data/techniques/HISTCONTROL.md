@@ -7,14 +7,20 @@
 
 > The <code>HISTCONTROL</code> environment variable keeps track of what should be saved by the <code>history</code> command and eventually into the <code>~/.bash_history</code> file when a user logs out. This setting can be configured to ignore commands that start with a space by simply setting it to "ignorespace". <code>HISTCONTROL</code> can also be set to ignore duplicate commands by setting it to "ignoredups". In some Linux systems, this is set by default to "ignoreboth" which covers both of the previous examples. This means that “ ls” will not be saved, but “ls” would be saved by history. <code>HISTCONTROL</code> does not exist by default on macOS, but can be set by the user and will be respected. Adversaries can use this to operate without leaving traces by simply prepending a space to all of their terminal commands.
 
+## Aliases
+
+```
+
+```
+
 ## Additional Attributes
 
 * Bypass: ['Log analysis', 'Host forensic analysis']
 * Effective Permissions: None
-* Network: intentionally left blank
+* Network: None
 * Permissions: ['User']
 * Platforms: ['Linux', 'macOS']
-* Remote: intentionally left blank
+* Remote: None
 * Type: attack-pattern
 * Wiki: https://attack.mitre.org/techniques/T1148
 
@@ -66,7 +72,8 @@ export HISTCONTROL=ignoreboth
 ## Raw Dataset
 
 ```json
-[{'Atomic Red Team Test - HISTCONTROL': {'atomic_tests': [{'description': 'Disables '
+[{'Atomic Red Team Test - HISTCONTROL': {'atomic_tests': [{'auto_generated_guid': '4eafdb45-0f79-4d66-aa86-a3e2c08791f5',
+                                                           'description': 'Disables '
                                                                           'history '
                                                                           'collection '
                                                                           'in '
@@ -92,7 +99,8 @@ export HISTCONTROL=ignoreboth
                                                                    'collection',
                                                            'supported_platforms': ['linux',
                                                                                    'macos']},
-                                                          {'description': '',
+                                                          {'auto_generated_guid': '468566d5-83e5-40c1-b338-511e1659628d',
+                                                           'description': '',
                                                            'executor': {'name': 'manual',
                                                                         'steps': '1. '
                                                                                  'export '

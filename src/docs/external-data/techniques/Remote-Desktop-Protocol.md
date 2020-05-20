@@ -11,14 +11,20 @@ Adversaries may connect to a remote system over RDP/RDS to expand access if the 
 
 Adversaries may also perform RDP session hijacking which involves stealing a legitimate user's remote session. Typically, a user is notified when someone else is trying to steal their session and prompted with a question. With System permissions and using Terminal Services Console, <code>c:\windows\system32\tscon.exe [session number to be stolen]</code>, an adversary can hijack a session without the need for credentials or prompts to the user. (Citation: RDP Hijacking Korznikov) This can be done remotely or locally and with active or disconnected sessions. (Citation: RDP Hijacking Medium) It can also lead to [Remote System Discovery](https://attack.mitre.org/techniques/T1018) and Privilege Escalation by stealing a Domain Admin or higher privileged account session. All of this can be done by using native Windows commands, but it has also been added as a feature in RedSnarf. (Citation: Kali Redsnarf)
 
+## Aliases
+
+```
+
+```
+
 ## Additional Attributes
 
 * Bypass: None
 * Effective Permissions: None
-* Network: intentionally left blank
+* Network: None
 * Permissions: ['Remote Desktop Users', 'User']
 * Platforms: ['Windows']
-* Remote: intentionally left blank
+* Remote: None
 * Type: attack-pattern
 * Wiki: https://attack.mitre.org/techniques/T1076
 
@@ -199,7 +205,13 @@ powershell/management/enable_rdp
                            'attack.privilege_escalation',
                            'attack.t1076',
                            'car.2013-07-002'],
-                  'title': 'Suspicious RDP Redirect Using TSCON'}}]
+                  'title': 'Suspicious RDP Redirect Using TSCON'}},
+ {'data_source': ['4688', 'Process Execution']},
+ {'data_source': ['4624', 'Authentication logs']},
+ {'data_source': ['Netflow/Enclave netflow']},
+ {'data_source': ['4688', 'Process Execution']},
+ {'data_source': ['4624', 'Authentication logs']},
+ {'data_source': ['Netflow/Enclave netflow']}]
 ```
 
 ## Potential Queries
@@ -276,7 +288,8 @@ powershell/management/enable_rdp
                                                                  'registry and '
                                                                  'services',
                                                   'Metasploit': 'post/windows/manage/enable_rdp'}},
- {'Atomic Red Team Test - Remote Desktop Protocol': {'atomic_tests': [{'description': 'RDP '
+ {'Atomic Red Team Test - Remote Desktop Protocol': {'atomic_tests': [{'auto_generated_guid': 'a37ac520-b911-458e-8aed-c5f1576d9f46',
+                                                                       'description': 'RDP '
                                                                                       'hijacking](https://medium.com/@networksecurity/rdp-hijacking-how-to-hijack-rds-and-remoteapp-sessions-transparently-to-move-through-an-da2a1e73a5f6) '
                                                                                       '- '
                                                                                       'how '
@@ -341,7 +354,8 @@ powershell/management/enable_rdp
                                                                        'name': 'RDP '
                                                                                'hijacking',
                                                                        'supported_platforms': ['windows']},
-                                                                      {'dependencies': [{'description': 'Computer '
+                                                                      {'auto_generated_guid': '355d4632-8cb9-449d-91ce-b566d0253d3e',
+                                                                       'dependencies': [{'description': 'Computer '
                                                                                                         'must '
                                                                                                         'be '
                                                                                                         'domain '

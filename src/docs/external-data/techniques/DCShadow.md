@@ -11,14 +11,20 @@ Registering a rogue DC involves creating a new server and nTDSDSA objects in the
 
 This technique may bypass system logging and security monitors such as security information and event management (SIEM) products (since actions taken on a rogue DC may not be reported to these sensors). (Citation: DCShadow Blog) The technique may also be used to alter and delete replication and other associated metadata to obstruct forensic analysis. Adversaries may also utilize this technique to perform [SID-History Injection](https://attack.mitre.org/techniques/T1178) and/or manipulate AD objects (such as accounts, access control lists, schemas) to establish backdoors for Persistence. (Citation: DCShadow Blog) (Citation: BlueHat DCShadow Jan 2018)
 
+## Aliases
+
+```
+
+```
+
 ## Additional Attributes
 
 * Bypass: ['Log analysis']
 * Effective Permissions: None
-* Network: intentionally left blank
+* Network: None
 * Permissions: ['Administrator']
 * Platforms: ['Windows']
-* Remote: intentionally left blank
+* Remote: None
 * Type: attack-pattern
 * Wiki: https://attack.mitre.org/techniques/T1207
 
@@ -37,7 +43,14 @@ This technique may bypass system logging and security monitors such as security 
 ## Potential Detections
 
 ```json
-
+[{'data_source': ['4624', 'Authentication logs']},
+ {'data_source': ['Network protocol analysis']},
+ {'data_source': ['Packet capture']},
+ {'data_source': ['API monitoring']},
+ {'data_source': ['4624', 'Authentication logs']},
+ {'data_source': ['Network protocol analysis']},
+ {'data_source': ['Packet capture']},
+ {'data_source': ['API monitoring']}]
 ```
 
 ## Potential Queries
@@ -49,7 +62,8 @@ This technique may bypass system logging and security monitors such as security 
 ## Raw Dataset
 
 ```json
-[{'Atomic Red Team Test - DCShadow': {'atomic_tests': [{'description': 'Utilize '
+[{'Atomic Red Team Test - DCShadow': {'atomic_tests': [{'auto_generated_guid': '0f4c5eb0-98a0-4496-9c3d-656b4f2bc8f6',
+                                                        'description': 'Utilize '
                                                                        'Mimikatz '
                                                                        'DCShadow '
                                                                        'method '

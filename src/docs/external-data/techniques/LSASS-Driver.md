@@ -9,14 +9,20 @@
 
 Adversaries may target lsass.exe drivers to obtain execution and/or persistence. By either replacing or adding illegitimate drivers (e.g., [DLL Side-Loading](https://attack.mitre.org/techniques/T1073) or [DLL Search Order Hijacking](https://attack.mitre.org/techniques/T1038)), an adversary can achieve arbitrary code execution triggered by continuous LSA operations.
 
+## Aliases
+
+```
+
+```
+
 ## Additional Attributes
 
 * Bypass: None
 * Effective Permissions: None
-* Network: intentionally left blank
+* Network: None
 * Permissions: ['Administrator', 'SYSTEM']
 * Platforms: ['Windows']
-* Remote: intentionally left blank
+* Remote: None
 * Type: attack-pattern
 * Wiki: https://attack.mitre.org/techniques/T1177
 
@@ -51,7 +57,19 @@ Adversaries may target lsass.exe drivers to obtain execution and/or persistence.
                                  'https://twitter.com/SBousseaden/status/1183745981189427200'],
                   'status': 'experimental',
                   'tags': ['attack.execution', 'attack.t1177'],
-                  'title': 'DLL Load via LSASS'}}]
+                  'title': 'DLL Load via LSASS'}},
+ {'data_source': ['4688', 'Process Execution']},
+ {'data_source': ['4663', 'File monitoring']},
+ {'data_source': ['DLL monitoring']},
+ {'data_source': ['Loaded DLLs']},
+ {'data_source': ['Sysmon - ID 6', 'Kernel drivers']},
+ {'data_source': ['API monitoring']},
+ {'data_source': ['4688', 'Process Execution']},
+ {'data_source': ['4663', 'File monitoring']},
+ {'data_source': ['Sysmon ID 7', 'DLL monitoring']},
+ {'data_source': ['Sysmon ID 7', 'Loaded DLLs']},
+ {'data_source': ['Sysmon - ID 6', 'Kernel drivers']},
+ {'data_source': ['API monitoring']}]
 ```
 
 ## Potential Queries

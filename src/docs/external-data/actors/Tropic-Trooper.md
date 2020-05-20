@@ -30,7 +30,6 @@ _/ __ \_  __ \
 ## Aliases
 
 ```
-intentionally left blank
 Tropic Trooper
 KeyBoy
 ```
@@ -60,6 +59,7 @@ Taiwan, High-Tech in Asia, Taiwanese Government, Fossil Fuel Provider, Taiwanese
 ```
 http://researchcenter.paloaltonetworks.com/2016/11/unit42-tropic-trooper-targets-taiwanese-government-and-fossil-fuel-provider-with-poison-ivy/
 https://blog.trendmicro.com/trendlabs-security-intelligence/tropic-trooper-new-strategy/
+https://blog.trendmicro.com/trendlabs-security-intelligence/tropic-troopers-back-usbferry-attack-targets-air-gapped-environments/
 ```
 
 ## Country

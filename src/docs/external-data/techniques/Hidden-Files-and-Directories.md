@@ -22,14 +22,20 @@ Users can mark specific files as hidden simply by putting a “.” as the first
 Files on macOS can be marked with the UF_HIDDEN flag which prevents them from being seen in Finder.app, but still allows them to be seen in Terminal.app (Citation: WireLurker).
 Many applications create these hidden files and folders to store information so that it doesn’t clutter up the user’s workspace. For example, SSH utilities create a .ssh folder that’s hidden and contains the user’s known hosts and keys.
 
+## Aliases
+
+```
+
+```
+
 ## Additional Attributes
 
 * Bypass: ['Host forensic analysis']
 * Effective Permissions: None
-* Network: intentionally left blank
+* Network: None
 * Permissions: ['User']
 * Platforms: ['Linux', 'macOS', 'Windows']
-* Remote: intentionally left blank
+* Remote: None
 * Type: attack-pattern
 * Wiki: https://attack.mitre.org/techniques/T1158
 
@@ -177,7 +183,15 @@ mv file to a .file
                   'tags': ['attack.defense_evasion',
                            'attack.persistence',
                            'attack.t1158'],
-                  'title': 'Hiding files with attrib.exe'}}]
+                  'title': 'Hiding files with attrib.exe'}},
+ {'data_source': ['4663', 'File monitoring']},
+ {'data_source': ['4688', 'Process Execution']},
+ {'data_source': ['4688 ', 'Process CMD Line']},
+ {'data_source': ['LMD', 'Hash Compae']},
+ {'data_source': ['4663', 'File monitoring']},
+ {'data_source': ['4688', 'Process Execution']},
+ {'data_source': ['4688 ', 'Process CMD Line']},
+ {'data_source': ['LOG-MD', 'Hash Compae']}]
 ```
 
 ## Potential Queries
@@ -224,7 +238,8 @@ mv file to a .file
 ## Raw Dataset
 
 ```json
-[{'Atomic Red Team Test - Hidden Files and Directories': {'atomic_tests': [{'description': 'Creates '
+[{'Atomic Red Team Test - Hidden Files and Directories': {'atomic_tests': [{'auto_generated_guid': '61a782e5-9a19-40b5-8ba4-69a4b9f3d7be',
+                                                                            'description': 'Creates '
                                                                                            'a '
                                                                                            'hidden '
                                                                                            'file '
@@ -253,7 +268,8 @@ mv file to a .file
                                                                                     'directory',
                                                                             'supported_platforms': ['linux',
                                                                                                     'macos']},
-                                                                           {'description': 'Hide '
+                                                                           {'auto_generated_guid': 'cddb9098-3b47-4e01-9d3b-6f5f323288a9',
+                                                                            'description': 'Hide '
                                                                                            'a '
                                                                                            'file '
                                                                                            'on '
@@ -290,7 +306,8 @@ mv file to a .file
                                                                                     'Hidden '
                                                                                     'file',
                                                                             'supported_platforms': ['macos']},
-                                                                           {'dependencies': [{'description': 'The '
+                                                                           {'auto_generated_guid': 'f70974c8-c094-4574-b542-2c545af95a32',
+                                                                            'dependencies': [{'description': 'The '
                                                                                                              'file '
                                                                                                              'must '
                                                                                                              'exist '
@@ -380,7 +397,8 @@ mv file to a .file
                                                                                     'with '
                                                                                     'Attrib',
                                                                             'supported_platforms': ['windows']},
-                                                                           {'dependencies': [{'description': 'The '
+                                                                           {'auto_generated_guid': 'dadb792e-4358-4d8d-9207-b771faa0daa5',
+                                                                            'dependencies': [{'description': 'The '
                                                                                                              'file '
                                                                                                              'must '
                                                                                                              'exist '
@@ -473,7 +491,8 @@ mv file to a .file
                                                                                     'with '
                                                                                     'Attrib',
                                                                             'supported_platforms': ['windows']},
-                                                                           {'description': 'Requires '
+                                                                           {'auto_generated_guid': '3b7015f2-3144-4205-b799-b05580621379',
+                                                                            'description': 'Requires '
                                                                                            'Apple '
                                                                                            'Dev '
                                                                                            'Tools\n',
@@ -493,7 +512,8 @@ mv file to a .file
                                                                             'name': 'Hidden '
                                                                                     'files',
                                                                             'supported_platforms': ['macos']},
-                                                                           {'description': 'Hide '
+                                                                           {'auto_generated_guid': 'b115ecaf-3b24-4ed2-aefe-2fcb9db913d3',
+                                                                            'description': 'Hide '
                                                                                            'a '
                                                                                            'directory '
                                                                                            'on '
@@ -511,7 +531,8 @@ mv file to a .file
                                                                                     'a '
                                                                                     'Directory',
                                                                             'supported_platforms': ['macos']},
-                                                                           {'description': 'Show '
+                                                                           {'auto_generated_guid': '9a1ec7da-b892-449f-ad68-67066d04380c',
+                                                                            'description': 'Show '
                                                                                            'all '
                                                                                            'hidden '
                                                                                            'files '
@@ -534,7 +555,8 @@ mv file to a .file
                                                                                     'hidden '
                                                                                     'files',
                                                                             'supported_platforms': ['macos']},
-                                                                           {'dependencies': [{'description': 'The '
+                                                                           {'auto_generated_guid': '17e7637a-ddaf-4a82-8622-377e20de8fdb',
+                                                                            'dependencies': [{'description': 'The '
                                                                                                              'file '
                                                                                                              'must '
                                                                                                              'exist '
@@ -654,7 +676,8 @@ mv file to a .file
                                                                                     'command '
                                                                                     'prompt',
                                                                             'supported_platforms': ['windows']},
-                                                                           {'dependencies': [{'description': 'The '
+                                                                           {'auto_generated_guid': '0045ea16-ed3c-4d4c-a9ee-15e44d1560d1',
+                                                                            'dependencies': [{'description': 'The '
                                                                                                              'file '
                                                                                                              'must '
                                                                                                              'exist '

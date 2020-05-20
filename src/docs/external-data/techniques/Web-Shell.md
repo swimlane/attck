@@ -9,14 +9,20 @@
 
 Web shells may serve as [Redundant Access](https://attack.mitre.org/techniques/T1108) or as a persistence mechanism in case an adversary's primary access methods are detected and removed.
 
+## Aliases
+
+```
+
+```
+
 ## Additional Attributes
 
 * Bypass: None
 * Effective Permissions: ['SYSTEM', 'User']
-* Network: intentionally left blank
+* Network: None
 * Permissions: None
 * Platforms: ['Linux', 'Windows', 'macOS']
-* Remote: intentionally left blank
+* Remote: None
 * Type: attack-pattern
 * Wiki: https://attack.mitre.org/techniques/T1100
 
@@ -215,7 +221,17 @@ ieexec.exe http://*:8080/bypass.exe
                   'tags': ['attack.privilege_escalation',
                            'attack.persistence',
                            'attack.t1100'],
-                  'title': 'Shells Spawned by Web Servers'}}]
+                  'title': 'Shells Spawned by Web Servers'}},
+ {'data_source': ['4688', 'Process Execution']},
+ {'data_source': ['4663', 'File monitoring']},
+ {'data_source': ['4624', ' 4625', 'Authentication logs']},
+ {'data_source': ['Netflow/Enclave netflow']},
+ {'data_source': ['Anti-virus']},
+ {'data_source': ['4688', 'Process Execution']},
+ {'data_source': ['4663', 'File monitoring']},
+ {'data_source': ['4624', ' 4625', 'Authentication logs']},
+ {'data_source': ['Netflow/Enclave netflow']},
+ {'data_source': ['Anti-virus']}]
 ```
 
 ## Potential Queries
@@ -227,7 +243,8 @@ ieexec.exe http://*:8080/bypass.exe
 ## Raw Dataset
 
 ```json
-[{'Atomic Red Team Test - Web Shell': {'atomic_tests': [{'dependencies': [{'description': 'Web '
+[{'Atomic Red Team Test - Web Shell': {'atomic_tests': [{'auto_generated_guid': '0a2ce662-1efa-496f-a472-2fe7b080db16',
+                                                         'dependencies': [{'description': 'Web '
                                                                                           'shell '
                                                                                           'must '
                                                                                           'exist '

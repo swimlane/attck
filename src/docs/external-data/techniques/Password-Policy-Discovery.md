@@ -20,14 +20,20 @@ Password policies can be set and discovered on Windows, Linux, and macOS systems
 ### macOS
 * <code>pwpolicy getaccountpolicies</code>
 
+## Aliases
+
+```
+
+```
+
 ## Additional Attributes
 
 * Bypass: None
 * Effective Permissions: None
-* Network: intentionally left blank
+* Network: None
 * Permissions: ['User']
 * Platforms: ['Windows', 'Linux', 'macOS']
-* Remote: intentionally left blank
+* Remote: None
 * Type: attack-pattern
 * Wiki: https://attack.mitre.org/techniques/T1201
 
@@ -125,7 +131,10 @@ The command completed successfully.
 ## Potential Detections
 
 ```json
-
+[{'data_source': ['4688 ', 'Process CMD Line']},
+ {'data_source': ['4688', 'Process Execution']},
+ {'data_source': ['4688 ', 'Process CMD Line']},
+ {'data_source': ['4688', 'Process Execution']}]
 ```
 
 ## Potential Queries
@@ -177,7 +186,8 @@ The command completed successfully.
 ## Raw Dataset
 
 ```json
-[{'Atomic Red Team Test - Password Policy Discovery': {'atomic_tests': [{'description': 'Lists '
+[{'Atomic Red Team Test - Password Policy Discovery': {'atomic_tests': [{'auto_generated_guid': '085fe567-ac84-47c7-ac4c-2688ce28265b',
+                                                                         'description': 'Lists '
                                                                                         'the '
                                                                                         'password '
                                                                                         'complexity '
@@ -197,7 +207,8 @@ The command completed successfully.
                                                                                  '- '
                                                                                  'Ubuntu',
                                                                          'supported_platforms': ['linux']},
-                                                                        {'dependencies': [{'description': 'System '
+                                                                        {'auto_generated_guid': '78a12e65-efff-4617-bc01-88f17d71315d',
+                                                                         'dependencies': [{'description': 'System '
                                                                                                           'must '
                                                                                                           'be '
                                                                                                           'CentOS '
@@ -252,7 +263,8 @@ The command completed successfully.
                                                                                  'CentOS/RHEL '
                                                                                  '7.x',
                                                                          'supported_platforms': ['linux']},
-                                                                        {'dependencies': [{'description': 'System '
+                                                                        {'auto_generated_guid': '6ce12552-0adb-4f56-89ff-95ce268f6358',
+                                                                         'dependencies': [{'description': 'System '
                                                                                                           'must '
                                                                                                           'be '
                                                                                                           'CentOS '
@@ -309,7 +321,8 @@ The command completed successfully.
                                                                                  'CentOS/RHEL '
                                                                                  '6.x',
                                                                          'supported_platforms': ['linux']},
-                                                                        {'description': 'Lists '
+                                                                        {'auto_generated_guid': '7c86c55c-70fa-4a05-83c9-3aa19b145d1a',
+                                                                         'description': 'Lists '
                                                                                         'the '
                                                                                         'password '
                                                                                         'expiration '
@@ -329,7 +342,8 @@ The command completed successfully.
                                                                                  'All '
                                                                                  'Linux',
                                                                          'supported_platforms': ['linux']},
-                                                                        {'description': 'Lists '
+                                                                        {'auto_generated_guid': '4588d243-f24e-4549-b2e3-e627acc089f6',
+                                                                         'description': 'Lists '
                                                                                         'the '
                                                                                         'local '
                                                                                         'password '
@@ -349,7 +363,8 @@ The command completed successfully.
                                                                                  '- '
                                                                                  'Windows',
                                                                          'supported_platforms': ['windows']},
-                                                                        {'description': 'Lists '
+                                                                        {'auto_generated_guid': '46c2c362-2679-4ef5-aec9-0e958e135be4',
+                                                                         'description': 'Lists '
                                                                                         'the '
                                                                                         'domain '
                                                                                         'password '
@@ -370,7 +385,8 @@ The command completed successfully.
                                                                                  '- '
                                                                                  'Windows',
                                                                          'supported_platforms': ['windows']},
-                                                                        {'description': 'Lists '
+                                                                        {'auto_generated_guid': '4b7fa042-9482-45e1-b348-4b756b2a0742',
+                                                                         'description': 'Lists '
                                                                                         'the '
                                                                                         'password '
                                                                                         'policy '

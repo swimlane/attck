@@ -9,14 +9,20 @@
 
 Adversaries may use this mechanism for privilege escalation. With Domain Administrator (or equivalent) rights, harvested or well-known SID values (Citation: Microsoft Well Known SIDs Jun 2017) may be inserted into SID-History to enable impersonation of arbitrary users/groups such as Enterprise Administrators. This manipulation may result in elevated access to local resources and/or access to otherwise inaccessible domains via lateral movement techniques such as [Remote Services](https://attack.mitre.org/techniques/T1021), [Windows Admin Shares](https://attack.mitre.org/techniques/T1077), or [Windows Remote Management](https://attack.mitre.org/techniques/T1028).
 
+## Aliases
+
+```
+
+```
+
 ## Additional Attributes
 
 * Bypass: None
 * Effective Permissions: None
-* Network: intentionally left blank
+* Network: None
 * Permissions: ['Administrator', 'SYSTEM']
 * Platforms: ['Windows']
-* Remote: intentionally left blank
+* Remote: None
 * Type: attack-pattern
 * Wiki: https://attack.mitre.org/techniques/T1178
 
@@ -60,7 +66,13 @@ powershell/persistence/misc/add_sid_history
                            'attack.privilege_escalation',
                            'attack.t1178'],
                   'title': 'Addition of SID History to Active Directory '
-                           'Object'}}]
+                           'Object'}},
+ {'data_source': ['4624', ' 4625', 'Authentication logs']},
+ {'data_source': ['Windows event logs']},
+ {'data_source': ['API monitoring']},
+ {'data_source': ['4624', ' 4625', 'Authentication logs']},
+ {'data_source': ['Windows event logs']},
+ {'data_source': ['API monitoring']}]
 ```
 
 ## Potential Queries
