@@ -35,7 +35,7 @@
         * [Actor](/pyattck/preattck/actor)
         * [Tactic](/pyattck/preattck/tactic)
         * [Technique](/pyattck/preattck/technique)
-* [External Data](/external-data/data.md)
+* [External Data](/external-data/data)
     * [Actors](/external-data/actors)
     * [Malwares](/external-data/malwares)
     * [Mitigations](/external-data/mitigations)
