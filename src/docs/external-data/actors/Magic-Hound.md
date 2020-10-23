@@ -69,6 +69,7 @@ MPK
 Open source tools
 Puppy RAT
 MagicHound.Leash (IRC Bot)
+PowGoop (Downloader.Covic)
 Backdoor.Syskit
 Poison Frog
 Infostealer/Sha.exe/Sha432.exe
@@ -111,6 +112,7 @@ https://securelist.com/twas-the-night-before/91599/
 https://www.clearskysec.com/wp-content/uploads/2019/09/The-Kittens-Are-Back-in-Town-Charming-Kitten-2019.pdf
 https://blogs.microsoft.com/on-the-issues/2019/10/04/recent-cyberattacks-require-us-all-to-be-vigilant/
 https://www.clearskysec.com/the-kittens-are-back-in-town-2/
+https://securityintelligence.com/posts/new-research-exposes-iranian-threat-group-operations/
 http://researchcenter.paloaltonetworks.com/2017/02/unit42-magic-hound-campaign-attacks-saudi-targets/
 https://securityintelligence.com/the-full-shamoon-how-the-devastating-malware-was-inserted-into-networks/
 https://www.symantec.com/connect/blogs/shamoon-multi-staged-destructive-attacks-limited-specific-targets
@@ -146,6 +148,7 @@ iran
 ## Comments
 
 ```
+IBM=ITG18
 possibly associated with Rocket Kitten and Cobalt Gypsy, Sandcat, use Recruitment themes
 Inconclusive link to OilRig/APT34
 ```

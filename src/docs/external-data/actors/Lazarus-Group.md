@@ -61,6 +61,9 @@ HtDnDownLoader
 Blockbuster
 Dark Seoul
 Applejeus
+Inception
+NorthStar
+Dream Job
 ```
 
 ## Targets
@@ -93,6 +96,12 @@ https://threatrecon.nshc.net/2019/01/23/sectora01-custom-proxy-utility-tool-anal
 https://objective-see.com/blog/blog_0x49.html
 https://www.sentinelone.com/blog/lazarus-apt-targets-mac-users-poisoned-word-document/
 https://blog.alyac.co.kr/2827
+https://www.sentinelone.com/blog/four-distinct-families-of-lazarus-malware-target-apples-macos-platform/
+https://securelist.com/lazarus-on-the-hunt-for-big-game/97757/
+https://www.welivesecurity.com/2020/06/17/operation-interception-aerospace-military-companies-cyberspies/
+https://www.mcafee.com/blogs/other-blogs/mcafee-labs/operation-north-star-a-job-offer-thats-too-good-to-be-true/
+https://www.clearskysec.com/operation-dream-job/
+https://blogs.jpcert.or.jp/en/2020/08/Lazarus-malware.html
 ```
 
 ## Country

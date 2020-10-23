@@ -44,8 +44,9 @@ tasklist
 
 {'windows': {'psh,pwsh': {'command': '$ps_url = "https://download.sysinternals.com/files/PSTools.zip";\n$download_folder = "C:\\Users\\Public\\";\n$staging_folder = "C:\\Users\\Public\\temp";\nStart-BitsTransfer -Source $ps_url -Destination $download_folder;\nExpand-Archive -LiteralPath $download_folder"PSTools.zip" -DestinationPath $staging_folder;\niex $staging_folder"\\pslist.exe" >> $env:LOCALAPPDATA\\output.log;\nRemove-Item $download_folder"PSTools.zip";\nRemove-Item $staging_folder -Recurse\n'}}}
 {'linux': {'sh': {'command': 'acrnctl list\n', 'parsers': {'plugins.stockpile.app.parsers.acrn': [{'source': 'hypervisor.vm.name'}]}}}}
-{'windows': {'psh': {'command': '$owners = @{};\ngwmi win32_process |% {$owners[$_.handle] = $_.getowner().user};\n$ps = get-process | select processname,Id,@{l="Owner";e={$owners[$_.id.tostring()]}};\n$valid = foreach($p in $ps) { if($p.Owner -eq $env:USERNAME -And $p.ProcessName -eq "svchost") {$p} };\n$valid | ConvertTo-Json\n', 'parsers': {'plugins.stockpile.app.parsers.json': [{'source': 'host.process.id', 'json_key': 'Id', 'json_type': ['int']}]}}}}
-{'windows': {'psh': {'command': '$ps = get-process | select processname,Id;\n$valid = foreach($p in $ps) { if($p.ProcessName -eq "lsass") {$p} };\n$valid | ConvertTo-Json\n', 'parsers': {'plugins.stockpile.app.parsers.json': [{'source': 'host.process.id', 'json_key': 'Id', 'json_type': ['int']}]}}, 'cmd': {'build_target': 'GetLsass.exe', 'language': 'csharp', 'code': 'using System;\nusing System.Diagnostics;\nusing System.ComponentModel;\n\nnamespace ProcessDump\n{\n    class MyProcess\n    {\n        void GrabLsassProcess()\n        {\n            Process[] allProc = Process.GetProcessesByName("lsass");\n            foreach(Process proc in allProc){\n                Console.WriteLine("Process: {0} -> PID: {1}", proc.ProcessName, proc.Id);\n            }\n        }\n        static void Main(string[] args)\n        {\n            MyProcess myProc = new MyProcess();\n            myProc.GrabLsassProcess();\n        }\n    }\n}\n'}}}
+{'windows': {'psh': {'command': '$owners = @{};\ngwmi win32_process |% {$owners[$_.handle] = $_.getowner().user};\n$ps = get-process | select processname,Id,@{l="Owner";e={$owners[$_.id.tostring()]}};\n$valid = foreach($p in $ps) { if($p.Owner -eq $env:USERNAME -And $p.ProcessName -eq "svchost") {$p} };\n$valid | ConvertTo-Json\n', 'parsers': {'plugins.stockpile.app.parsers.json': [{'source': 'host.process.id', 'custom_parser_vals': {'json_key': 'Id', 'json_type': 'int'}}]}}}}
+{'windows': {'psh': {'command': '$ps = get-process | select processname,Id;\n$valid = foreach($p in $ps) { if($p.ProcessName -eq "lsass") {$p} };\n$valid | ConvertTo-Json\n', 'parsers': {'plugins.stockpile.app.parsers.json': [{'source': 'host.process.id', 'custom_parser_vals': {'json_key': 'Id', 'json_type': 'int'}}]}}, 'cmd': {'build_target': 'GetLsass.exe', 'language': 'csharp', 'code': 'using System;\nusing System.Diagnostics;\nusing System.ComponentModel;\n\nnamespace ProcessDump\n{\n    class MyProcess\n    {\n        void GrabLsassProcess()\n        {\n            Process[] allProc = Process.GetProcessesByName("lsass");\n            foreach(Process proc in allProc){\n                Console.WriteLine("Process: {0} -> PID: {1}", proc.ProcessName, proc.Id);\n            }\n        }\n        static void Main(string[] args)\n        {\n            MyProcess myProc = new MyProcess();\n            myProc.GrabLsassProcess();\n        }\n    }\n}\n'}}}
+{'darwin': {'sh': {'command': 'ps\n'}}, 'linux': {'sh': {'command': 'ps\n'}}, 'windows': {'psh': {'command': 'get-process\n'}}}
 {'darwin': {'sh': {'command': 'ps aux | grep #{host.user.name}\n'}}, 'linux': {'sh': {'command': 'ps aux | grep #{host.user.name}\n'}}, 'windows': {'psh': {'command': '$owners = @{};\ngwmi win32_process |% {$owners[$_.handle] = $_.getowner().user};\n$ps = get-process | select processname,Id,@{l="Owner";e={$owners[$_.id.tostring()]}};\nforeach($p in $ps) {\n    if($p.Owner -eq "#{host.user.name}") {\n        $p;\n    }\n}\n'}}}
 {'windows': {'psh,pwsh': {'command': 'get-process >> $env:APPDATA\\vmtools.log;\ncat $env:APPDATA\\vmtools.log\n'}}}
 {'windows': {'psh': {'command': 'Get-Process'}, 'cmd': {'command': 'tasklist'}, 'donut_amd64': {'build_target': 'ProcessDump.donut', 'language': 'csharp', 'code': 'using System;\nusing System.Diagnostics;\nusing System.ComponentModel;\n\nnamespace ProcessDump\n{\n    class MyProcess\n    {\n        void GrabAllProcesses()\n        {\n            Process[] allProc = Process.GetProcesses();\n            foreach(Process proc in allProc){\n                Console.WriteLine("Process: {0} -> PID: {1}", proc.ProcessName, proc.Id);\n            }\n        }\n        static void Main(string[] args)\n        {\n            MyProcess myProc = new MyProcess();\n            myProc.GrabAllProcesses();\n        }\n    }\n}\n'}}, 'darwin': {'sh': {'command': 'ps aux'}}, 'linux': {'sh': {'command': 'ps aux'}}}
@@ -110,8 +111,8 @@ powershell/situational_awareness/network/powerview/process_hunter
                                              '-And $p.ProcessName -eq '
                                              '"svchost") {$p} };\n'
                                              '$valid | ConvertTo-Json\n',
-                                  'parsers': {'plugins.stockpile.app.parsers.json': [{'json_key': 'Id',
-                                                                                      'json_type': ['int'],
+                                  'parsers': {'plugins.stockpile.app.parsers.json': [{'custom_parser_vals': {'json_key': 'Id',
+                                                                                                             'json_type': 'int'},
                                                                                       'source': 'host.process.id'}]}}}},
   'name': 'Discovers processes that the current user has the ability to access '
           'and selects an injectable one',
@@ -154,11 +155,16 @@ powershell/situational_awareness/network/powerview/process_hunter
                                              'if($p.ProcessName -eq "lsass") '
                                              '{$p} };\n'
                                              '$valid | ConvertTo-Json\n',
-                                  'parsers': {'plugins.stockpile.app.parsers.json': [{'json_key': 'Id',
-                                                                                      'json_type': ['int'],
+                                  'parsers': {'plugins.stockpile.app.parsers.json': [{'custom_parser_vals': {'json_key': 'Id',
+                                                                                                             'json_type': 'int'},
                                                                                       'source': 'host.process.id'}]}}}},
   'name': 'Get process info for LSASS',
   'source': 'data/abilities/discovery/0bff4ee7-42a4-4bde-b09a-9d79d8b9edd7.yml'},
+ {'command': {'darwin': {'sh': {'command': 'ps\n'}},
+              'linux': {'sh': {'command': 'ps\n'}},
+              'windows': {'psh': {'command': 'get-process\n'}}},
+  'name': 'Display information about current system processes',
+  'source': 'data/abilities/discovery/335cea7b-bec0-48c6-adfb-6066070f5f68.yml'},
  {'command': {'darwin': {'sh': {'command': 'ps aux | grep '
                                            '#{host.user.name}\n'}},
               'linux': {'sh': {'command': 'ps aux | grep #{host.user.name}\n'}},
@@ -470,8 +476,8 @@ powershell/situational_awareness/network/powerview/process_hunter
                                                                                                                                                                        '$valid '
                                                                                                                                                                        '| '
                                                                                                                                                                        'ConvertTo-Json\n',
-                                                                                                                                                            'parsers': {'plugins.stockpile.app.parsers.json': [{'json_key': 'Id',
-                                                                                                                                                                                                                'json_type': ['int'],
+                                                                                                                                                            'parsers': {'plugins.stockpile.app.parsers.json': [{'custom_parser_vals': {'json_key': 'Id',
+                                                                                                                                                                                                                                       'json_type': 'int'},
                                                                                                                                                                                                                 'source': 'host.process.id'}]}}}},
                                                                                                                           'tactic': 'discovery',
                                                                                                                           'technique': {'attack_id': 'T1057',
@@ -566,13 +572,29 @@ powershell/situational_awareness/network/powerview/process_hunter
                                                                                                 '$valid '
                                                                                                 '| '
                                                                                                 'ConvertTo-Json\n',
-                                                                                     'parsers': {'plugins.stockpile.app.parsers.json': [{'json_key': 'Id',
-                                                                                                                                         'json_type': ['int'],
+                                                                                     'parsers': {'plugins.stockpile.app.parsers.json': [{'custom_parser_vals': {'json_key': 'Id',
+                                                                                                                                                                'json_type': 'int'},
                                                                                                                                          'source': 'host.process.id'}]}}}},
                                                    'tactic': 'discovery',
                                                    'technique': {'attack_id': 'T1057',
                                                                  'name': 'Process '
                                                                          'Discovery'}}},
+ {'Mitre Stockpile - Display information about current system processes': {'description': 'Display '
+                                                                                          'information '
+                                                                                          'about '
+                                                                                          'current '
+                                                                                          'system '
+                                                                                          'processes',
+                                                                           'id': '335cea7b-bec0-48c6-adfb-6066070f5f68',
+                                                                           'name': 'View '
+                                                                                   'Processes',
+                                                                           'platforms': {'darwin': {'sh': {'command': 'ps\n'}},
+                                                                                         'linux': {'sh': {'command': 'ps\n'}},
+                                                                                         'windows': {'psh': {'command': 'get-process\n'}}},
+                                                                           'tactic': 'discovery',
+                                                                           'technique': {'attack_id': 'T1057',
+                                                                                         'name': 'Process '
+                                                                                                 'Discovery'}}},
  {'Mitre Stockpile - Get process info for processes running as a user': {'description': 'Get '
                                                                                         'process '
                                                                                         'info '

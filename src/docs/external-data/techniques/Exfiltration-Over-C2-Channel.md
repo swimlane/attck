@@ -192,9 +192,7 @@
                                                    'technique': {'attack_id': 'T1041',
                                                                  'name': 'Exfiltration '
                                                                          'Over '
-                                                                         'Command '
-                                                                         'and '
-                                                                         'Control '
+                                                                         'C2 '
                                                                          'Channel'}}}]
 ```
 

@@ -42,31 +42,37 @@ The White Company
 ## Operations
 
 ```
-
+InPage zero-day
+Malicious MDM
 ```
 
 ## Targets
 
 ```
-
+Middle Eastern human rights activists
 ```
 
 ## Attribution Links
 
 ```
-
+https://www.bellingcat.com/news/mena/2017/06/12/bahamut-pursuing-cyber-espionage-actor-middle-east/
+https://www.bellingcat.com/resources/case-studies/2017/10/27/bahamut-revisited-cyber-espionage-middle-east-south-asia/
+https://blog.trendmicro.com/trendlabs-security-intelligence/the-urpage-connection-to-bahamut-confucius-and-patchwork/
+https://blog.talosintelligence.com/2018/07/Mobile-Malware-Campaign-uses-Malicious-MDM.html
+https://blog.talosintelligence.com/2018/07/Mobile-Malware-Campaign-uses-Malicious-MDM-Part2.html
+https://blogs.blackberry.com/en/2020/10/blackberry-uncovers-massive-hack-for-hire-group-targeting-governments-businesses-human-rights-groups-and-influential-individuals
 ```
 
 ## Country
 
 ```
-
+other
 ```
 
 ## Comments
 
 ```
-
+Possibly linked to WindShift, Patchwork, Dropping Elephant
 ```
 
 # Techniques

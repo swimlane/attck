@@ -57,6 +57,8 @@ cat /tmp/T1083.txt
 find . -type f -name ".*"
 
 {'windows': {'psh': {'command': 'Get-ChildItem -Path #{host.system.path}\n'}}}
+{'darwin': {'sh': {'command': 'ls\n'}}, 'linux': {'sh': {'command': 'ls\n'}}, 'windows': {'psh': {'command': 'dir\n'}}}
+{'darwin': {'sh': {'command': 'pwd\n'}}, 'linux': {'sh': {'command': 'pwd\n'}}, 'windows': {'psh': {'command': 'pwd\n'}}}
 powershell/collection/file_finder
 powershell/collection/file_finder
 powershell/collection/find_interesting_file
@@ -108,6 +110,16 @@ powershell/situational_awareness/network/powerview/get_fileserver
                                              '#{host.system.path}\n'}}},
   'name': 'Find or discover files on the file system',
   'source': 'data/abilities/discovery/1c353eb4-29ab-4dfe-88ed-f34f5a60848e.yml'},
+ {'command': {'darwin': {'sh': {'command': 'ls\n'}},
+              'linux': {'sh': {'command': 'ls\n'}},
+              'windows': {'psh': {'command': 'dir\n'}}},
+  'name': 'List contents of current directory',
+  'source': 'data/abilities/discovery/52177cc1-b9ab-4411-ac21-2eadc4b5d3b8.yml'},
+ {'command': {'darwin': {'sh': {'command': 'pwd\n'}},
+              'linux': {'sh': {'command': 'pwd\n'}},
+              'windows': {'psh': {'command': 'pwd\n'}}},
+  'name': 'Print the current working directory on the system',
+  'source': 'data/abilities/discovery/6e1a53c0-7352-4899-be35-fa7f364d5722.yml'},
  {'command': 'powershell/collection/file_finder',
   'name': 'Empire Module Command',
   'source': 'https://github.com/dstepanic/attck_empire/blob/master/Empire_modules.xlsx?raw=true'},
@@ -436,6 +448,44 @@ powershell/situational_awareness/network/powerview/get_fileserver
                                                                                         'and '
                                                                                         'Directory '
                                                                                         'Discovery'}}},
+ {'Mitre Stockpile - List contents of current directory': {'description': 'List '
+                                                                          'contents '
+                                                                          'of '
+                                                                          'current '
+                                                                          'directory',
+                                                           'id': '52177cc1-b9ab-4411-ac21-2eadc4b5d3b8',
+                                                           'name': 'List '
+                                                                   'Directory',
+                                                           'platforms': {'darwin': {'sh': {'command': 'ls\n'}},
+                                                                         'linux': {'sh': {'command': 'ls\n'}},
+                                                                         'windows': {'psh': {'command': 'dir\n'}}},
+                                                           'tactic': 'discovery',
+                                                           'technique': {'attack_id': 'T1083',
+                                                                         'name': 'File '
+                                                                                 'and '
+                                                                                 'Directory '
+                                                                                 'Discovery'}}},
+ {'Mitre Stockpile - Print the current working directory on the system': {'description': 'Print '
+                                                                                         'the '
+                                                                                         'current '
+                                                                                         'working '
+                                                                                         'directory '
+                                                                                         'on '
+                                                                                         'the '
+                                                                                         'system',
+                                                                          'id': '6e1a53c0-7352-4899-be35-fa7f364d5722',
+                                                                          'name': 'Print '
+                                                                                  'Working '
+                                                                                  'Directory',
+                                                                          'platforms': {'darwin': {'sh': {'command': 'pwd\n'}},
+                                                                                        'linux': {'sh': {'command': 'pwd\n'}},
+                                                                                        'windows': {'psh': {'command': 'pwd\n'}}},
+                                                                          'tactic': 'discovery',
+                                                                          'technique': {'attack_id': 'T1083',
+                                                                                        'name': 'File '
+                                                                                                'and '
+                                                                                                'Directory '
+                                                                                                'Discovery'}}},
  {'Empire Module XLSX Sheet by dstepanic': {'ATT&CK Technique #1': 'T1083',
                                             'ATT&CK Technique #2': '',
                                             'Concatenate for Python Dictionary': '"powershell/collection/file_finder":  '

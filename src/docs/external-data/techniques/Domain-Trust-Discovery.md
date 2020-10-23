@@ -37,7 +37,7 @@ Get-NetForestTrust
 Get-ADDomain
 Get-ADGroupMember Administrators -Recursive
 
-{'windows': {'psh': {'command': 'Import-Module .\\powerview.ps1 -Force;\nGet-NetDomain | ConvertTo-Json -Depth 1\n', 'parsers': {'plugins.stockpile.app.parsers.json': [{'source': 'domain.ad.forest', 'json_key': 'Forest', 'json_type': ['str']}, {'source': 'domain.ad.name', 'json_key': 'Name', 'json_type': ['str']}]}, 'payloads': ['powerview.ps1']}}}
+{'windows': {'psh': {'command': 'Import-Module .\\powerview.ps1 -Force;\nGet-NetDomain | ConvertTo-Json -Depth 1\n', 'parsers': {'plugins.stockpile.app.parsers.json': [{'source': 'domain.ad.forest', 'custom_parser_vals': {'json_key': 'Forest', 'json_type': 'str'}}, {'source': 'domain.ad.name', 'custom_parser_vals': {'json_key': 'Name', 'json_type': 'str'}}]}, 'payloads': ['powerview.ps1']}}}
 ```
 
 ## Commands Dataset
@@ -60,11 +60,11 @@ Get-ADGroupMember Administrators -Recursive
                                              '-Force;\n'
                                              'Get-NetDomain | ConvertTo-Json '
                                              '-Depth 1\n',
-                                  'parsers': {'plugins.stockpile.app.parsers.json': [{'json_key': 'Forest',
-                                                                                      'json_type': ['str'],
+                                  'parsers': {'plugins.stockpile.app.parsers.json': [{'custom_parser_vals': {'json_key': 'Forest',
+                                                                                                             'json_type': 'str'},
                                                                                       'source': 'domain.ad.forest'},
-                                                                                     {'json_key': 'Name',
-                                                                                      'json_type': ['str'],
+                                                                                     {'custom_parser_vals': {'json_key': 'Name',
+                                                                                                             'json_type': 'str'},
                                                                                       'source': 'domain.ad.name'}]},
                                   'payloads': ['powerview.ps1']}}},
   'name': 'Determine the Windows Domain of a computer',
@@ -304,11 +304,11 @@ Get-ADGroupMember Administrators -Recursive
                                                                                                                 'ConvertTo-Json '
                                                                                                                 '-Depth '
                                                                                                                 '1\n',
-                                                                                                     'parsers': {'plugins.stockpile.app.parsers.json': [{'json_key': 'Forest',
-                                                                                                                                                         'json_type': ['str'],
+                                                                                                     'parsers': {'plugins.stockpile.app.parsers.json': [{'custom_parser_vals': {'json_key': 'Forest',
+                                                                                                                                                                                'json_type': 'str'},
                                                                                                                                                          'source': 'domain.ad.forest'},
-                                                                                                                                                        {'json_key': 'Name',
-                                                                                                                                                         'json_type': ['str'],
+                                                                                                                                                        {'custom_parser_vals': {'json_key': 'Name',
+                                                                                                                                                                                'json_type': 'str'},
                                                                                                                                                          'source': 'domain.ad.name'}]},
                                                                                                      'payloads': ['powerview.ps1']}}},
                                                                    'tactic': 'discovery',

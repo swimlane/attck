@@ -34,6 +34,11 @@ reg query "HKEY_LOCAL_MACHINE\Software\Microsoft\Internet Explorer" /v svcVersio
 Get-ItemProperty HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\* | Select-Object DisplayName, DisplayVersion, Publisher, InstallDate | Format-Table -Autosize
 Get-ItemProperty HKLM:\Software\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall\* | Select-Object DisplayName, DisplayVersion, Publisher, InstallDate | Format-Table -Autosize
 
+/usr/libexec/PlistBuddy -c "print :CFBundleShortVersionString" /Applications/Safari.app/Contents/Info.plist
+/usr/libexec/PlistBuddy -c "print :CFBundleVersion" /Applications/Safari.app/Contents/Info.plist
+{'darwin': {'sh': {'command': 'which google-chrome\n'}}, 'linux': {'sh': {'command': 'which google-chrome\n'}}}
+{'darwin': {'sh': {'command': 'which go\n'}}, 'linux': {'sh': {'command': 'which go\n'}}}
+{'darwin': {'sh': {'command': 'python3 --version\n'}}, 'linux': {'sh': {'command': 'python3 --version\n'}}}
 {'windows': {'psh': {'command': "(Get-ItemProperty 'HKLM:\\SOFTWARE\\Microsoft\\Internet Explorer').Version\n"}}}
 ```
 
@@ -54,6 +59,24 @@ Get-ItemProperty HKLM:\Software\Wow6432Node\Microsoft\Windows\CurrentVersion\Uni
              'InstallDate | Format-Table -Autosize\n',
   'name': None,
   'source': 'atomics/T1518/T1518.yaml'},
+ {'command': '/usr/libexec/PlistBuddy -c "print :CFBundleShortVersionString" '
+             '/Applications/Safari.app/Contents/Info.plist\n'
+             '/usr/libexec/PlistBuddy -c "print :CFBundleVersion" '
+             '/Applications/Safari.app/Contents/Info.plist',
+  'name': None,
+  'source': 'atomics/T1518/T1518.yaml'},
+ {'command': {'darwin': {'sh': {'command': 'which google-chrome\n'}},
+              'linux': {'sh': {'command': 'which google-chrome\n'}}},
+  'name': 'Check to see if Gooogle Chrome browser is installed',
+  'source': 'data/abilities/discovery/830bb6ed-9594-4817-b1a1-c298c0f9f425.yml'},
+ {'command': {'darwin': {'sh': {'command': 'which go\n'}},
+              'linux': {'sh': {'command': 'which go\n'}}},
+  'name': 'Check to see if GoLang is installed',
+  'source': 'data/abilities/discovery/9849d956-37ea-49f2-a8b5-f2ca080b315d.yml'},
+ {'command': {'darwin': {'sh': {'command': 'python3 --version\n'}},
+              'linux': {'sh': {'command': 'python3 --version\n'}}},
+  'name': 'Check to see what version of python is installed',
+  'source': 'data/abilities/discovery/b18e8767-b7ea-41a3-8e80-baf65a5ddef5.yml'},
  {'command': {'windows': {'psh': {'command': '(Get-ItemProperty '
                                              "'HKLM:\\SOFTWARE\\Microsoft\\Internet "
                                              "Explorer').Version\n"}}},
@@ -167,10 +190,119 @@ Get-ItemProperty HKLM:\Software\Wow6432Node\Microsoft\Windows\CurrentVersion\Uni
                                                                                'name': 'powershell'},
                                                                   'name': 'Applications '
                                                                           'Installed',
-                                                                  'supported_platforms': ['windows']}],
+                                                                  'supported_platforms': ['windows']},
+                                                                 {'auto_generated_guid': '103d6533-fd2a-4d08-976a-4a598565280f',
+                                                                  'description': 'Adversaries '
+                                                                                 'may '
+                                                                                 'attempt '
+                                                                                 'to '
+                                                                                 'get '
+                                                                                 'a '
+                                                                                 'listing '
+                                                                                 'of '
+                                                                                 'non-security '
+                                                                                 'related '
+                                                                                 'software '
+                                                                                 'that '
+                                                                                 'is '
+                                                                                 'installed '
+                                                                                 'on '
+                                                                                 'the '
+                                                                                 'system. '
+                                                                                 'Adversaries '
+                                                                                 'may '
+                                                                                 'use '
+                                                                                 'the '
+                                                                                 'information '
+                                                                                 'from '
+                                                                                 'Software '
+                                                                                 'Discovery '
+                                                                                 'during '
+                                                                                 'automated '
+                                                                                 'discovery '
+                                                                                 'to '
+                                                                                 'shape '
+                                                                                 'follow-on '
+                                                                                 'behaviors\n',
+                                                                  'executor': {'command': '/usr/libexec/PlistBuddy '
+                                                                                          '-c '
+                                                                                          '"print '
+                                                                                          ':CFBundleShortVersionString" '
+                                                                                          '/Applications/Safari.app/Contents/Info.plist\n'
+                                                                                          '/usr/libexec/PlistBuddy '
+                                                                                          '-c '
+                                                                                          '"print '
+                                                                                          ':CFBundleVersion" '
+                                                                                          '/Applications/Safari.app/Contents/Info.plist',
+                                                                               'elevation_required': False,
+                                                                               'name': 'command_prompt'},
+                                                                  'name': 'Find '
+                                                                          'and '
+                                                                          'Display '
+                                                                          'Safari '
+                                                                          'Browser '
+                                                                          'Version',
+                                                                  'supported_platforms': ['macos']}],
                                                 'attack_technique': 'T1518',
                                                 'display_name': 'Software '
                                                                 'Discovery'}},
+ {'Mitre Stockpile - Check to see if Gooogle Chrome browser is installed': {'description': 'Check '
+                                                                                           'to '
+                                                                                           'see '
+                                                                                           'if '
+                                                                                           'Gooogle '
+                                                                                           'Chrome '
+                                                                                           'browser '
+                                                                                           'is '
+                                                                                           'installed',
+                                                                            'id': '830bb6ed-9594-4817-b1a1-c298c0f9f425',
+                                                                            'name': 'Check '
+                                                                                    'Chrome',
+                                                                            'platforms': {'darwin': {'sh': {'command': 'which '
+                                                                                                                       'google-chrome\n'}},
+                                                                                          'linux': {'sh': {'command': 'which '
+                                                                                                                      'google-chrome\n'}}},
+                                                                            'tactic': 'discovery',
+                                                                            'technique': {'attack_id': 'T1518',
+                                                                                          'name': 'Software '
+                                                                                                  'Discovery'}}},
+ {'Mitre Stockpile - Check to see if GoLang is installed': {'description': 'Check '
+                                                                           'to '
+                                                                           'see '
+                                                                           'if '
+                                                                           'GoLang '
+                                                                           'is '
+                                                                           'installed',
+                                                            'id': '9849d956-37ea-49f2-a8b5-f2ca080b315d',
+                                                            'name': 'Check Go',
+                                                            'platforms': {'darwin': {'sh': {'command': 'which '
+                                                                                                       'go\n'}},
+                                                                          'linux': {'sh': {'command': 'which '
+                                                                                                      'go\n'}}},
+                                                            'tactic': 'discovery',
+                                                            'technique': {'attack_id': 'T1518',
+                                                                          'name': 'Software '
+                                                                                  'Discovery'}}},
+ {'Mitre Stockpile - Check to see what version of python is installed': {'description': 'Check '
+                                                                                        'to '
+                                                                                        'see '
+                                                                                        'what '
+                                                                                        'version '
+                                                                                        'of '
+                                                                                        'python '
+                                                                                        'is '
+                                                                                        'installed',
+                                                                         'id': 'b18e8767-b7ea-41a3-8e80-baf65a5ddef5',
+                                                                         'name': 'Check '
+                                                                                 'Python',
+                                                                         'platforms': {'darwin': {'sh': {'command': 'python3 '
+                                                                                                                    '--version\n'}},
+                                                                                       'linux': {'sh': {'command': 'python3 '
+                                                                                                                   '--version\n'}}},
+                                                                         'tactic': 'discovery',
+                                                                         'technique': {'attack_id': 'T1518',
+                                                                                       'name': 'Software '
+                                                                                               'Discovery'}}},
  {'Mitre Stockpile - Determine the version of Internet Explorer running': {'description': 'Determine '
                                                                                           'the '
                                                                                           'version '

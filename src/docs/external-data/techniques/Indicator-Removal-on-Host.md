@@ -29,7 +29,8 @@ These actions may interfere with event collection, reporting, or other notificat
 ## Potential Commands
 
 ```
-{'windows': {'psh,pwsh': {'command': 'Clear-Eventlog Security;\nClear-Eventlog System;\n'}}}
+fsutil usn deletejournal /D C:
+
 fsutil.exe usn deletejournal /D
 vssadmin.exe delete shadows /all /quiet
 wbadmin.exe delete catalog -quiet
@@ -57,10 +58,9 @@ rm -rf /var/log/*
 ## Commands Dataset
 
 ```
-[{'command': {'windows': {'psh,pwsh': {'command': 'Clear-Eventlog Security;\n'
-                                                  'Clear-Eventlog System;\n'}}},
-  'name': 'Clear Sysmon logs [intended to trigger CAR-2016-04-002]',
-  'source': 'data/abilities/defense-evasion/fcf71ee3-d1a9-4136-b919-9e5f6da43608.yml'},
+[{'command': 'fsutil usn deletejournal /D C:\n',
+  'name': None,
+  'source': 'atomics/T1070/T1070.yaml'},
  {'command': 'fsutil.exe usn deletejournal /D',
   'name': None,
   'source': 'Threat Hunting Tables'},
@@ -269,27 +269,68 @@ rm -rf /var/log/*
 ## Raw Dataset
 
 ```json
-[{'Mitre Stockpile - Clear Sysmon logs [intended to trigger CAR-2016-04-002]': {'description': 'Clear '
-                                                                                               'Sysmon '
-                                                                                               'logs '
-                                                                                               '[intended '
-                                                                                               'to '
-                                                                                               'trigger '
-                                                                                               'CAR-2016-04-002]',
-                                                                                'id': 'fcf71ee3-d1a9-4136-b919-9e5f6da43608',
-                                                                                'name': 'Clear '
-                                                                                        'Logs',
-                                                                                'platforms': {'windows': {'psh,pwsh': {'command': 'Clear-Eventlog '
-                                                                                                                                  'Security;\n'
-                                                                                                                                  'Clear-Eventlog '
-                                                                                                                                  'System;\n'}}},
-                                                                                'privilege': 'Elevated',
-                                                                                'tactic': 'defense-evasion',
-                                                                                'technique': {'attack_id': 'T1070',
-                                                                                              'name': 'Indicator '
-                                                                                                      'Removal '
-                                                                                                      'on '
-                                                                                                      'Host'}}},
+[{'Atomic Red Team Test - Indicator Removal on Host': {'atomic_tests': [{'auto_generated_guid': 'b4115c7a-0e92-47f0-a61e-17e7218b2435',
+                                                                         'description': 'Manages '
+                                                                                        'the '
+                                                                                        'update '
+                                                                                        'sequence '
+                                                                                        'number '
+                                                                                        '(USN) '
+                                                                                        'change '
+                                                                                        'journal, '
+                                                                                        'which '
+                                                                                        'provides '
+                                                                                        'a '
+                                                                                        'persistent '
+                                                                                        'log '
+                                                                                        'of '
+                                                                                        'all '
+                                                                                        'changes '
+                                                                                        'made '
+                                                                                        'to '
+                                                                                        'files '
+                                                                                        'on '
+                                                                                        'the '
+                                                                                        'volume. '
+                                                                                        'Upon '
+                                                                                        'execution, '
+                                                                                        'no '
+                                                                                        'output\n'
+                                                                                        'will '
+                                                                                        'be '
+                                                                                        'displayed. '
+                                                                                        'More '
+                                                                                        'information '
+                                                                                        'about '
+                                                                                        'fsutil '
+                                                                                        'can '
+                                                                                        'be '
+                                                                                        'found '
+                                                                                        'at '
+                                                                                        'https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/fsutil-usn\n',
+                                                                         'executor': {'cleanup_command': 'fsutil '
+                                                                                                         'usn '
+                                                                                                         'createjournal '
+                                                                                                         'm=1000 '
+                                                                                                         'a=100 '
+                                                                                                         'c:\n',
+                                                                                      'command': 'fsutil '
+                                                                                                 'usn '
+                                                                                                 'deletejournal '
+                                                                                                 '/D '
+                                                                                                 'C:\n',
+                                                                                      'elevation_required': True,
+                                                                                      'name': 'command_prompt'},
+                                                                         'name': 'Indicator '
+                                                                                 'Removal '
+                                                                                 'using '
+                                                                                 'FSUtil',
+                                                                         'supported_platforms': ['windows']}],
+                                                       'attack_technique': 'T1070',
+                                                       'display_name': 'Indicator '
+                                                                       'Removal '
+                                                                       'on '
+                                                                       'Host'}},
  {'Threat Hunting Tables': {'chain_id': '100034',
                             'commandline_string': 'usn deletejournal /D',
                             'file_path': '',

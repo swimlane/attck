@@ -70,6 +70,7 @@ https://go.crowdstrike.com/rs/281-OBQ-266/images/Report2018GlobalThreatReport.pd
 https://crowdstrike.lookbookhq.com/web-global-threat-report-2019/crowdstrike-2019-gtr page 52
 https://www.crowdstrike.com/blog/wizard-spider-lunar-spider-shared-proxy-module/
 https://www.crowdstrike.com/blog/wizard-spider-adds-new-feature-to-ryuk-ransomware/
+https://www.crowdstrike.com/blog/wizard-spider-adversary-update/
 ```
 
 ## Country

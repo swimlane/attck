@@ -46,6 +46,8 @@ where /R C:\Users\ Bookmarks
 
 where /R C:\Users\ places.sqlite
 
+dir /s /b %USERPROFILE%\Favorites
+
 {'darwin': {'sh': {'command': 'cat ~/Library/Application\\ Support/Google/Chrome/Default/Bookmarks\n', 'parsers': {'plugins.stockpile.app.parsers.bookmarks': [{'source': 'host.chrome.bookmark_title', 'edge': 'resolves_to', 'target': 'host.chrome.bookmark_url'}]}}}}
 powershell/collection/browser_data
 powershell/collection/browser_data
@@ -77,6 +79,9 @@ powershell/collection/browser_data
   'name': None,
   'source': 'atomics/T1217/T1217.yaml'},
  {'command': 'where /R C:\\Users\\ places.sqlite\n',
+  'name': None,
+  'source': 'atomics/T1217/T1217.yaml'},
+ {'command': 'dir /s /b %USERPROFILE%\\Favorites\n',
   'name': None,
   'source': 'atomics/T1217/T1217.yaml'},
  {'command': {'darwin': {'sh': {'command': 'cat ~/Library/Application\\ '
@@ -420,6 +425,37 @@ powershell/collection/browser_data
                                                                                   'on '
                                                                                   'Windows '
                                                                                   'with '
+                                                                                  'command '
+                                                                                  'prompt',
+                                                                          'supported_platforms': ['windows']},
+                                                                         {'auto_generated_guid': '727dbcdb-e495-4ab1-a6c4-80c7f77aef85',
+                                                                          'description': 'This '
+                                                                                         'test '
+                                                                                         'will '
+                                                                                         'list '
+                                                                                         'the '
+                                                                                         'bookmarks '
+                                                                                         'for '
+                                                                                         'Internet '
+                                                                                         'Explorer '
+                                                                                         'that '
+                                                                                         'are '
+                                                                                         'found '
+                                                                                         'in '
+                                                                                         'the '
+                                                                                         'Favorites '
+                                                                                         'folder',
+                                                                          'executor': {'command': 'dir '
+                                                                                                  '/s '
+                                                                                                  '/b '
+                                                                                                  '%USERPROFILE%\\Favorites\n',
+                                                                                       'name': 'command_prompt'},
+                                                                          'name': 'List '
+                                                                                  'Internet '
+                                                                                  'Explorer '
+                                                                                  'Bookmarks '
+                                                                                  'using '
+                                                                                  'the '
                                                                                   'command '
                                                                                   'prompt',
                                                                           'supported_platforms': ['windows']}],

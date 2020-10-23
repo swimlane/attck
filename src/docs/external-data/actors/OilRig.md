@@ -89,6 +89,7 @@ https://sec0wn.blogspot.com/2018/05/prb-backdoor-fully-loaded-powershell.html
 https://www.ncsc.gov.uk/news/turla-group-exploits-iran-apt-to-expand-coverage-of-victims
 https://securityintelligence.com/posts/new-destructive-wiper-zerocleare-targets-energy-sector-in-the-middle-east/
 https://www.clearskysec.com/powdesk-apt34/
+https://unit42.paloaltonetworks.com/oilrig-novel-c2-channel-steganography/
 ```
 
 ## Country

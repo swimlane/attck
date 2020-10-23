@@ -67,6 +67,13 @@ $secondOctet = $pieces[1]
 $thirdOctet = $pieces[2]
 foreach ($ip in 1..255 | % { "$firstOctet.$secondOctet.$thirdOctet.$_" } ) {cmd.exe /c nslookup $ip}
 
+adidnsdump -u domain\user -p #{acct_pass} --print-zones #{host_name}
+
+adidnsdump -u #{user_name} -p password --print-zones #{host_name}
+
+adidnsdump -u #{user_name} -p #{acct_pass} --print-zones 192.168.1.1
+
+{'windows': {'psh': {'command': 'Import-Module .\\PowerView.ps1 -Force;\nGet-NetComputer\n', 'payloads': ['powerview.ps1']}}}
 {'windows': {'psh': {'command': 'Import-Module .\\powerview.ps1;\nGet-DomainComputer\n', 'parsers': {'plugins.stockpile.app.parsers.gdomain': [{'source': 'remote.host.fqdn'}]}, 'payloads': ['powerview.ps1']}}}
 {'windows': {'cmd': {'command': 'nltest /dsgetdc:%USERDOMAIN%\n'}, 'psh': {'command': 'nltest /dsgetdc:$env:USERDOMAIN\n'}}}
 {'darwin': {'sh': {'command': 'cat ~/.ssh/known_hosts\n'}}, 'linux': {'sh': {'command': 'cat ~/.ssh/known_hosts\n'}}}
@@ -168,6 +175,24 @@ python/situational_awareness/network/gethostbyname
              'nslookup $ip}\n',
   'name': None,
   'source': 'atomics/T1018/T1018.yaml'},
+ {'command': 'adidnsdump -u domain\\user -p #{acct_pass} --print-zones '
+             '#{host_name}\n',
+  'name': None,
+  'source': 'atomics/T1018/T1018.yaml'},
+ {'command': 'adidnsdump -u #{user_name} -p password --print-zones '
+             '#{host_name}\n',
+  'name': None,
+  'source': 'atomics/T1018/T1018.yaml'},
+ {'command': 'adidnsdump -u #{user_name} -p #{acct_pass} --print-zones '
+             '192.168.1.1\n',
+  'name': None,
+  'source': 'atomics/T1018/T1018.yaml'},
+ {'command': {'windows': {'psh': {'command': 'Import-Module .\\PowerView.ps1 '
+                                             '-Force;\n'
+                                             'Get-NetComputer\n',
+                                  'payloads': ['powerview.ps1']}}},
+  'name': 'Get a list of all computers in a domain',
+  'source': 'data/abilities/discovery/0360ede1-3c28-48d3-a6ef-6e98f562c5af.yml'},
  {'command': {'windows': {'psh': {'command': 'Import-Module .\\powerview.ps1;\n'
                                              'Get-DomainComputer\n',
                                   'parsers': {'plugins.stockpile.app.parsers.gdomain': [{'source': 'remote.host.fqdn'}]},
@@ -689,6 +714,7 @@ python/situational_awareness/network/gethostbyname
                                                                                       'via '
                                                                                       'ping '
                                                                                       'sweep.\n'
+                                                                                      '\n'
                                                                                       'Upon '
                                                                                       'successful '
                                                                                       'execution, '
@@ -709,7 +735,7 @@ python/situational_awareness/network/gethostbyname
                                                                                       'an '
                                                                                       'IP '
                                                                                       'is '
-                                                                                      'active.',
+                                                                                      'active.\n',
                                                                        'executor': {'command': 'for '
                                                                                                'ip '
                                                                                                'in '
@@ -852,11 +878,177 @@ python/situational_awareness/network/gethostbyname
                                                                                'Discovery '
                                                                                '- '
                                                                                'nslookup',
+                                                                       'supported_platforms': ['windows']},
+                                                                      {'auto_generated_guid': '95e19466-469e-4316-86d2-1dc401b5a959',
+                                                                       'dependencies': [{'description': 'Computer '
+                                                                                                        'must '
+                                                                                                        'have '
+                                                                                                        'python '
+                                                                                                        '3 '
+                                                                                                        'installed\n',
+                                                                                         'get_prereq_command': 'echo '
+                                                                                                               '"Python '
+                                                                                                               '3 '
+                                                                                                               'must '
+                                                                                                               'be '
+                                                                                                               'installed '
+                                                                                                               'manually"\n',
+                                                                                         'prereq_command': 'if '
+                                                                                                           '(python '
+                                                                                                           '--version) '
+                                                                                                           '{exit '
+                                                                                                           '0} '
+                                                                                                           'else '
+                                                                                                           '{exit '
+                                                                                                           '1}\n'},
+                                                                                        {'description': 'Computer '
+                                                                                                        'must '
+                                                                                                        'have '
+                                                                                                        'pip '
+                                                                                                        'installed\n',
+                                                                                         'get_prereq_command': 'echo '
+                                                                                                               '"PIP '
+                                                                                                               'must '
+                                                                                                               'be '
+                                                                                                               'installed '
+                                                                                                               'manually"\n',
+                                                                                         'prereq_command': 'if '
+                                                                                                           '(pip3 '
+                                                                                                           '-V) '
+                                                                                                           '{exit '
+                                                                                                           '0} '
+                                                                                                           'else '
+                                                                                                           '{exit '
+                                                                                                           '1}\n'},
+                                                                                        {'description': 'adidnsdump '
+                                                                                                        'must '
+                                                                                                        'be '
+                                                                                                        'installed '
+                                                                                                        'and '
+                                                                                                        'part '
+                                                                                                        'of '
+                                                                                                        'PATH\n',
+                                                                                         'get_prereq_command': 'pip3 '
+                                                                                                               'install '
+                                                                                                               'adidnsdump\n',
+                                                                                         'prereq_command': 'if '
+                                                                                                           '(cmd '
+                                                                                                           '/c '
+                                                                                                           'adidnsdump '
+                                                                                                           '-h) '
+                                                                                                           '{exit '
+                                                                                                           '0} '
+                                                                                                           'else '
+                                                                                                           '{exit '
+                                                                                                           '1}\n'}],
+                                                                       'dependency_executor_name': 'powershell',
+                                                                       'description': 'This '
+                                                                                      'tool '
+                                                                                      'enables '
+                                                                                      'enumeration '
+                                                                                      'and '
+                                                                                      'exporting '
+                                                                                      'of '
+                                                                                      'all '
+                                                                                      'DNS '
+                                                                                      'records '
+                                                                                      'in '
+                                                                                      'the '
+                                                                                      'zone '
+                                                                                      'for '
+                                                                                      'recon '
+                                                                                      'purposes '
+                                                                                      'of '
+                                                                                      'internal '
+                                                                                      'networks\n'
+                                                                                      'Python '
+                                                                                      '3 '
+                                                                                      'and '
+                                                                                      'adidnsdump '
+                                                                                      'must '
+                                                                                      'be '
+                                                                                      'installed, '
+                                                                                      'use '
+                                                                                      'the '
+                                                                                      "get_prereq_command's "
+                                                                                      'to '
+                                                                                      'meet '
+                                                                                      'the '
+                                                                                      'prerequisites '
+                                                                                      'for '
+                                                                                      'this '
+                                                                                      'test.\n'
+                                                                                      'Successful '
+                                                                                      'execution '
+                                                                                      'of '
+                                                                                      'this '
+                                                                                      'test '
+                                                                                      'will '
+                                                                                      'list '
+                                                                                      'dns '
+                                                                                      'zones '
+                                                                                      'in '
+                                                                                      'the '
+                                                                                      'terminal.\n',
+                                                                       'executor': {'command': 'adidnsdump '
+                                                                                               '-u '
+                                                                                               '#{user_name} '
+                                                                                               '-p '
+                                                                                               '#{acct_pass} '
+                                                                                               '--print-zones '
+                                                                                               '#{host_name}\n',
+                                                                                    'elevation_required': True,
+                                                                                    'name': 'command_prompt'},
+                                                                       'input_arguments': {'acct_pass': {'default': 'password',
+                                                                                                         'description': 'Account '
+                                                                                                                        'password.',
+                                                                                                         'type': 'string'},
+                                                                                           'host_name': {'default': '192.168.1.1',
+                                                                                                         'description': 'hostname '
+                                                                                                                        'or '
+                                                                                                                        'ip '
+                                                                                                                        'address '
+                                                                                                                        'to '
+                                                                                                                        'connect '
+                                                                                                                        'to.',
+                                                                                                         'type': 'string'},
+                                                                                           'user_name': {'default': 'domain\\user',
+                                                                                                         'description': 'username '
+                                                                                                                        'including '
+                                                                                                                        'domain.',
+                                                                                                         'type': 'string'}},
+                                                                       'name': 'Remote '
+                                                                               'System '
+                                                                               'Discovery '
+                                                                               '- '
+                                                                               'adidnsdump',
                                                                        'supported_platforms': ['windows']}],
                                                      'attack_technique': 'T1018',
                                                      'display_name': 'Remote '
                                                                      'System '
                                                                      'Discovery'}},
+ {'Mitre Stockpile - Get a list of all computers in a domain': {'description': 'Get '
+                                                                               'a '
+                                                                               'list '
+                                                                               'of '
+                                                                               'all '
+                                                                               'computers '
+                                                                               'in '
+                                                                               'a '
+                                                                               'domain',
+                                                                'id': '0360ede1-3c28-48d3-a6ef-6e98f562c5af',
+                                                                'name': 'GetComputers '
+                                                                        '(Alice)',
+                                                                'platforms': {'windows': {'psh': {'command': 'Import-Module '
+                                                                                                             '.\\PowerView.ps1 '
+                                                                                                             '-Force;\n'
+                                                                                                             'Get-NetComputer\n',
+                                                                                                  'payloads': ['powerview.ps1']}}},
+                                                                'tactic': 'discovery',
+                                                                'technique': {'attack_id': 'T1018',
+                                                                              'name': 'Remote '
+                                                                                      'System '
+                                                                                      'Discovery'}}},
  {'Mitre Stockpile - Use PowerView to query the Active Directory server for a list of computers in the Domain': {'description': 'Use '
                                                                                                                                 'PowerView '
                                                                                                                                 'to '

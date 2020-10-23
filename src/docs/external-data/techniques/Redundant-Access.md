@@ -33,7 +33,6 @@ Use of a [Web Shell](https://attack.mitre.org/techniques/T1100) is one such way 
 ## Potential Commands
 
 ```
-{'darwin': {'sh': {'command': 'sleep 60'}}, 'linux': {'sh': {'command': 'sleep 60'}}, 'windows': {'psh': {'command': 'sleep 60'}}}
 powershell/persistence/misc/skeleton_key
 powershell/persistence/misc/skeleton_key
 powershell/persistence/powerbreach/deaduser
@@ -47,12 +46,7 @@ powershell/persistence/powerbreach/resolver
 ## Commands Dataset
 
 ```
-[{'command': {'darwin': {'sh': {'command': 'sleep 60'}},
-              'linux': {'sh': {'command': 'sleep 60'}},
-              'windows': {'psh': {'command': 'sleep 60'}}},
-  'name': 'Pause all operations to avoid making noise',
-  'source': 'data/abilities/defense-evasion/36eecb80-ede3-442b-8774-956e906aff02.yml'},
- {'command': 'powershell/persistence/misc/skeleton_key',
+[{'command': 'powershell/persistence/misc/skeleton_key',
   'name': 'Empire Module Command',
   'source': 'https://github.com/dstepanic/attck_empire/blob/master/Empire_modules.xlsx?raw=true'},
  {'command': 'powershell/persistence/misc/skeleton_key',
@@ -106,27 +100,7 @@ powershell/persistence/powerbreach/resolver
 ## Raw Dataset
 
 ```json
-[{'Mitre Stockpile - Pause all operations to avoid making noise': {'description': 'Pause '
-                                                                                  'all '
-                                                                                  'operations '
-                                                                                  'to '
-                                                                                  'avoid '
-                                                                                  'making '
-                                                                                  'noise',
-                                                                   'id': '36eecb80-ede3-442b-8774-956e906aff02',
-                                                                   'name': '1-min '
-                                                                           'sleep',
-                                                                   'platforms': {'darwin': {'sh': {'command': 'sleep '
-                                                                                                              '60'}},
-                                                                                 'linux': {'sh': {'command': 'sleep '
-                                                                                                             '60'}},
-                                                                                 'windows': {'psh': {'command': 'sleep '
-                                                                                                                '60'}}},
-                                                                   'tactic': 'defense-evasion',
-                                                                   'technique': {'attack_id': 'T1108',
-                                                                                 'name': 'Redundant '
-                                                                                         'Access'}}},
- {'Empire Module XLSX Sheet by dstepanic': {'ATT&CK Technique #1': 'T1108',
+[{'Empire Module XLSX Sheet by dstepanic': {'ATT&CK Technique #1': 'T1108',
                                             'ATT&CK Technique #2': '',
                                             'Concatenate for Python Dictionary': '"powershell/persistence/misc/skeleton_key":  '
                                                                                  '["T1108"],',

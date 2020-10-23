@@ -31,17 +31,13 @@ Adversaries may use several methods to accomplish [Virtualization/Sandbox Evasio
 ## Potential Commands
 
 ```
-{'windows': {'psh': {'command': 'get-wmiobject win32_computersystem | fl model\n'}}}
+
 ```
 
 ## Commands Dataset
 
 ```
-[{'command': {'windows': {'psh': {'command': 'get-wmiobject '
-                                             'win32_computersystem | fl '
-                                             'model\n'}}},
-  'name': 'Determine if the system is virtualized or physical',
-  'source': 'data/abilities/discovery/5dc841fd-28ad-40e2-b10e-fb007fe09e81.yml'}]
+
 ```
 
 ## Potential Detections
@@ -59,28 +55,7 @@ Adversaries may use several methods to accomplish [Virtualization/Sandbox Evasio
 ## Raw Dataset
 
 ```json
-[{'Mitre Stockpile - Determine if the system is virtualized or physical': {'description': 'Determine '
-                                                                                          'if '
-                                                                                          'the '
-                                                                                          'system '
-                                                                                          'is '
-                                                                                          'virtualized '
-                                                                                          'or '
-                                                                                          'physical',
-                                                                           'id': '5dc841fd-28ad-40e2-b10e-fb007fe09e81',
-                                                                           'name': 'Virtual '
-                                                                                   'or '
-                                                                                   'Real',
-                                                                           'platforms': {'windows': {'psh': {'command': 'get-wmiobject '
-                                                                                                                        'win32_computersystem '
-                                                                                                                        '| '
-                                                                                                                        'fl '
-                                                                                                                        'model\n'}}},
-                                                                           'tactic': 'discovery',
-                                                                           'technique': {'attack_id': 'T1497',
-                                                                                         'name': 'Virtualization '
-                                                                                                 'Sandbox '
-                                                                                                 'Evasion'}}}]
+
 ```
 
 # Tactics

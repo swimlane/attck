@@ -135,6 +135,7 @@ https://www.crowdstrike.com/blog/meet-crowdstrikes-adversary-of-the-month-for-no
 https://unit42.paloaltonetworks.com/new-python-based-payload-mechaflounder-used-by-chafer/
 https://securityintelligence.com/posts/observations-of-itg07-cyber-operations/
 https://www.bitdefender.com/files/News/CaseStudies/study/332/Bitdefender-Whitepaper-Chafer-creat4491-en-EN-interactive.pdf
+https://threatconnect.com/blog/research-roundup-apt39-adversaries/
 ```
 
 ## Country

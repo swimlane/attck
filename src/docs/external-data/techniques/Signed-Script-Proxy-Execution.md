@@ -29,8 +29,8 @@
 ```
 C:\windows\system32\SyncAppvPublishingServer.vbs "\n;Start-Process calc"
 
-set comspec=C:\Windows\System32\calc.exe
-cscript manage-bde.wsf
+set comspec=%windir%\System32\calc.exe
+cscript %windir%\System32\manage-bde.wsf
 
 PubPrn.vbsPubPrn.vbs
 ```
@@ -42,8 +42,8 @@ PubPrn.vbsPubPrn.vbs
              '"\\n;Start-Process calc"\n',
   'name': None,
   'source': 'atomics/T1216/T1216.yaml'},
- {'command': 'set comspec=C:\\Windows\\System32\\calc.exe\n'
-             'cscript manage-bde.wsf\n',
+ {'command': 'set comspec=%windir%\\System32\\calc.exe\n'
+             'cscript %windir%\\System32\\manage-bde.wsf\n',
   'name': None,
   'source': 'atomics/T1216/T1216.yaml'},
  {'command': 'PubPrn.vbsPubPrn.vbs',
@@ -126,13 +126,13 @@ PubPrn.vbsPubPrn.vbs
                                                                                             'arbitrary '
                                                                                             'command.\n',
                                                                              'executor': {'cleanup_command': 'set '
-                                                                                                             'comspec=C:\\Windows\\System32\\cmd.exe\n',
+                                                                                                             'comspec=%windir%\\System32\\cmd.exe\n',
                                                                                           'command': 'set '
                                                                                                      'comspec=#{command_to_execute}\n'
                                                                                                      'cscript '
-                                                                                                     'manage-bde.wsf\n',
+                                                                                                     '%windir%\\System32\\manage-bde.wsf\n',
                                                                                           'name': 'command_prompt'},
-                                                                             'input_arguments': {'command_to_execute': {'default': 'C:\\Windows\\System32\\calc.exe',
+                                                                             'input_arguments': {'command_to_execute': {'default': '%windir%\\System32\\calc.exe',
                                                                                                                         'description': 'A '
                                                                                                                                        'command '
                                                                                                                                        'to '

@@ -75,6 +75,7 @@ https://intrusiontruth.wordpress.com/2020/01/13/who-else-works-for-this-cover-co
 https://intrusiontruth.wordpress.com/2020/01/14/who-is-mr-ding/
 https://intrusiontruth.wordpress.com/2020/01/15/hainan-xiandun-technology-company-is-apt40/
 https://jsac.jpcert.or.jp/archive/2020/pdf/JSAC2020_8_koike-nakajima_jp.pdf
+https://www.microsoft.com/security/blog/2020/09/24/gadolinium-detecting-empires-cloud/
 ```
 
 ## Country

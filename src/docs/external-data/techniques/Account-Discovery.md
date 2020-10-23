@@ -41,9 +41,6 @@ shell dsquery user "dc=domain,dc=com"
 shell dsquery * OU="Domain Admins",dc=domain,dc=com -scope base -attr SAMAccountName userPrincipleName Description
 shell dsquery * -filter "(&(objectCategory=contact)(objectCategory=person)(mail=*)(objectClass=user))" -Attr samAccountName mail -Limit 0
 shell dsquery * -filter "(&(objectCategory=group)(name=*Admin*))" -Attr name description members
-{'windows': {'cmd,psh': {'command': 'net user #{domain.user.name} /domain'}}}
-{'darwin': {'sh': {'command': "cut -d: -f1 /etc/passwd | grep -v '_' | grep -v '#'\n", 'parsers': {'plugins.stockpile.app.parsers.basic': [{'source': 'host.user.name'}]}}}, 'linux': {'sh': {'command': "cut -d: -f1 /etc/passwd | grep -v '_' | grep -v '#'\n", 'parsers': {'plugins.stockpile.app.parsers.basic': [{'source': 'host.user.name'}]}}}}
-{'windows': {'cmd': {'command': 'net user /domain'}}}
 Net.exe localgroup "administrators"
 Net.exe group "domain admins" /domain
 Net.exe user * /domain
@@ -160,23 +157,6 @@ id
              'members',
   'name': 'Cobalt Strike',
   'source': 'https://attack.mitre.org/docs/APT3_Adversary_Emulation_Field_Manual.xlsx'},
- {'command': {'windows': {'cmd,psh': {'command': 'net user #{domain.user.name} '
-                                                 '/domain'}}},
-  'name': 'The net utility is executed via cmd to enumerate detailed '
-          'information about a specific user account.',
-  'source': 'data/abilities/discovery/364ea817-bbb9-4083-87dd-94b9dba45f6f.yml'},
- {'command': {'darwin': {'sh': {'command': 'cut -d: -f1 /etc/passwd | grep -v '
-                                           "'_' | grep -v '#'\n",
-                                'parsers': {'plugins.stockpile.app.parsers.basic': [{'source': 'host.user.name'}]}}},
-              'linux': {'sh': {'command': 'cut -d: -f1 /etc/passwd | grep -v '
-                                          "'_' | grep -v '#'\n",
-                               'parsers': {'plugins.stockpile.app.parsers.basic': [{'source': 'host.user.name'}]}}}},
-  'name': 'Get a list of all local users',
-  'source': 'data/abilities/discovery/c1cd6388-3ced-48c7-a511-0434c6ba8f48.yml'},
- {'command': {'windows': {'cmd': {'command': 'net user /domain'}}},
-  'name': 'The net utility is executed via cmd to enumerate domain user '
-          'accounts.',
-  'source': 'data/abilities/discovery/c7ec57cd-933e-42b6-99a4-e852a9e57a33.yml'},
  {'command': 'Net.exe localgroup "administrators"',
   'name': None,
   'source': 'Threat Hunting Tables'},
@@ -688,95 +668,6 @@ id
                                                                  'include '
                                                                  '"dc=subdomain,dc=domain,dc=tld"',
                                                   'Metasploit': ''}},
- {'Mitre Stockpile - The net utility is executed via cmd to enumerate detailed information about a specific user account.': {'description': 'The '
-                                                                                                                                            'net '
-                                                                                                                                            'utility '
-                                                                                                                                            'is '
-                                                                                                                                            'executed '
-                                                                                                                                            'via '
-                                                                                                                                            'cmd '
-                                                                                                                                            'to '
-                                                                                                                                            'enumerate '
-                                                                                                                                            'detailed '
-                                                                                                                                            'information '
-                                                                                                                                            'about '
-                                                                                                                                            'a '
-                                                                                                                                            'specific '
-                                                                                                                                            'user '
-                                                                                                                                            'account.',
-                                                                                                                             'id': '364ea817-bbb9-4083-87dd-94b9dba45f6f',
-                                                                                                                             'name': 'Account '
-                                                                                                                                     'Discovery '
-                                                                                                                                     '(targeted)',
-                                                                                                                             'platforms': {'windows': {'cmd,psh': {'command': 'net '
-                                                                                                                                                                              'user '
-                                                                                                                                                                              '#{domain.user.name} '
-                                                                                                                                                                              '/domain'}}},
-                                                                                                                             'tactic': 'discovery',
-                                                                                                                             'technique': {'attack_id': 'T1087',
-                                                                                                                                           'name': 'Account '
-                                                                                                                                                   'Discovery'}}},
- {'Mitre Stockpile - Get a list of all local users': {'description': 'Get a '
-                                                                     'list of '
-                                                                     'all '
-                                                                     'local '
-                                                                     'users',
-                                                      'id': 'c1cd6388-3ced-48c7-a511-0434c6ba8f48',
-                                                      'name': 'Find local '
-                                                              'users',
-                                                      'platforms': {'darwin': {'sh': {'command': 'cut '
-                                                                                                 '-d: '
-                                                                                                 '-f1 '
-                                                                                                 '/etc/passwd '
-                                                                                                 '| '
-                                                                                                 'grep '
-                                                                                                 '-v '
-                                                                                                 "'_' "
-                                                                                                 '| '
-                                                                                                 'grep '
-                                                                                                 '-v '
-                                                                                                 "'#'\n",
-                                                                                      'parsers': {'plugins.stockpile.app.parsers.basic': [{'source': 'host.user.name'}]}}},
-                                                                    'linux': {'sh': {'command': 'cut '
-                                                                                                '-d: '
-                                                                                                '-f1 '
-                                                                                                '/etc/passwd '
-                                                                                                '| '
-                                                                                                'grep '
-                                                                                                '-v '
-                                                                                                "'_' "
-                                                                                                '| '
-                                                                                                'grep '
-                                                                                                '-v '
-                                                                                                "'#'\n",
-                                                                                     'parsers': {'plugins.stockpile.app.parsers.basic': [{'source': 'host.user.name'}]}}}},
-                                                      'tactic': 'discovery',
-                                                      'technique': {'attack_id': 'T1087',
-                                                                    'name': 'Account '
-                                                                            'Discovery'}}},
- {'Mitre Stockpile - The net utility is executed via cmd to enumerate domain user accounts.': {'description': 'The '
-                                                                                                              'net '
-                                                                                                              'utility '
-                                                                                                              'is '
-                                                                                                              'executed '
-                                                                                                              'via '
-                                                                                                              'cmd '
-                                                                                                              'to '
-                                                                                                              'enumerate '
-                                                                                                              'domain '
-                                                                                                              'user '
-                                                                                                              'accounts.',
-                                                                                               'id': 'c7ec57cd-933e-42b6-99a4-e852a9e57a33',
-                                                                                               'name': 'Account '
-                                                                                                       'Discovery '
-                                                                                                       '(all)',
-                                                                                               'platforms': {'windows': {'cmd': {'command': 'net '
-                                                                                                                                            'user '
-                                                                                                                                            '/domain'}}},
-                                                                                               'tactic': 'discovery',
-                                                                                               'technique': {'attack_id': 'T1087',
-                                                                                                             'name': 'Account '
-                                                                                                                     'Discovery'}}},
  {'Threat Hunting Tables': {'chain_id': '100137',
                             'commandline_string': 'localgroup "administrators"',
                             'file_path': '',

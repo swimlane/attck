@@ -33,8 +33,6 @@ Many popular offensive frameworks exist which use forms of scripting for securit
 ## Potential Commands
 
 ```
-{'windows': {'psh': {'command': 'Set-ItemProperty -Path HKLM:\\Software\\Policies\\Microsoft\\Windows\\PowerShell -Name ExecutionPolicy -Value ByPass;\n        $shell = New-Object -ComObject Wscript.Shell\n        Set-ExecutionPolicy Bypass | echo $shell.sendkeys("Y`r`n")'}}}
-{'windows': {'psh': {'command': "$job = Start-Job -ScriptBlock {\n  $username = '#{host.user.name}';\n  $password = '#{host.user.password}';\n  $securePassword = ConvertTo-SecureString $password -AsPlainText -Force;\n  $credential = New-Object System.Management.Automation.PSCredential $username, $securePassword;\n  Start-Process Notepad.exe -NoNewWindow -PassThru -Credential $credential;\n};\nReceive-Job -Job $job -Wait;\n"}}}
 cscript.exe
 *.jse
 cscript.exe
@@ -110,37 +108,7 @@ Creates and executes a simple bash script.
 ## Commands Dataset
 
 ```
-[{'command': {'windows': {'psh': {'command': 'Set-ItemProperty -Path '
-                                             'HKLM:\\Software\\Policies\\Microsoft\\Windows\\PowerShell '
-                                             '-Name ExecutionPolicy -Value '
-                                             'ByPass;\n'
-                                             '        $shell = New-Object '
-                                             '-ComObject Wscript.Shell\n'
-                                             '        Set-ExecutionPolicy '
-                                             'Bypass | echo '
-                                             '$shell.sendkeys("Y`r`n")'}}},
-  'name': 'Ensure the ExecutionPolicy is turned to Bypass',
-  'source': 'data/abilities/defense-evasion/3864fd22-5c63-41c9-bdbc-a66b5ffa3f5e.yml'},
- {'command': {'windows': {'psh': {'command': '$job = Start-Job -ScriptBlock {\n'
-                                             '  $username = '
-                                             "'#{host.user.name}';\n"
-                                             '  $password = '
-                                             "'#{host.user.password}';\n"
-                                             '  $securePassword = '
-                                             'ConvertTo-SecureString $password '
-                                             '-AsPlainText -Force;\n'
-                                             '  $credential = New-Object '
-                                             'System.Management.Automation.PSCredential '
-                                             '$username, $securePassword;\n'
-                                             '  Start-Process Notepad.exe '
-                                             '-NoNewWindow -PassThru '
-                                             '-Credential $credential;\n'
-                                             '};\n'
-                                             'Receive-Job -Job $job '
-                                             '-Wait;\n'}}},
-  'name': 'Run an application as a different user',
-  'source': 'data/abilities/execution/3796a00b-b11d-4731-b4ca-275a07d83299.yml'},
- {'command': 'cscript.exe',
+[{'command': 'cscript.exe',
   'name': 'parent_process',
   'source': 'Threat Hunting Tables'},
  {'command': '*.jse',
@@ -608,95 +576,7 @@ Creates and executes a simple bash script.
 ## Raw Dataset
 
 ```json
-[{'Mitre Stockpile - Ensure the ExecutionPolicy is turned to Bypass': {'description': 'Ensure '
-                                                                                      'the '
-                                                                                      'ExecutionPolicy '
-                                                                                      'is '
-                                                                                      'turned '
-                                                                                      'to '
-                                                                                      'Bypass',
-                                                                       'id': '3864fd22-5c63-41c9-bdbc-a66b5ffa3f5e',
-                                                                       'name': 'Bypass '
-                                                                               'ExecutionPolicy',
-                                                                       'platforms': {'windows': {'psh': {'command': 'Set-ItemProperty '
-                                                                                                                    '-Path '
-                                                                                                                    'HKLM:\\Software\\Policies\\Microsoft\\Windows\\PowerShell '
-                                                                                                                    '-Name '
-                                                                                                                    'ExecutionPolicy '
-                                                                                                                    '-Value '
-                                                                                                                    'ByPass;\n'
-                                                                                                                    '        '
-                                                                                                                    '$shell '
-                                                                                                                    '= '
-                                                                                                                    'New-Object '
-                                                                                                                    '-ComObject '
-                                                                                                                    'Wscript.Shell\n'
-                                                                                                                    '        '
-                                                                                                                    'Set-ExecutionPolicy '
-                                                                                                                    'Bypass '
-                                                                                                                    '| '
-                                                                                                                    'echo '
-                                                                                                                    '$shell.sendkeys("Y`r`n")'}}},
-                                                                       'tactic': 'defense-evasion',
-                                                                       'technique': {'attack_id': 'T1064',
-                                                                                     'name': 'Scripting'}}},
- {'Mitre Stockpile - Run an application as a different user': {'description': 'Run '
-                                                                              'an '
-                                                                              'application '
-                                                                              'as '
-                                                                              'a '
-                                                                              'different '
-                                                                              'user',
-                                                               'id': '3796a00b-b11d-4731-b4ca-275a07d83299',
-                                                               'name': 'Impersonate '
-                                                                       'user',
-                                                               'platforms': {'windows': {'psh': {'command': '$job '
-                                                                                                            '= '
-                                                                                                            'Start-Job '
-                                                                                                            '-ScriptBlock '
-                                                                                                            '{\n'
-                                                                                                            '  '
-                                                                                                            '$username '
-                                                                                                            '= '
-                                                                                                            "'#{host.user.name}';\n"
-                                                                                                            '  '
-                                                                                                            '$password '
-                                                                                                            '= '
-                                                                                                            "'#{host.user.password}';\n"
-                                                                                                            '  '
-                                                                                                            '$securePassword '
-                                                                                                            '= '
-                                                                                                            'ConvertTo-SecureString '
-                                                                                                            '$password '
-                                                                                                            '-AsPlainText '
-                                                                                                            '-Force;\n'
-                                                                                                            '  '
-                                                                                                            '$credential '
-                                                                                                            '= '
-                                                                                                            'New-Object '
-                                                                                                            'System.Management.Automation.PSCredential '
-                                                                                                            '$username, '
-                                                                                                            '$securePassword;\n'
-                                                                                                            '  '
-                                                                                                            'Start-Process '
-                                                                                                            'Notepad.exe '
-                                                                                                            '-NoNewWindow '
-                                                                                                            '-PassThru '
-                                                                                                            '-Credential '
-                                                                                                            '$credential;\n'
-                                                                                                            '};\n'
-                                                                                                            'Receive-Job '
-                                                                                                            '-Job '
-                                                                                                            '$job '
-                                                                                                            '-Wait;\n'}}},
-                                                               'requirements': [{'plugins.stockpile.app.requirements.paw_provenance': [{'source': 'host.user.name'}]},
-                                                                                {'plugins.stockpile.app.requirements.basic': [{'edge': 'has_password',
-                                                                                                                               'source': 'host.user.name',
-                                                                                                                               'target': 'host.user.password'}]}],
-                                                               'tactic': 'execution',
-                                                               'technique': {'attack_id': 'T1064',
-                                                                             'name': 'Scripting'}}},
- {'Threat Hunting Tables': {'chain_id': '100016',
+[{'Threat Hunting Tables': {'chain_id': '100016',
                             'commandline_string': '',
                             'file_path': '',
                             'file_value': '',

@@ -66,6 +66,7 @@ https://blog.prevailion.com/2020/02/the-triune-threat-mastermana-returns.html
 https://medium.com/@paul.k.burbage/aggah-not-exactly-apt-5e51aaff95f5
 https://blog.360totalsecurity.com/en/gorgon-uses-covid-19-outbreak-to-launch-cyber-attacks-on-canada-and-other-regions/
 https://yoroi.company/research/cyber-criminal-espionage-operation-insists-on-italian-manufacturing/
+https://threatresearch.ext.hp.com/aggah-campaigns-latest-tactics-victimology-powerpoint-dropper-and-cryptocurrency-stealer/
 ```
 
 ## Country

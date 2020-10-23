@@ -59,6 +59,7 @@ https://www.welivesecurity.com/2019/05/14/plead-malware-mitm-asus-webstorage/
 https://blogs.jpcert.or.jp/en/2019/09/tscookie-loader.html
 https://blogs.jpcert.or.jp/en/2019/11/icondown-downloader-used-by-blacktech.html
 https://blog.trendmicro.com/trendlabs-security-intelligence/waterbear-is-back-uses-api-hooking-to-evade-security-product-detection/
+https://symantec-enterprise-blogs.security.com/blogs/threat-intelligence/palmerworm-blacktech-espionage-apt
 ```
 
 ## Country

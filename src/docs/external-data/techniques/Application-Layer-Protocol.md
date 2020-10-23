@@ -160,8 +160,7 @@ Adversaries may utilize many different protocols, including those used for web b
                                                                                                                          '$server#{app.contact.html}\n'}}},
                                                                                'tactic': 'command-and-control',
                                                                                'technique': {'attack_id': 'T1071',
-                                                                                             'name': 'Standard '
-                                                                                                     'Application '
+                                                                                             'name': 'Application '
                                                                                                      'Layer '
                                                                                                      'Protocol'}}}]
 ```

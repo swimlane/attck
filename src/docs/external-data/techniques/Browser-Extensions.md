@@ -69,7 +69,19 @@ There have also been instances of botnets using a persistent backdoor through ma
 
 ```json
 [{'Atomic Red Team Test - Browser Extensions': {'atomic_tests': [{'auto_generated_guid': '3ecd790d-2617-4abf-9a8c-4e8d47da9ee1',
-                                                                  'description': '',
+                                                                  'description': 'Turn '
+                                                                                 'on '
+                                                                                 'Chrome '
+                                                                                 'developer '
+                                                                                 'mode '
+                                                                                 'and '
+                                                                                 'Load '
+                                                                                 'Extension '
+                                                                                 'found '
+                                                                                 'in '
+                                                                                 'the '
+                                                                                 'src '
+                                                                                 'directory',
                                                                   'executor': {'name': 'manual',
                                                                                'steps': '1. '
                                                                                         'Navigate '
@@ -88,7 +100,7 @@ There have also been instances of botnets using a persistent backdoor through ma
                                                                                         'and '
                                                                                         'navigate '
                                                                                         'to\n'
-                                                                                        '[Browser_Extension](../t1176/)\n'
+                                                                                        '[Browser_Extension](../t1176/src/)\n'
                                                                                         '\n'
                                                                                         '3. '
                                                                                         'Click '
@@ -100,7 +112,14 @@ There have also been instances of botnets using a persistent backdoor through ma
                                                                                           'windows',
                                                                                           'macos']},
                                                                  {'auto_generated_guid': '4c83940d-8ca5-4bb2-8100-f46dc914bc3f',
-                                                                  'description': '',
+                                                                  'description': 'Install '
+                                                                                 'the '
+                                                                                 '"Minimum '
+                                                                                 'Viable '
+                                                                                 'Malicious '
+                                                                                 'Extension" '
+                                                                                 'Chrome '
+                                                                                 'extension',
                                                                   'executor': {'name': 'manual',
                                                                                'steps': '1. '
                                                                                         'Navigate '

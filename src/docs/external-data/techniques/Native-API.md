@@ -34,10 +34,10 @@ Adversaries may abuse these native API functions as a means of executing behavio
 
 ```
 C:\Windows\Microsoft.NET\Framework\v4.0.30319\csc.exe /out:"#{output_file}" /target:exe PathToAtomicsFolder\T1106\src\CreateProcess.cs
-%tmp/T1106.exe
+%tmp%/T1106.exe
 
 C:\Windows\Microsoft.NET\Framework\v4.0.30319\csc.exe /out:"%tmp%\T1106.exe" /target:exe #{source_file}
-%tmp/T1106.exe
+%tmp%/T1106.exe
 
 python/situational_awareness/network/dcos/chronos_api_add_job
 python/situational_awareness/network/dcos/chronos_api_add_job
@@ -59,12 +59,12 @@ python/situational_awareness/network/http_rest_api
 [{'command': 'C:\\Windows\\Microsoft.NET\\Framework\\v4.0.30319\\csc.exe '
              '/out:"#{output_file}" /target:exe '
              'PathToAtomicsFolder\\T1106\\src\\CreateProcess.cs\n'
-             '%tmp/T1106.exe\n',
+             '%tmp%/T1106.exe\n',
   'name': None,
   'source': 'atomics/T1106/T1106.yaml'},
  {'command': 'C:\\Windows\\Microsoft.NET\\Framework\\v4.0.30319\\csc.exe '
              '/out:"%tmp%\\T1106.exe" /target:exe #{source_file}\n'
-             '%tmp/T1106.exe\n',
+             '%tmp%/T1106.exe\n',
   'name': None,
   'source': 'atomics/T1106/T1106.yaml'},
  {'command': 'python/situational_awareness/network/dcos/chronos_api_add_job',
@@ -144,7 +144,7 @@ python/situational_awareness/network/http_rest_api
                                                                                   '/out:"#{output_file}" '
                                                                                   '/target:exe '
                                                                                   '#{source_file}\n'
-                                                                                  '%tmp/T1106.exe\n',
+                                                                                  '%tmp%/T1106.exe\n',
                                                                        'name': 'command_prompt'},
                                                           'input_arguments': {'output_file': {'default': '%tmp%\\T1106.exe',
                                                                                               'description': 'Location '
@@ -157,7 +157,12 @@ python/situational_awareness/network/http_rest_api
                                                                                                              'of '
                                                                                                              'the '
                                                                                                              'CSharp '
-                                                                                                             'source_file',
+                                                                                                             'source '
+                                                                                                             'file '
+                                                                                                             'to '
+                                                                                                             'compile '
+                                                                                                             'and '
+                                                                                                             'execute',
                                                                                               'type': 'Path'}},
                                                           'name': 'Execution '
                                                                   'through API '

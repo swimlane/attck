@@ -37,10 +37,14 @@ tshark -c 5 -i ens33
 sudo tcpdump -c 5 -nnni en0A    
 if [ -x "$(command -v tshark)" ]; then sudo tshark -c 5 -i en0A; fi;
 
-"c:\Program Files\Wireshark\tshark.exe" -i Ethernet0 -c 5
-c:\windump.exe
+"c:\Program Files\Wireshark\tshark.exe" -i Ethernet -c 5
 
-{'windows': {'psh': {'command': 'New-NetEventSession -Name "PCAP" -CaptureMode SaveToFile -LocalFilePath "$ENV:UserProfile\\Desktop\\pcap.etl" -MaxFileSize 0\nAdd-NetEventPacketCaptureProvider -SessionName "PCAP"\nStart-NetEventSession -Name "PCAP"\nStart-Sleep -s 60\nStop-NetEventSession -Name "PCAP"\nGet-Content "$ENV:UserProfile\\Desktop\\pcap.etl"\n', 'cleanup': 'Remove-NetEventSession -Name "Capture"\nRemove-Item $ENV:UserProfile\\Desktop\\pcap.etl\nRemove-Item $ENV:UserProfile\\Desktop\\pcap.cab\n'}}, 'darwin': {'sh': {'command': 'tcpdump -i en0 & sleep 5; kill $!\n'}}}
+"c:\Program Files\Wireshark\tshark.exe" -i #{interface} -c 5
+
+"c:\Program Files\Wireshark\tshark.exe" -i #{interface} -c 5
+
+netsh trace start capture=yes tracefile=%temp%\trace.etl maxsize=10
+{'windows': {'psh': {'timeout': 80, 'command': '$path = "$ENV:UserProfile\\Desktop\\pcap.etl";\nNew-NetEventSession -Name "PCAP" -CaptureMode SaveToFile -LocalFilePath $path;\nAdd-NetEventProvider -Name "Microsoft-Windows-TCPIP" -SessionName "PCAP";\nStart-NetEventSession -Name "PCAP";\nStart-Sleep -s 60;\nStop-NetEventSession -Name "PCAP";\nif (Test-Path $path) {\n  echo $path;\n  exit 0;\n} else {\n  echo "Failed to generate PCAP file.";\n  exit 1;\n};\n', 'cleanup': 'Remove-NetEventSession -Name "PCAP";\nRemove-Item $ENV:UserProfile\\Desktop\\pcap.etl;\n'}}, 'darwin': {'sh': {'command': 'tcpdump -i en0 & sleep 5; kill $!\n'}}}
 powershell/collection/packet_capture
 powershell/collection/packet_capture
 python/collection/linux/sniffer
@@ -62,32 +66,49 @@ tshark -c 5 -i #{interface}
              'fi;\n',
   'name': None,
   'source': 'atomics/T1040/T1040.yaml'},
- {'command': '"c:\\Program Files\\Wireshark\\tshark.exe" -i Ethernet0 -c 5\n'
-             'c:\\windump.exe\n',
+ {'command': '"c:\\Program Files\\Wireshark\\tshark.exe" -i Ethernet -c 5\n',
+  'name': None,
+  'source': 'atomics/T1040/T1040.yaml'},
+ {'command': '"c:\\Program Files\\Wireshark\\tshark.exe" -i #{interface} -c '
+             '5\n',
+  'name': None,
+  'source': 'atomics/T1040/T1040.yaml'},
+ {'command': '"c:\\Program Files\\Wireshark\\tshark.exe" -i #{interface} -c '
+             '5\n',
+  'name': None,
+  'source': 'atomics/T1040/T1040.yaml'},
+ {'command': 'netsh trace start capture=yes tracefile=%temp%\\trace.etl '
+             'maxsize=10',
   'name': None,
   'source': 'atomics/T1040/T1040.yaml'},
  {'command': {'darwin': {'sh': {'command': 'tcpdump -i en0 & sleep 5; kill '
                                            '$!\n'}},
               'windows': {'psh': {'cleanup': 'Remove-NetEventSession -Name '
-                                             '"Capture"\n'
+                                             '"PCAP";\n'
                                              'Remove-Item '
-                                             '$ENV:UserProfile\\Desktop\\pcap.etl\n'
-                                             'Remove-Item '
-                                             '$ENV:UserProfile\\Desktop\\pcap.cab\n',
-                                  'command': 'New-NetEventSession -Name "PCAP" '
+                                             '$ENV:UserProfile\\Desktop\\pcap.etl;\n',
+                                  'command': '$path = '
+                                             '"$ENV:UserProfile\\Desktop\\pcap.etl";\n'
+                                             'New-NetEventSession -Name "PCAP" '
                                              '-CaptureMode SaveToFile '
-                                             '-LocalFilePath '
-                                             '"$ENV:UserProfile\\Desktop\\pcap.etl" '
-                                             '-MaxFileSize 0\n'
-                                             'Add-NetEventPacketCaptureProvider '
-                                             '-SessionName "PCAP"\n'
+                                             '-LocalFilePath $path;\n'
+                                             'Add-NetEventProvider -Name '
+                                             '"Microsoft-Windows-TCPIP" '
+                                             '-SessionName "PCAP";\n'
                                              'Start-NetEventSession -Name '
-                                             '"PCAP"\n'
-                                             'Start-Sleep -s 60\n'
+                                             '"PCAP";\n'
+                                             'Start-Sleep -s 60;\n'
                                              'Stop-NetEventSession -Name '
-                                             '"PCAP"\n'
-                                             'Get-Content '
-                                             '"$ENV:UserProfile\\Desktop\\pcap.etl"\n'}}},
+                                             '"PCAP";\n'
+                                             'if (Test-Path $path) {\n'
+                                             '  echo $path;\n'
+                                             '  exit 0;\n'
+                                             '} else {\n'
+                                             '  echo "Failed to generate PCAP '
+                                             'file.";\n'
+                                             '  exit 1;\n'
+                                             '};\n',
+                                  'timeout': 80}}},
   'name': 'Perform a packet capture',
   'source': 'data/abilities/credential-access/1b4fb81c-8090-426c-93ab-0a633e7a16a7.yml'},
  {'command': 'powershell/collection/packet_capture',
@@ -458,6 +479,34 @@ tshark -c 5 -i #{interface}
                                                                         'macOS',
                                                                 'supported_platforms': ['macos']},
                                                                {'auto_generated_guid': 'a5b2f6a0-24b4-493e-9590-c699f75723ca',
+                                                                'dependencies': [{'description': 'tshark '
+                                                                                                 'must '
+                                                                                                 'be '
+                                                                                                 'installed '
+                                                                                                 'and '
+                                                                                                 'in '
+                                                                                                 'the '
+                                                                                                 'default '
+                                                                                                 'path '
+                                                                                                 'of '
+                                                                                                 '"c:\\Program '
+                                                                                                 'Files\\Wireshark\\Tshark.exe".\n',
+                                                                                  'get_prereq_command': 'Invoke-WebRequest '
+                                                                                                        '-OutFile '
+                                                                                                        '$env:temp\\wireshark_installer.exe '
+                                                                                                        '#{wireshark_url}\n'
+                                                                                                        'Start-Process '
+                                                                                                        '$env:temp\\wireshark_installer.exe '
+                                                                                                        '/S\n',
+                                                                                  'prereq_command': 'if '
+                                                                                                    '(test-path '
+                                                                                                    '"#{tshark_path}") '
+                                                                                                    '{exit '
+                                                                                                    '0} '
+                                                                                                    'else '
+                                                                                                    '{exit '
+                                                                                                    '1}'}],
+                                                                'dependency_executor_name': 'powershell',
                                                                 'description': 'Perform '
                                                                                'a '
                                                                                'packet '
@@ -475,16 +524,7 @@ tshark -c 5 -i #{interface}
                                                                                'that '
                                                                                'has '
                                                                                'Wireshark/Tshark\n'
-                                                                               'installed, '
-                                                                               'along '
-                                                                               'with '
-                                                                               'WinPCAP. '
-                                                                               'Windump '
-                                                                               'will '
-                                                                               'require '
-                                                                               'the '
-                                                                               'windump '
-                                                                               'executable.\n'
+                                                                               'installed.\n'
                                                                                '\n'
                                                                                'Upon '
                                                                                'successful '
@@ -498,29 +538,85 @@ tshark -c 5 -i #{interface}
                                                                                'packets '
                                                                                'on '
                                                                                'interface '
-                                                                               'Ethernet0.\n',
+                                                                               '"Ethernet".\n',
                                                                 'executor': {'command': '"c:\\Program '
                                                                                         'Files\\Wireshark\\tshark.exe" '
                                                                                         '-i '
                                                                                         '#{interface} '
                                                                                         '-c '
-                                                                                        '5\n'
-                                                                                        'c:\\windump.exe\n',
+                                                                                        '5\n',
                                                                              'elevation_required': True,
                                                                              'name': 'command_prompt'},
-                                                                'input_arguments': {'interface': {'default': 'Ethernet0',
+                                                                'input_arguments': {'interface': {'default': 'Ethernet',
                                                                                                   'description': 'Specify '
                                                                                                                  'interface '
                                                                                                                  'to '
                                                                                                                  'perform '
                                                                                                                  'PCAP '
                                                                                                                  'on.',
-                                                                                                  'type': 'String'}},
+                                                                                                  'type': 'String'},
+                                                                                    'tshark_path': {'default': 'c:\\program '
+                                                                                                               'files\\wireshark\\tshark.exe',
+                                                                                                    'description': 'path '
+                                                                                                                   'to '
+                                                                                                                   'tshark.exe',
+                                                                                                    'type': 'path'},
+                                                                                    'wireshark_url': {'default': 'https://2.na.dl.wireshark.org/win64/Wireshark-win64-3.2.6.exe',
+                                                                                                      'description': 'wireshark '
+                                                                                                                     'installer '
+                                                                                                                     'download '
+                                                                                                                     'URL',
+                                                                                                      'type': 'url'}},
                                                                 'name': 'Packet '
                                                                         'Capture '
                                                                         'Windows '
                                                                         'Command '
                                                                         'Prompt',
+                                                                'supported_platforms': ['windows']},
+                                                               {'auto_generated_guid': 'b5656f67-d67f-4de8-8e62-b5581630f528',
+                                                                'description': 'Uses '
+                                                                               'the '
+                                                                               'built-in '
+                                                                               'Windows '
+                                                                               'packet '
+                                                                               'capture\n'
+                                                                               'After '
+                                                                               'execution '
+                                                                               'you '
+                                                                               'should '
+                                                                               'find '
+                                                                               'a '
+                                                                               'file '
+                                                                               'named '
+                                                                               'trace.etl '
+                                                                               'and '
+                                                                               'trace.cab '
+                                                                               'in '
+                                                                               'the '
+                                                                               'temp '
+                                                                               'directory',
+                                                                'executor': {'cleanup_command': 'netsh '
+                                                                                                'trace '
+                                                                                                'stop\n'
+                                                                                                'TIMEOUT '
+                                                                                                '/T '
+                                                                                                '50\n'
+                                                                                                'del '
+                                                                                                '%temp%\\trace.etl\n'
+                                                                                                'del '
+                                                                                                '%temp%\\trace.cab',
+                                                                             'command': 'netsh '
+                                                                                        'trace '
+                                                                                        'start '
+                                                                                        'capture=yes '
+                                                                                        'tracefile=%temp%\\trace.etl '
+                                                                                        'maxsize=10',
+                                                                             'elevation_required': True,
+                                                                             'name': 'command_prompt'},
+                                                                'name': 'Windows '
+                                                                        'Internal '
+                                                                        'Packet '
+                                                                        'Capture',
                                                                 'supported_platforms': ['windows']}],
                                               'attack_technique': 'T1040',
                                               'display_name': 'Network '
@@ -541,34 +637,59 @@ tshark -c 5 -i #{interface}
                                                                                             '$!\n'}},
                                                                'windows': {'psh': {'cleanup': 'Remove-NetEventSession '
                                                                                               '-Name '
-                                                                                              '"Capture"\n'
+                                                                                              '"PCAP";\n'
                                                                                               'Remove-Item '
-                                                                                              '$ENV:UserProfile\\Desktop\\pcap.etl\n'
-                                                                                              'Remove-Item '
-                                                                                              '$ENV:UserProfile\\Desktop\\pcap.cab\n',
-                                                                                   'command': 'New-NetEventSession '
+                                                                                              '$ENV:UserProfile\\Desktop\\pcap.etl;\n',
+                                                                                   'command': '$path '
+                                                                                              '= '
+                                                                                              '"$ENV:UserProfile\\Desktop\\pcap.etl";\n'
+                                                                                              'New-NetEventSession '
                                                                                               '-Name '
                                                                                               '"PCAP" '
                                                                                               '-CaptureMode '
                                                                                               'SaveToFile '
                                                                                               '-LocalFilePath '
-                                                                                              '"$ENV:UserProfile\\Desktop\\pcap.etl" '
-                                                                                              '-MaxFileSize '
-                                                                                              '0\n'
-                                                                                              'Add-NetEventPacketCaptureProvider '
+                                                                                              '$path;\n'
+                                                                                              'Add-NetEventProvider '
+                                                                                              '-Name '
+                                                                                              '"Microsoft-Windows-TCPIP" '
                                                                                               '-SessionName '
-                                                                                              '"PCAP"\n'
+                                                                                              '"PCAP";\n'
                                                                                               'Start-NetEventSession '
                                                                                               '-Name '
-                                                                                              '"PCAP"\n'
+                                                                                              '"PCAP";\n'
                                                                                               'Start-Sleep '
                                                                                               '-s '
-                                                                                              '60\n'
+                                                                                              '60;\n'
                                                                                               'Stop-NetEventSession '
                                                                                               '-Name '
-                                                                                              '"PCAP"\n'
-                                                                                              'Get-Content '
-                                                                                              '"$ENV:UserProfile\\Desktop\\pcap.etl"\n'}}},
+                                                                                              '"PCAP";\n'
+                                                                                              'if '
+                                                                                              '(Test-Path '
+                                                                                              '$path) '
+                                                                                              '{\n'
+                                                                                              '  '
+                                                                                              'echo '
+                                                                                              '$path;\n'
+                                                                                              '  '
+                                                                                              'exit '
+                                                                                              '0;\n'
+                                                                                              '} '
+                                                                                              'else '
+                                                                                              '{\n'
+                                                                                              '  '
+                                                                                              'echo '
+                                                                                              '"Failed '
+                                                                                              'to '
+                                                                                              'generate '
+                                                                                              'PCAP '
+                                                                                              'file.";\n'
+                                                                                              '  '
+                                                                                              'exit '
+                                                                                              '1;\n'
+                                                                                              '};\n',
+                                                                                   'timeout': 80}}},
+                                                 'privilege': 'Elevated',
                                                  'tactic': 'credential-access',
                                                  'technique': {'attack_id': 'T1040',
                                                                'name': 'Network '

@@ -74,6 +74,7 @@ https://securelist.com/twas-the-night-before/91599/
 https://www.clearskysec.com/wp-content/uploads/2019/09/The-Kittens-Are-Back-in-Town-Charming-Kitten-2019.pdf
 https://blogs.microsoft.com/on-the-issues/2019/10/04/recent-cyberattacks-require-us-all-to-be-vigilant/
 https://www.clearskysec.com/the-kittens-are-back-in-town-2/
+https://securityintelligence.com/posts/new-research-exposes-iranian-threat-group-operations/
 ```
 
 ## Country
@@ -85,7 +86,7 @@ iran
 ## Comments
 
 ```
-
+IBM=ITG18
 ```
 
 # Techniques

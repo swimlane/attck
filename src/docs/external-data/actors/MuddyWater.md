@@ -69,6 +69,10 @@ https://www.clearskysec.com/wp-content/uploads/2019/06/Clearsky-Iranian-APT-grou
 https://securelist.com/muddywaters-arsenal/90659/
 https://blog.prevailion.com/2020/01/summer-mirage.html
 https://www.secureworks.com/blog/business-as-usual-for-iranian-operations-despite-increased-tensions
+https://www.bleepingcomputer.com/news/security/microsoft-iranian-hackers-actively-exploiting-windows-zerologon-flaw/
+https://www.clearskysec.com/wp-content/uploads/2020/10/Operation-Quicksand.pdf
+https://www.telsy.com/wp-content/uploads/Operation_Space_Race.pdf
+https://symantec-enterprise-blogs.security.com/blogs/threat-intelligence/seedworm-apt-iran-middle-east
 ```
 
 ## Country

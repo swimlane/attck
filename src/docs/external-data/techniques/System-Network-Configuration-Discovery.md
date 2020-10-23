@@ -40,7 +40,7 @@ route
 nbtstat -a {IP | COMP_NAME }
 shell c:\windows\sysnative\nbstat.exe -a {IP | COMP_NAME}
 ipconfig /all
-netsh interface show
+netsh interface show interface
 arp -a
 nbtstat -n
 net config
@@ -143,6 +143,7 @@ Write-Host $results
 {'darwin': {'sh': {'command': './wifi.sh pref\n', 'payloads': ['wifi.sh'], 'parsers': {'plugins.stockpile.app.parsers.wifipref': [{'source': 'wifi.network.ssid'}]}}}, 'linux': {'sh': {'command': './wifi.sh pref\n', 'payloads': ['wifi.sh'], 'parsers': {'plugins.stockpile.app.parsers.wifipref': [{'source': 'wifi.network.ssid'}]}}}, 'windows': {'psh': {'command': '.\\wifi.ps1 -Pref\n', 'payloads': ['wifi.ps1'], 'parsers': {'plugins.stockpile.app.parsers.wifipref': [{'source': 'wifi.network.ssid'}]}}}}
 {'darwin': {'sh': {'command': 'for ip in $(seq 190 199); do ping -c 1 $(echo #{domain.broadcast.ip} |\ncut -d. -f-3).$ip -W 1; done\n'}}}
 {'darwin': {'sh': {'command': 'ifconfig | grep broadcast'}}}
+{'darwin': {'sh': {'command': 'sudo ifconfig\n'}}, 'linux': {'sh': {'command': 'sudo ifconfig\n'}}, 'windows': {'psh': {'command': 'ipconfig\n'}}}
 powershell/situational_awareness/host/dnsserver
 powershell/situational_awareness/host/dnsserver
 powershell/situational_awareness/host/get_proxy
@@ -181,7 +182,7 @@ powershell/situational_awareness/network/powerview/get_subnet
   'name': 'Cobalt Strike',
   'source': 'https://attack.mitre.org/docs/APT3_Adversary_Emulation_Field_Manual.xlsx'},
  {'command': 'ipconfig /all\n'
-             'netsh interface show\n'
+             'netsh interface show interface\n'
              'arp -a\n'
              'nbtstat -n\n'
              'net config\n',
@@ -333,6 +334,11 @@ powershell/situational_awareness/network/powerview/get_subnet
  {'command': {'darwin': {'sh': {'command': 'ifconfig | grep broadcast'}}},
   'name': 'Capture the local network broadcast IP address',
   'source': 'data/abilities/discovery/b6f545ef-f802-4537-b59d-2cb19831c8ed.yml'},
+ {'command': {'darwin': {'sh': {'command': 'sudo ifconfig\n'}},
+              'linux': {'sh': {'command': 'sudo ifconfig\n'}},
+              'windows': {'psh': {'command': 'ipconfig\n'}}},
+  'name': 'View network configuration info for host',
+  'source': 'data/abilities/discovery/e8017c46-acb8-400c-a4b5-b3362b5b5baa.yml'},
  {'command': 'powershell/situational_awareness/host/dnsserver',
   'name': 'Empire Module Command',
   'source': 'https://github.com/dstepanic/attck_empire/blob/master/Empire_modules.xlsx?raw=true'},
@@ -464,7 +470,8 @@ powershell/situational_awareness/network/powerview/get_subnet
                                                                                                               '/all\n'
                                                                                                               'netsh '
                                                                                                               'interface '
-                                                                                                              'show\n'
+                                                                                                              'show '
+                                                                                                              'interface\n'
                                                                                                               'arp '
                                                                                                               '-a\n'
                                                                                                               'nbtstat '
@@ -1070,6 +1077,27 @@ powershell/situational_awareness/network/powerview/get_subnet
                                                                                              'Network '
                                                                                              'Configuration '
                                                                                              'Discovery'}}},
+ {'Mitre Stockpile - View network configuration info for host': {'description': 'View '
+                                                                                'network '
+                                                                                'configuration '
+                                                                                'info '
+                                                                                'for '
+                                                                                'host',
+                                                                 'id': 'e8017c46-acb8-400c-a4b5-b3362b5b5baa',
+                                                                 'name': 'Network '
+                                                                         'Interface '
+                                                                         'Configuration',
+                                                                 'platforms': {'darwin': {'sh': {'command': 'sudo '
+                                                                                                            'ifconfig\n'}},
+                                                                               'linux': {'sh': {'command': 'sudo '
+                                                                                                           'ifconfig\n'}},
+                                                                               'windows': {'psh': {'command': 'ipconfig\n'}}},
+                                                                 'tactic': 'discovery',
+                                                                 'technique': {'attack_id': 'T1016',
+                                                                               'name': 'System '
+                                                                                       'Network '
+                                                                                       'Configuration '
+                                                                                       'Discovery'}}},
  {'Empire Module XLSX Sheet by dstepanic': {'ATT&CK Technique #1': 'T1016',
                                             'ATT&CK Technique #2': '',
                                             'Concatenate for Python Dictionary': '"powershell/situational_awareness/host/dnsserver":  '

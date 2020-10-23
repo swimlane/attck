@@ -34,8 +34,6 @@ net group ["Domain Admins"] /domain[:DOMAIN]
 net group ["Domain Admins"] /domain
 domain_list_gen.rb
 post/windows/gather/enum_domain_group_users
-{'windows': {'psh': {'command': 'gpresult /R\n'}}, 'darwin': {'sh': {'command': 'groups'}}, 'linux': {'sh': {'command': 'groups'}}}
-{'darwin': {'sh': {'command': "dscl . list /Users | grep -v '_'\n"}}, 'windows': {'psh': {'command': 'Get-WmiObject -Class Win32_UserAccount\n'}}}
 powershell/situational_awareness/host/get_pathacl
 powershell/situational_awareness/host/get_pathacl
 powershell/situational_awareness/network/powerview/get_object_acl
@@ -67,17 +65,6 @@ powershell/situational_awareness/host/get_uaclevel
  {'command': 'domain_list_gen.rb\npost/windows/gather/enum_domain_group_users',
   'name': 'Metasploit',
   'source': 'https://attack.mitre.org/docs/APT3_Adversary_Emulation_Field_Manual.xlsx'},
- {'command': {'darwin': {'sh': {'command': 'groups'}},
-              'linux': {'sh': {'command': 'groups'}},
-              'windows': {'psh': {'command': 'gpresult /R\n'}}},
-  'name': 'Summary of permission and security groups',
-  'source': 'data/abilities/discovery/5c4dd985-89e3-4590-9b57-71fed66ff4e2.yml'},
- {'command': {'darwin': {'sh': {'command': 'dscl . list /Users | grep -v '
-                                           "'_'\n"}},
-              'windows': {'psh': {'command': 'Get-WmiObject -Class '
-                                             'Win32_UserAccount\n'}}},
-  'name': 'Identify all local users',
-  'source': 'data/abilities/discovery/feaced8f-f43f-452a-9500-a5219488abb8.yml'},
  {'command': 'powershell/situational_awareness/host/get_pathacl',
   'name': 'Empire Module Command',
   'source': 'https://github.com/dstepanic/attck_empire/blob/master/Empire_modules.xlsx?raw=true'},
@@ -203,45 +190,6 @@ powershell/situational_awareness/host/get_uaclevel
                                                                  'accounts',
                                                   'Metasploit': 'domain_list_gen.rb\n'
                                                                 'post/windows/gather/enum_domain_group_users'}},
- {'Mitre Stockpile - Summary of permission and security groups': {'description': 'Summary '
-                                                                                 'of '
-                                                                                 'permission '
-                                                                                 'and '
-                                                                                 'security '
-                                                                                 'groups',
-                                                                  'id': '5c4dd985-89e3-4590-9b57-71fed66ff4e2',
-                                                                  'name': 'Permission '
-                                                                          'Groups '
-                                                                          'Discovery',
-                                                                  'platforms': {'darwin': {'sh': {'command': 'groups'}},
-                                                                                'linux': {'sh': {'command': 'groups'}},
-                                                                                'windows': {'psh': {'command': 'gpresult '
-                                                                                                               '/R\n'}}},
-                                                                  'tactic': 'discovery',
-                                                                  'technique': {'attack_id': 'T1069',
-                                                                                'name': 'Permission '
-                                                                                        'Groups '
-                                                                                        'Discovery'}}},
- {'Mitre Stockpile - Identify all local users': {'description': 'Identify all '
-                                                                'local users',
-                                                 'id': 'feaced8f-f43f-452a-9500-a5219488abb8',
-                                                 'name': 'Identify local users',
-                                                 'platforms': {'darwin': {'sh': {'command': 'dscl '
-                                                                                            '. '
-                                                                                            'list '
-                                                                                            '/Users '
-                                                                                            '| '
-                                                                                            'grep '
-                                                                                            '-v '
-                                                                                            "'_'\n"}},
-                                                               'windows': {'psh': {'command': 'Get-WmiObject '
-                                                                                              '-Class '
-                                                                                              'Win32_UserAccount\n'}}},
-                                                 'tactic': 'discovery',
-                                                 'technique': {'attack_id': 'T1069',
-                                                               'name': 'Permission '
-                                                                       'Groups '
-                                                                       'Discovery'}}},
  {'Empire Module XLSX Sheet by dstepanic': {'ATT&CK Technique #1': 'T1069',
                                             'ATT&CK Technique #2': '',
                                             'Concatenate for Python Dictionary': '"powershell/situational_awareness/host/get_pathacl":  '

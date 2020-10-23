@@ -241,9 +241,29 @@ python/collection/osx/screenshot
                                                                       'Capture',
                                                               'supported_platforms': ['linux']},
                                                              {'auto_generated_guid': '9cd1cccb-91e4-4550-9139-e20a586fcea1',
+                                                              'dependencies': [{'description': 'ImageMagick '
+                                                                                               'must '
+                                                                                               'be '
+                                                                                               'installed\n',
+                                                                                'get_prereq_command': 'sudo '
+                                                                                                      'apt-get '
+                                                                                                      'install '
+                                                                                                      'imagemagick\n',
+                                                                                'prereq_command': 'if '
+                                                                                                  'import '
+                                                                                                  '--version; '
+                                                                                                  'then '
+                                                                                                  'exit '
+                                                                                                  '0; '
+                                                                                                  'else '
+                                                                                                  'exit '
+                                                                                                  '1; '
+                                                                                                  'fi\n'}],
                                                               'description': 'Use '
                                                                              'import '
                                                                              'command '
+                                                                             'from '
+                                                                             'ImageMagick '
                                                                              'to '
                                                                              'collect '
                                                                              'a '
@@ -262,7 +282,12 @@ python/collection/osx/screenshot
                                                                                                                  'file '
                                                                                                                  'path',
                                                                                                   'type': 'Path'}},
-                                                              'name': 'Import',
+                                                              'name': 'Capture '
+                                                                      'Linux '
+                                                                      'Desktop '
+                                                                      'using '
+                                                                      'Import '
+                                                                      'Tool',
                                                               'supported_platforms': ['linux']}],
                                             'attack_technique': 'T1113',
                                             'display_name': 'Screen Capture'}},

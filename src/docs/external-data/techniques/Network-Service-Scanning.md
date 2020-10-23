@@ -46,6 +46,8 @@ nmap -sS 192.168.1.0/24 -p #{port}
 telnet #{host} #{port}
 nc -nv #{host} #{port}
 
+nmap #{host_to_scan}
+nmap 127.0.0.1
 {'darwin': {'sh': {'command': 'nmap -sV -p #{remote.host.port} #{remote.host.ip}\n'}}, 'linux': {'sh': {'command': 'nmap -sV -p #{remote.host.port} #{remote.host.ip}\n'}}}
 {'darwin': {'sh': {'command': 'python3 scanner.py -i #{remote.host.ip}\n', 'parsers': {'plugins.stockpile.app.parsers.scan': [{'source': 'remote.host.ip', 'edge': 'has_open_port', 'target': 'remote.host.port'}]}, 'payloads': ['scanner.py']}}, 'linux': {'sh': {'command': 'python3 scanner.py -i #{remote.host.ip}\n', 'parsers': {'plugins.stockpile.app.parsers.scan': [{'source': 'remote.host.ip', 'edge': 'has_open_port', 'target': 'remote.host.port'}]}, 'payloads': ['scanner.py']}}}
 {'windows': {'psh': {'command': 'Import-Module ./basic_scanner.ps1;\n$ports = @(22, 53, 80, 445);\nGet-NetIPConfiguration | ?{$_.NetAdapter.Status -ne "Disconnected"} | Get-NetIPaddress -AddressFamily IPv4 | %{\n    $ipv4 = $_.IPAddress;\n    $prefixLength = $_.PrefixLength;\n    Scan-Netrange -ipv4 $ipv4 -prefixLength $prefixLength -ports $ports;\n};\n', 'payloads': ['basic_scanner.ps1'], 'timeout': 180}}}
@@ -88,6 +90,12 @@ python/situational_awareness/network/port_scan
  {'command': 'nmap -sS 192.168.1.0/24 -p #{port}\n'
              'telnet #{host} #{port}\n'
              'nc -nv #{host} #{port}\n',
+  'name': None,
+  'source': 'atomics/T1046/T1046.yaml'},
+ {'command': 'nmap #{host_to_scan}',
+  'name': None,
+  'source': 'atomics/T1046/T1046.yaml'},
+ {'command': 'nmap 127.0.0.1',
   'name': None,
   'source': 'atomics/T1046/T1046.yaml'},
  {'command': {'darwin': {'sh': {'command': 'nmap -sV -p #{remote.host.port} '
@@ -389,7 +397,66 @@ python/situational_awareness/network/port_scan
                                                                                 'Scan '
                                                                                 'Nmap',
                                                                         'supported_platforms': ['linux',
-                                                                                                'macos']}],
+                                                                                                'macos']},
+                                                                       {'auto_generated_guid': 'd696a3cb-d7a8-4976-8eb5-5af4abf2e3df',
+                                                                        'dependencies': [{'description': 'NMap '
+                                                                                                         'must '
+                                                                                                         'be '
+                                                                                                         'installed\n',
+                                                                                          'get_prereq_command': 'Invoke-WebRequest '
+                                                                                                                '-OutFile '
+                                                                                                                '$env:temp\\nmap-7.80-setup.exe '
+                                                                                                                '#{nmap_url}\n'
+                                                                                                                'Start-Process '
+                                                                                                                '$env:temp\\nmap-7.80-setup.exe '
+                                                                                                                '/S\n',
+                                                                                          'prereq_command': 'if '
+                                                                                                            '(cmd '
+                                                                                                            '/c '
+                                                                                                            '"nmap '
+                                                                                                            '2>nul") '
+                                                                                                            '{exit '
+                                                                                                            '0} '
+                                                                                                            'else '
+                                                                                                            '{exit '
+                                                                                                            '1}'}],
+                                                                        'dependency_executor_name': 'powershell',
+                                                                        'description': 'Scan '
+                                                                                       'ports '
+                                                                                       'to '
+                                                                                       'check '
+                                                                                       'for '
+                                                                                       'listening '
+                                                                                       'ports '
+                                                                                       'for '
+                                                                                       'the '
+                                                                                       'local '
+                                                                                       'host '
+                                                                                       '127.0.0.1',
+                                                                        'executor': {'command': 'nmap '
+                                                                                                '#{host_to_scan}',
+                                                                                     'elevation_required': True,
+                                                                                     'name': 'powershell'},
+                                                                        'input_arguments': {'host_to_scan': {'default': '127.0.0.1',
+                                                                                                             'description': 'The '
+                                                                                                                            'host '
+                                                                                                                            'to '
+                                                                                                                            'scan '
+                                                                                                                            'with '
+                                                                                                                            'NMap',
+                                                                                                             'type': 'string'},
+                                                                                            'nmap_url': {'default': 'https://nmap.org/dist/nmap-7.80-setup.exe',
+                                                                                                         'description': 'NMap '
+                                                                                                                        'installer '
+                                                                                                                        'download '
+                                                                                                                        'URL',
+                                                                                                         'type': 'url'}},
+                                                                        'name': 'Port '
+                                                                                'Scan '
+                                                                                'NMap '
+                                                                                'for '
+                                                                                'Windows',
+                                                                        'supported_platforms': ['windows']}],
                                                       'attack_technique': 'T1046',
                                                       'display_name': 'Network '
                                                                       'Service '

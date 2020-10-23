@@ -36,6 +36,8 @@ clip < %temp%\T1115.txt
 echo Get-Process | clip
 Get-Clipboard | iex
 
+echo ifconfig | pbcopy
+$(pbpaste)
 {'darwin': {'sh': {'command': 'pbpaste\n'}}, 'windows': {'psh,pwsh': {'command': 'Get-Clipboard -raw\n'}}, 'linux': {'sh': {'command': 'xclip -o\n'}}}
 cmd.exe <command> | clip
 cmd.exe clip < readme.txt
@@ -56,6 +58,9 @@ python/collection/osx/clipboard
   'name': None,
   'source': 'atomics/T1115/T1115.yaml'},
  {'command': 'echo Get-Process | clip\nGet-Clipboard | iex\n',
+  'name': None,
+  'source': 'atomics/T1115/T1115.yaml'},
+ {'command': 'echo ifconfig | pbcopy\n$(pbpaste)',
   'name': None,
   'source': 'atomics/T1115/T1115.yaml'},
  {'command': {'darwin': {'sh': {'command': 'pbpaste\n'}},
@@ -169,7 +174,27 @@ python/collection/osx/clipboard
                                                                       'Clipboard '
                                                                       'using '
                                                                       'PowerShell',
-                                                              'supported_platforms': ['windows']}],
+                                                              'supported_platforms': ['windows']},
+                                                             {'auto_generated_guid': '1ac2247f-65f8-4051-b51f-b0ccdfaaa5ff',
+                                                              'description': 'Echo '
+                                                                             'a '
+                                                                             'command '
+                                                                             'to '
+                                                                             'clipboard '
+                                                                             'and '
+                                                                             'execute '
+                                                                             'it',
+                                                              'executor': {'command': 'echo '
+                                                                                      'ifconfig '
+                                                                                      '| '
+                                                                                      'pbcopy\n'
+                                                                                      '$(pbpaste)',
+                                                                           'name': 'bash'},
+                                                              'name': 'Execute '
+                                                                      'commands '
+                                                                      'from '
+                                                                      'clipboard',
+                                                              'supported_platforms': ['macos']}],
                                             'attack_technique': 'T1115',
                                             'display_name': 'Clipboard Data'}},
  {'Mitre Stockpile - copy the contents for the clipboard and print them': {'description': 'copy '

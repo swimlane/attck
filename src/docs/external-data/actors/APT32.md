@@ -132,6 +132,7 @@ https://blog.malwarebytes.com/threat-analysis/2019/04/funky-malware-format-found
 https://community.rsa.com/community/products/netwitness/blog/2018/01/30/apt32-continues-asean-targeting
 https://ti.qianxin.com/blog/articles/english-version-of-new-approaches-utilized-by-oceanLotus-to-target-vietnamese-environmentalist/
 https://threatrecon.nshc.net/2019/07/25/growth-of-sectorf01-groups-cyber-espionage-activities/
+https://blog.malwarebytes.com/malwarebytes-news/2020/10/kraken-attack-abuses-wer-service/
 ```
 
 ## Country

