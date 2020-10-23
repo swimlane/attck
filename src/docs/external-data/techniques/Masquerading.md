@@ -53,24 +53,24 @@ csrsr.exe
 csrss.exe
 !=*\Windows\System32\
 cssrss.exe
-explorer.exe
 !=*\Windows\System32\
+explorer.exe
 iexplore.exe
 isass.exe
 lexplore.exe
 lsm.exe
 !=*\Windows\System32\
 lssass.exe
-mmc.exe
 !=*\Windows\System32\
-!=wininit.exe
+mmc.exe
 lsass
+!=wininit.exe
 run32dll.exe
 rundII.exe
 scvhost.exe
 smss.exe
-!=services.exe
 svchost.exe
+!=services.exe
 svchosts.exe
 ```
 
@@ -693,7 +693,37 @@ svchosts.exe
            'contains ".exe"or file_name contains ".dll"or file_name contains '
            '".bat"or file_name contains ".com"or file_name contains ".ps1"or '
            'file_name contains ".py"or file_name contains ".js"or file_name '
-           'contains ".vbs"or file_name contains ".hta")'}]
+           'contains ".vbs"or file_name contains ".hta")'},
+ {'name': 'Yml',
+  'product': 'https://raw.githubusercontent.com/12306Bro/Threathunting-book/master/{}',
+  'query': 'Yml\n'
+           "title: Use '$' new user account in the properties 'SamAccountName' "
+           'or renaming user accounts\n'
+           'status: experimental\n'
+           'description: user account name by abnormal detect possible bypass '
+           'EDR and SIEM.\n'
+           'tags:\n'
+           '    - attack.defense_evasion\n'
+           '    - attack.t1036\n'
+           'author: 12306Br0 (test + translation)\n'
+           'date: 2020/06/09\n'
+           'logsource:\n'
+           '    product: windows\n'
+           '    service: security\n'
+           'detection:\n'
+           '    selection:\n'
+           '        EventID:\n'
+           '            --4720 # Create a user\n'
+           '            --4781 modify the user name #\n'
+           "        UserName | contains: '$' #Sam Username\n"
+           '    condition: selection\n'
+           'fields:\n'
+           '    - EventID\n'
+           '    - UserName\n'
+           '    - SubjectAccountName\n'
+           'falsepositives:\n'
+           '    - Unkown\n'
+           'level: high'}]
 ```
 
 ## Raw Dataset

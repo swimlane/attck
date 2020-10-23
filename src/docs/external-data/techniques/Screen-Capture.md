@@ -28,23 +28,34 @@
 ## Potential Commands
 
 ```
-screencapture /tmp/T1113_desktop.png
-
 screencapture -x /tmp/T1113_desktop.png
-
 xwd -root -out /tmp/T1113_desktop.xwd
 xwud -in /tmp/T1113_desktop.xwd
-
+screencapture /tmp/T1113_desktop.png
 import -window root /tmp/T1113_desktop.png
-
-{'darwin': {'sh': {'command': 'for i in {1..5}; do screencapture -t png screen-$i.png; echo "$(cd "$(dirname "$1")"; pwd -P)/$(basename "screen-$i.png")"; sleep 5; done;\n', 'cleanup': 'for i in {1..5}; do /bin/rm screen-$i.png; done;', 'parsers': {'plugins.stockpile.app.parsers.basic': [{'source': 'host.screenshot.png'}]}}}, 'windows': {'psh,pwsh': {'command': '$loadResult = [Reflection.Assembly]::LoadWithPartialName("System.Drawing");\nfunction screenshot([Drawing.Rectangle]$bounds, $path) {\n   $bmp = New-Object Drawing.Bitmap $bounds.width, $bounds.height;\n   $graphics = [Drawing.Graphics]::FromImage($bmp);\n   $graphics.CopyFromScreen($bounds.Location, [Drawing.Point]::Empty, $bounds.size);\n   $bmp.Save($path);\n   $graphics.Dispose();\n   $bmp.Dispose();\n}\nif ($loadResult) {\n  $bounds = [Drawing.Rectangle]::FromLTRB(0, 0, 1000, 900);\n  $dest = "$HOME\\Desktop\\screenshot.png";\n  screenshot $bounds $dest;\n  if (Test-Path -Path $dest) {\n    $dest;\n    exit 0;\n  };\n};\nexit 1;\n', 'cleanup': '$filePath = "$HOME\\Desktop\\screenshot.png"; if (Test-Path -Path $filePath) { del $filePath; };', 'parsers': {'plugins.stockpile.app.parsers.basic': [{'source': 'host.screenshot.png'}]}}}}
-powershell/collection/screenshot
+$loadResult = [Reflection.Assembly]::LoadWithPartialName("System.Drawing");
+function screenshot([Drawing.Rectangle]$bounds, $path) {
+   $bmp = New-Object Drawing.Bitmap $bounds.width, $bounds.height;
+   $graphics = [Drawing.Graphics]::FromImage($bmp);
+   $graphics.CopyFromScreen($bounds.Location, [Drawing.Point]::Empty, $bounds.size);
+   $bmp.Save($path);
+   $graphics.Dispose();
+   $bmp.Dispose();
+}
+if ($loadResult) {
+  $bounds = [Drawing.Rectangle]::FromLTRB(0, 0, 1000, 900);
+  $dest = "$HOME\Desktop\screenshot.png";
+  screenshot $bounds $dest;
+  if (Test-Path -Path $dest) {
+    $dest;
+    exit 0;
+  };
+};
+exit 1;
+for i in {1..5}; do screencapture -t png screen-$i.png; echo "$(cd "$(dirname "$1")"; pwd -P)/$(basename "screen-$i.png")"; sleep 5; done;
 powershell/collection/screenshot
 python/collection/osx/native_screenshot
-python/collection/osx/native_screenshot
 python/collection/osx/native_screenshot_mss
-python/collection/osx/native_screenshot_mss
-python/collection/osx/screenshot
 python/collection/osx/screenshot
 ```
 
@@ -64,54 +75,33 @@ python/collection/osx/screenshot
  {'command': 'import -window root /tmp/T1113_desktop.png\n',
   'name': None,
   'source': 'atomics/T1113/T1113.yaml'},
- {'command': {'darwin': {'sh': {'cleanup': 'for i in {1..5}; do /bin/rm '
-                                           'screen-$i.png; done;',
-                                'command': 'for i in {1..5}; do screencapture '
-                                           '-t png screen-$i.png; echo "$(cd '
-                                           '"$(dirname "$1")"; pwd '
-                                           '-P)/$(basename "screen-$i.png")"; '
-                                           'sleep 5; done;\n',
-                                'parsers': {'plugins.stockpile.app.parsers.basic': [{'source': 'host.screenshot.png'}]}}},
-              'windows': {'psh,pwsh': {'cleanup': '$filePath = '
-                                                  '"$HOME\\Desktop\\screenshot.png"; '
-                                                  'if (Test-Path -Path '
-                                                  '$filePath) { del $filePath; '
-                                                  '};',
-                                       'command': '$loadResult = '
-                                                  '[Reflection.Assembly]::LoadWithPartialName("System.Drawing");\n'
-                                                  'function '
-                                                  'screenshot([Drawing.Rectangle]$bounds, '
-                                                  '$path) {\n'
-                                                  '   $bmp = New-Object '
-                                                  'Drawing.Bitmap '
-                                                  '$bounds.width, '
-                                                  '$bounds.height;\n'
-                                                  '   $graphics = '
-                                                  '[Drawing.Graphics]::FromImage($bmp);\n'
-                                                  '   '
-                                                  '$graphics.CopyFromScreen($bounds.Location, '
-                                                  '[Drawing.Point]::Empty, '
-                                                  '$bounds.size);\n'
-                                                  '   $bmp.Save($path);\n'
-                                                  '   $graphics.Dispose();\n'
-                                                  '   $bmp.Dispose();\n'
-                                                  '}\n'
-                                                  'if ($loadResult) {\n'
-                                                  '  $bounds = '
-                                                  '[Drawing.Rectangle]::FromLTRB(0, '
-                                                  '0, 1000, 900);\n'
-                                                  '  $dest = '
-                                                  '"$HOME\\Desktop\\screenshot.png";\n'
-                                                  '  screenshot $bounds '
-                                                  '$dest;\n'
-                                                  '  if (Test-Path -Path '
-                                                  '$dest) {\n'
-                                                  '    $dest;\n'
-                                                  '    exit 0;\n'
-                                                  '  };\n'
-                                                  '};\n'
-                                                  'exit 1;\n',
-                                       'parsers': {'plugins.stockpile.app.parsers.basic': [{'source': 'host.screenshot.png'}]}}}},
+ {'command': 'for i in {1..5}; do screencapture -t png screen-$i.png; echo '
+             '"$(cd "$(dirname "$1")"; pwd -P)/$(basename "screen-$i.png")"; '
+             'sleep 5; done;\n',
+  'name': 'capture the contents of the screen',
+  'source': 'data/abilities/collection/316251ed-6a28-4013-812b-ddf5b5b007f8.yml'},
+ {'command': '$loadResult = '
+             '[Reflection.Assembly]::LoadWithPartialName("System.Drawing");\n'
+             'function screenshot([Drawing.Rectangle]$bounds, $path) {\n'
+             '   $bmp = New-Object Drawing.Bitmap $bounds.width, '
+             '$bounds.height;\n'
+             '   $graphics = [Drawing.Graphics]::FromImage($bmp);\n'
+             '   $graphics.CopyFromScreen($bounds.Location, '
+             '[Drawing.Point]::Empty, $bounds.size);\n'
+             '   $bmp.Save($path);\n'
+             '   $graphics.Dispose();\n'
+             '   $bmp.Dispose();\n'
+             '}\n'
+             'if ($loadResult) {\n'
+             '  $bounds = [Drawing.Rectangle]::FromLTRB(0, 0, 1000, 900);\n'
+             '  $dest = "$HOME\\Desktop\\screenshot.png";\n'
+             '  screenshot $bounds $dest;\n'
+             '  if (Test-Path -Path $dest) {\n'
+             '    $dest;\n'
+             '    exit 0;\n'
+             '  };\n'
+             '};\n'
+             'exit 1;\n',
   'name': 'capture the contents of the screen',
   'source': 'data/abilities/collection/316251ed-6a28-4013-812b-ddf5b5b007f8.yml'},
  {'command': 'powershell/collection/screenshot',

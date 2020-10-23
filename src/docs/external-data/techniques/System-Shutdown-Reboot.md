@@ -29,24 +29,15 @@ Adversaries may attempt to shutdown/reboot a system after impacting it in other 
 ## Potential Commands
 
 ```
-shutdown /s /t 1
-
-shutdown /r /t 1
-
-shutdown -r now
-
-shutdown -h now
-
 reboot
-
 halt -p
-
 halt --reboot
-
+shutdown -r now
+shutdown /s /t 1
+shutdown -h now
+shutdown /r /t 1
 poweroff
-
 poweroff --reboot
-
 ```
 
 ## Commands Dataset

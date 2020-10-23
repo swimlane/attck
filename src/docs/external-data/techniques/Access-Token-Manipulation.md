@@ -32,18 +32,15 @@ Any standard user can use the <code>runas</code> command, and the Windows API fu
 
 ```
 Token Stealing:
-steal_token pid#
-Token Stealing:
 use incognito
 list_tokens -u
 impersonate_token DOMAIN\\User
 or:
 steal_token {pid}
-powershell/credentials/tokens
+Token Stealing:
+steal_token pid#
 powershell/credentials/tokens
 powershell/management/runas
-powershell/management/runas
-powershell/privesc/getsystem
 powershell/privesc/getsystem
 ```
 
@@ -95,7 +92,26 @@ powershell/privesc/getsystem
 ## Potential Queries
 
 ```json
-
+[{'name': 'Yml',
+  'product': 'https://raw.githubusercontent.com/12306Bro/Threathunting-book/master/{}',
+  'query': 'Yml\n'
+           'title: Windows SID History permission to create a domain '
+           'controller back door\n'
+           'description: domain environment test\n'
+           'references: https://adsecurity.org/?p=1772\n'
+           'status: experimental\n'
+           'author: 12306Bro\n'
+           'logsource:\n'
+           '    product: windows\n'
+           '    service: security\n'
+           'detection:\n'
+           '    selection:\n'
+           '        EventID:\n'
+           '         --4766 # attempt to add SID History to an account '
+           'failed.\n'
+           '         --4765 # SID history has been added to the account.\n'
+           '    condition: selection\n'
+           'level: medium'}]
 ```
 
 ## Raw Dataset

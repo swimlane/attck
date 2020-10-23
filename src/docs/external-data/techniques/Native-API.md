@@ -35,21 +35,13 @@ Adversaries may abuse these native API functions as a means of executing behavio
 ```
 C:\Windows\Microsoft.NET\Framework\v4.0.30319\csc.exe /out:"#{output_file}" /target:exe PathToAtomicsFolder\T1106\src\CreateProcess.cs
 %tmp%/T1106.exe
-
 C:\Windows\Microsoft.NET\Framework\v4.0.30319\csc.exe /out:"%tmp%\T1106.exe" /target:exe #{source_file}
 %tmp%/T1106.exe
-
-python/situational_awareness/network/dcos/chronos_api_add_job
 python/situational_awareness/network/dcos/chronos_api_add_job
 python/situational_awareness/network/dcos/chronos_api_delete_job
-python/situational_awareness/network/dcos/chronos_api_delete_job
-python/situational_awareness/network/dcos/chronos_api_start_job
 python/situational_awareness/network/dcos/chronos_api_start_job
 python/situational_awareness/network/dcos/marathon_api_create_start_app
-python/situational_awareness/network/dcos/marathon_api_create_start_app
 python/situational_awareness/network/dcos/marathon_api_delete_app
-python/situational_awareness/network/dcos/marathon_api_delete_app
-python/situational_awareness/network/http_rest_api
 python/situational_awareness/network/http_rest_api
 ```
 

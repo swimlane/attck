@@ -27,13 +27,13 @@
 ## Potential Commands
 
 ```
-{'darwin': {'sh': {'command': 'system_profiler SPUSBDataType\n'}}}
+system_profiler SPUSBDataType
 ```
 
 ## Commands Dataset
 
 ```
-[{'command': {'darwin': {'sh': {'command': 'system_profiler SPUSBDataType\n'}}},
+[{'command': 'system_profiler SPUSBDataType\n',
   'name': 'find attached usb devices',
   'source': 'data/abilities/discovery/9b007f62-daa1-44bd-a57d-00c5315ec6fe.yml'}]
 ```

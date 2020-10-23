@@ -31,23 +31,18 @@ Admin tools such as TeamViewer have been used by several groups targeting instit
 ## Potential Commands
 
 ```
-Invoke-WebRequest -OutFile C:\Users\$env:username\Desktop\TeamViewer_Setup.exe https://download.teamviewer.com/download/TeamViewer_Setup.exe
-$file1 = "C:\Users\" + $env:username + "\Desktop\TeamViewer_Setup.exe"
-Start-Process $file1 /S;
-Start-Process 'C:\Program Files (x86)\TeamViewer\TeamViewer.exe'
-
 Invoke-WebRequest -OutFile C:\Users\$env:username\Desktop\AnyDesk.exe https://download.anydesk.com/AnyDesk.exe
 $file1 = "C:\Users\" + $env:username + "\Desktop\AnyDesk.exe"
 Start-Process $file1 /S;
-
 Invoke-WebRequest -OutFile C:\Users\$env:username\Desktop\LogMeInIgnition.msi https://secure.logmein.com/LogMeInIgnition.msi
 $file1 = "C:\Users\" + $env:username + "\Desktop\LogMeInIgnition.msi"
 Start-Process $file1 /S;
 Start-Process 'C:\Program Files (x86)\LogMeInIgnition\LMIIgnition.exe' "/S"
-
+Invoke-WebRequest -OutFile C:\Users\$env:username\Desktop\TeamViewer_Setup.exe https://download.teamviewer.com/download/TeamViewer_Setup.exe
+$file1 = "C:\Users\" + $env:username + "\Desktop\TeamViewer_Setup.exe"
+Start-Process $file1 /S;
+Start-Process 'C:\Program Files (x86)\TeamViewer\TeamViewer.exe'
 powershell/management/vnc
-powershell/management/vnc
-python/management/osx/screen_sharing
 python/management/osx/screen_sharing
 ```
 

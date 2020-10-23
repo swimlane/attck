@@ -41,18 +41,7 @@ Some adversaries may split communications between different protocols. There cou
 ## Potential Detections
 
 ```json
-[{'data_source': ['4688', 'Process Execution']},
- {'data_source': ['4688 ', 'Process CMD Line']},
- {'data_source': ['5156', 'Windows Firewall']},
- {'data_source': ['Malware reverse engineering']},
- {'data_source': ['Packet capture']},
- {'data_source': ['Netflow/Enclave netflow']},
- {'data_source': ['4688', 'Process Execution']},
- {'data_source': ['4688 ', 'Process CMD Line']},
- {'data_source': ['5156', 'Windows Firewall']},
- {'data_source': ['Malware reverse engineering']},
- {'data_source': ['Packet capture']},
- {'data_source': ['Netflow/Enclave netflow']}]
+
 ```
 
 ## Potential Queries

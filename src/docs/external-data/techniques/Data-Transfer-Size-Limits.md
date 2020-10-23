@@ -27,12 +27,10 @@
 ## Potential Commands
 
 ```
-cd #{folder_path}; split -b 5000000 T1030_urandom
-ls -l #{folder_path}
-
 cd /tmp/T1030; split -b 5000000 #{file_name}
 ls -l /tmp/T1030
-
+cd #{folder_path}; split -b 5000000 T1030_urandom
+ls -l #{folder_path}
 ```
 
 ## Commands Dataset

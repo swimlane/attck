@@ -31,80 +31,64 @@ Within IaaS (Infrastructure as a Service) environments, remote systems include i
 ## Potential Commands
 
 ```
-net group "Domain Computers" /domain[:DOMAIN]
 net group "Domain Computers" /domain
-
 post/windows/gather/enum_ad_computers
 post/windows/gather/enum_computers
-net group "Domain Controllers" /domain[:DOMAIN]
+net group "Domain Computers" /domain[:DOMAIN]
 net group "Domain Controllers" /domain
+net group "Domain Controllers" /domain[:DOMAIN]
 nltest /dclist[:domain]
 echo %LOGONSERVER%
 shell echo %LOGONSERVER%
-net view /domain
-net view
-
-net group "Domain Computers" /domain
-
-nltest.exe /dclist:domain.local
-
-for /l %i in (1,1,254) do ping -n 1 -w 100 192.168.1.%i
-
-arp -a
-
-arp -a | grep -v '^?'
-
-for ip in $(seq 1 #{stop_host}); do ping -c 1 #{subnet}.$ip; [ $? -eq 0 ] && echo "#{subnet}.$ip UP" || : ; done
-
-for ip in $(seq #{start_host} 254); do ping -c 1 #{subnet}.$ip; [ $? -eq 0 ] && echo "#{subnet}.$ip UP" || : ; done
-
-for ip in $(seq #{start_host} #{stop_host}); do ping -c 1 192.168.1.$ip; [ $? -eq 0 ] && echo "192.168.1.$ip UP" || : ; done
-
+adidnsdump -u #{user_name} -p password --print-zones #{host_name}
 $localip = ((ipconfig | findstr [0-9].\.)[0]).Split()[-1]
 $pieces = $localip.split(".")
 $firstOctet = $pieces[0]
 $secondOctet = $pieces[1]
 $thirdOctet = $pieces[2]
 foreach ($ip in 1..255 | % { "$firstOctet.$secondOctet.$thirdOctet.$_" } ) {cmd.exe /c nslookup $ip}
-
-adidnsdump -u domain\user -p #{acct_pass} --print-zones #{host_name}
-
-adidnsdump -u #{user_name} -p password --print-zones #{host_name}
-
+for ip in $(seq 1 #{stop_host}); do ping -c 1 #{subnet}.$ip; [ $? -eq 0 ] && echo "#{subnet}.$ip UP" || : ; done
+for /l %i in (1,1,254) do ping -n 1 -w 100 192.168.1.%i
 adidnsdump -u #{user_name} -p #{acct_pass} --print-zones 192.168.1.1
-
-{'windows': {'psh': {'command': 'Import-Module .\\PowerView.ps1 -Force;\nGet-NetComputer\n', 'payloads': ['powerview.ps1']}}}
-{'windows': {'psh': {'command': 'Import-Module .\\powerview.ps1;\nGet-DomainComputer\n', 'parsers': {'plugins.stockpile.app.parsers.gdomain': [{'source': 'remote.host.fqdn'}]}, 'payloads': ['powerview.ps1']}}}
-{'windows': {'cmd': {'command': 'nltest /dsgetdc:%USERDOMAIN%\n'}, 'psh': {'command': 'nltest /dsgetdc:$env:USERDOMAIN\n'}}}
-{'darwin': {'sh': {'command': 'cat ~/.ssh/known_hosts\n'}}, 'linux': {'sh': {'command': 'cat ~/.ssh/known_hosts\n'}}}
-{'darwin': {'sh': {'command': 'arp -a', 'parsers': {'plugins.stockpile.app.parsers.ipaddr': [{'source': 'remote.host.ip'}]}}}, 'linux': {'sh': {'command': 'arp -a', 'parsers': {'plugins.stockpile.app.parsers.ipaddr': [{'source': 'remote.host.ip'}]}}}, 'windows': {'psh,cmd': {'command': 'arp -a', 'parsers': {'plugins.stockpile.app.parsers.ipaddr': [{'source': 'remote.host.ip'}]}}}}
-{'windows': {'cmd': {'command': 'nltest /dsgetdc:%USERDOMAIN%\n'}, 'psh': {'command': 'nltest /dsgetdc:$env:USERDOMAIN\n'}}}
-{'linux': {'sh': {'command': 'host "#{target.org.domain}" | grep mail | grep -oE \'[^ ]+$\' | rev | cut -c 2- | rev', 'parsers': {'plugins.stockpile.app.parsers.basic': [{'source': 'target.org.emailhost'}]}}}, 'darwin': {'sh': {'command': 'host "#{target.org.domain}" | grep mail | grep -oE \'[^ ]+$\' | rev | cut -c 2- | rev', 'parsers': {'plugins.stockpile.app.parsers.basic': [{'source': 'target.org.emailhost'}]}}}, 'windows': {'psh': {'command': "(nslookup -querytype=mx #{target.org.domain}. | Select-String -pattern 'mail' | Out-String).Trim()\n", 'parsers': {'plugins.stockpile.app.parsers.basic': [{'source': 'target.org.emailhost'}]}}}}
-{'windows': {'psh': {'command': 'nslookup #{remote.host.ip}\n', 'parsers': {'plugins.stockpile.app.parsers.reverse_nslookup': [{'source': 'remote.host.fqdn', 'edge': 'has_ip', 'target': 'remote.host.ip'}]}}}}
-{'windows': {'psh': {'command': 'nbtstat -A #{remote.host.ip}'}}}
+arp -a | grep -v '^?'
+for ip in $(seq #{start_host} 254); do ping -c 1 #{subnet}.$ip; [ $? -eq 0 ] && echo "#{subnet}.$ip UP" || : ; done
+for ip in $(seq #{start_host} #{stop_host}); do ping -c 1 192.168.1.$ip; [ $? -eq 0 ] && echo "192.168.1.$ip UP" || : ; done
+adidnsdump -u domain\user -p #{acct_pass} --print-zones #{host_name}
+nltest.exe /dclist:domain.local
+net view /domain
+net view
+net group "Domain Computers" /domain
+arp -a
+Import-Module .\PowerView.ps1 -Force;
+Get-NetComputer
+Import-Module .\powerview.ps1;
+Get-DomainComputer
+nltest /dsgetdc:%USERDOMAIN%
+nltest /dsgetdc:$env:USERDOMAIN
+cat ~/.ssh/known_hosts
+arp -a
+nltest /dsgetdc:%USERDOMAIN%
+nltest /dsgetdc:$env:USERDOMAIN
+(nslookup -querytype=mx #{target.org.domain}. | Select-String -pattern 'mail' | Out-String).Trim()
+host "#{target.org.domain}" | grep mail | grep -oE '[^ ]+$' | rev | cut -c 2- | rev
+nslookup #{remote.host.ip}
+nbtstat -A #{remote.host.ip}
 net.exe view /domain
 qwinsta.exe /server:
 installutil.exe /logfile= /LogToConsole=false /U *.dll
 powershell/situational_awareness/network/powerview/get_domain_controller
-powershell/situational_awareness/network/powerview/get_domain_controller
-powershell/situational_awareness/network/powerview/get_domain_policy
 powershell/situational_awareness/network/powerview/get_domain_policy
 powershell/situational_awareness/network/powerview/get_domain_trust
-powershell/situational_awareness/network/powerview/get_domain_trust
-powershell/situational_awareness/network/powerview/get_forest
 powershell/situational_awareness/network/powerview/get_forest
 powershell/situational_awareness/network/powerview/get_forest_domain
-powershell/situational_awareness/network/powerview/get_forest_domain
-powershell/situational_awareness/network/powerview/get_site
 powershell/situational_awareness/network/powerview/get_site
 powershell/situational_awareness/network/reverse_dns
-powershell/situational_awareness/network/reverse_dns
-python/situational_awareness/network/active_directory/get_computers
 python/situational_awareness/network/active_directory/get_computers
 python/situational_awareness/network/active_directory/get_domaincontrollers
-python/situational_awareness/network/active_directory/get_domaincontrollers
 python/situational_awareness/network/gethostbyname
-python/situational_awareness/network/gethostbyname
+Bash
+C: \ Users \ administrator.0DAY> net view \\ ICBC.0day.org
+List is empty.
 ```
 
 ## Commands Dataset
@@ -187,63 +171,56 @@ python/situational_awareness/network/gethostbyname
              '192.168.1.1\n',
   'name': None,
   'source': 'atomics/T1018/T1018.yaml'},
- {'command': {'windows': {'psh': {'command': 'Import-Module .\\PowerView.ps1 '
-                                             '-Force;\n'
-                                             'Get-NetComputer\n',
-                                  'payloads': ['powerview.ps1']}}},
+ {'command': 'Import-Module .\\PowerView.ps1 -Force;\nGet-NetComputer\n',
   'name': 'Get a list of all computers in a domain',
   'source': 'data/abilities/discovery/0360ede1-3c28-48d3-a6ef-6e98f562c5af.yml'},
- {'command': {'windows': {'psh': {'command': 'Import-Module .\\powerview.ps1;\n'
-                                             'Get-DomainComputer\n',
-                                  'parsers': {'plugins.stockpile.app.parsers.gdomain': [{'source': 'remote.host.fqdn'}]},
-                                  'payloads': ['powerview.ps1']}}},
+ {'command': 'Import-Module .\\powerview.ps1;\nGet-DomainComputer\n',
   'name': 'Use PowerView to query the Active Directory server for a list of '
           'computers in the Domain',
   'source': 'data/abilities/discovery/13379ae1-d20e-4162-91f8-320d78a35e7f.yml'},
- {'command': {'windows': {'cmd': {'command': 'nltest /dsgetdc:%USERDOMAIN%\n'},
-                          'psh': {'command': 'nltest '
-                                             '/dsgetdc:$env:USERDOMAIN\n'}}},
+ {'command': 'nltest /dsgetdc:%USERDOMAIN%\n',
   'name': 'Identify the remote domain controllers',
   'source': 'data/abilities/discovery/26c8b8b5-7b5b-4de1-a128-7d37fb14f517.yml'},
- {'command': {'darwin': {'sh': {'command': 'cat ~/.ssh/known_hosts\n'}},
-              'linux': {'sh': {'command': 'cat ~/.ssh/known_hosts\n'}}},
+ {'command': 'nltest /dsgetdc:$env:USERDOMAIN\n',
+  'name': 'Identify the remote domain controllers',
+  'source': 'data/abilities/discovery/26c8b8b5-7b5b-4de1-a128-7d37fb14f517.yml'},
+ {'command': 'cat ~/.ssh/known_hosts\n',
   'name': 'View the known_hosts file',
   'source': 'data/abilities/discovery/5f77ecf9-613f-4863-8d2f-ed6b447a4633.yml'},
- {'command': {'darwin': {'sh': {'command': 'arp -a',
-                                'parsers': {'plugins.stockpile.app.parsers.ipaddr': [{'source': 'remote.host.ip'}]}}},
-              'linux': {'sh': {'command': 'arp -a',
-                               'parsers': {'plugins.stockpile.app.parsers.ipaddr': [{'source': 'remote.host.ip'}]}}},
-              'windows': {'psh,cmd': {'command': 'arp -a',
-                                      'parsers': {'plugins.stockpile.app.parsers.ipaddr': [{'source': 'remote.host.ip'}]}}}},
+ {'command': 'cat ~/.ssh/known_hosts\n',
+  'name': 'View the known_hosts file',
+  'source': 'data/abilities/discovery/5f77ecf9-613f-4863-8d2f-ed6b447a4633.yml'},
+ {'command': 'arp -a',
   'name': 'Locate all active IP and FQDNs on the network',
   'source': 'data/abilities/discovery/85341c8c-4ecb-4579-8f53-43e3e91d7617.yml'},
- {'command': {'windows': {'cmd': {'command': 'nltest /dsgetdc:%USERDOMAIN%\n'},
-                          'psh': {'command': 'nltest '
-                                             '/dsgetdc:$env:USERDOMAIN\n'}}},
+ {'command': 'arp -a',
+  'name': 'Locate all active IP and FQDNs on the network',
+  'source': 'data/abilities/discovery/85341c8c-4ecb-4579-8f53-43e3e91d7617.yml'},
+ {'command': 'arp -a',
+  'name': 'Locate all active IP and FQDNs on the network',
+  'source': 'data/abilities/discovery/85341c8c-4ecb-4579-8f53-43e3e91d7617.yml'},
+ {'command': 'nltest /dsgetdc:%USERDOMAIN%\n',
   'name': 'Identify remote domain controller',
   'source': 'data/abilities/discovery/b22b3b47-6219-4504-a2e6-ae8263e49fc3.yml'},
- {'command': {'darwin': {'sh': {'command': 'host "#{target.org.domain}" | grep '
-                                           "mail | grep -oE '[^ ]+$' | rev | "
-                                           'cut -c 2- | rev',
-                                'parsers': {'plugins.stockpile.app.parsers.basic': [{'source': 'target.org.emailhost'}]}}},
-              'linux': {'sh': {'command': 'host "#{target.org.domain}" | grep '
-                                          "mail | grep -oE '[^ ]+$' | rev | "
-                                          'cut -c 2- | rev',
-                               'parsers': {'plugins.stockpile.app.parsers.basic': [{'source': 'target.org.emailhost'}]}}},
-              'windows': {'psh': {'command': '(nslookup -querytype=mx '
-                                             '#{target.org.domain}. | '
-                                             "Select-String -pattern 'mail' | "
-                                             'Out-String).Trim()\n',
-                                  'parsers': {'plugins.stockpile.app.parsers.basic': [{'source': 'target.org.emailhost'}]}}}},
+ {'command': 'nltest /dsgetdc:$env:USERDOMAIN\n',
+  'name': 'Identify remote domain controller',
+  'source': 'data/abilities/discovery/b22b3b47-6219-4504-a2e6-ae8263e49fc3.yml'},
+ {'command': 'host "#{target.org.domain}" | grep mail | grep -oE \'[^ ]+$\' | '
+             'rev | cut -c 2- | rev',
   'name': 'Identify the organizations mail server',
   'source': 'data/abilities/discovery/ce485320-41a4-42e8-a510-f5a8fe96a644.yml'},
- {'command': {'windows': {'psh': {'command': 'nslookup #{remote.host.ip}\n',
-                                  'parsers': {'plugins.stockpile.app.parsers.reverse_nslookup': [{'edge': 'has_ip',
-                                                                                                  'source': 'remote.host.fqdn',
-                                                                                                  'target': 'remote.host.ip'}]}}}},
+ {'command': 'host "#{target.org.domain}" | grep mail | grep -oE \'[^ ]+$\' | '
+             'rev | cut -c 2- | rev',
+  'name': 'Identify the organizations mail server',
+  'source': 'data/abilities/discovery/ce485320-41a4-42e8-a510-f5a8fe96a644.yml'},
+ {'command': '(nslookup -querytype=mx #{target.org.domain}. | Select-String '
+             "-pattern 'mail' | Out-String).Trim()\n",
+  'name': 'Identify the organizations mail server',
+  'source': 'data/abilities/discovery/ce485320-41a4-42e8-a510-f5a8fe96a644.yml'},
+ {'command': 'nslookup #{remote.host.ip}\n',
   'name': 'Find hostname of remote IP in domain',
   'source': 'data/abilities/discovery/fa4ed735-7006-4451-a578-b516f80e559f.yml'},
- {'command': {'windows': {'psh': {'command': 'nbtstat -A #{remote.host.ip}'}}},
+ {'command': 'nbtstat -A #{remote.host.ip}',
   'name': 'Find hostname of remote host',
   'source': 'data/abilities/discovery/fdf8bf36-797f-4157-805b-fe7c1c6fc903.yml'},
  {'command': 'net.exe view /domain',
@@ -314,7 +291,12 @@ python/situational_awareness/network/gethostbyname
   'source': 'https://github.com/dstepanic/attck_empire/blob/master/Empire_modules.xlsx?raw=true'},
  {'command': 'python/situational_awareness/network/gethostbyname',
   'name': 'Empire Module Command',
-  'source': 'https://github.com/dstepanic/attck_empire/blob/master/Empire_modules.xlsx?raw=true'}]
+  'source': 'https://github.com/dstepanic/attck_empire/blob/master/Empire_modules.xlsx?raw=true'},
+ {'command': 'Bash\n'
+             'C: \\ Users \\ administrator.0DAY> net view \\\\ ICBC.0day.org\n'
+             'List is empty.',
+  'name': 'Bash',
+  'source': 'https://raw.githubusercontent.com/12306Bro/Threathunting-book/master/{}'}]
 ```
 
 ## Potential Detections
@@ -342,7 +324,30 @@ python/situational_awareness/network/gethostbyname
   'product': 'Azure Sentinel',
   'query': 'Sysmon| where (process_path contains "net.exe"or process_path '
            'contains "ping.exe")and (process_command_line contains "view"or '
-           'process_command_line contains "ping")'}]
+           'process_command_line contains "ping")'},
+ {'name': 'Yml',
+  'product': 'https://raw.githubusercontent.com/12306Bro/Threathunting-book/master/{}',
+  'query': 'Yml\n'
+           'title: windows net view command execution\n'
+           'description: windows server 2016\n'
+           'references: No\n'
+           'tags: T1018\n'
+           'status: experimental\n'
+           'author: 12306Bro\n'
+           'logsource:\n'
+           '    product: windows\n'
+           '    service: security\n'
+           'detection:\n'
+           '    selection:\n'
+           '        EventID: 4688 # Process Creation\n'
+           "        Newprocessname: 'C: \\ windows \\ System32 \\ net.exe' # "
+           'process information> new process name\n'
+           "        Creatorprocessname: 'C: \\ windows \\ system32 \\ cmd.exe' "
+           '# Process Information> Creator Process Name\n'
+           '        Processcommandline: net view * # Process Information> '
+           'process command line\n'
+           '    condition: selection\n'
+           'level: low'}]
 ```
 
 ## Raw Dataset

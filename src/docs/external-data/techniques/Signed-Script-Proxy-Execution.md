@@ -28,10 +28,8 @@
 
 ```
 C:\windows\system32\SyncAppvPublishingServer.vbs "\n;Start-Process calc"
-
 set comspec=%windir%\System32\calc.exe
 cscript %windir%\System32\manage-bde.wsf
-
 PubPrn.vbsPubPrn.vbs
 ```
 

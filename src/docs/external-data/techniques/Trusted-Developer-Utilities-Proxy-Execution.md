@@ -28,8 +28,6 @@
 
 ```
 powershell/lateral_movement/invoke_executemsbuild
-powershell/lateral_movement/invoke_executemsbuild
-powershell/code_execution/invoke_ntsd
 powershell/code_execution/invoke_ntsd
 ```
 

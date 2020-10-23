@@ -30,29 +30,22 @@ These actions may interfere with event collection, reporting, or other notificat
 
 ```
 fsutil usn deletejournal /D C:
-
 fsutil.exe usn deletejournal /D
 vssadmin.exe delete shadows /all /quiet
 wbadmin.exe delete catalog -quiet
 wevtutil.exe /cl
 wmic.exe /NODE:*shadowcopy delete *
 wevtutilcl
-wevtutil|cl
-fsutil|usn|deletejournal
 fsutilusn|deletejournal
-powershell/credentials/mimikatz/purge
+fsutil|usn|deletejournal
+wevtutil|cl
 powershell/credentials/mimikatz/purge
 powershell/management/lock
-powershell/management/lock
-powershell/management/logoff
 powershell/management/logoff
 powershell/management/restart
-powershell/management/restart
-python/persistence/osx/RemoveDaemon
 python/persistence/osx/RemoveDaemon
 ```
 rm -rf /var/log/*
-```
 ```
 
 ## Commands Dataset
@@ -240,6 +233,38 @@ rm -rf /var/log/*
 [{'name': 'Indicator Removal On Host',
   'product': 'Azure Sentinel',
   'query': 'Sysmon| where process_path contains "wevtutil"'},
+ {'name': 'Yml',
+  'product': 'https://raw.githubusercontent.com/12306Bro/Threathunting-book/master/{}',
+  'query': 'Yml\n'
+           'title: windows log Clear\n'
+           'description: win7 and windows server 2003 simulation test results\n'
+           'status: experimental\n'
+           'author: 12306Bro\n'
+           'logsource:\n'
+           'product: windows\n'
+           'service: security\n'
+           'detection:\n'
+           'selection:\n'
+           'EventID:\n'
+           '\\ --1102\n'
+           '\\ --517\n'
+           'condition: selection\n'
+           'level: medium'},
+ {'name': 'Yml',
+  'product': 'https://raw.githubusercontent.com/12306Bro/Threathunting-book/master/{}',
+  'query': 'Yml\n'
+           'title: windows log Clear\n'
+           'description: win7 simulation test results\n'
+           'status: experimental\n'
+           'author: 12306Bro\n'
+           'logsource:\n'
+           'product: windows\n'
+           'service: system\n'
+           'detection:\n'
+           'selection:\n'
+           'EventID: 104\n'
+           'condition: selection\n'
+           'level: medium'},
  {'name': None, 'product': 'Splunk', 'query': '```'},
  {'name': None,
   'product': 'Splunk',

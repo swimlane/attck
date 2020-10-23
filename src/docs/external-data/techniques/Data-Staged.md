@@ -31,43 +31,40 @@ Adversaries may choose to stage data from a victim network in a centralized loca
 ## Potential Commands
 
 ```
-{'darwin': {'sh': {'command': 'cp "#{host.file.path[filters(technique=T1005,max=3)]}" #{host.dir.staged[filters(max=1)]}\n'}}, 'linux': {'sh': {'command': 'cp "#{host.file.path[filters(technique=T1005,max=3)]}" #{host.dir.staged[filters(max=1)]}\n'}}, 'windows': {'psh': {'command': 'Copy-Item #{host.file.path[filters(technique=T1005,max=3)]} #{host.dir.staged[filters(max=1)]}\n'}, 'cmd': {'command': 'copy #{host.file.path[filters(technique=T1005,max=3)]} #{host.dir.staged[filters(max=1)]}\n'}}}
-{'darwin': {'sh': {'command': 'mkdir -p staged && echo $PWD/staged\n', 'cleanup': 'rm -rf staged\n', 'parsers': {'plugins.stockpile.app.parsers.basic': [{'source': 'host.dir.staged'}]}}}, 'linux': {'sh': {'command': 'mkdir -p staged && echo $PWD/staged\n', 'cleanup': 'rm -rf staged\n', 'parsers': {'plugins.stockpile.app.parsers.basic': [{'source': 'host.dir.staged'}]}}}, 'windows': {'psh,pwsh': {'command': 'New-Item -Path "." -Name "staged" -ItemType "directory" -Force | foreach {$_.FullName} | Select-Object\n', 'cleanup': 'Remove-Item -Path "staged" -recurse\n', 'parsers': {'plugins.stockpile.app.parsers.basic': [{'source': 'host.dir.staged'}]}}}}
+cp "#{host.file.path[filters(technique=T1005,max=3)]}" #{host.dir.staged[filters(max=1)]}
+copy #{host.file.path[filters(technique=T1005,max=3)]} #{host.dir.staged[filters(max=1)]}
+Copy-Item #{host.file.path[filters(technique=T1005,max=3)]} #{host.dir.staged[filters(max=1)]}
+New-Item -Path "." -Name "staged" -ItemType "directory" -Force | foreach {$_.FullName} | Select-Object
+mkdir -p staged && echo $PWD/staged
 ```
 
 ## Commands Dataset
 
 ```
-[{'command': {'darwin': {'sh': {'command': 'cp '
-                                           '"#{host.file.path[filters(technique=T1005,max=3)]}" '
-                                           '#{host.dir.staged[filters(max=1)]}\n'}},
-              'linux': {'sh': {'command': 'cp '
-                                          '"#{host.file.path[filters(technique=T1005,max=3)]}" '
-                                          '#{host.dir.staged[filters(max=1)]}\n'}},
-              'windows': {'cmd': {'command': 'copy '
-                                             '#{host.file.path[filters(technique=T1005,max=3)]} '
-                                             '#{host.dir.staged[filters(max=1)]}\n'},
-                          'psh': {'command': 'Copy-Item '
-                                             '#{host.file.path[filters(technique=T1005,max=3)]} '
-                                             '#{host.dir.staged[filters(max=1)]}\n'}}},
+[{'command': 'cp "#{host.file.path[filters(technique=T1005,max=3)]}" '
+             '#{host.dir.staged[filters(max=1)]}\n',
   'name': 'copy files to staging directory',
   'source': 'data/abilities/collection/4e97e699-93d7-4040-b5a3-2e906a58199e.yml'},
- {'command': {'darwin': {'sh': {'cleanup': 'rm -rf staged\n',
-                                'command': 'mkdir -p staged && echo '
-                                           '$PWD/staged\n',
-                                'parsers': {'plugins.stockpile.app.parsers.basic': [{'source': 'host.dir.staged'}]}}},
-              'linux': {'sh': {'cleanup': 'rm -rf staged\n',
-                               'command': 'mkdir -p staged && echo '
-                                          '$PWD/staged\n',
-                               'parsers': {'plugins.stockpile.app.parsers.basic': [{'source': 'host.dir.staged'}]}}},
-              'windows': {'psh,pwsh': {'cleanup': 'Remove-Item -Path "staged" '
-                                                  '-recurse\n',
-                                       'command': 'New-Item -Path "." -Name '
-                                                  '"staged" -ItemType '
-                                                  '"directory" -Force | '
-                                                  'foreach {$_.FullName} | '
-                                                  'Select-Object\n',
-                                       'parsers': {'plugins.stockpile.app.parsers.basic': [{'source': 'host.dir.staged'}]}}}},
+ {'command': 'cp "#{host.file.path[filters(technique=T1005,max=3)]}" '
+             '#{host.dir.staged[filters(max=1)]}\n',
+  'name': 'copy files to staging directory',
+  'source': 'data/abilities/collection/4e97e699-93d7-4040-b5a3-2e906a58199e.yml'},
+ {'command': 'Copy-Item #{host.file.path[filters(technique=T1005,max=3)]} '
+             '#{host.dir.staged[filters(max=1)]}\n',
+  'name': 'copy files to staging directory',
+  'source': 'data/abilities/collection/4e97e699-93d7-4040-b5a3-2e906a58199e.yml'},
+ {'command': 'copy #{host.file.path[filters(technique=T1005,max=3)]} '
+             '#{host.dir.staged[filters(max=1)]}\n',
+  'name': 'copy files to staging directory',
+  'source': 'data/abilities/collection/4e97e699-93d7-4040-b5a3-2e906a58199e.yml'},
+ {'command': 'mkdir -p staged && echo $PWD/staged\n',
+  'name': 'create a directory for exfil staging',
+  'source': 'data/abilities/collection/6469befa-748a-4b9c-a96d-f191fde47d89.yml'},
+ {'command': 'mkdir -p staged && echo $PWD/staged\n',
+  'name': 'create a directory for exfil staging',
+  'source': 'data/abilities/collection/6469befa-748a-4b9c-a96d-f191fde47d89.yml'},
+ {'command': 'New-Item -Path "." -Name "staged" -ItemType "directory" -Force | '
+             'foreach {$_.FullName} | Select-Object\n',
   'name': 'create a directory for exfil staging',
   'source': 'data/abilities/collection/6469befa-748a-4b9c-a96d-f191fde47d89.yml'}]
 ```

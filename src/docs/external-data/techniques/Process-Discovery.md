@@ -33,27 +33,49 @@ tasklist /v [/svc]
 net start
 qprocess *
 ps
+post/windows/gather/enum_services
+ps
 shell tasklist /v [/svc]
 shell net start
-ps
-post/windows/gather/enum_services
+tasklist
 ps >> /tmp/loot.txt
 ps aux >> /tmp/loot.txt
-
+$ps_url = "https://download.sysinternals.com/files/PSTools.zip";
+$download_folder = "C:\Users\Public\";
+$staging_folder = "C:\Users\Public\temp";
+Start-BitsTransfer -Source $ps_url -Destination $download_folder;
+Expand-Archive -LiteralPath $download_folder"PSTools.zip" -DestinationPath $staging_folder;
+iex $staging_folder"\pslist.exe" >> $env:LOCALAPPDATA\output.log;
+Remove-Item $download_folder"PSTools.zip";
+Remove-Item $staging_folder -Recurse
+acrnctl list
+$owners = @{};
+gwmi win32_process |% {$owners[$_.handle] = $_.getowner().user};
+$ps = get-process | select processname,Id,@{l="Owner";e={$owners[$_.id.tostring()]}};
+$valid = foreach($p in $ps) { if($p.Owner -eq $env:USERNAME -And $p.ProcessName -eq "svchost") {$p} };
+$valid | ConvertTo-Json
+$ps = get-process | select processname,Id;
+$valid = foreach($p in $ps) { if($p.ProcessName -eq "lsass") {$p} };
+$valid | ConvertTo-Json
+get-process
+ps
+$owners = @{};
+gwmi win32_process |% {$owners[$_.handle] = $_.getowner().user};
+$ps = get-process | select processname,Id,@{l="Owner";e={$owners[$_.id.tostring()]}};
+foreach($p in $ps) {
+    if($p.Owner -eq "#{host.user.name}") {
+        $p;
+    }
+}
+ps aux | grep #{host.user.name}
+get-process >> $env:APPDATA\vmtools.log;
+cat $env:APPDATA\vmtools.log
+Get-Process
 tasklist
-
-{'windows': {'psh,pwsh': {'command': '$ps_url = "https://download.sysinternals.com/files/PSTools.zip";\n$download_folder = "C:\\Users\\Public\\";\n$staging_folder = "C:\\Users\\Public\\temp";\nStart-BitsTransfer -Source $ps_url -Destination $download_folder;\nExpand-Archive -LiteralPath $download_folder"PSTools.zip" -DestinationPath $staging_folder;\niex $staging_folder"\\pslist.exe" >> $env:LOCALAPPDATA\\output.log;\nRemove-Item $download_folder"PSTools.zip";\nRemove-Item $staging_folder -Recurse\n'}}}
-{'linux': {'sh': {'command': 'acrnctl list\n', 'parsers': {'plugins.stockpile.app.parsers.acrn': [{'source': 'hypervisor.vm.name'}]}}}}
-{'windows': {'psh': {'command': '$owners = @{};\ngwmi win32_process |% {$owners[$_.handle] = $_.getowner().user};\n$ps = get-process | select processname,Id,@{l="Owner";e={$owners[$_.id.tostring()]}};\n$valid = foreach($p in $ps) { if($p.Owner -eq $env:USERNAME -And $p.ProcessName -eq "svchost") {$p} };\n$valid | ConvertTo-Json\n', 'parsers': {'plugins.stockpile.app.parsers.json': [{'source': 'host.process.id', 'custom_parser_vals': {'json_key': 'Id', 'json_type': 'int'}}]}}}}
-{'windows': {'psh': {'command': '$ps = get-process | select processname,Id;\n$valid = foreach($p in $ps) { if($p.ProcessName -eq "lsass") {$p} };\n$valid | ConvertTo-Json\n', 'parsers': {'plugins.stockpile.app.parsers.json': [{'source': 'host.process.id', 'custom_parser_vals': {'json_key': 'Id', 'json_type': 'int'}}]}}, 'cmd': {'build_target': 'GetLsass.exe', 'language': 'csharp', 'code': 'using System;\nusing System.Diagnostics;\nusing System.ComponentModel;\n\nnamespace ProcessDump\n{\n    class MyProcess\n    {\n        void GrabLsassProcess()\n        {\n            Process[] allProc = Process.GetProcessesByName("lsass");\n            foreach(Process proc in allProc){\n                Console.WriteLine("Process: {0} -> PID: {1}", proc.ProcessName, proc.Id);\n            }\n        }\n        static void Main(string[] args)\n        {\n            MyProcess myProc = new MyProcess();\n            myProc.GrabLsassProcess();\n        }\n    }\n}\n'}}}
-{'darwin': {'sh': {'command': 'ps\n'}}, 'linux': {'sh': {'command': 'ps\n'}}, 'windows': {'psh': {'command': 'get-process\n'}}}
-{'darwin': {'sh': {'command': 'ps aux | grep #{host.user.name}\n'}}, 'linux': {'sh': {'command': 'ps aux | grep #{host.user.name}\n'}}, 'windows': {'psh': {'command': '$owners = @{};\ngwmi win32_process |% {$owners[$_.handle] = $_.getowner().user};\n$ps = get-process | select processname,Id,@{l="Owner";e={$owners[$_.id.tostring()]}};\nforeach($p in $ps) {\n    if($p.Owner -eq "#{host.user.name}") {\n        $p;\n    }\n}\n'}}}
-{'windows': {'psh,pwsh': {'command': 'get-process >> $env:APPDATA\\vmtools.log;\ncat $env:APPDATA\\vmtools.log\n'}}}
-{'windows': {'psh': {'command': 'Get-Process'}, 'cmd': {'command': 'tasklist'}, 'donut_amd64': {'build_target': 'ProcessDump.donut', 'language': 'csharp', 'code': 'using System;\nusing System.Diagnostics;\nusing System.ComponentModel;\n\nnamespace ProcessDump\n{\n    class MyProcess\n    {\n        void GrabAllProcesses()\n        {\n            Process[] allProc = Process.GetProcesses();\n            foreach(Process proc in allProc){\n                Console.WriteLine("Process: {0} -> PID: {1}", proc.ProcessName, proc.Id);\n            }\n        }\n        static void Main(string[] args)\n        {\n            MyProcess myProc = new MyProcess();\n            myProc.GrabAllProcesses();\n        }\n    }\n}\n'}}, 'darwin': {'sh': {'command': 'ps aux'}}, 'linux': {'sh': {'command': 'ps aux'}}}
-{'windows': {'psh': {'command': 'tasklist /m  >> $env:APPDATA\\vmtool.log;\ncat $env:APPDATA\\vmtool.log\n'}}}
+ps aux
+tasklist /m  >> $env:APPDATA\vmtool.log;
+cat $env:APPDATA\vmtool.log
 powershell/situational_awareness/host/paranoia
-powershell/situational_awareness/host/paranoia
-powershell/situational_awareness/network/powerview/process_hunter
 powershell/situational_awareness/network/powerview/process_hunter
 ```
 
@@ -73,167 +95,85 @@ powershell/situational_awareness/network/powerview/process_hunter
   'name': None,
   'source': 'atomics/T1057/T1057.yaml'},
  {'command': 'tasklist\n', 'name': None, 'source': 'atomics/T1057/T1057.yaml'},
- {'command': {'windows': {'psh,pwsh': {'command': '$ps_url = '
-                                                  '"https://download.sysinternals.com/files/PSTools.zip";\n'
-                                                  '$download_folder = '
-                                                  '"C:\\Users\\Public\\";\n'
-                                                  '$staging_folder = '
-                                                  '"C:\\Users\\Public\\temp";\n'
-                                                  'Start-BitsTransfer -Source '
-                                                  '$ps_url -Destination '
-                                                  '$download_folder;\n'
-                                                  'Expand-Archive -LiteralPath '
-                                                  '$download_folder"PSTools.zip" '
-                                                  '-DestinationPath '
-                                                  '$staging_folder;\n'
-                                                  'iex '
-                                                  '$staging_folder"\\pslist.exe" '
-                                                  '>> '
-                                                  '$env:LOCALAPPDATA\\output.log;\n'
-                                                  'Remove-Item '
-                                                  '$download_folder"PSTools.zip";\n'
-                                                  'Remove-Item $staging_folder '
-                                                  '-Recurse\n'}}},
+ {'command': '$ps_url = '
+             '"https://download.sysinternals.com/files/PSTools.zip";\n'
+             '$download_folder = "C:\\Users\\Public\\";\n'
+             '$staging_folder = "C:\\Users\\Public\\temp";\n'
+             'Start-BitsTransfer -Source $ps_url -Destination '
+             '$download_folder;\n'
+             'Expand-Archive -LiteralPath $download_folder"PSTools.zip" '
+             '-DestinationPath $staging_folder;\n'
+             'iex $staging_folder"\\pslist.exe" >> '
+             '$env:LOCALAPPDATA\\output.log;\n'
+             'Remove-Item $download_folder"PSTools.zip";\n'
+             'Remove-Item $staging_folder -Recurse\n',
   'name': 'Process discovery via SysInternals pstool',
   'source': 'data/abilities/collection/cc191baa-7472-4386-a2f4-42f203f1acfd.yml'},
- {'command': {'linux': {'sh': {'command': 'acrnctl list\n',
-                               'parsers': {'plugins.stockpile.app.parsers.acrn': [{'source': 'hypervisor.vm.name'}]}}}},
+ {'command': 'acrnctl list\n',
   'name': 'Enumerate running virtual machines on hypervisor',
   'source': 'data/abilities/discovery/0093c0e0-68b6-4cab-b0d4-2b40b3c78f71.yml'},
- {'command': {'windows': {'psh': {'command': '$owners = @{};\n'
-                                             'gwmi win32_process |% '
-                                             '{$owners[$_.handle] = '
-                                             '$_.getowner().user};\n'
-                                             '$ps = get-process | select '
-                                             'processname,Id,@{l="Owner";e={$owners[$_.id.tostring()]}};\n'
-                                             '$valid = foreach($p in $ps) { '
-                                             'if($p.Owner -eq $env:USERNAME '
-                                             '-And $p.ProcessName -eq '
-                                             '"svchost") {$p} };\n'
-                                             '$valid | ConvertTo-Json\n',
-                                  'parsers': {'plugins.stockpile.app.parsers.json': [{'custom_parser_vals': {'json_key': 'Id',
-                                                                                                             'json_type': 'int'},
-                                                                                      'source': 'host.process.id'}]}}}},
+ {'command': '$owners = @{};\n'
+             'gwmi win32_process |% {$owners[$_.handle] = '
+             '$_.getowner().user};\n'
+             '$ps = get-process | select '
+             'processname,Id,@{l="Owner";e={$owners[$_.id.tostring()]}};\n'
+             '$valid = foreach($p in $ps) { if($p.Owner -eq $env:USERNAME -And '
+             '$p.ProcessName -eq "svchost") {$p} };\n'
+             '$valid | ConvertTo-Json\n',
   'name': 'Discovers processes that the current user has the ability to access '
           'and selects an injectable one',
   'source': 'data/abilities/discovery/05cda6f6-2b1b-462e-bff1-845af94343f7.yml'},
- {'command': {'windows': {'cmd': {'build_target': 'GetLsass.exe',
-                                  'code': 'using System;\n'
-                                          'using System.Diagnostics;\n'
-                                          'using System.ComponentModel;\n'
-                                          '\n'
-                                          'namespace ProcessDump\n'
-                                          '{\n'
-                                          '    class MyProcess\n'
-                                          '    {\n'
-                                          '        void GrabLsassProcess()\n'
-                                          '        {\n'
-                                          '            Process[] allProc = '
-                                          'Process.GetProcessesByName("lsass");\n'
-                                          '            foreach(Process proc in '
-                                          'allProc){\n'
-                                          '                '
-                                          'Console.WriteLine("Process: {0} -> '
-                                          'PID: {1}", proc.ProcessName, '
-                                          'proc.Id);\n'
-                                          '            }\n'
-                                          '        }\n'
-                                          '        static void Main(string[] '
-                                          'args)\n'
-                                          '        {\n'
-                                          '            MyProcess myProc = new '
-                                          'MyProcess();\n'
-                                          '            '
-                                          'myProc.GrabLsassProcess();\n'
-                                          '        }\n'
-                                          '    }\n'
-                                          '}\n',
-                                  'language': 'csharp'},
-                          'psh': {'command': '$ps = get-process | select '
-                                             'processname,Id;\n'
-                                             '$valid = foreach($p in $ps) { '
-                                             'if($p.ProcessName -eq "lsass") '
-                                             '{$p} };\n'
-                                             '$valid | ConvertTo-Json\n',
-                                  'parsers': {'plugins.stockpile.app.parsers.json': [{'custom_parser_vals': {'json_key': 'Id',
-                                                                                                             'json_type': 'int'},
-                                                                                      'source': 'host.process.id'}]}}}},
+ {'command': '$ps = get-process | select processname,Id;\n'
+             '$valid = foreach($p in $ps) { if($p.ProcessName -eq "lsass") '
+             '{$p} };\n'
+             '$valid | ConvertTo-Json\n',
   'name': 'Get process info for LSASS',
   'source': 'data/abilities/discovery/0bff4ee7-42a4-4bde-b09a-9d79d8b9edd7.yml'},
- {'command': {'darwin': {'sh': {'command': 'ps\n'}},
-              'linux': {'sh': {'command': 'ps\n'}},
-              'windows': {'psh': {'command': 'get-process\n'}}},
+ {'command': 'ps\n',
   'name': 'Display information about current system processes',
   'source': 'data/abilities/discovery/335cea7b-bec0-48c6-adfb-6066070f5f68.yml'},
- {'command': {'darwin': {'sh': {'command': 'ps aux | grep '
-                                           '#{host.user.name}\n'}},
-              'linux': {'sh': {'command': 'ps aux | grep #{host.user.name}\n'}},
-              'windows': {'psh': {'command': '$owners = @{};\n'
-                                             'gwmi win32_process |% '
-                                             '{$owners[$_.handle] = '
-                                             '$_.getowner().user};\n'
-                                             '$ps = get-process | select '
-                                             'processname,Id,@{l="Owner";e={$owners[$_.id.tostring()]}};\n'
-                                             'foreach($p in $ps) {\n'
-                                             '    if($p.Owner -eq '
-                                             '"#{host.user.name}") {\n'
-                                             '        $p;\n'
-                                             '    }\n'
-                                             '}\n'}}},
+ {'command': 'ps\n',
+  'name': 'Display information about current system processes',
+  'source': 'data/abilities/discovery/335cea7b-bec0-48c6-adfb-6066070f5f68.yml'},
+ {'command': 'get-process\n',
+  'name': 'Display information about current system processes',
+  'source': 'data/abilities/discovery/335cea7b-bec0-48c6-adfb-6066070f5f68.yml'},
+ {'command': 'ps aux | grep #{host.user.name}\n',
   'name': 'Get process info for processes running as a user',
   'source': 'data/abilities/discovery/3b5db901-2cb8-4df7-8043-c4628a6a5d5a.yml'},
- {'command': {'windows': {'psh,pwsh': {'command': 'get-process >> '
-                                                  '$env:APPDATA\\vmtools.log;\n'
-                                                  'cat '
-                                                  '$env:APPDATA\\vmtools.log\n'}}},
+ {'command': 'ps aux | grep #{host.user.name}\n',
+  'name': 'Get process info for processes running as a user',
+  'source': 'data/abilities/discovery/3b5db901-2cb8-4df7-8043-c4628a6a5d5a.yml'},
+ {'command': '$owners = @{};\n'
+             'gwmi win32_process |% {$owners[$_.handle] = '
+             '$_.getowner().user};\n'
+             '$ps = get-process | select '
+             'processname,Id,@{l="Owner";e={$owners[$_.id.tostring()]}};\n'
+             'foreach($p in $ps) {\n'
+             '    if($p.Owner -eq "#{host.user.name}") {\n'
+             '        $p;\n'
+             '    }\n'
+             '}\n',
+  'name': 'Get process info for processes running as a user',
+  'source': 'data/abilities/discovery/3b5db901-2cb8-4df7-8043-c4628a6a5d5a.yml'},
+ {'command': 'get-process >> $env:APPDATA\\vmtools.log;\n'
+             'cat $env:APPDATA\\vmtools.log\n',
   'name': 'Capture running processes via PowerShell',
   'source': 'data/abilities/discovery/4d9b079c-9ede-4116-8b14-72ad3a5533af.yml'},
- {'command': {'darwin': {'sh': {'command': 'ps aux'}},
-              'linux': {'sh': {'command': 'ps aux'}},
-              'windows': {'cmd': {'command': 'tasklist'},
-                          'donut_amd64': {'build_target': 'ProcessDump.donut',
-                                          'code': 'using System;\n'
-                                                  'using System.Diagnostics;\n'
-                                                  'using '
-                                                  'System.ComponentModel;\n'
-                                                  '\n'
-                                                  'namespace ProcessDump\n'
-                                                  '{\n'
-                                                  '    class MyProcess\n'
-                                                  '    {\n'
-                                                  '        void '
-                                                  'GrabAllProcesses()\n'
-                                                  '        {\n'
-                                                  '            Process[] '
-                                                  'allProc = '
-                                                  'Process.GetProcesses();\n'
-                                                  '            foreach(Process '
-                                                  'proc in allProc){\n'
-                                                  '                '
-                                                  'Console.WriteLine("Process: '
-                                                  '{0} -> PID: {1}", '
-                                                  'proc.ProcessName, '
-                                                  'proc.Id);\n'
-                                                  '            }\n'
-                                                  '        }\n'
-                                                  '        static void '
-                                                  'Main(string[] args)\n'
-                                                  '        {\n'
-                                                  '            MyProcess '
-                                                  'myProc = new MyProcess();\n'
-                                                  '            '
-                                                  'myProc.GrabAllProcesses();\n'
-                                                  '        }\n'
-                                                  '    }\n'
-                                                  '}\n',
-                                          'language': 'csharp'},
-                          'psh': {'command': 'Get-Process'}}},
+ {'command': 'Get-Process',
   'name': 'Identify system processes',
   'source': 'data/abilities/discovery/5a39d7ed-45c9-4a79-b581-e5fb99e24f65.yml'},
- {'command': {'windows': {'psh': {'command': 'tasklist /m  >> '
-                                             '$env:APPDATA\\vmtool.log;\n'
-                                             'cat '
-                                             '$env:APPDATA\\vmtool.log\n'}}},
+ {'command': 'tasklist',
+  'name': 'Identify system processes',
+  'source': 'data/abilities/discovery/5a39d7ed-45c9-4a79-b581-e5fb99e24f65.yml'},
+ {'command': 'ps aux',
+  'name': 'Identify system processes',
+  'source': 'data/abilities/discovery/5a39d7ed-45c9-4a79-b581-e5fb99e24f65.yml'},
+ {'command': 'ps aux',
+  'name': 'Identify system processes',
+  'source': 'data/abilities/discovery/5a39d7ed-45c9-4a79-b581-e5fb99e24f65.yml'},
+ {'command': 'tasklist /m  >> $env:APPDATA\\vmtool.log;\n'
+             'cat $env:APPDATA\\vmtool.log\n',
   'name': 'Capture running processes and their loaded DLLs',
   'source': 'data/abilities/discovery/8adf02e8-6e71-4244-886c-98c402857404.yml'},
  {'command': 'powershell/situational_awareness/host/paranoia',
@@ -265,7 +205,30 @@ powershell/situational_awareness/network/powerview/process_hunter
 [{'name': 'Process Discovery',
   'product': 'Azure Sentinel',
   'query': 'Sysmon| where EventID == 1 and process_path contains '
-           '"tasklist.exe"or process_command_line contains "Get-Process"'}]
+           '"tasklist.exe"or process_command_line contains "Get-Process"'},
+ {'name': 'Yml',
+  'product': 'https://raw.githubusercontent.com/12306Bro/Threathunting-book/master/{}',
+  'query': 'Yml\n'
+           'title: windows executed locally Tasklist\n'
+           'description: windows server 2016\n'
+           'references: No\n'
+           'tags: T1057\n'
+           'status: experimental\n'
+           'author: 12306Bro\n'
+           'logsource:\n'
+           '    product: windows\n'
+           '    service: security\n'
+           'detection:\n'
+           '    selection:\n'
+           '        EventID: 4688 # Process Creation\n'
+           "        Newprocessname: 'C: \\ windows \\ system32 \\ "
+           "tasklist.exe' # process information> new process name\n"
+           "        Creatorprocessname: 'C: \\ windows \\ system32 \\ cmd.exe' "
+           '# Process Information> Creator Process Name\n'
+           '        Processcommandline: tasklist # Process information> '
+           'process command line\n'
+           '    condition: selection\n'
+           'level: low'}]
 ```
 
 ## Raw Dataset

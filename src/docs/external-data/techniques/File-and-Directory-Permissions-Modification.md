@@ -29,14 +29,11 @@ Modifications may include changing specific access rights, which may require tak
 ## Potential Commands
 
 ```
-```
 chmod 766 test1.txt
-chmod u+x test1.txt
+```
 chmod o-x test1.txt
-```
-```
+chmod u+x test1.txt
 chown ec2-user:ec2-user test1.txt
-```
 ```
 
 ## Commands Dataset

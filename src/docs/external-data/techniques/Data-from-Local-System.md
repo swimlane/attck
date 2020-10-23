@@ -30,77 +30,63 @@ Adversaries may do this using a [Command and Scripting Interpreter](https://atta
 ## Potential Commands
 
 ```
-{'darwin': {'sh': {'command': 'pip install stormssh && storm list\n', 'parsers': {'plugins.stockpile.app.parsers.ssh': [{'source': 'remote.ssh.cmd'}]}}}, 'linux': {'sh': {'command': "pip install -q stormssh 2> /dev/null && storm list | sed 's/\\x1b\\[[0-9;]*m//g'\n", 'parsers': {'plugins.stockpile.app.parsers.ssh': [{'source': 'remote.ssh.cmd'}]}}}}
-{'darwin': {'sh': {'command': 'find $(echo ~#{host.user.name}) -type f -size -500k -maxdepth 5 -exec grep -EIr -o "\\b[A-Za-z0-9._%+-]+@#{target.org.name}\\b" 2>/dev/null {} \\;\n'}}}
-{'darwin': {'sh': {'command': 'curl #{remote.host.socket}\n'}}, 'linux': {'sh': {'command': 'curl #{remote.host.socket}\n'}}}
-{'darwin': {'sh': {'command': "find /Users -name '*.#{file.sensitive.extension}' -type f -not -path '*/\\.*' -size -500k 2>/dev/null | head -5\n", 'parsers': {'plugins.stockpile.app.parsers.basic': [{'source': 'host.file.path'}]}}}, 'windows': {'psh,pwsh': {'command': "Get-ChildItem C:\\Users -Recurse -Include *.#{file.sensitive.extension} -ErrorAction 'SilentlyContinue' | foreach {$_.FullName} | Select-Object -first 5;\nexit 0;\n", 'parsers': {'plugins.stockpile.app.parsers.basic': [{'source': 'host.file.path'}]}}}, 'linux': {'sh': {'command': "find / -name '*.#{file.sensitive.extension}' -type f -not -path '*/\\.*' -size -500k 2>/dev/null | head -5\n", 'parsers': {'plugins.stockpile.app.parsers.basic': [{'source': 'host.file.path'}]}}}}
-{'darwin': {'sh': {'command': 'find $(echo ~#{host.user.name}) -type f -size -500k -maxdepth 5 -exec grep -EIr -o "(($(echo #{domain.broadcast.ip} | cut -d. -f-2))\\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)" 2>/dev/null {} \\;\n'}}}
-powershell/collection/get_sql_column_sample_data
+pip install -q stormssh 2> /dev/null && storm list | sed 's/\x1b\[[0-9;]*m//g'
+pip install stormssh && storm list
+find $(echo ~#{host.user.name}) -type f -size -500k -maxdepth 5 -exec grep -EIr -o "\b[A-Za-z0-9._%+-]+@#{target.org.name}\b" 2>/dev/null {} \;
+curl #{remote.host.socket}
+Get-ChildItem C:\Users -Recurse -Include *.#{file.sensitive.extension} -ErrorAction 'SilentlyContinue' | foreach {$_.FullName} | Select-Object -first 5;
+exit 0;
+find / -name '*.#{file.sensitive.extension}' -type f -not -path '*/\.*' -size -500k 2>/dev/null | head -5
+find /Users -name '*.#{file.sensitive.extension}' -type f -not -path '*/\.*' -size -500k 2>/dev/null | head -5
+find $(echo ~#{host.user.name}) -type f -size -500k -maxdepth 5 -exec grep -EIr -o "(($(echo #{domain.broadcast.ip} | cut -d. -f-2))\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)" 2>/dev/null {} \;
 powershell/collection/get_sql_column_sample_data
 powershell/collection/get_sql_query
-powershell/collection/get_sql_query
-powershell/collection/minidump
 powershell/collection/minidump
 powershell/credentials/sessiongopher
-powershell/credentials/sessiongopher
-python/collection/osx/browser_dump
 python/collection/osx/browser_dump
 python/collection/osx/imessage_dump
-python/collection/osx/imessage_dump
-python/situational_awareness/host/osx/situational_awareness
 python/situational_awareness/host/osx/situational_awareness
 ```
 
 ## Commands Dataset
 
 ```
-[{'command': {'darwin': {'sh': {'command': 'pip install stormssh && storm '
-                                           'list\n',
-                                'parsers': {'plugins.stockpile.app.parsers.ssh': [{'source': 'remote.ssh.cmd'}]}}},
-              'linux': {'sh': {'command': 'pip install -q stormssh 2> '
-                                          '/dev/null && storm list | sed '
-                                          "'s/\\x1b\\[[0-9;]*m//g'\n",
-                               'parsers': {'plugins.stockpile.app.parsers.ssh': [{'source': 'remote.ssh.cmd'}]}}}},
+[{'command': 'pip install stormssh && storm list\n',
   'name': 'Search for valid SSH commands in the config file',
   'source': 'data/abilities/collection/02de522f-7e0a-4544-8afc-0c195f400f5f.yml'},
- {'command': {'darwin': {'sh': {'command': 'find $(echo ~#{host.user.name}) '
-                                           '-type f -size -500k -maxdepth 5 '
-                                           '-exec grep -EIr -o '
-                                           '"\\b[A-Za-z0-9._%+-]+@#{target.org.name}\\b" '
-                                           '2>/dev/null {} \\;\n'}}},
+ {'command': 'pip install -q stormssh 2> /dev/null && storm list | sed '
+             "'s/\\x1b\\[[0-9;]*m//g'\n",
+  'name': 'Search for valid SSH commands in the config file',
+  'source': 'data/abilities/collection/02de522f-7e0a-4544-8afc-0c195f400f5f.yml'},
+ {'command': 'find $(echo ~#{host.user.name}) -type f -size -500k -maxdepth 5 '
+             '-exec grep -EIr -o "\\b[A-Za-z0-9._%+-]+@#{target.org.name}\\b" '
+             '2>/dev/null {} \\;\n',
   'name': 'Grep for all emails for the given target company',
   'source': 'data/abilities/collection/1f7ff232-ebf8-42bf-a3c4-657855794cfe.yml'},
- {'command': {'darwin': {'sh': {'command': 'curl #{remote.host.socket}\n'}},
-              'linux': {'sh': {'command': 'curl #{remote.host.socket}\n'}}},
+ {'command': 'curl #{remote.host.socket}\n',
   'name': 'See the raw content of a socket',
   'source': 'data/abilities/collection/89955f55-529d-4d58-bed4-fed9e42515ec.yml'},
- {'command': {'darwin': {'sh': {'command': 'find /Users -name '
-                                           "'*.#{file.sensitive.extension}' "
-                                           "-type f -not -path '*/\\.*' -size "
-                                           '-500k 2>/dev/null | head -5\n',
-                                'parsers': {'plugins.stockpile.app.parsers.basic': [{'source': 'host.file.path'}]}}},
-              'linux': {'sh': {'command': 'find / -name '
-                                          "'*.#{file.sensitive.extension}' "
-                                          "-type f -not -path '*/\\.*' -size "
-                                          '-500k 2>/dev/null | head -5\n',
-                               'parsers': {'plugins.stockpile.app.parsers.basic': [{'source': 'host.file.path'}]}}},
-              'windows': {'psh,pwsh': {'command': 'Get-ChildItem C:\\Users '
-                                                  '-Recurse -Include '
-                                                  '*.#{file.sensitive.extension} '
-                                                  '-ErrorAction '
-                                                  "'SilentlyContinue' | "
-                                                  'foreach {$_.FullName} | '
-                                                  'Select-Object -first 5;\n'
-                                                  'exit 0;\n',
-                                       'parsers': {'plugins.stockpile.app.parsers.basic': [{'source': 'host.file.path'}]}}}},
+ {'command': 'curl #{remote.host.socket}\n',
+  'name': 'See the raw content of a socket',
+  'source': 'data/abilities/collection/89955f55-529d-4d58-bed4-fed9e42515ec.yml'},
+ {'command': "find /Users -name '*.#{file.sensitive.extension}' -type f -not "
+             "-path '*/\\.*' -size -500k 2>/dev/null | head -5\n",
   'name': 'Locate files deemed sensitive',
   'source': 'data/abilities/collection/90c2efaa-8205-480d-8bb6-61d90dbaf81b.yml'},
- {'command': {'darwin': {'sh': {'command': 'find $(echo ~#{host.user.name}) '
-                                           '-type f -size -500k -maxdepth 5 '
-                                           '-exec grep -EIr -o "(($(echo '
-                                           '#{domain.broadcast.ip} | cut -d. '
-                                           '-f-2))\\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)" '
-                                           '2>/dev/null {} \\;\n'}}},
+ {'command': 'Get-ChildItem C:\\Users -Recurse -Include '
+             "*.#{file.sensitive.extension} -ErrorAction 'SilentlyContinue' | "
+             'foreach {$_.FullName} | Select-Object -first 5;\n'
+             'exit 0;\n',
+  'name': 'Locate files deemed sensitive',
+  'source': 'data/abilities/collection/90c2efaa-8205-480d-8bb6-61d90dbaf81b.yml'},
+ {'command': "find / -name '*.#{file.sensitive.extension}' -type f -not -path "
+             "'*/\\.*' -size -500k 2>/dev/null | head -5\n",
+  'name': 'Locate files deemed sensitive',
+  'source': 'data/abilities/collection/90c2efaa-8205-480d-8bb6-61d90dbaf81b.yml'},
+ {'command': 'find $(echo ~#{host.user.name}) -type f -size -500k -maxdepth 5 '
+             '-exec grep -EIr -o "(($(echo #{domain.broadcast.ip} | cut -d. '
+             '-f-2))\\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)" '
+             '2>/dev/null {} \\;\n',
   'name': 'Grep for IP addresses in file system per user',
   'source': 'data/abilities/collection/d69e8660-62c9-431e-87eb-8cf6bd4e35cf.yml'},
  {'command': 'powershell/collection/get_sql_column_sample_data',

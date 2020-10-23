@@ -31,27 +31,38 @@ Utilities and commands that acquire this information include [netstat](https://a
 ## Potential Commands
 
 ```
-netstat -ano[b] 
 shell c:\windows\sysnative\netstat.exe -ano[b]
 post/windows/gather/tcpnetstat
+netstat -ano[b]
 net session | find / "\\"
-shell net session | find / "\\"
 post/windows/gather/enum_logged_on_users
+shell net session | find / "\\"
+netstat
+who -a
 netstat
 net use
 net sessions
-
 Get-NetTCPConnection
-
-netstat
-who -a
-
-{'windows': {'psh': {'command': 'netstat -ano;\nGet-NetTCPConnection'}}}
-{'darwin': {'sh': {'command': 'netstat -ant\n'}}, 'linux': {'sh': {'command': 'netstat -ant\n'}}, 'windows': {'psh': {'command': 'Get-NetTCPConnection\n'}}}
-powershell/situational_awareness/host/monitortcpconnections
+netstat -ano;
+Get-NetTCPConnection
+netstat -ant
+Get-NetTCPConnection
 powershell/situational_awareness/host/monitortcpconnections
 powershell/situational_awareness/network/powerview/get_rdp_session
-powershell/situational_awareness/network/powerview/get_rdp_session
+Dos
+C: \ Users \ Administrator> net use
+It will record a new network connection.
+
+List is empty.
+Dos
+C: \ Users \ Administrator> netstat
+
+Active connections
+
+  Protocol local address external address status
+Dos
+C: \ Users \ Administrator> net session
+List is empty.
 ```
 
 ## Commands Dataset
@@ -84,13 +95,16 @@ powershell/situational_awareness/network/powerview/get_rdp_session
  {'command': 'netstat\nwho -a\n',
   'name': None,
   'source': 'atomics/T1049/T1049.yaml'},
- {'command': {'windows': {'psh': {'command': 'netstat -ano;\n'
-                                             'Get-NetTCPConnection'}}},
+ {'command': 'netstat -ano;\nGet-NetTCPConnection',
   'name': 'Enumerates network connections',
   'source': 'data/abilities/discovery/613e0ffb-e6e8-4e86-b35d-10edd232679d.yml'},
- {'command': {'darwin': {'sh': {'command': 'netstat -ant\n'}},
-              'linux': {'sh': {'command': 'netstat -ant\n'}},
-              'windows': {'psh': {'command': 'Get-NetTCPConnection\n'}}},
+ {'command': 'netstat -ant\n',
+  'name': 'Find System Network Connections',
+  'source': 'data/abilities/discovery/638fb6bb-ba39-4285-93d1-7e4775b033a8.yml'},
+ {'command': 'netstat -ant\n',
+  'name': 'Find System Network Connections',
+  'source': 'data/abilities/discovery/638fb6bb-ba39-4285-93d1-7e4775b033a8.yml'},
+ {'command': 'Get-NetTCPConnection\n',
   'name': 'Find System Network Connections',
   'source': 'data/abilities/discovery/638fb6bb-ba39-4285-93d1-7e4775b033a8.yml'},
  {'command': 'powershell/situational_awareness/host/monitortcpconnections',
@@ -104,7 +118,25 @@ powershell/situational_awareness/network/powerview/get_rdp_session
   'source': 'https://github.com/dstepanic/attck_empire/blob/master/Empire_modules.xlsx?raw=true'},
  {'command': 'powershell/situational_awareness/network/powerview/get_rdp_session',
   'name': 'Empire Module Command',
-  'source': 'https://github.com/dstepanic/attck_empire/blob/master/Empire_modules.xlsx?raw=true'}]
+  'source': 'https://github.com/dstepanic/attck_empire/blob/master/Empire_modules.xlsx?raw=true'},
+ {'command': 'Dos\n'
+             'C: \\ Users \\ Administrator> netstat\n'
+             '\n'
+             'Active connections\n'
+             '\n'
+             '  Protocol local address external address status',
+  'name': 'Dos',
+  'source': 'https://raw.githubusercontent.com/12306Bro/Threathunting-book/master/{}'},
+ {'command': 'Dos\n'
+             'C: \\ Users \\ Administrator> net use\n'
+             'It will record a new network connection.\n'
+             '\n'
+             'List is empty.',
+  'name': 'Dos',
+  'source': 'https://raw.githubusercontent.com/12306Bro/Threathunting-book/master/{}'},
+ {'command': 'Dos\nC: \\ Users \\ Administrator> net session\nList is empty.',
+  'name': 'Dos',
+  'source': 'https://raw.githubusercontent.com/12306Bro/Threathunting-book/master/{}'}]
 ```
 
 ## Potential Detections
@@ -126,7 +158,112 @@ powershell/situational_awareness/network/powerview/get_rdp_session
            'contains "*net* use*"or process_command_line contains "*net* '
            'sessions*"or process_command_line contains "*net* file*"or '
            'process_command_line contains "*netstat*")or process_command_line '
-           'contains "*Get-NetTCPConnection*"'}]
+           'contains "*Get-NetTCPConnection*"'},
+ {'name': 'Yml',
+  'product': 'https://raw.githubusercontent.com/12306Bro/Threathunting-book/master/{}',
+  'query': 'Yml\n'
+           'title: windows system network link found\n'
+           'description: windows server 2016\n'
+           'references:\n'
+           'tags: T1049\n'
+           'status: experimental\n'
+           'author: 12306Bro\n'
+           'logsource:\n'
+           '    product: windows\n'
+           '    service: security\n'
+           'detection:\n'
+           '    selection1:\n'
+           '        EventID: 4688 # have created a new process.\n'
+           "        Newprocessname: 'C: \\ Windows \\ System32 \\ NETSTAT.EXE' "
+           '# process information> new process name\n'
+           "        Creatorprocessname: 'C: \\ windows \\ system32 \\ cmd.exe' "
+           '# Process Information> Creator Process Name\n'
+           '        Processcommandline: netstat # Process information> process '
+           'command line\n'
+           '    selection2:\n'
+           "        EventID: 4703 # a user's privileges to be adjusted.\n"
+           "        ProcessName: 'C: \\ Windows \\ System32 \\ NETSTAT.EXE' # "
+           'process information> process name\n'
+           "        EnabledPrivileges: 'SeDebugPrivilege' permission enabled "
+           '#\n'
+           '    selection3:\n'
+           '        EventID: 4689 # exited process\n'
+           "        ProcessName: 'C: \\ Windows \\ System32 \\ NETSTAT.EXE' # "
+           'process information> process name\n'
+           '    timeframe: last 5s # can be adjusted according to actual '
+           'situation\n'
+           '    condition: all of them\n'
+           'level: medium'},
+ {'name': 'Yml',
+  'product': 'https://raw.githubusercontent.com/12306Bro/Threathunting-book/master/{}',
+  'query': 'Yml\n'
+           'title: windows system network link found\n'
+           'description: windows server 2016\n'
+           'references:\n'
+           'tags: T1049\n'
+           'status: experimental\n'
+           'author: 12306Bro\n'
+           'logsource:\n'
+           '    product: windows\n'
+           '    service: security\n'
+           'detection:\n'
+           '    selection1:\n'
+           '        EventID: 4688 # have created a new process.\n'
+           "        Newprocessname: 'C: \\ Windows \\ System32 \\ net.exe' # "
+           'process information> new process name\n'
+           "        Creatorprocessname: 'C: \\ windows \\ system32 \\ cmd.exe' "
+           '# Process Information> Creator Process Name\n'
+           '        Processcommandline: net use # Process Information> process '
+           'command line\n'
+           '    selection2:\n'
+           '        EventID: 4689 # exited process\n'
+           "        ProcessName: 'C: \\ Windows \\ System32 \\ net.exe' # "
+           'process information> process name\n'
+           '    timeframe: last 5s # can be adjusted according to actual '
+           'situation\n'
+           '    condition: all of them\n'
+           'level: medium'},
+ {'name': 'Yml',
+  'product': 'https://raw.githubusercontent.com/12306Bro/Threathunting-book/master/{}',
+  'query': 'Yml\n'
+           'title: windows system network link found\n'
+           'description: windows server 2016\n'
+           'references:\n'
+           'tags: T1049\n'
+           'status: experimental\n'
+           'author: 12306Bro\n'
+           'logsource:\n'
+           '    product: windows\n'
+           '    service: security\n'
+           'detection:\n'
+           '    selection1:\n'
+           '        EventID: 4688 # have created a new process.\n'
+           "        Newprocessname: 'C: \\ Windows \\ System32 \\ net.exe' # "
+           'process information> new process name\n'
+           "        Creatorprocessname: 'C: \\ windows \\ system32 \\ cmd.exe' "
+           '# Process Information> Creator Process Name\n'
+           '        Processcommandline: net session # Process Information> '
+           'process command line\n'
+           '    selection2:\n'
+           '        EventID: 4688 # have created a new process.\n'
+           "        Newprocessname: 'C: \\ Windows \\ System32 \\ net1.exe' # "
+           'process information> new process name\n'
+           "        Creatorprocessname: 'C: \\ Windows \\ System32 \\ net.exe' "
+           '# Process Information> Creator Process Name\n'
+           '        Processcommandline: C: \\ Windows \\ system32 \\ net1 '
+           'session # Process Information> process command line\n'
+           '    selection3:\n'
+           '        EventID: 4689 # exited process\n'
+           "        ProcessName: 'C: \\ Windows \\ System32 \\ net1.exe' # "
+           'process information> process name\n'
+           '    selection4:\n'
+           '        EventID: 4689 # exited process\n'
+           "        ProcessName: 'C: \\ Windows \\ System32 \\ net.exe' # "
+           'process information> process name\n'
+           '    timeframe: last 1m # can be adjusted according to actual '
+           'situation\n'
+           '    condition: all of them\n'
+           'level: medium'}]
 ```
 
 ## Raw Dataset

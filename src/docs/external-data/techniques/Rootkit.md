@@ -29,24 +29,11 @@ Rootkits or rootkit enabling functionality may reside at the user or kernel leve
 ## Potential Commands
 
 ```
-sudo insmod #{rootkit_path}
-
-sudo insmod PathToAtomicsFolder/T1014/bin/T1014.ko
-
-sudo insmod #{rootkit_path}
-
-sudo insmod #{rootkit_path}
-
-sudo modprobe #{rootkit_name}
-
-sudo modprobe #{rootkit_name}
-
-sudo modprobe T1014
-
-sudo modprobe #{rootkit_name}
-
 puppetstrings C:\Drivers\driver.sys
-
+sudo insmod PathToAtomicsFolder/T1014/bin/T1014.ko
+sudo modprobe T1014
+sudo insmod #{rootkit_path}
+sudo modprobe #{rootkit_name}
 ```
 
 ## Commands Dataset

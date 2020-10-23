@@ -47,7 +47,28 @@ Kerberos is an authentication protocol widely used in modern Windows domain envi
 ## Potential Queries
 
 ```json
-
+[{'name': 'Yml',
+  'product': 'https://raw.githubusercontent.com/12306Bro/Threathunting-book/master/{}',
+  'query': 'Yml\n'
+           'title: kerberos weak encryption\n'
+           'description: domain environment test\n'
+           'references: https://adsecurity.org/?p=3458\n'
+           'status: experimental\n'
+           'author: 12306Bro\n'
+           'logsource:\n'
+           '    product: windows\n'
+           '    service: security\n'
+           'detection:\n'
+           '    selection:\n'
+           '        EventID: 4769 #kerberos Service Ticket Request\n'
+           '        TicketOptions: 0x40810000 # Additional information> Ticket '
+           'Options\n'
+           '        TicketEncryptiontype: 0x17 # Additional information> '
+           'Ticket Encryption Type\n'
+           '    reduction:\n'
+           "        - ServiceName: '$ *' # service name> service information\n"
+           '    condition: selection and not reduction\n'
+           'level: medium'}]
 ```
 
 ## Raw Dataset

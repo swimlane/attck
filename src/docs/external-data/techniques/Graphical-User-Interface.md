@@ -41,14 +41,7 @@ The Graphical User Interfaces (GUI) is a common way to interact with an operatin
 ## Potential Detections
 
 ```json
-[{'data_source': ['4688 ', 'Process CMD Line']},
- {'data_source': ['4688', 'Process Execution']},
- {'data_source': ['4663', 'File monitoring']},
- {'data_source': ['B9', 'Binary file metadata']},
- {'data_source': ['4688 ', 'Process CMD Line']},
- {'data_source': ['4688', 'Process Execution']},
- {'data_source': ['4663', 'File monitoring']},
- {'data_source': ['LOG-MD - B9', 'Binary file metadata']}]
+
 ```
 
 ## Potential Queries

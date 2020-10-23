@@ -33,62 +33,19 @@ Use of a [Web Shell](https://attack.mitre.org/techniques/T1100) is one such way 
 ## Potential Commands
 
 ```
-powershell/persistence/misc/skeleton_key
-powershell/persistence/misc/skeleton_key
-powershell/persistence/powerbreach/deaduser
-powershell/persistence/powerbreach/deaduser
-powershell/persistence/powerbreach/eventlog
-powershell/persistence/powerbreach/eventlog
-powershell/persistence/powerbreach/resolver
-powershell/persistence/powerbreach/resolver
+
 ```
 
 ## Commands Dataset
 
 ```
-[{'command': 'powershell/persistence/misc/skeleton_key',
-  'name': 'Empire Module Command',
-  'source': 'https://github.com/dstepanic/attck_empire/blob/master/Empire_modules.xlsx?raw=true'},
- {'command': 'powershell/persistence/misc/skeleton_key',
-  'name': 'Empire Module Command',
-  'source': 'https://github.com/dstepanic/attck_empire/blob/master/Empire_modules.xlsx?raw=true'},
- {'command': 'powershell/persistence/powerbreach/deaduser',
-  'name': 'Empire Module Command',
-  'source': 'https://github.com/dstepanic/attck_empire/blob/master/Empire_modules.xlsx?raw=true'},
- {'command': 'powershell/persistence/powerbreach/deaduser',
-  'name': 'Empire Module Command',
-  'source': 'https://github.com/dstepanic/attck_empire/blob/master/Empire_modules.xlsx?raw=true'},
- {'command': 'powershell/persistence/powerbreach/eventlog',
-  'name': 'Empire Module Command',
-  'source': 'https://github.com/dstepanic/attck_empire/blob/master/Empire_modules.xlsx?raw=true'},
- {'command': 'powershell/persistence/powerbreach/eventlog',
-  'name': 'Empire Module Command',
-  'source': 'https://github.com/dstepanic/attck_empire/blob/master/Empire_modules.xlsx?raw=true'},
- {'command': 'powershell/persistence/powerbreach/resolver',
-  'name': 'Empire Module Command',
-  'source': 'https://github.com/dstepanic/attck_empire/blob/master/Empire_modules.xlsx?raw=true'},
- {'command': 'powershell/persistence/powerbreach/resolver',
-  'name': 'Empire Module Command',
-  'source': 'https://github.com/dstepanic/attck_empire/blob/master/Empire_modules.xlsx?raw=true'}]
+
 ```
 
 ## Potential Detections
 
 ```json
-[{'data_source': ['4688', 'Process Execution']},
- {'data_source': ['5156', 'Windows Firewall']},
- {'data_source': ['4663', 'File monitoring']},
- {'data_source': ['Login - 4624', 'Auth Logs']},
- {'data_source': ['LMD - B9', 'Binary file metadata']},
- {'data_source': ['Network protocol analysis']},
- {'data_source': ['Packet capture']},
- {'data_source': ['4688', 'Process Execution']},
- {'data_source': ['5156', 'Windows Firewall']},
- {'data_source': ['4663', 'File monitoring']},
- {'data_source': ['Login - 4624', 'Auth Logs']},
- {'data_source': ['LOG-MD - B9', 'Binary file metadata']},
- {'data_source': ['Network protocol analysis']},
- {'data_source': ['Packet capture']}]
+
 ```
 
 ## Potential Queries
@@ -100,30 +57,7 @@ powershell/persistence/powerbreach/resolver
 ## Raw Dataset
 
 ```json
-[{'Empire Module XLSX Sheet by dstepanic': {'ATT&CK Technique #1': 'T1108',
-                                            'ATT&CK Technique #2': '',
-                                            'Concatenate for Python Dictionary': '"powershell/persistence/misc/skeleton_key":  '
-                                                                                 '["T1108"],',
-                                            'Empire Module': 'powershell/persistence/misc/skeleton_key',
-                                            'Technique': 'Redundant Access'}},
- {'Empire Module XLSX Sheet by dstepanic': {'ATT&CK Technique #1': 'T1108',
-                                            'ATT&CK Technique #2': '',
-                                            'Concatenate for Python Dictionary': '"powershell/persistence/powerbreach/deaduser":  '
-                                                                                 '["T1108"],',
-                                            'Empire Module': 'powershell/persistence/powerbreach/deaduser',
-                                            'Technique': 'Redundant Access'}},
- {'Empire Module XLSX Sheet by dstepanic': {'ATT&CK Technique #1': 'T1108',
-                                            'ATT&CK Technique #2': '',
-                                            'Concatenate for Python Dictionary': '"powershell/persistence/powerbreach/eventlog":  '
-                                                                                 '["T1108"],',
-                                            'Empire Module': 'powershell/persistence/powerbreach/eventlog',
-                                            'Technique': 'Redundant Access'}},
- {'Empire Module XLSX Sheet by dstepanic': {'ATT&CK Technique #1': 'T1108',
-                                            'ATT&CK Technique #2': '',
-                                            'Concatenate for Python Dictionary': '"powershell/persistence/powerbreach/resolver":  '
-                                                                                 '["T1108"],',
-                                            'Empire Module': 'powershell/persistence/powerbreach/resolver',
-                                            'Technique': 'Redundant Access'}}]
+
 ```
 
 # Tactics

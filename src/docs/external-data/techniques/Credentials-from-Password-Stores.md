@@ -45,7 +45,39 @@
 ## Potential Queries
 
 ```json
-
+[{'name': 'Yml',
+  'product': 'https://raw.githubusercontent.com/12306Bro/Threathunting-book/master/{}',
+  'query': 'Yml\n'
+           'title: windows system web browser to obtain the voucher\n'
+           'description: windows server 2016 test results\n'
+           'references: No\n'
+           'tags: T1555-003\n'
+           'status: experimental\n'
+           'author: 12306Bro\n'
+           'logsource:\n'
+           '    product: windows\n'
+           '    service: security\n'
+           'detection:\n'
+           '    selection:\n'
+           '        EventID: 4663 # trying to access the object.\n'
+           '        Objectserver: Security # Object> Object Server\n'
+           '        Objecttype: file # Object> Object Type\n'
+           '        Objectname:\n'
+           "           - 'C: \\ users \\ * \\ appdata \\ roaming \\ opera "
+           "software \\ opera stable \\ login data' # Object> object name "
+           'Opera\n'
+           "           - 'C: \\ Users \\ IEUser \\ AppData \\ Roaming \\ "
+           "Mozilla \\ Firefox \\ Profiles \\ kushu3sd.default \\ key4.db' "
+           '#Firefox\n'
+           "           - 'C: \\ Users \\ IEUser \\ AppData \\ Roaming \\ "
+           "Mozilla \\ Firefox \\ Profiles \\ kushu3sd.default \\ logins.json' "
+           '#Firefox\n'
+           "           - 'C: \\ Users \\ IEUser \\ AppData \\ Local \\ Google "
+           "\\ Chrome \\ User Data \\ Default \\ Login Data' #Chrome\n"
+           '        Access: ReadData (or listdirectory) # access request '
+           'information> Access\n'
+           '    condition: selection\n'
+           'level: medium'}]
 ```
 
 ## Raw Dataset

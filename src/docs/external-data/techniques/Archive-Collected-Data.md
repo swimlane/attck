@@ -29,10 +29,8 @@ Both compression and encryption are done prior to exfiltration, and can be perfo
 ## Potential Commands
 
 ```
-dir $env:USERPROFILE -Recurse | Compress-Archive -DestinationPath #{output_file}
-
 dir #{input_file} -Recurse | Compress-Archive -DestinationPath $env:USERPROFILE\T1560-data-ps.zip
-
+dir $env:USERPROFILE -Recurse | Compress-Archive -DestinationPath #{output_file}
 ```
 
 ## Commands Dataset

@@ -41,7 +41,7 @@ A type-1 hypervisor is a software layer that sits between the guest operating sy
 ## Potential Detections
 
 ```json
-[{'data_source': ['System calls']}, {'data_source': ['System calls']}]
+
 ```
 
 ## Potential Queries

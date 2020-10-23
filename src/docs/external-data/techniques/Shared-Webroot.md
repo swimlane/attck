@@ -43,10 +43,7 @@ This mechanism of shared access and remote execution could be used for lateral m
 ## Potential Detections
 
 ```json
-[{'data_source': ['4663', 'File monitoring']},
- {'data_source': ['4688', 'Process Execution']},
- {'data_source': ['4663', 'File monitoring']},
- {'data_source': ['4688', 'Process Execution']}]
+
 ```
 
 ## Potential Queries

@@ -31,16 +31,14 @@ Sometimes a user's action may be required to open it for deobfuscation or decryp
 ## Potential Commands
 
 ```
-certutil -encode C:\Windows\System32\calc.exe %temp%\T1140_calc.txt
-certutil -decode %temp%\T1140_calc.txt %temp%\T1140_calc_decoded.exe
-
 copy %windir%\system32\certutil.exe %temp%\tcm.tmp
 %temp%\tcm.tmp -encode C:\Windows\System32\calc.exe %temp%\T1140_calc2.txt
 %temp%\tcm.tmp -decode %temp%\T1140_calc2.txt %temp%\T1140_calc2_decoded.exe
-
+certutil -encode C:\Windows\System32\calc.exe %temp%\T1140_calc.txt
+certutil -decode %temp%\T1140_calc.txt %temp%\T1140_calc_decoded.exe
 certutil.exe -decode
-certutil.exe-decode|-urlcache
 certutil.exe|-decode|-urlcache
+certutil.exe-decode|-urlcache
 ```
 
 ## Commands Dataset

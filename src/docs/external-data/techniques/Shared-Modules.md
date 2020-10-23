@@ -39,9 +39,9 @@ Adversaries may use this functionality as a way to execute arbitrary code on a v
 ## Potential Commands
 
 ```
-control.exe
 malware.dll
 rundll32.exe
+control.exe
 ```
 
 ## Commands Dataset

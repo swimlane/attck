@@ -33,33 +33,12 @@ Adversaries may also obfuscate commands executed from payloads or directly via a
 ## Potential Commands
 
 ```
-sh -c "echo ZWNobyBIZWxsbyBmcm9tIHRoZSBBdG9taWMgUmVkIFRlYW0= > /tmp/encoded.dat"
-cat /tmp/encoded.dat | base64 -d > /tmp/art.sh
-chmod +x /tmp/art.sh
-/tmp/art.sh
-
+"#{exe_payload}"
 $OriginalCommand = 'Write-Host "Hey, Atomic!"'
 $Bytes = [System.Text.Encoding]::Unicode.GetBytes($OriginalCommand)
 $EncodedCommand =[Convert]::ToBase64String($Bytes)
 $EncodedCommand
 powershell.exe -EncodedCommand $EncodedCommand
-
-$OriginalCommand = '#{powershell_command}'
-$Bytes = [System.Text.Encoding]::Unicode.GetBytes($OriginalCommand)
-$EncodedCommand =[Convert]::ToBase64String($Bytes)
-$EncodedCommand
-
-Set-ItemProperty -Force -Path HKCU:Software\Microsoft\Windows\CurrentVersion -Name #{registry_entry_storage} -Value $EncodedCommand
-powershell.exe -Command "IEX ([Text.Encoding]::UNICODE.GetString([Convert]::FromBase64String((gp HKCU:Software\Microsoft\Windows\CurrentVersion #{registry_entry_storage}).#{registry_entry_storage})))"
-
-$OriginalCommand = 'Write-Host "Hey, Atomic!"'
-$Bytes = [System.Text.Encoding]::Unicode.GetBytes($OriginalCommand)
-$EncodedCommand =[Convert]::ToBase64String($Bytes)
-$EncodedCommand
-
-Set-ItemProperty -Force -Path #{registry_key_storage} -Name #{registry_entry_storage} -Value $EncodedCommand
-powershell.exe -Command "IEX ([Text.Encoding]::UNICODE.GetString([Convert]::FromBase64String((gp #{registry_key_storage} #{registry_entry_storage}).#{registry_entry_storage})))"
-
 $OriginalCommand = '#{powershell_command}'
 $Bytes = [System.Text.Encoding]::Unicode.GetBytes($OriginalCommand)
 $EncodedCommand =[Convert]::ToBase64String($Bytes)
@@ -67,13 +46,67 @@ $EncodedCommand
 
 Set-ItemProperty -Force -Path #{registry_key_storage} -Name Debug -Value $EncodedCommand
 powershell.exe -Command "IEX ([Text.Encoding]::UNICODE.GetString([Convert]::FromBase64String((gp #{registry_key_storage} Debug).Debug)))"
+$OriginalCommand = 'Write-Host "Hey, Atomic!"'
+$Bytes = [System.Text.Encoding]::Unicode.GetBytes($OriginalCommand)
+$EncodedCommand =[Convert]::ToBase64String($Bytes)
+$EncodedCommand
 
+Set-ItemProperty -Force -Path #{registry_key_storage} -Name #{registry_entry_storage} -Value $EncodedCommand
+powershell.exe -Command "IEX ([Text.Encoding]::UNICODE.GetString([Convert]::FromBase64String((gp #{registry_key_storage} #{registry_entry_storage}).#{registry_entry_storage})))"
+$OriginalCommand = '#{powershell_command}'
+$Bytes = [System.Text.Encoding]::Unicode.GetBytes($OriginalCommand)
+$EncodedCommand =[Convert]::ToBase64String($Bytes)
+$EncodedCommand
+
+Set-ItemProperty -Force -Path HKCU:Software\Microsoft\Windows\CurrentVersion -Name #{registry_entry_storage} -Value $EncodedCommand
+powershell.exe -Command "IEX ([Text.Encoding]::UNICODE.GetString([Convert]::FromBase64String((gp HKCU:Software\Microsoft\Windows\CurrentVersion #{registry_entry_storage}).#{registry_entry_storage})))"
 "%temp%\temp_T1027.zip\T1027.exe"
-
-"#{exe_payload}"
-
+sh -c "echo ZWNobyBIZWxsbyBmcm9tIHRoZSBBdG9taWMgUmVkIFRlYW0= > /tmp/encoded.dat"
+cat /tmp/encoded.dat | base64 -d > /tmp/art.sh
+chmod +x /tmp/art.sh
+/tmp/art.sh
 [a-z0-9]{1}.exe
-*.exe \*.exe\:Zone.Identifier:$DATA" 
+*.exe \*.exe\:Zone.Identifier:$DATA"
+Log
+Event ID: 4688
+Process information:
+New Process ID: 0xa9c
+New Process Name: C: \ Windows \ Microsoft.NET \ Framework64 \ v4.0.30319 \ csc.exe
+Token Type lift: TokenElevationTypeDefault (1)
+Creator Process ID: 0xaa0
+Process the command line: C: \ Windows \ Microsoft.NET \ Framework64 \ v4.0.30319 \ csc.exe /r:System.EnterpriseServices.dll /r:System.IO.Compression.dll / target: library /out:1.exe / platform: x64 / unsafe C: \ Users \ Administrator \ Desktop \ a \ 1.cs
+
+Event ID: 4688
+Process information:
+New Process ID: 0x984
+New Process Name: C: \ Windows \ Microsoft.NET \ Framework64 \ v4.0.30319 \ InstallUtil.exe
+Token Type lift: TokenElevationTypeDefault (1)
+Creator Process ID: 0xaa0
+Process the command line: C: \ Windows \ Microsoft.NET \ Framework64 \ v4.0.30319 \ InstallUtil.exe / logfile = / LogToConsole = false / U C: \ Users \ Administrator \ Desktop \ a \ 1.exe
+Log
+Event-ID: 4663
+Trying to access the object.
+
+Object:
+ Security ID: SYSTEM
+ Account name: 12306BR0-PC $
+ Account Domain: WORKGROUP
+ Login ID: 0x3e7
+
+Object:
+ Object Server: Security
+ Object Type: File
+ Object Name: C: \ Windows \ System32 \ mapi32.dll
+ Handle ID: 0x4e8
+
+Process information:
+ Process ID: 0x128
+ Process Name: C: \ Windows \ servicing \ TrustedInstaller.exe
+
+Access request information:
+ Access: DELETE
+
+ Access Mask: 0x10000
 ```
 
 ## Commands Dataset
@@ -147,7 +180,61 @@ powershell.exe -Command "IEX ([Text.Encoding]::UNICODE.GetString([Convert]::From
   'source': 'Threat Hunting Tables'},
  {'command': '*.exe \\*.exe\\:Zone.Identifier:$DATA" ',
   'name': None,
-  'source': 'Threat Hunting Tables'}]
+  'source': 'Threat Hunting Tables'},
+ {'command': 'Log\n'
+             'Event ID: 4688\n'
+             'Process information:\n'
+             'New Process ID: 0xa9c\n'
+             'New Process Name: C: \\ Windows \\ Microsoft.NET \\ Framework64 '
+             '\\ v4.0.30319 \\ csc.exe\n'
+             'Token Type lift: TokenElevationTypeDefault (1)\n'
+             'Creator Process ID: 0xaa0\n'
+             'Process the command line: C: \\ Windows \\ Microsoft.NET \\ '
+             'Framework64 \\ v4.0.30319 \\ csc.exe '
+             '/r:System.EnterpriseServices.dll /r:System.IO.Compression.dll / '
+             'target: library /out:1.exe / platform: x64 / unsafe C: \\ Users '
+             '\\ Administrator \\ Desktop \\ a \\ 1.cs\n'
+             '\n'
+             'Event ID: 4688\n'
+             'Process information:\n'
+             'New Process ID: 0x984\n'
+             'New Process Name: C: \\ Windows \\ Microsoft.NET \\ Framework64 '
+             '\\ v4.0.30319 \\ InstallUtil.exe\n'
+             'Token Type lift: TokenElevationTypeDefault (1)\n'
+             'Creator Process ID: 0xaa0\n'
+             'Process the command line: C: \\ Windows \\ Microsoft.NET \\ '
+             'Framework64 \\ v4.0.30319 \\ InstallUtil.exe / logfile = / '
+             'LogToConsole = false / U C: \\ Users \\ Administrator \\ Desktop '
+             '\\ a \\ 1.exe',
+  'name': 'Log',
+  'source': 'https://raw.githubusercontent.com/12306Bro/Threathunting-book/master/{}'},
+ {'command': 'Log\n'
+             'Event-ID: 4663\n'
+             'Trying to access the object.\n'
+             '\n'
+             'Object:\n'
+             ' Security ID: SYSTEM\n'
+             ' Account name: 12306BR0-PC $\n'
+             ' Account Domain: WORKGROUP\n'
+             ' Login ID: 0x3e7\n'
+             '\n'
+             'Object:\n'
+             ' Object Server: Security\n'
+             ' Object Type: File\n'
+             ' Object Name: C: \\ Windows \\ System32 \\ mapi32.dll\n'
+             ' Handle ID: 0x4e8\n'
+             '\n'
+             'Process information:\n'
+             ' Process ID: 0x128\n'
+             ' Process Name: C: \\ Windows \\ servicing \\ '
+             'TrustedInstaller.exe\n'
+             '\n'
+             'Access request information:\n'
+             ' Access: DELETE\n'
+             '\n'
+             ' Access Mask: 0x10000',
+  'name': 'Log',
+  'source': 'https://raw.githubusercontent.com/12306Bro/Threathunting-book/master/{}'}]
 ```
 
 ## Potential Detections
@@ -226,7 +313,61 @@ powershell.exe -Command "IEX ([Text.Encoding]::UNICODE.GetString([Convert]::From
   'product': 'Azure Sentinel',
   'query': 'Sysmon| where EventID == 1 and (process_path contains '
            '"certutil.exe" and process_command_line contains "encode")or '
-           'process_command_line contains "ToBase64String"'}]
+           'process_command_line contains "ToBase64String"'},
+ {'name': 'Yml',
+  'product': 'https://raw.githubusercontent.com/12306Bro/Threathunting-book/master/{}',
+  'query': 'Yml\n'
+           'title: Ping Hex IP\n'
+           'description: win7 simulation test results\n'
+           'references:\n'
+           '    - '
+           'https://github.com/Neo23x0/sigma/blob/master/rules/windows/process_creation/win_susp_ping_hex_ip.yml\n'
+           'status: experimental\n'
+           'author: 12306Bro\n'
+           'logsource:\n'
+           'product: windows\n'
+           'service: security\n'
+           'detection:\n'
+           '    selection:\n'
+           '        CommandLine:\n'
+           "            - '* \\ ping.exe 0x *'\n"
+           "            - '* \\ ping 0x *'\n"
+           '    condition: selection\n'
+           'level: high'},
+ {'name': 'Yml',
+  'product': 'https://raw.githubusercontent.com/12306Bro/Threathunting-book/master/{}',
+  'query': 'Yml\n'
+           'title: Use secure deletion SDelete\n'
+           'status: experimental\n'
+           'description: When using the tool to delete files detected SDelete '
+           'rename the file\n'
+           'author: 12306Br0 (test + translation)\n'
+           'date: 2020/06/09\n'
+           'references:\n'
+           '    - https://jpcertcc.github.io/ToolAnalysisResultSheet\n'
+           '    - https://www.jpcert.or.jp/english/pub/sr/ir_research.html\n'
+           '    - '
+           'https://technet.microsoft.com/en-us/en-en/sysinternals/sdelete.aspx\n'
+           'tags:\n'
+           '    - attack.defense_evasion\n'
+           '    - attack.t1027\n'
+           'logsource:\n'
+           '    product: windows\n'
+           '    service: security\n'
+           'detection:\n'
+           '    selection:\n'
+           '        EventID:\n'
+           '            --4656\n'
+           '            --4663\n'
+           '            --4658\n'
+           '        ObjectName:\n'
+           "            - '* .AAA'\n"
+           "            - '* .ZZZ'\n"
+           '    condition: selection\n'
+           'falsepositives:\n'
+           '    - legitimate use SDelete, test results are not satisfactory, '
+           'it is recommended to use caution\n'
+           'level: low'}]
 ```
 
 ## Raw Dataset

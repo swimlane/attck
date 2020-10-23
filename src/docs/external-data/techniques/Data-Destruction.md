@@ -31,14 +31,10 @@ To maximize impact on the target organization in operations where network-wide a
 ## Potential Commands
 
 ```
-Invoke-Expression -Command "$env:TEMP\Sdelete\sdelete.exe -accepteula #{file_to_delete}"
-
-Invoke-Expression -Command "#{sdelete_exe} -accepteula $env:TEMP\T1485.txt"
-
-dd of=#{file_to_overwrite} if=/dev/zero
-
 dd of=/var/log/syslog if=#{overwrite_source}
-
+dd of=#{file_to_overwrite} if=/dev/zero
+Invoke-Expression -Command "#{sdelete_exe} -accepteula $env:TEMP\T1485.txt"
+Invoke-Expression -Command "$env:TEMP\Sdelete\sdelete.exe -accepteula #{file_to_delete}"
 ```
 
 ## Commands Dataset

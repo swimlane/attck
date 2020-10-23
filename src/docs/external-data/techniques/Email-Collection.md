@@ -28,20 +28,12 @@
 
 ```
 powershell/management/mailraider/disable_security
-powershell/management/mailraider/disable_security
-powershell/management/mailraider/get_emailitems
 powershell/management/mailraider/get_emailitems
 powershell/management/mailraider/get_subfolders
-powershell/management/mailraider/get_subfolders
-powershell/management/mailraider/mail_search
 powershell/management/mailraider/mail_search
 powershell/management/mailraider/search_gal
-powershell/management/mailraider/search_gal
-powershell/management/mailraider/send_mail
 powershell/management/mailraider/send_mail
 powershell/management/mailraider/view_email
-powershell/management/mailraider/view_email
-python/collection/osx/search_email
 python/collection/osx/search_email
 ```
 

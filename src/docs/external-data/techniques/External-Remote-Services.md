@@ -48,7 +48,61 @@ Access to [Valid Accounts](https://attack.mitre.org/techniques/T1078) to use the
 ## Potential Queries
 
 ```json
-
+[{'name': 'Yml',
+  'product': 'https://raw.githubusercontent.com/12306Bro/Threathunting-book/master/{}',
+  'query': 'Yml\n'
+           'title: landing from the public network failure behavior\n'
+           'description: log on from a public IP network boundary may indicate '
+           'firewall or configuration errors.\n'
+           'author: NVISO 12306Br0 (translation + test)\n'
+           'date: 2020/05/06\n'
+           'tags:\n'
+           '    - attack.initial_access\n'
+           '    - attack.persistence\n'
+           '    - attack.t1078\n'
+           '    - attack.t1190\n'
+           '    - attack.t1133\n'
+           'logsource:\n'
+           '    product: windows\n'
+           '    service: security\n'
+           'detection:\n'
+           '    selection:\n'
+           '        EventID: 4625 # landing failed\n'
+           '    unknown:\n'
+           "        IpAddress | contains: '-'\n"
+           '    privatev4:\n'
+           '        IpAddress | startswith:\n'
+           "            -. '10 '# 10.0.0.0 / 8\n"
+           "            - '. 192.168' # 192.168.0.0 / 16\n"
+           "            - '. 172.16' # 172.16.0.0 / 12\n"
+           "            - '172.17.'\n"
+           "            - '172.18.'\n"
+           "            - '172.19.'\n"
+           "            - '172.20.'\n"
+           "            - '172.21.'\n"
+           "            - '172.22.'\n"
+           "            - '172.23.'\n"
+           "            - '172.24.'\n"
+           "            - '172.25.'\n"
+           "            - '172.26.'\n"
+           "            - '172.27.'\n"
+           "            - '172.28.'\n"
+           "            - '172.29.'\n"
+           "            - '172.30.'\n"
+           "            - '172.31.'\n"
+           "            - '127.' # 127.0.0.0 / 8\n"
+           "            - '. 169.254' # 169.254.0.0 / 16\n"
+           '    privatev6:\n'
+           "        - IpAddress: ':: 1' #loopback\n"
+           '        - IpAddress | startswith:\n'
+           "            - 'fe80 ::' # link-local\n"
+           "            - 'fc00 ::' #unique local\n"
+           '    condition: selection and not (unknown or privatev4 or '
+           'privatev6)\n'
+           'falsepositives:\n'
+           '    - legal attempt to log on the Internet\n'
+           '    - IPv4 to IPv6 mapping of IP\n'
+           'level: medium'}]
 ```
 
 ## Raw Dataset

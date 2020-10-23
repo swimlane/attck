@@ -54,71 +54,44 @@ wmic.exe /node:"192.168.0.1" service where (caption like "%sql server (%")
 wmic.exe get-wmiobject -class "win32_share" -namespace "root\CIMV2" -computer "targetname"
 nltest.exe
 powershell/management/get_domain_sid
-powershell/management/get_domain_sid
-powershell/management/sid_to_user
 powershell/management/sid_to_user
 powershell/management/user_to_sid
-powershell/management/user_to_sid
-powershell/situational_awareness/network/get_spn
 powershell/situational_awareness/network/get_spn
 powershell/situational_awareness/network/powerview/find_foreign_group
-powershell/situational_awareness/network/powerview/find_foreign_group
-powershell/situational_awareness/network/powerview/find_foreign_user
 powershell/situational_awareness/network/powerview/find_foreign_user
 powershell/situational_awareness/network/powerview/find_gpo_computer_admin
-powershell/situational_awareness/network/powerview/find_gpo_computer_admin
-powershell/situational_awareness/network/powerview/find_gpo_location
 powershell/situational_awareness/network/powerview/find_gpo_location
 powershell/situational_awareness/network/powerview/find_localadmin_access
-powershell/situational_awareness/network/powerview/find_localadmin_access
-powershell/situational_awareness/network/powerview/find_managed_security_group
 powershell/situational_awareness/network/powerview/find_managed_security_group
 powershell/situational_awareness/network/powerview/get_gpo_computer
-powershell/situational_awareness/network/powerview/get_gpo_computer
-powershell/situational_awareness/network/powerview/get_group
 powershell/situational_awareness/network/powerview/get_group
 powershell/situational_awareness/network/powerview/get_group_member
-powershell/situational_awareness/network/powerview/get_group_member
-powershell/situational_awareness/network/powerview/get_localgroup
 powershell/situational_awareness/network/powerview/get_localgroup
 powershell/situational_awareness/network/powerview/get_loggedon
-powershell/situational_awareness/network/powerview/get_loggedon
-powershell/situational_awareness/network/powerview/get_ou
 powershell/situational_awareness/network/powerview/get_ou
 powershell/situational_awareness/network/powerview/get_user
-powershell/situational_awareness/network/powerview/get_user
-powershell/situational_awareness/network/powerview/user_hunter
 powershell/situational_awareness/network/powerview/user_hunter
 python/situational_awareness/network/active_directory/dscl_get_groupmembers
-python/situational_awareness/network/active_directory/dscl_get_groupmembers
-python/situational_awareness/network/active_directory/dscl_get_groups
 python/situational_awareness/network/active_directory/dscl_get_groups
 python/situational_awareness/network/active_directory/dscl_get_users
-python/situational_awareness/network/active_directory/dscl_get_users
-python/situational_awareness/network/active_directory/get_groupmembers
 python/situational_awareness/network/active_directory/get_groupmembers
 python/situational_awareness/network/active_directory/get_groupmemberships
-python/situational_awareness/network/active_directory/get_groupmemberships
-python/situational_awareness/network/active_directory/get_groups
 python/situational_awareness/network/active_directory/get_groups
 python/situational_awareness/network/active_directory/get_ous
-python/situational_awareness/network/active_directory/get_ous
-python/situational_awareness/network/active_directory/get_userinformation
 python/situational_awareness/network/active_directory/get_userinformation
 python/situational_awareness/network/active_directory/get_users
-python/situational_awareness/network/active_directory/get_users
-Atomic Test #1 - Enumerate all accounts
 cat /etc/passwd > #{output_file}
-Atomic Test #2 - View sudoers access
-cat /etc/sudoers > #{output_file}
-Atomic Test #3 - View accounts with UID 0
-username=$(echo $HOME | awk -F'/' '{print $3}') && lsof -u $username
-lsof $USER
+Atomic Test #1 - Enumerate all accounts
 Atomic Test #4 - Show if a user account has ever logger in remotely
-lastlog > #{output_file}
-Atomic Test #5 - Enumerate users and groups
-groups
 id
+lastlog > #{output_file}
+cat /etc/sudoers > #{output_file}
+lsof $USER
+Atomic Test #2 - View sudoers access
+username=$(echo $HOME | awk -F'/' '{print $3}') && lsof -u $username
+groups
+Atomic Test #5 - Enumerate users and groups
+Atomic Test #3 - View accounts with UID 0
 ```
 
 ## Commands Dataset

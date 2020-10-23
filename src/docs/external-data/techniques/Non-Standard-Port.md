@@ -27,14 +27,10 @@
 ## Potential Commands
 
 ```
-Test-NetConnection -ComputerName #{domain} -port 8081
-
-Test-NetConnection -ComputerName google.com -port #{port}
-
-telnet #{domain} 8081
-
 telnet google.com #{port}
-
+Test-NetConnection -ComputerName #{domain} -port 8081
+telnet #{domain} 8081
+Test-NetConnection -ComputerName google.com -port #{port}
 ```
 
 ## Commands Dataset

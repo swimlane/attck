@@ -27,13 +27,13 @@
 ## Potential Commands
 
 ```
-C:\Windows\Microsoft.NET\Framework\v4.0.30319\csc.exe -out:#{output_file_name} PathToAtomicsFolder\T1010\src\T1010.cs
-#{output_file_name}
-
 C:\Windows\Microsoft.NET\Framework\v4.0.30319\csc.exe -out:%TEMP%\T1010.exe #{input_source_code}
 %TEMP%\T1010.exe
-
-{'windows': {'psh': {'command': '$x = Get-Process | Where-Object {$_.MainWindowTitle -ne ""} | Select-Object MainWindowTitle;\n$a = New-Object -com "Shell.Application"; $b = $a.windows() | select-object LocationName;\nwrite-host ($x | Format-List | Out-String) ($b | Format-List | Out-String)'}}}
+C:\Windows\Microsoft.NET\Framework\v4.0.30319\csc.exe -out:#{output_file_name} PathToAtomicsFolder\T1010\src\T1010.cs
+#{output_file_name}
+$x = Get-Process | Where-Object {$_.MainWindowTitle -ne ""} | Select-Object MainWindowTitle;
+$a = New-Object -com "Shell.Application"; $b = $a.windows() | select-object LocationName;
+write-host ($x | Format-List | Out-String) ($b | Format-List | Out-String)
 ```
 
 ## Commands Dataset
@@ -50,16 +50,12 @@ C:\Windows\Microsoft.NET\Framework\v4.0.30319\csc.exe -out:%TEMP%\T1010.exe #{in
              '%TEMP%\\T1010.exe\n',
   'name': None,
   'source': 'atomics/T1010/T1010.yaml'},
- {'command': {'windows': {'psh': {'command': '$x = Get-Process | Where-Object '
-                                             '{$_.MainWindowTitle -ne ""} | '
-                                             'Select-Object MainWindowTitle;\n'
-                                             '$a = New-Object -com '
-                                             '"Shell.Application"; $b = '
-                                             '$a.windows() | select-object '
-                                             'LocationName;\n'
-                                             'write-host ($x | Format-List | '
-                                             'Out-String) ($b | Format-List | '
-                                             'Out-String)'}}},
+ {'command': '$x = Get-Process | Where-Object {$_.MainWindowTitle -ne ""} | '
+             'Select-Object MainWindowTitle;\n'
+             '$a = New-Object -com "Shell.Application"; $b = $a.windows() | '
+             'select-object LocationName;\n'
+             'write-host ($x | Format-List | Out-String) ($b | Format-List | '
+             'Out-String)',
   'name': 'Extracts the names of all open non-explorer windows, and the '
           'locations of all explorer windows.',
   'source': 'data/abilities/discovery/5c65eec8-4839-4713-a4e1-86b2e75d1927.yml'}]
@@ -79,7 +75,32 @@ C:\Windows\Microsoft.NET\Framework\v4.0.30319\csc.exe -out:%TEMP%\T1010.exe #{in
 ## Potential Queries
 
 ```json
-
+[{'name': 'Yml',
+  'product': 'https://raw.githubusercontent.com/12306Bro/Threathunting-book/master/{}',
+  'query': 'Yml\n'
+           'title: windows local Powershell command execution, enumerate the '
+           'application window\n'
+           'description: windows server 2016\n'
+           'references: No\n'
+           'tags: T1010\n'
+           'status: experimental\n'
+           'author: 12306Bro\n'
+           'logsource:\n'
+           '    product: windows\n'
+           '    service: powershell\n'
+           'detection:\n'
+           '    selection:\n'
+           '        EventID: 4104 # remote command execution\n'
+           '        message:\n'
+           "          - 'get-process | where-object {. $ _ Mainwindowtitle -ne "
+           '""} | Select-Object mainwindowtitle\' # command line parameters '
+           'based on the detection, the detection rate is low\n'
+           '          -. [Activator] :: CreateInstance ([type] :: '
+           'GetTypeFromCLSID ( "13709620-C279-11CE-A49E-444553540000")) '
+           'windows () # command line parameters based on the detection, the '
+           'detection rate is low\n'
+           '    condition: selection\n'
+           'level: low'}]
 ```
 
 ## Raw Dataset

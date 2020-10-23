@@ -33,26 +33,30 @@ Network sniffing may also reveal configuration details, such as running services
 ```
 tcpdump -c 5 -nnni ens33
 tshark -c 5 -i ens33
-
+netsh trace start capture=yes tracefile=%temp%\trace.etl maxsize=10
+"c:\Program Files\Wireshark\tshark.exe" -i #{interface} -c 5
 sudo tcpdump -c 5 -nnni en0A    
 if [ -x "$(command -v tshark)" ]; then sudo tshark -c 5 -i en0A; fi;
-
 "c:\Program Files\Wireshark\tshark.exe" -i Ethernet -c 5
-
-"c:\Program Files\Wireshark\tshark.exe" -i #{interface} -c 5
-
-"c:\Program Files\Wireshark\tshark.exe" -i #{interface} -c 5
-
-netsh trace start capture=yes tracefile=%temp%\trace.etl maxsize=10
-{'windows': {'psh': {'timeout': 80, 'command': '$path = "$ENV:UserProfile\\Desktop\\pcap.etl";\nNew-NetEventSession -Name "PCAP" -CaptureMode SaveToFile -LocalFilePath $path;\nAdd-NetEventProvider -Name "Microsoft-Windows-TCPIP" -SessionName "PCAP";\nStart-NetEventSession -Name "PCAP";\nStart-Sleep -s 60;\nStop-NetEventSession -Name "PCAP";\nif (Test-Path $path) {\n  echo $path;\n  exit 0;\n} else {\n  echo "Failed to generate PCAP file.";\n  exit 1;\n};\n', 'cleanup': 'Remove-NetEventSession -Name "PCAP";\nRemove-Item $ENV:UserProfile\\Desktop\\pcap.etl;\n'}}, 'darwin': {'sh': {'command': 'tcpdump -i en0 & sleep 5; kill $!\n'}}}
-powershell/collection/packet_capture
+tcpdump -i en0 & sleep 5; kill $!
+$path = "$ENV:UserProfile\Desktop\pcap.etl";
+New-NetEventSession -Name "PCAP" -CaptureMode SaveToFile -LocalFilePath $path;
+Add-NetEventProvider -Name "Microsoft-Windows-TCPIP" -SessionName "PCAP";
+Start-NetEventSession -Name "PCAP";
+Start-Sleep -s 60;
+Stop-NetEventSession -Name "PCAP";
+if (Test-Path $path) {
+  echo $path;
+  exit 0;
+} else {
+  echo "Failed to generate PCAP file.";
+  exit 1;
+};
 powershell/collection/packet_capture
 python/collection/linux/sniffer
-python/collection/linux/sniffer
 python/collection/osx/sniffer
-python/collection/osx/sniffer
-tcpdump -c 5 -nnni #{interface}
 tshark -c 5 -i #{interface}
+tcpdump -c 5 -nnni #{interface}
 ```
 
 ## Commands Dataset
@@ -81,34 +85,24 @@ tshark -c 5 -i #{interface}
              'maxsize=10',
   'name': None,
   'source': 'atomics/T1040/T1040.yaml'},
- {'command': {'darwin': {'sh': {'command': 'tcpdump -i en0 & sleep 5; kill '
-                                           '$!\n'}},
-              'windows': {'psh': {'cleanup': 'Remove-NetEventSession -Name '
-                                             '"PCAP";\n'
-                                             'Remove-Item '
-                                             '$ENV:UserProfile\\Desktop\\pcap.etl;\n',
-                                  'command': '$path = '
-                                             '"$ENV:UserProfile\\Desktop\\pcap.etl";\n'
-                                             'New-NetEventSession -Name "PCAP" '
-                                             '-CaptureMode SaveToFile '
-                                             '-LocalFilePath $path;\n'
-                                             'Add-NetEventProvider -Name '
-                                             '"Microsoft-Windows-TCPIP" '
-                                             '-SessionName "PCAP";\n'
-                                             'Start-NetEventSession -Name '
-                                             '"PCAP";\n'
-                                             'Start-Sleep -s 60;\n'
-                                             'Stop-NetEventSession -Name '
-                                             '"PCAP";\n'
-                                             'if (Test-Path $path) {\n'
-                                             '  echo $path;\n'
-                                             '  exit 0;\n'
-                                             '} else {\n'
-                                             '  echo "Failed to generate PCAP '
-                                             'file.";\n'
-                                             '  exit 1;\n'
-                                             '};\n',
-                                  'timeout': 80}}},
+ {'command': '$path = "$ENV:UserProfile\\Desktop\\pcap.etl";\n'
+             'New-NetEventSession -Name "PCAP" -CaptureMode SaveToFile '
+             '-LocalFilePath $path;\n'
+             'Add-NetEventProvider -Name "Microsoft-Windows-TCPIP" '
+             '-SessionName "PCAP";\n'
+             'Start-NetEventSession -Name "PCAP";\n'
+             'Start-Sleep -s 60;\n'
+             'Stop-NetEventSession -Name "PCAP";\n'
+             'if (Test-Path $path) {\n'
+             '  echo $path;\n'
+             '  exit 0;\n'
+             '} else {\n'
+             '  echo "Failed to generate PCAP file.";\n'
+             '  exit 1;\n'
+             '};\n',
+  'name': 'Perform a packet capture',
+  'source': 'data/abilities/credential-access/1b4fb81c-8090-426c-93ab-0a633e7a16a7.yml'},
+ {'command': 'tcpdump -i en0 & sleep 5; kill $!\n',
   'name': 'Perform a packet capture',
   'source': 'data/abilities/credential-access/1b4fb81c-8090-426c-93ab-0a633e7a16a7.yml'},
  {'command': 'powershell/collection/packet_capture',

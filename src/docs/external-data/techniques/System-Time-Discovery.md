@@ -29,12 +29,24 @@ System time information may be gathered in a number of ways, such as with [Net](
 ## Potential Commands
 
 ```
+Get-Date
 net time \\localhost
 w32tm /tz
+date -u +"%Y-%m-%dT%H:%M:%SZ"
+Get-Date -UFormat '+%Y-%m-%dT%H:%M:%SZ'
+Dos
+C: \ Windows \ system32> net time \\ ICBC
+Current time \\ ICBC is 2019/11/10 20:09:50
 
-Get-Date
+The command completed successfully.
+Dos
+Microsoft Windows [Version 10.0.14393]
+(C) 2016 Microsoft Corporation. all rights reserved.
 
-{'darwin': {'sh': {'command': 'date -u +"%Y-%m-%dT%H:%M:%SZ"\n', 'parsers': {'plugins.stockpile.app.parsers.basic': [{'source': 'host.current.time'}]}}}, 'linux': {'sh': {'command': 'date -u +"%Y-%m-%dT%H:%M:%SZ"\n', 'parsers': {'plugins.stockpile.app.parsers.basic': [{'source': 'host.current.time'}]}}}, 'windows': {'psh': {'command': "Get-Date -UFormat '+%Y-%m-%dT%H:%M:%SZ'\n", 'parsers': {'plugins.stockpile.app.parsers.basic': [{'source': 'host.current.time'}]}}}}
+C: \ Users \ Administrator> w32tm / tz
+Time zone: Current: TIME_ZONE_ID_UNKNOWN deviating: -480 minutes (UTC = local time + Bias)
+  [Standard name: "China Standard Time" partial amount: 0 Date :( unspecified)]
+  [Daylight Saving Time Name: "China Daylight Saving Time" partial amount: -60 points :( date not specified)]
 ```
 
 ## Commands Dataset
@@ -44,15 +56,35 @@ Get-Date
   'name': None,
   'source': 'atomics/T1124/T1124.yaml'},
  {'command': 'Get-Date\n', 'name': None, 'source': 'atomics/T1124/T1124.yaml'},
- {'command': {'darwin': {'sh': {'command': 'date -u +"%Y-%m-%dT%H:%M:%SZ"\n',
-                                'parsers': {'plugins.stockpile.app.parsers.basic': [{'source': 'host.current.time'}]}}},
-              'linux': {'sh': {'command': 'date -u +"%Y-%m-%dT%H:%M:%SZ"\n',
-                               'parsers': {'plugins.stockpile.app.parsers.basic': [{'source': 'host.current.time'}]}}},
-              'windows': {'psh': {'command': 'Get-Date -UFormat '
-                                             "'+%Y-%m-%dT%H:%M:%SZ'\n",
-                                  'parsers': {'plugins.stockpile.app.parsers.basic': [{'source': 'host.current.time'}]}}}},
+ {'command': 'date -u +"%Y-%m-%dT%H:%M:%SZ"\n',
   'name': 'get current system time (ISO 8601)',
-  'source': 'data/abilities/discovery/fa6e8607-e0b1-425d-8924-9b894da5a002.yml'}]
+  'source': 'data/abilities/discovery/fa6e8607-e0b1-425d-8924-9b894da5a002.yml'},
+ {'command': 'date -u +"%Y-%m-%dT%H:%M:%SZ"\n',
+  'name': 'get current system time (ISO 8601)',
+  'source': 'data/abilities/discovery/fa6e8607-e0b1-425d-8924-9b894da5a002.yml'},
+ {'command': "Get-Date -UFormat '+%Y-%m-%dT%H:%M:%SZ'\n",
+  'name': 'get current system time (ISO 8601)',
+  'source': 'data/abilities/discovery/fa6e8607-e0b1-425d-8924-9b894da5a002.yml'},
+ {'command': 'Dos\n'
+             'C: \\ Windows \\ system32> net time \\\\ ICBC\n'
+             'Current time \\\\ ICBC is 2019/11/10 20:09:50\n'
+             '\n'
+             'The command completed successfully.',
+  'name': 'Dos',
+  'source': 'https://raw.githubusercontent.com/12306Bro/Threathunting-book/master/{}'},
+ {'command': 'Dos\n'
+             'Microsoft Windows [Version 10.0.14393]\n'
+             '(C) 2016 Microsoft Corporation. all rights reserved.\n'
+             '\n'
+             'C: \\ Users \\ Administrator> w32tm / tz\n'
+             'Time zone: Current: TIME_ZONE_ID_UNKNOWN deviating: -480 minutes '
+             '(UTC = local time + Bias)\n'
+             '  [Standard name: "China Standard Time" partial amount: 0 Date '
+             ':( unspecified)]\n'
+             '  [Daylight Saving Time Name: "China Daylight Saving Time" '
+             'partial amount: -60 points :( date not specified)]',
+  'name': 'Dos',
+  'source': 'https://raw.githubusercontent.com/12306Bro/Threathunting-book/master/{}'}]
 ```
 
 ## Potential Detections
@@ -74,7 +106,77 @@ Get-Date
   'query': 'Sysmon| where EventID == 1and (process_path contains '
            '"*\\\\net.exe"and process_command_line contains "*net* time*")or '
            'process_path contains "w32tm.exe"or process_command_line contains '
-           '"*Get-Date*"'}]
+           '"*Get-Date*"'},
+ {'name': 'Yml',
+  'product': 'https://raw.githubusercontent.com/12306Bro/Threathunting-book/master/{}',
+  'query': 'Yml\n'
+           'title: windows system service discovery\n'
+           'description: windows server 2016\n'
+           'references:\n'
+           'tags: T1124\n'
+           'status: experimental\n'
+           'author: 12306Bro\n'
+           'logsource:\n'
+           '    product: windows\n'
+           '    service: security\n'
+           'detection:\n'
+           '    selection1:\n'
+           '        EventID: 4688 # have created a new process.\n'
+           "        Newprocessname: 'C: \\ Windows \\ System32 \\ net.exe' # "
+           'process information> new process name\n'
+           "        Creatorprocessname: 'C: \\ windows \\ system32 \\ cmd.exe' "
+           '# Process Information> Creator Process Name\n'
+           '        Processcommandline: net time * # Process Information> '
+           'process command line\n'
+           '    selection2:\n'
+           '        EventID: 4688 # have created a new process.\n'
+           "        Newprocessname: 'C: \\ Windows \\ System32 \\ net1.exe' # "
+           'process information> new process name\n'
+           "        Creatorprocessname: 'C: \\ Windows \\ System32 \\ net.exe' "
+           '# Process Information> Creator Process Name\n'
+           '        Processcommandline: C: \\ Windows \\ system32 \\ net1 time '
+           '* # Process Information> process command line\n'
+           '    selection3:\n'
+           '        EventID: 4689 # exited process\n'
+           "        ProcessName: 'C: \\ Windows \\ System32 \\ net1.exe' # "
+           'process information> process name\n'
+           '    selection4:\n'
+           '        EventID: 4689 # exited process\n'
+           "        ProcessName: 'C: \\ Windows \\ System32 \\ net.exe' # "
+           'process information> process name\n'
+           '    timeframe: last 1m # can be adjusted according to actual '
+           'situation\n'
+           '    condition: all of them\n'
+           'level: medium'},
+ {'name': 'Yml',
+  'product': 'https://raw.githubusercontent.com/12306Bro/Threathunting-book/master/{}',
+  'query': 'Yml\n'
+           'title: windows system service discovery\n'
+           'description: windows server 2016\n'
+           'references:\n'
+           'tags: T1124\n'
+           'status: experimental\n'
+           'author: 12306Bro\n'
+           'logsource:\n'
+           '    product: windows\n'
+           '    service: security\n'
+           'detection:\n'
+           '    selection1:\n'
+           '        EventID: 4688 # have created a new process.\n'
+           "        Newprocessname: 'C: \\ Windows \\ System32 \\ w32tm.exe' # "
+           'process information> new process name\n'
+           "        Creatorprocessname: 'C: \\ windows \\ system32 \\ cmd.exe' "
+           '# Process Information> Creator Process Name\n'
+           '        Processcommandline: w32tm / tz # Process Information> '
+           'process command line\n'
+           '    selection2:\n'
+           '        EventID: 4689 # exited process\n'
+           "        ProcessName: 'C: \\ Windows \\ System32 \\ w32tm.exe' # "
+           'process information> process name\n'
+           '    timeframe: last 5s # can be adjusted according to actual '
+           'situation\n'
+           '    condition: all of them\n'
+           'level: medium'}]
 ```
 
 ## Raw Dataset

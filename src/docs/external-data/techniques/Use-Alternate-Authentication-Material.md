@@ -50,7 +50,115 @@ Caching alternate authentication material allows the system to verify an identit
 ## Potential Queries
 
 ```json
-
+[{'name': 'Yml',
+  'product': 'https://raw.githubusercontent.com/12306Bro/Threathunting-book/master/{}',
+  'query': 'Yml\n'
+           'title: windows local account manipulation\n'
+           'description: win7 test\n'
+           'references:\n'
+           'tags: T1550-003\n'
+           'status: experimental\n'
+           'author: 12306Bro\n'
+           'logsource:\n'
+           '    product: windows\n'
+           '    service: security\n'
+           'detection:\n'
+           '    selection1:\n'
+           '        EventID: 4624 # account login\n'
+           "        Account domain: '. * *' # May be understood with reference "
+           'to exemplary log\n'
+           '    selection2:\n'
+           '        EventID: 4672 # Special Login\n'
+           '        Account domain: _ # account field is empty\n'
+           '    timeframe: last 5s\n'
+           '    condition: all of them\n'
+           'level: medium'},
+ {'name': 'Yml',
+  'product': 'https://raw.githubusercontent.com/12306Bro/Threathunting-book/master/{}',
+  'query': 'Yml\n'
+           'title: Pass the Hash Activity (target host)\n'
+           'id: f8d98d6c-7a07-4d74-b064-dd4a3c244528\n'
+           'status: experimental\n'
+           'description: Detects the attack technique pass the hash which is '
+           'used to move laterally inside the network\n'
+           'references:\n'
+           '    - '
+           'https://github.com/iadgov/Event-Forwarding-Guidance/tree/master/Events\n'
+           'author: Ilias el Matani (rule), The Information Assurance '
+           'Directorate at the NSA (method)\n'
+           'date: 2017/03/08\n'
+           'tags:\n'
+           '    - attack.lateral_movement\n'
+           '    - attack.T1550-002\n'
+           '    - car.2016-04-004\n'
+           'logsource:\n'
+           '    product: windows\n'
+           '    service: security\n'
+           '    definition: The successful use of PtH for lateral movement '
+           'between workstations would trigger event ID 4624, a failed logon '
+           'attempt would trigger an event ID 4625\n'
+           'detection:\n'
+           '    selection:\n'
+           '        - EventID: 4624\n'
+           "          LogonType: '3'\n"
+           "          LogonProcessName: 'NtLmSsp'\n"
+           "          WorkstationName: '% Workstations%'\n"
+           "          ComputerName: '% Workstations%'\n"
+           '        - EventID: 4625\n'
+           "          LogonType: '3'\n"
+           "          LogonProcessName: 'NtLmSsp'\n"
+           "          WorkstationName: '% Workstations%'\n"
+           "          ComputerName: '% Workstations%'\n"
+           '    filter:\n'
+           "        AccountName: 'ANONYMOUS LOGON'\n"
+           '    condition: selection and not filter\n'
+           'falsepositives:\n'
+           '    - Administrator activity\n'
+           '    - Penetration tests\n'
+           'level: medium'},
+ {'name': 'Yml',
+  'product': 'https://raw.githubusercontent.com/12306Bro/Threathunting-book/master/{}',
+  'query': 'Yml\n'
+           'title: Pass the Hash Activity 2 (attack aircraft)\n'
+           'id: 8eef149c-bd26-49f2-9e5a-9b00e3af499b\n'
+           'status: production\n'
+           'description: Detects the attack technique pass the hash which is '
+           'used to move laterally inside the network\n'
+           'references:\n'
+           '    - '
+           'https://github.com/iadgov/Event-Forwarding-Guidance/tree/master/Events\n'
+           '    - '
+           'https://blog.binarydefense.com/reliably-detecting-pass-the-hash-through-event-log-analysis\n'
+           '    - '
+           'https://blog.stealthbits.com/how-to-detect-pass-the-hash-attacks/\n'
+           'author: Dave Kennedy, Jeff Warren (method) / David Vassallo '
+           '(rule)\n'
+           'date: 2019/06/14\n'
+           'tags:\n'
+           '    - attack.lateral_movement\n'
+           '    - attack.T1550-002\n'
+           'logsource:\n'
+           '    product: windows\n'
+           '    service: security\n'
+           '    definition: The successful use of PtH for lateral movement '
+           'between workstations would trigger event ID 4624\n'
+           'detection:\n'
+           '    selection:\n'
+           '        - EventID: 4624\n'
+           "          SubjectUserSid: 'S-1-0-0'\n"
+           "          LogonType: '3'\n"
+           "          LogonProcessName: 'NtLmSsp'\n"
+           "          KeyLength: '0'\n"
+           '        - EventID: 4624 # untested trigger this feature\n'
+           "          LogonType: '9'\n"
+           "          LogonProcessName: 'seclogo'\n"
+           '    filter:\n'
+           "        AccountName: 'ANONYMOUS LOGON'\n"
+           '    condition: selection and not filter\n'
+           'falsepositives:\n'
+           '    - Administrator activity\n'
+           '    - Penetration tests\n'
+           'level: medium'}]
 ```
 
 ## Raw Dataset

@@ -32,8 +32,6 @@ In macOS, there are a few different malware samples that record the user's webca
 
 ```
 powershell/collection/WebcamRecorder
-powershell/collection/WebcamRecorder
-python/collection/osx/webcam
 python/collection/osx/webcam
 ```
 

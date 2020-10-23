@@ -47,7 +47,22 @@ Adversaries could also target event aggregation and analysis mechanisms, or othe
 ## Potential Queries
 
 ```json
-
+[{'name': 'Yml',
+  'product': 'https://raw.githubusercontent.com/12306Bro/Threathunting-book/master/{}',
+  'query': 'Yml\n'
+           'title: Stop Windows Defense Service\n'
+           'description: win7 simulation test results\n'
+           'status: experimental\n'
+           'author: 12306Bro\n'
+           'logsource:\n'
+           'product: windows\n'
+           'service: system\n'
+           'detection:\n'
+           'selection:\n'
+           'EventID: 7036\n'
+           "Message: 'Windows Firewall service is stopped. '\n"
+           'condition: selection\n'
+           'level: medium'}]
 ```
 
 ## Raw Dataset

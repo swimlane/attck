@@ -43,7 +43,6 @@ Information stored in a repository may vary based on the specific instance or en
 
 ```
 powershell/situational_awareness/host/findtrusteddocuments
-powershell/situational_awareness/host/findtrusteddocuments
 ```
 
 ## Commands Dataset

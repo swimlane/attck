@@ -28,27 +28,29 @@
 ## Potential Commands
 
 ```
-{'darwin': {'sh': {'command': 'echo "proof that this machine was hacked." > message.txt\n'}}, 'linux': {'sh': {'command': 'echo "proof that this machine was hacked." > message.txt\n'}}, 'windows': {'psh': {'command': "Set-Content -Path 'message.txt' -Value 'proof that this machine was hacked.'\n"}}}
-{'windows': {'psh,pwsh': {'command': '.\\Invoke-MemeKatz.ps1\n', 'payloads': ['Invoke-MemeKatz.ps1']}, 'cmd': {'command': 'powershell.exe -ep bypass -c "Invoke-MemeKatz.ps1"\n', 'payloads': ['Invoke-MemeKatz.ps1']}}}
+Set-Content -Path 'message.txt' -Value 'proof that this machine was hacked.'
+echo "proof that this machine was hacked." > message.txt
+.\Invoke-MemeKatz.ps1
+powershell.exe -ep bypass -c "Invoke-MemeKatz.ps1"
 ```
 
 ## Commands Dataset
 
 ```
-[{'command': {'darwin': {'sh': {'command': 'echo "proof that this machine was '
-                                           'hacked." > message.txt\n'}},
-              'linux': {'sh': {'command': 'echo "proof that this machine was '
-                                          'hacked." > message.txt\n'}},
-              'windows': {'psh': {'command': "Set-Content -Path 'message.txt' "
-                                             "-Value 'proof that this machine "
-                                             "was hacked.'\n"}}},
+[{'command': 'echo "proof that this machine was hacked." > message.txt\n',
   'name': 'Create a text file for the user to find',
   'source': 'data/abilities/impact/47d08617-5ce1-424a-8cc5-c9c978ce6bf9.yml'},
- {'command': {'windows': {'cmd': {'command': 'powershell.exe -ep bypass -c '
-                                             '"Invoke-MemeKatz.ps1"\n',
-                                  'payloads': ['Invoke-MemeKatz.ps1']},
-                          'psh,pwsh': {'command': '.\\Invoke-MemeKatz.ps1\n',
-                                       'payloads': ['Invoke-MemeKatz.ps1']}}},
+ {'command': 'echo "proof that this machine was hacked." > message.txt\n',
+  'name': 'Create a text file for the user to find',
+  'source': 'data/abilities/impact/47d08617-5ce1-424a-8cc5-c9c978ce6bf9.yml'},
+ {'command': "Set-Content -Path 'message.txt' -Value 'proof that this machine "
+             "was hacked.'\n",
+  'name': 'Create a text file for the user to find',
+  'source': 'data/abilities/impact/47d08617-5ce1-424a-8cc5-c9c978ce6bf9.yml'},
+ {'command': '.\\Invoke-MemeKatz.ps1\n',
+  'name': 'Downloads random meme and sets as desktop background',
+  'source': 'data/abilities/impact/68235976-2404-42a8-9105-68230cfef562.yml'},
+ {'command': 'powershell.exe -ep bypass -c "Invoke-MemeKatz.ps1"\n',
   'name': 'Downloads random meme and sets as desktop background',
   'source': 'data/abilities/impact/68235976-2404-42a8-9105-68230cfef562.yml'}]
 ```

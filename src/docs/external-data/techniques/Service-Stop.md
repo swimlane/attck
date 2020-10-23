@@ -30,12 +30,9 @@ Adversaries may accomplish this by disabling individual services of high importa
 
 ```
 sc.exe stop spooler
-
-net.exe stop spooler
-
 taskkill.exe /f /im spoolsv.exe
-
-{'darwin': {'osa': {'command': 'quit app "Microsoft Outlook.app"'}}}
+net.exe stop spooler
+quit app "Microsoft Outlook.app"
 ```
 
 ## Commands Dataset
@@ -50,8 +47,7 @@ taskkill.exe /f /im spoolsv.exe
  {'command': 'taskkill.exe /f /im spoolsv.exe\n',
   'name': None,
   'source': 'atomics/T1489/T1489.yaml'},
- {'command': {'darwin': {'osa': {'command': 'quit app "Microsoft '
-                                            'Outlook.app"'}}},
+ {'command': 'quit app "Microsoft Outlook.app"',
   'name': 'Quit Outlook',
   'source': 'data/abilities/impact/3b007f46-23e7-4a11-9c14-e7085b6a754a.yml'}]
 ```

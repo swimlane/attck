@@ -29,17 +29,34 @@ Adversaries may attempt to enumerate software for a variety of reasons, such as 
 ## Potential Commands
 
 ```
-reg query "HKEY_LOCAL_MACHINE\Software\Microsoft\Internet Explorer" /v svcVersion
-
-Get-ItemProperty HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\* | Select-Object DisplayName, DisplayVersion, Publisher, InstallDate | Format-Table -Autosize
-Get-ItemProperty HKLM:\Software\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall\* | Select-Object DisplayName, DisplayVersion, Publisher, InstallDate | Format-Table -Autosize
-
 /usr/libexec/PlistBuddy -c "print :CFBundleShortVersionString" /Applications/Safari.app/Contents/Info.plist
 /usr/libexec/PlistBuddy -c "print :CFBundleVersion" /Applications/Safari.app/Contents/Info.plist
-{'darwin': {'sh': {'command': 'which google-chrome\n'}}, 'linux': {'sh': {'command': 'which google-chrome\n'}}}
-{'darwin': {'sh': {'command': 'which go\n'}}, 'linux': {'sh': {'command': 'which go\n'}}}
-{'darwin': {'sh': {'command': 'python3 --version\n'}}, 'linux': {'sh': {'command': 'python3 --version\n'}}}
-{'windows': {'psh': {'command': "(Get-ItemProperty 'HKLM:\\SOFTWARE\\Microsoft\\Internet Explorer').Version\n"}}}
+Get-ItemProperty HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\* | Select-Object DisplayName, DisplayVersion, Publisher, InstallDate | Format-Table -Autosize
+Get-ItemProperty HKLM:\Software\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall\* | Select-Object DisplayName, DisplayVersion, Publisher, InstallDate | Format-Table -Autosize
+reg query "HKEY_LOCAL_MACHINE\Software\Microsoft\Internet Explorer" /v svcVersion
+which google-chrome
+which go
+python3 --version
+(Get-ItemProperty 'HKLM:\SOFTWARE\Microsoft\Internet Explorer').Version
+Dos
+Microsoft Windows [Version 10.0.14393]
+(C) 2016 Microsoft Corporation. all rights reserved.
+
+C: \ Users \ Administrator> netsh advfirewall firewall show rule name = all
+
+Rule Name: Network Discovery (UPnP-In)
+-------------------------------------------------- --------------------
+Enabled: Yes
+Direction: Inbound
+Profile: Dedicated
+Grouping: Network Discovery
+Local IP: Any
+Remote IP: Any
+Protocol: TCP
+Local Port: 2869
+Remote Port: Any
+Edge traversal: No
+Action: Allow
 ```
 
 ## Commands Dataset
@@ -65,23 +82,51 @@ Get-ItemProperty HKLM:\Software\Wow6432Node\Microsoft\Windows\CurrentVersion\Uni
              '/Applications/Safari.app/Contents/Info.plist',
   'name': None,
   'source': 'atomics/T1518/T1518.yaml'},
- {'command': {'darwin': {'sh': {'command': 'which google-chrome\n'}},
-              'linux': {'sh': {'command': 'which google-chrome\n'}}},
+ {'command': 'which google-chrome\n',
   'name': 'Check to see if Gooogle Chrome browser is installed',
   'source': 'data/abilities/discovery/830bb6ed-9594-4817-b1a1-c298c0f9f425.yml'},
- {'command': {'darwin': {'sh': {'command': 'which go\n'}},
-              'linux': {'sh': {'command': 'which go\n'}}},
+ {'command': 'which google-chrome\n',
+  'name': 'Check to see if Gooogle Chrome browser is installed',
+  'source': 'data/abilities/discovery/830bb6ed-9594-4817-b1a1-c298c0f9f425.yml'},
+ {'command': 'which go\n',
   'name': 'Check to see if GoLang is installed',
   'source': 'data/abilities/discovery/9849d956-37ea-49f2-a8b5-f2ca080b315d.yml'},
- {'command': {'darwin': {'sh': {'command': 'python3 --version\n'}},
-              'linux': {'sh': {'command': 'python3 --version\n'}}},
+ {'command': 'which go\n',
+  'name': 'Check to see if GoLang is installed',
+  'source': 'data/abilities/discovery/9849d956-37ea-49f2-a8b5-f2ca080b315d.yml'},
+ {'command': 'python3 --version\n',
   'name': 'Check to see what version of python is installed',
   'source': 'data/abilities/discovery/b18e8767-b7ea-41a3-8e80-baf65a5ddef5.yml'},
- {'command': {'windows': {'psh': {'command': '(Get-ItemProperty '
-                                             "'HKLM:\\SOFTWARE\\Microsoft\\Internet "
-                                             "Explorer').Version\n"}}},
+ {'command': 'python3 --version\n',
+  'name': 'Check to see what version of python is installed',
+  'source': 'data/abilities/discovery/b18e8767-b7ea-41a3-8e80-baf65a5ddef5.yml'},
+ {'command': "(Get-ItemProperty 'HKLM:\\SOFTWARE\\Microsoft\\Internet "
+             "Explorer').Version\n",
   'name': 'Determine the version of Internet Explorer running',
-  'source': 'data/abilities/discovery/c9be8043-a445-4cbf-b77b-ed7bb007fc7c.yml'}]
+  'source': 'data/abilities/discovery/c9be8043-a445-4cbf-b77b-ed7bb007fc7c.yml'},
+ {'command': 'Dos\n'
+             'Microsoft Windows [Version 10.0.14393]\n'
+             '(C) 2016 Microsoft Corporation. all rights reserved.\n'
+             '\n'
+             'C: \\ Users \\ Administrator> netsh advfirewall firewall show '
+             'rule name = all\n'
+             '\n'
+             'Rule Name: Network Discovery (UPnP-In)\n'
+             '-------------------------------------------------- '
+             '--------------------\n'
+             'Enabled: Yes\n'
+             'Direction: Inbound\n'
+             'Profile: Dedicated\n'
+             'Grouping: Network Discovery\n'
+             'Local IP: Any\n'
+             'Remote IP: Any\n'
+             'Protocol: TCP\n'
+             'Local Port: 2869\n'
+             'Remote Port: Any\n'
+             'Edge traversal: No\n'
+             'Action: Allow',
+  'name': 'Dos',
+  'source': 'https://raw.githubusercontent.com/12306Bro/Threathunting-book/master/{}'}]
 ```
 
 ## Potential Detections
@@ -93,7 +138,30 @@ Get-ItemProperty HKLM:\Software\Wow6432Node\Microsoft\Windows\CurrentVersion\Uni
 ## Potential Queries
 
 ```json
-
+[{'name': 'Yml',
+  'product': 'https://raw.githubusercontent.com/12306Bro/Threathunting-book/master/{}',
+  'query': 'Yml\n'
+           'title: windows executed locally netsh advfirewall firewall show '
+           'rule name = all\n'
+           'description: windows server 2016\n'
+           'references: No\n'
+           'tags: T1518-001\n'
+           'status: experimental\n'
+           'author: 12306Bro\n'
+           'logsource:\n'
+           '    product: windows\n'
+           '    service: security\n'
+           'detection:\n'
+           '    selection:\n'
+           '        EventID: 4688 # Process Creation\n'
+           "        Newprocessname: 'C: \\ Windows \\ System32 \\ netsh.exe' # "
+           'process information> new process name\n'
+           "        Creatorprocessname: 'C: \\ windows \\ System32 \\ cmd.exe' "
+           '# Process Information> Creator Process Name\n'
+           '        Processcommandline: netsh advfirewall firewall show rule '
+           'name = all # Process Information> process command line\n'
+           '    condition: selection\n'
+           'level: low'}]
 ```
 
 ## Raw Dataset

@@ -39,7 +39,6 @@ There are several different ways this can occur. (Citation: Osanda Stealing NetN
 
 ```
 powershell/lateral_movement/invoke_smbexec
-powershell/lateral_movement/invoke_smbexec
 ```
 
 ## Commands Dataset

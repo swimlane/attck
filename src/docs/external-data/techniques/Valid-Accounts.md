@@ -29,13 +29,123 @@ The overlap of permissions for local, domain, and cloud accounts across a networ
 ## Potential Commands
 
 ```
+Yml
+title: Adding a user to a local group
+description: This rule is triggered to add user accounts in the local Administrators group, this may be a sign of legitimate activities or privilege escalation activities.
+status: stable
+author: 12306Br0 (test + translation)
+date: 2020/06/08
+tags:
+    - attack.privilege_escalation
+    - attack.t1078
+logsource:
+    product: windows
+    service: security
+detection:
+    selection:
+        EventID: 4732
+    selection_group1:
+        GroupName: 'Administrators' # group name
+    selection_group2:
+        GroupSid: 'S-1-5-32-544'
+    filter:
+        SubjectUserName: '* $'
+    condition: selection and (1 of selection_group *) and not filter
+falsepositives:
+    - legitimate user activity
+level: medium
+Ideas: Statistics within an hour, on the same host, the user is greater than a landing
+Log
+Add a member of security has enabled local group.
 
+theme:
+ Security ID: 12306Br0-PC \ 12306Br0
+ Account name: 12306Br0
+ Account domain: 12306Br0-PC
+ Login ID: 0x51893
+
+member:
+ Security ID: 12306Br0-PC \ admin09
+ account name: -
+
+group:
+ Security ID: BUILTIN \ Administrators
+ Group name: Administrators
+ Group Domain: Builtin
+
+extra information:
+ Privileges: -
+Bash
+C: \ Windows \ system32> net localgroup administrators admin09 / add
+The command completed successfully.
 ```
 
 ## Commands Dataset
 
 ```
-
+[{'command': 'Bash\n'
+             'C: \\ Windows \\ system32> net localgroup administrators admin09 '
+             '/ add\n'
+             'The command completed successfully.',
+  'name': 'Bash',
+  'source': 'https://raw.githubusercontent.com/12306Bro/Threathunting-book/master/{}'},
+ {'command': 'Log\n'
+             'Add a member of security has enabled local group.\n'
+             '\n'
+             'theme:\n'
+             ' Security ID: 12306Br0-PC \\ 12306Br0\n'
+             ' Account name: 12306Br0\n'
+             ' Account domain: 12306Br0-PC\n'
+             ' Login ID: 0x51893\n'
+             '\n'
+             'member:\n'
+             ' Security ID: 12306Br0-PC \\ admin09\n'
+             ' account name: -\n'
+             '\n'
+             'group:\n'
+             ' Security ID: BUILTIN \\ Administrators\n'
+             ' Group name: Administrators\n'
+             ' Group Domain: Builtin\n'
+             '\n'
+             'extra information:\n'
+             ' Privileges: -',
+  'name': 'Log',
+  'source': 'https://raw.githubusercontent.com/12306Bro/Threathunting-book/master/{}'},
+ {'command': 'Ideas: Statistics within an hour, on the same host, the user is '
+             'greater than a landing',
+  'name': 'Ideas: Statistics within an hour, on the same host, the user is '
+          'greater than a landing',
+  'source': 'https://raw.githubusercontent.com/12306Bro/Threathunting-book/master/{}'},
+ {'command': 'Yml\n'
+             'title: Adding a user to a local group\n'
+             'description: This rule is triggered to add user accounts in the '
+             'local Administrators group, this may be a sign of legitimate '
+             'activities or privilege escalation activities.\n'
+             'status: stable\n'
+             'author: 12306Br0 (test + translation)\n'
+             'date: 2020/06/08\n'
+             'tags:\n'
+             '    - attack.privilege_escalation\n'
+             '    - attack.t1078\n'
+             'logsource:\n'
+             '    product: windows\n'
+             '    service: security\n'
+             'detection:\n'
+             '    selection:\n'
+             '        EventID: 4732\n'
+             '    selection_group1:\n'
+             "        GroupName: 'Administrators' # group name\n"
+             '    selection_group2:\n'
+             "        GroupSid: 'S-1-5-32-544'\n"
+             '    filter:\n'
+             "        SubjectUserName: '* $'\n"
+             '    condition: selection and (1 of selection_group *) and not '
+             'filter\n'
+             'falsepositives:\n'
+             '    - legitimate user activity\n'
+             'level: medium',
+  'name': 'Yml',
+  'source': 'https://raw.githubusercontent.com/12306Bro/Threathunting-book/master/{}'}]
 ```
 
 ## Potential Detections
@@ -188,7 +298,123 @@ The overlap of permissions for local, domain, and cloud accounts across a networ
 ## Potential Queries
 
 ```json
-
+[{'name': 'Yml',
+  'product': 'https://raw.githubusercontent.com/12306Bro/Threathunting-book/master/{}',
+  'query': 'Yml\n'
+           'title: I failed to log in to different accounts from a single '
+           'source system\n'
+           'Suspicious failed login using a different user accounts from a '
+           'single source detection system: description\n'
+           'author: 12306Br0 (translation)\n'
+           'date: 2020/06/09\n'
+           'tags:\n'
+           '    - attack.persistence\n'
+           '    - attack.privilege_escalation\n'
+           '    - attack.t1078-003\n'
+           'logsource:\n'
+           '    product: windows\n'
+           '    service: security\n'
+           'detection:\n'
+           '    selection1:\n'
+           '        EventID:\n'
+           '            --529\n'
+           '            --4625\n'
+           "        UserName: '*' # username\n"
+           "        WorkstationName: '*' # workstation name\n"
+           '    selection2:\n'
+           '        EventID: 4776 # applies to domain account login\n'
+           "        UserName: '*' # username\n"
+           "        Workstation: '*' # workstation name\n"
+           '    timeframe: 24h\n'
+           '    condition:\n'
+           '        - selection1 | count (UserName) by WorkstationName> 3\n'
+           '        - selection2 | count (UserName) by Workstation> 3\n'
+           'falsepositives:\n'
+           '    - Terminal Server\n'
+           '    - springboard server\n'
+           '    - other multi-user systems such as Citrix server farm\n'
+           "    - frequent changes in the user's workstation\n"
+           'level: medium'},
+ {'name': 'Yml',
+  'product': 'https://raw.githubusercontent.com/12306Bro/Threathunting-book/master/{}',
+  'query': 'Yml\n'
+           'title: Accounts tampering - suspected cause of failed logins\n'
+           'description: this method to determine the suspicious activity of '
+           'failed login does not use common error codes and disabled or '
+           'tampered with in some way by the account limits.\n'
+           'author: 12306Br0 (test + translation)\n'
+           'date: 2020/06/09\n'
+           'references:\n'
+           '    - https://twitter.com/SBousseaden/status/1101431884540710913\n'
+           'tags:\n'
+           '    - attack.persistence\n'
+           '    - attack.privilege_escalation\n'
+           '    - attack.t1078\n'
+           'logsource:\n'
+           '    product: windows\n'
+           '    service: security\n'
+           'detection:\n'
+           '    selection:\n'
+           '        EventID:\n'
+           '            --4625 # ordinary account login fails\n'
+           '            --4776 # domain account login fails\n'
+           '        Status:\n'
+           "            - '0xC0000072' # user logs on to the administrator "
+           'account has been disabled\n'
+           "            - '0xC000006F' # time a user logs out of the "
+           'authorization\n'
+           "            - '0xC0000070' # users from unauthorized workstation "
+           'logon\n'
+           "            - '0xC0000413' # Logon failure: the computer you are "
+           'logged by the authentication protected by a firewall. The '
+           'specified account does not allow the computer to authenticate\n'
+           "            - '0xC000018C' # login request failed because the "
+           'trust relationship between the primary domain and the trusted '
+           'domain failed\n'
+           "            - '0xC000015B' # user has not been granted the "
+           'requested logon type at this computer (also known as login '
+           'privileges)\n'
+           '    condition: selection\n'
+           'falsepositives:\n'
+           '    - to disable user accounts\n'
+           'level: high'},
+ {'name': 'Yml',
+  'product': 'https://raw.githubusercontent.com/12306Bro/Threathunting-book/master/{}',
+  'query': 'Yml\n'
+           'title: I failed to log in to different accounts from a single '
+           'source system\n'
+           'Suspicious failed login using a different user accounts from a '
+           'single source detection system: description\n'
+           'author: 12306Br0 (translation)\n'
+           'date: 2020/06/09\n'
+           'tags:\n'
+           '    - attack.persistence\n'
+           '    - attack.privilege_escalation\n'
+           '    - attack.t1078-003\n'
+           'logsource:\n'
+           '    product: windows\n'
+           '    service: security\n'
+           'detection:\n'
+           '    selection1:\n'
+           '        EventID:\n'
+           '            --529\n'
+           '            --4625\n'
+           "        UserName: '*' # username\n"
+           "        WorkstationName: '*' # workstation name\n"
+           '    selection2:\n'
+           '        EventID: 4776 # applies to domain account login\n'
+           "        UserName: '*' # username\n"
+           "        Workstation: '*' # workstation name\n"
+           '    timeframe: 24h\n'
+           '    condition:\n'
+           '        - selection1 | count (UserName) by WorkstationName> 3\n'
+           '        - selection2 | count (UserName) by Workstation> 3\n'
+           'falsepositives:\n'
+           '    - Terminal Server\n'
+           '    - springboard server\n'
+           '    - other multi-user systems such as Citrix server farm\n'
+           "    - frequent changes in the user's workstation\n"
+           'level: medium'}]
 ```
 
 ## Raw Dataset

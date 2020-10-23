@@ -29,37 +29,8 @@ Adversaries may also subsequently log off and/or reboot boxes to set malicious c
 ## Potential Commands
 
 ```
-net user AtomicAdministrator #{new_user_password} /add
-net.exe user AtomicAdministrator #{new_password}
-
-net user #{user_account} User2ChangePW! /add
-net.exe user #{user_account} #{new_password}
-
-net user #{user_account} #{new_user_password} /add
-net.exe user #{user_account} HuHuHUHoHo283283@dJD
-
 net user #{user_account} User2DeletePW! /add
 net.exe user #{user_account} /delete
-
-net user AtomicUser #{new_user_password} /add
-net.exe user AtomicUser /delete
-
-$PWord = ConvertTo-SecureString -String #{super_pass} -AsPlainText -Force
-$Credential = New-Object -TypeName System.Management.Automation.PSCredential -ArgumentList domain\super_user, $PWord
-if((Get-ADUser #{remove_user} -Properties memberof).memberof -like "CN=Domain Admins*"){
-  Remove-ADGroupMember -Identity "Domain Admins" -Members #{remove_user} -Credential $Credential -Confirm:$False
-} else{
-    write-host "Error - Make sure #{remove_user} is in the domain admins group" -foregroundcolor Red
-}
-
-$PWord = ConvertTo-SecureString -String password -AsPlainText -Force
-$Credential = New-Object -TypeName System.Management.Automation.PSCredential -ArgumentList #{super_user}, $PWord
-if((Get-ADUser #{remove_user} -Properties memberof).memberof -like "CN=Domain Admins*"){
-  Remove-ADGroupMember -Identity "Domain Admins" -Members #{remove_user} -Credential $Credential -Confirm:$False
-} else{
-    write-host "Error - Make sure #{remove_user} is in the domain admins group" -foregroundcolor Red
-}
-
 $PWord = ConvertTo-SecureString -String #{super_pass} -AsPlainText -Force
 $Credential = New-Object -TypeName System.Management.Automation.PSCredential -ArgumentList #{super_user}, $PWord
 if((Get-ADUser remove_user -Properties memberof).memberof -like "CN=Domain Admins*"){
@@ -67,7 +38,28 @@ if((Get-ADUser remove_user -Properties memberof).memberof -like "CN=Domain Admin
 } else{
     write-host "Error - Make sure remove_user is in the domain admins group" -foregroundcolor Red
 }
-
+net user AtomicUser #{new_user_password} /add
+net.exe user AtomicUser /delete
+$PWord = ConvertTo-SecureString -String #{super_pass} -AsPlainText -Force
+$Credential = New-Object -TypeName System.Management.Automation.PSCredential -ArgumentList domain\super_user, $PWord
+if((Get-ADUser #{remove_user} -Properties memberof).memberof -like "CN=Domain Admins*"){
+  Remove-ADGroupMember -Identity "Domain Admins" -Members #{remove_user} -Credential $Credential -Confirm:$False
+} else{
+    write-host "Error - Make sure #{remove_user} is in the domain admins group" -foregroundcolor Red
+}
+net user #{user_account} #{new_user_password} /add
+net.exe user #{user_account} HuHuHUHoHo283283@dJD
+net user #{user_account} User2ChangePW! /add
+net.exe user #{user_account} #{new_password}
+net user AtomicAdministrator #{new_user_password} /add
+net.exe user AtomicAdministrator #{new_password}
+$PWord = ConvertTo-SecureString -String password -AsPlainText -Force
+$Credential = New-Object -TypeName System.Management.Automation.PSCredential -ArgumentList #{super_user}, $PWord
+if((Get-ADUser #{remove_user} -Properties memberof).memberof -like "CN=Domain Admins*"){
+  Remove-ADGroupMember -Identity "Domain Admins" -Members #{remove_user} -Credential $Credential -Confirm:$False
+} else{
+    write-host "Error - Make sure #{remove_user} is in the domain admins group" -foregroundcolor Red
+}
 ```
 
 ## Commands Dataset

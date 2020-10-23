@@ -29,23 +29,33 @@ Password policies can be set and discovered on Windows, Linux, and macOS systems
 ## Potential Commands
 
 ```
-cat /etc/pam.d/common-password
-
 cat /etc/security/pwquality.conf
-
 cat /etc/pam.d/system-auth
 cat /etc/security/pwquality.conf
-
-cat /etc/login.defs
-
-net accounts
-
-net accounts /domain
-
 pwpolicy getaccountpolicies
-{'darwin': {'sh': {'command': 'pwpolicy getaccountpolicies\n'}}, 'linux': {'sh': {'command': 'cat /etc/pam.d/common-password\n'}}, 'windows': {'psh': {'command': 'net accounts'}}}
+net accounts /domain
+cat /etc/pam.d/common-password
+net accounts
+cat /etc/login.defs
+pwpolicy getaccountpolicies
+net accounts
+cat /etc/pam.d/common-password
 powershell/situational_awareness/network/powerview/get_gpo
-powershell/situational_awareness/network/powerview/get_gpo
+Dos
+Microsoft Windows [Version 10.0.14393]
+(C) 2016 Microsoft Corporation. all rights reserved.
+
+C: \ Users \ administrator.0DAY> net accounts
+How long must force users to log off after time expires:? Never
+Minimum password age (days): 1
+Maximum password age (days): 42
+Minimum password length: 7
+Keep the length of the password history: 24
+Lockout threshold: Never
+Lockout duration (minutes): 30
+Lock observation window (minutes): 30
+Computer role: SERVER
+The command completed successfully.
 ```
 
 ## Commands Dataset
@@ -72,9 +82,13 @@ powershell/situational_awareness/network/powerview/get_gpo
  {'command': 'pwpolicy getaccountpolicies',
   'name': None,
   'source': 'atomics/T1201/T1201.yaml'},
- {'command': {'darwin': {'sh': {'command': 'pwpolicy getaccountpolicies\n'}},
-              'linux': {'sh': {'command': 'cat /etc/pam.d/common-password\n'}},
-              'windows': {'psh': {'command': 'net accounts'}}},
+ {'command': 'pwpolicy getaccountpolicies\n',
+  'name': 'Password Policy Discovery',
+  'source': 'data/abilities/discovery/e82f39e2-56f8-4f19-8376-b007f9ac5f8a.yml'},
+ {'command': 'cat /etc/pam.d/common-password\n',
+  'name': 'Password Policy Discovery',
+  'source': 'data/abilities/discovery/e82f39e2-56f8-4f19-8376-b007f9ac5f8a.yml'},
+ {'command': 'net accounts',
   'name': 'Password Policy Discovery',
   'source': 'data/abilities/discovery/e82f39e2-56f8-4f19-8376-b007f9ac5f8a.yml'},
  {'command': 'powershell/situational_awareness/network/powerview/get_gpo',
@@ -82,7 +96,24 @@ powershell/situational_awareness/network/powerview/get_gpo
   'source': 'https://github.com/dstepanic/attck_empire/blob/master/Empire_modules.xlsx?raw=true'},
  {'command': 'powershell/situational_awareness/network/powerview/get_gpo',
   'name': 'Empire Module Command',
-  'source': 'https://github.com/dstepanic/attck_empire/blob/master/Empire_modules.xlsx?raw=true'}]
+  'source': 'https://github.com/dstepanic/attck_empire/blob/master/Empire_modules.xlsx?raw=true'},
+ {'command': 'Dos\n'
+             'Microsoft Windows [Version 10.0.14393]\n'
+             '(C) 2016 Microsoft Corporation. all rights reserved.\n'
+             '\n'
+             'C: \\ Users \\ administrator.0DAY> net accounts\n'
+             'How long must force users to log off after time expires:? Never\n'
+             'Minimum password age (days): 1\n'
+             'Maximum password age (days): 42\n'
+             'Minimum password length: 7\n'
+             'Keep the length of the password history: 24\n'
+             'Lockout threshold: Never\n'
+             'Lockout duration (minutes): 30\n'
+             'Lock observation window (minutes): 30\n'
+             'Computer role: SERVER\n'
+             'The command completed successfully.',
+  'name': 'Dos',
+  'source': 'https://raw.githubusercontent.com/12306Bro/Threathunting-book/master/{}'}]
 ```
 
 ## Potential Detections
@@ -101,7 +132,38 @@ powershell/situational_awareness/network/powerview/get_gpo
   'product': 'Azure Sentinel',
   'query': 'Sysmon| where EventID == 11and (process_command_line contains "net '
            'accounts"or process_command_line contains "net accounts '
-           '\\\\/domain")'}]
+           '\\\\/domain")'},
+ {'name': 'Yml',
+  'product': 'https://raw.githubusercontent.com/12306Bro/Threathunting-book/master/{}',
+  'query': 'Yml\n'
+           'title: windows system password policies found\n'
+           'description: windows server 2016\n'
+           'references:\n'
+           'tags: T1016\n'
+           'status: experimental\n'
+           'author: 12306Bro\n'
+           'logsource:\n'
+           '    product: windows\n'
+           '    service: security\n'
+           'detection:\n'
+           '    selection1:\n'
+           '        EventID: 4688 # have created a new process.\n'
+           "        Newprocessname: 'C: \\ Windows \\ System32 \\ net.exe' # "
+           'process information> new process name\n'
+           "        Creatorprocessname: 'C: \\ Windows \\ System32 \\ cmd.exe' "
+           '# Process Information> Creator Process Name\n'
+           '        Processcommandline: net accounts # Process Information> '
+           'process command line\n'
+           '    selection2:\n'
+           '        EventID: 4688 # have created a new process.\n'
+           "        Newprocessname: 'C: \\ Windows \\ System32 \\ net1.exe' # "
+           'process information> new process name\n'
+           "        Creatorprocessname: 'C: \\ Windows \\ System32 \\ net.exe' "
+           '# Process Information> Creator Process Name\n'
+           '        Processcommandline: C: \\ Windows \\ system32 \\ net1 '
+           'accounts # Process Information> process command line\n'
+           '    condition: selection1 and selection2\n'
+           'level: low'}]
 ```
 
 ## Raw Dataset

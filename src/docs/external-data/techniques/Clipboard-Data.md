@@ -32,20 +32,18 @@ In Windows, Applications can access clipboard data by using the Windows API.(Cit
 dir | clip
 echo "T1115" > %temp%\T1115.txt
 clip < %temp%\T1115.txt
-
 echo Get-Process | clip
 Get-Clipboard | iex
-
 echo ifconfig | pbcopy
 $(pbpaste)
-{'darwin': {'sh': {'command': 'pbpaste\n'}}, 'windows': {'psh,pwsh': {'command': 'Get-Clipboard -raw\n'}}, 'linux': {'sh': {'command': 'xclip -o\n'}}}
+Get-Clipboard -raw
+xclip -o
+pbpaste
 cmd.exe <command> | clip
 cmd.exe clip < readme.txt
 powershell.exe echo Get-Process | clip
 powershell.exe echo Get-Process | clip
 powershell/collection/clipboard_monitor
-powershell/collection/clipboard_monitor
-python/collection/osx/clipboard
 python/collection/osx/clipboard
 ```
 
@@ -63,9 +61,13 @@ python/collection/osx/clipboard
  {'command': 'echo ifconfig | pbcopy\n$(pbpaste)',
   'name': None,
   'source': 'atomics/T1115/T1115.yaml'},
- {'command': {'darwin': {'sh': {'command': 'pbpaste\n'}},
-              'linux': {'sh': {'command': 'xclip -o\n'}},
-              'windows': {'psh,pwsh': {'command': 'Get-Clipboard -raw\n'}}},
+ {'command': 'pbpaste\n',
+  'name': 'copy the contents for the clipboard and print them',
+  'source': 'data/abilities/collection/b007fe0c-c6b0-4fda-915c-255bbc070de2.yml'},
+ {'command': 'Get-Clipboard -raw\n',
+  'name': 'copy the contents for the clipboard and print them',
+  'source': 'data/abilities/collection/b007fe0c-c6b0-4fda-915c-255bbc070de2.yml'},
+ {'command': 'xclip -o\n',
   'name': 'copy the contents for the clipboard and print them',
   'source': 'data/abilities/collection/b007fe0c-c6b0-4fda-915c-255bbc070de2.yml'},
  {'command': 'cmd.exe <command> | clip',

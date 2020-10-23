@@ -29,22 +29,18 @@ This technique may incorporate use of other techniques such as [File and Directo
 ## Potential Commands
 
 ```
-mkdir %temp%\T1119_command_prompt_collection >nul 2>&1
-dir c: /b /s .docx | findstr /e .docx
-for /R c: %f in (*.docx) do copy %f %temp%\T1119_command_prompt_collection
-
-New-Item -Path $env:TEMP\T1119_powershell_collection -ItemType Directory -Force | Out-Null
-Get-ChildItem -Recurse -Include *.doc | % {Copy-Item $_.FullName -destination $env:TEMP\T1119_powershell_collection}
-
-Get-Service > $env:TEMP\T1119_1.txt
-Get-ChildItem Env: > $env:TEMP\T1119_2.txt
-Get-Process > $env:TEMP\T1119_3.txt
-
 sc query type=service > %TEMP%\T1119_1.txt
 doskey /history > %TEMP%\T1119_2.txt
 wmic process list > %TEMP%\T1119_3.txt
 tree C:\AtomicRedTeam\atomics > %TEMP%\T1119_4.txt
-
+mkdir %temp%\T1119_command_prompt_collection >nul 2>&1
+dir c: /b /s .docx | findstr /e .docx
+for /R c: %f in (*.docx) do copy %f %temp%\T1119_command_prompt_collection
+New-Item -Path $env:TEMP\T1119_powershell_collection -ItemType Directory -Force | Out-Null
+Get-ChildItem -Recurse -Include *.doc | % {Copy-Item $_.FullName -destination $env:TEMP\T1119_powershell_collection}
+Get-Service > $env:TEMP\T1119_1.txt
+Get-ChildItem Env: > $env:TEMP\T1119_2.txt
+Get-Process > $env:TEMP\T1119_3.txt
 cmd.exe dir c: /b /s .docx | findstr /e .docx
 ```
 

@@ -32,10 +32,7 @@ An adversary may also be able to escalate their privileges since some boot or lo
 
 ```
 \Environment\UserInitMprLogonScript
-\Environment\UserInitMprLogonScript
 python/persistence/multi/desktopfile
-python/persistence/multi/desktopfile
-python/persistence/osx/loginhook
 python/persistence/osx/loginhook
 ```
 

@@ -31,25 +31,17 @@ Specific storage locations vary based on platform and/or application, but browse
 ## Potential Commands
 
 ```
-find / -path "*.mozilla/firefox/*/places.sqlite" 2>/dev/null -exec echo {} >> /tmp/T1217-Firefox.txt \;
-cat /tmp/T1217-Firefox.txt 2>/dev/null
-
-find / -path "*/Firefox/Profiles/*/places.sqlite" -exec echo {} >> /tmp/T1217_Firefox.txt \;
-cat /tmp/T1217_Firefox.txt 2>/dev/null
-
+where /R C:\Users\ Bookmarks
 find / -path "*/Google/Chrome/*/Bookmarks" -exec echo {} >> /tmp/T1217-Chrome.txt \;
 cat /tmp/T1217-Chrome.txt 2>/dev/null
-
-Get-ChildItem -Path C:\Users\ -Filter Bookmarks -Recurse -ErrorAction SilentlyContinue -Force
-
-where /R C:\Users\ Bookmarks
-
-where /R C:\Users\ places.sqlite
-
 dir /s /b %USERPROFILE%\Favorites
-
-{'darwin': {'sh': {'command': 'cat ~/Library/Application\\ Support/Google/Chrome/Default/Bookmarks\n', 'parsers': {'plugins.stockpile.app.parsers.bookmarks': [{'source': 'host.chrome.bookmark_title', 'edge': 'resolves_to', 'target': 'host.chrome.bookmark_url'}]}}}}
-powershell/collection/browser_data
+where /R C:\Users\ places.sqlite
+Get-ChildItem -Path C:\Users\ -Filter Bookmarks -Recurse -ErrorAction SilentlyContinue -Force
+find / -path "*/Firefox/Profiles/*/places.sqlite" -exec echo {} >> /tmp/T1217_Firefox.txt \;
+cat /tmp/T1217_Firefox.txt 2>/dev/null
+find / -path "*.mozilla/firefox/*/places.sqlite" 2>/dev/null -exec echo {} >> /tmp/T1217-Firefox.txt \;
+cat /tmp/T1217-Firefox.txt 2>/dev/null
+cat ~/Library/Application\ Support/Google/Chrome/Default/Bookmarks
 powershell/collection/browser_data
 ```
 
@@ -84,11 +76,8 @@ powershell/collection/browser_data
  {'command': 'dir /s /b %USERPROFILE%\\Favorites\n',
   'name': None,
   'source': 'atomics/T1217/T1217.yaml'},
- {'command': {'darwin': {'sh': {'command': 'cat ~/Library/Application\\ '
-                                           'Support/Google/Chrome/Default/Bookmarks\n',
-                                'parsers': {'plugins.stockpile.app.parsers.bookmarks': [{'edge': 'resolves_to',
-                                                                                         'source': 'host.chrome.bookmark_title',
-                                                                                         'target': 'host.chrome.bookmark_url'}]}}}},
+ {'command': 'cat ~/Library/Application\\ '
+             'Support/Google/Chrome/Default/Bookmarks\n',
   'name': 'Get Chrome Bookmarks',
   'source': 'data/abilities/discovery/b007fc38-9eb7-4320-92b3-9a3ad3e6ec25.yml'},
  {'command': 'powershell/collection/browser_data',

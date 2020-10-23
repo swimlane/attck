@@ -29,41 +29,37 @@ Within cloud environments, adversaries may attempt to discover services running 
 ## Potential Commands
 
 ```
+nmap 127.0.0.1
+nmap -sS 192.168.1.0/24 -p #{port}
+telnet #{host} #{port}
+nc -nv #{host} #{port}
+nmap -sS #{network_range} -p 80
+telnet #{host} 80
+nc -nv #{host} 80
+nmap #{host_to_scan}
 for port in {1..65535};
 do
   echo >/dev/tcp/192.168.1.1/$port && echo "port $port is open" || echo "port $port is closed" : ;
 done
-
 nmap -sS #{network_range} -p #{port}
 telnet 192.168.1.1 #{port}
 nc -nv 192.168.1.1 #{port}
-
-nmap -sS #{network_range} -p 80
-telnet #{host} 80
-nc -nv #{host} 80
-
-nmap -sS 192.168.1.0/24 -p #{port}
-telnet #{host} #{port}
-nc -nv #{host} #{port}
-
-nmap #{host_to_scan}
-nmap 127.0.0.1
-{'darwin': {'sh': {'command': 'nmap -sV -p #{remote.host.port} #{remote.host.ip}\n'}}, 'linux': {'sh': {'command': 'nmap -sV -p #{remote.host.port} #{remote.host.ip}\n'}}}
-{'darwin': {'sh': {'command': 'python3 scanner.py -i #{remote.host.ip}\n', 'parsers': {'plugins.stockpile.app.parsers.scan': [{'source': 'remote.host.ip', 'edge': 'has_open_port', 'target': 'remote.host.port'}]}, 'payloads': ['scanner.py']}}, 'linux': {'sh': {'command': 'python3 scanner.py -i #{remote.host.ip}\n', 'parsers': {'plugins.stockpile.app.parsers.scan': [{'source': 'remote.host.ip', 'edge': 'has_open_port', 'target': 'remote.host.port'}]}, 'payloads': ['scanner.py']}}}
-{'windows': {'psh': {'command': 'Import-Module ./basic_scanner.ps1;\n$ports = @(22, 53, 80, 445);\nGet-NetIPConfiguration | ?{$_.NetAdapter.Status -ne "Disconnected"} | Get-NetIPaddress -AddressFamily IPv4 | %{\n    $ipv4 = $_.IPAddress;\n    $prefixLength = $_.PrefixLength;\n    Scan-Netrange -ipv4 $ipv4 -prefixLength $prefixLength -ports $ports;\n};\n', 'payloads': ['basic_scanner.ps1'], 'timeout': 180}}}
+nmap -sV -p #{remote.host.port} #{remote.host.ip}
+python3 scanner.py -i #{remote.host.ip}
+Import-Module ./basic_scanner.ps1;
+$ports = @(22, 53, 80, 445);
+Get-NetIPConfiguration | ?{$_.NetAdapter.Status -ne "Disconnected"} | Get-NetIPaddress -AddressFamily IPv4 | %{
+    $ipv4 = $_.IPAddress;
+    $prefixLength = $_.PrefixLength;
+    Scan-Netrange -ipv4 $ipv4 -prefixLength $prefixLength -ports $ports;
+};
 rcpping.exe -s 127.0.0.1 -t ncacn_np
 rcpping.exe -s 127.0.0.1 -e 1234 -a privacy -u NTLM
 powershell/recon/find_fruit
-powershell/recon/find_fruit
-powershell/situational_awareness/network/get_sql_instance_domain
 powershell/situational_awareness/network/get_sql_instance_domain
 powershell/situational_awareness/network/get_sql_server_info
-powershell/situational_awareness/network/get_sql_server_info
-powershell/situational_awareness/network/portscan
 powershell/situational_awareness/network/portscan
 python/situational_awareness/network/find_fruit
-python/situational_awareness/network/find_fruit
-python/situational_awareness/network/port_scan
 python/situational_awareness/network/port_scan
 ```
 
@@ -98,43 +94,27 @@ python/situational_awareness/network/port_scan
  {'command': 'nmap 127.0.0.1',
   'name': None,
   'source': 'atomics/T1046/T1046.yaml'},
- {'command': {'darwin': {'sh': {'command': 'nmap -sV -p #{remote.host.port} '
-                                           '#{remote.host.ip}\n'}},
-              'linux': {'sh': {'command': 'nmap -sV -p #{remote.host.port} '
-                                          '#{remote.host.ip}\n'}}},
+ {'command': 'nmap -sV -p #{remote.host.port} #{remote.host.ip}\n',
   'name': 'Uses nmap to fingerprint services that were network accessible',
   'source': 'data/abilities/discovery/3a2ce3d5-e9e2-4344-ae23-470432ff8687.yml'},
- {'command': {'darwin': {'sh': {'command': 'python3 scanner.py -i '
-                                           '#{remote.host.ip}\n',
-                                'parsers': {'plugins.stockpile.app.parsers.scan': [{'edge': 'has_open_port',
-                                                                                    'source': 'remote.host.ip',
-                                                                                    'target': 'remote.host.port'}]},
-                                'payloads': ['scanner.py']}},
-              'linux': {'sh': {'command': 'python3 scanner.py -i '
-                                          '#{remote.host.ip}\n',
-                               'parsers': {'plugins.stockpile.app.parsers.scan': [{'edge': 'has_open_port',
-                                                                                   'source': 'remote.host.ip',
-                                                                                   'target': 'remote.host.port'}]},
-                               'payloads': ['scanner.py']}}},
+ {'command': 'nmap -sV -p #{remote.host.port} #{remote.host.ip}\n',
+  'name': 'Uses nmap to fingerprint services that were network accessible',
+  'source': 'data/abilities/discovery/3a2ce3d5-e9e2-4344-ae23-470432ff8687.yml'},
+ {'command': 'python3 scanner.py -i #{remote.host.ip}\n',
   'name': 'Use dropped scanner to find open popular ports',
   'source': 'data/abilities/discovery/47abe1f5-55a5-46cc-8cad-506dac8ea6d9.yml'},
- {'command': {'windows': {'psh': {'command': 'Import-Module '
-                                             './basic_scanner.ps1;\n'
-                                             '$ports = @(22, 53, 80, 445);\n'
-                                             'Get-NetIPConfiguration | '
-                                             '?{$_.NetAdapter.Status -ne '
-                                             '"Disconnected"} | '
-                                             'Get-NetIPaddress -AddressFamily '
-                                             'IPv4 | %{\n'
-                                             '    $ipv4 = $_.IPAddress;\n'
-                                             '    $prefixLength = '
-                                             '$_.PrefixLength;\n'
-                                             '    Scan-Netrange -ipv4 $ipv4 '
-                                             '-prefixLength $prefixLength '
-                                             '-ports $ports;\n'
-                                             '};\n',
-                                  'payloads': ['basic_scanner.ps1'],
-                                  'timeout': 180}}},
+ {'command': 'python3 scanner.py -i #{remote.host.ip}\n',
+  'name': 'Use dropped scanner to find open popular ports',
+  'source': 'data/abilities/discovery/47abe1f5-55a5-46cc-8cad-506dac8ea6d9.yml'},
+ {'command': 'Import-Module ./basic_scanner.ps1;\n'
+             '$ports = @(22, 53, 80, 445);\n'
+             'Get-NetIPConfiguration | ?{$_.NetAdapter.Status -ne '
+             '"Disconnected"} | Get-NetIPaddress -AddressFamily IPv4 | %{\n'
+             '    $ipv4 = $_.IPAddress;\n'
+             '    $prefixLength = $_.PrefixLength;\n'
+             '    Scan-Netrange -ipv4 $ipv4 -prefixLength $prefixLength -ports '
+             '$ports;\n'
+             '};\n',
   'name': 'Scans the local network for common open ports',
   'source': 'data/abilities/discovery/5a4cb2be-2684-4801-9355-3a90c91e0004.yml'},
  {'command': 'rcpping.exe -s 127.0.0.1 -t ncacn_np',

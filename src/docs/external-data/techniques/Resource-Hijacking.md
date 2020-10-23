@@ -30,8 +30,8 @@ One common purpose for Resource Hijacking is to validate transactions of cryptoc
 
 ```
 yes > /dev/null
-
-{'darwin': {'sh': {'command': 'brew install sox >/dev/null 2>&1;\nsox -d recording.wav trim 0 15 >/dev/null 2>&1;\n', 'timeout': 120}}}
+brew install sox >/dev/null 2>&1;
+sox -d recording.wav trim 0 15 >/dev/null 2>&1;
 ```
 
 ## Commands Dataset
@@ -40,10 +40,8 @@ yes > /dev/null
 [{'command': 'yes > /dev/null\n',
   'name': None,
   'source': 'atomics/T1496/T1496.yaml'},
- {'command': {'darwin': {'sh': {'command': 'brew install sox >/dev/null 2>&1;\n'
-                                           'sox -d recording.wav trim 0 15 '
-                                           '>/dev/null 2>&1;\n',
-                                'timeout': 120}}},
+ {'command': 'brew install sox >/dev/null 2>&1;\n'
+             'sox -d recording.wav trim 0 15 >/dev/null 2>&1;\n',
   'name': 'Install sox and record microphone for n-seconds',
   'source': 'data/abilities/impact/78524da1-f347-4fbb-9295-209f1f408330.yml'}]
 ```

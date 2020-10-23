@@ -30,7 +30,6 @@ Adversaries can also take advantage of routing schemes in Content Delivery Netwo
 
 ```
 python/management/multi/socks
-python/management/multi/socks
 ```
 
 ## Commands Dataset
@@ -99,7 +98,28 @@ python/management/multi/socks
 ## Potential Queries
 
 ```json
-
+[{'name': 'Yml',
+  'product': 'https://raw.githubusercontent.com/12306Bro/Threathunting-book/master/{}',
+  'query': 'Yml\n'
+           'title: netsh port forwarding\n'
+           'description: windows server 2016\n'
+           'tags: T1090-001\n'
+           'status: experimental\n'
+           'author: 12306Bro\n'
+           'logsource:\n'
+           '    product: windows\n'
+           '    service: security\n'
+           'detection:\n'
+           '    selection:\n'
+           '        EventID: 4688 # have created a new process.\n'
+           "        Newprocessname: 'C: \\ Windows \\ System32 \\ netsh.exe' # "
+           'new process name\n'
+           "        Creatorprocessname: 'C: \\ Windows \\ System32 \\ cmd.exe' "
+           '# creator process name\n'
+           '        Processcommandline: "netsh interface portproxy add v4tov4 '
+           '*" # process command line arguments\n'
+           '    condition: selection\n'
+           'level: medium'}]
 ```
 
 ## Raw Dataset

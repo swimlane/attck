@@ -29,6 +29,9 @@ Many command shell utilities can be used to obtain this information. Examples in
 ## Potential Commands
 
 ```
+ls -recurse
+get-childitem -recurse
+gci -recurse
 dir /s c:\ >> %temp%\download
 dir /s "c:\Documents and Settings" >> %temp%\download
 dir /s "c:\Program Files\" >> %temp%\download
@@ -36,11 +39,6 @@ dir "%systemdrive%\Users\*.*" >> %temp%\download
 dir "%userprofile%\AppData\Roaming\Microsoft\Windows\Recent\*.*" >> %temp%\download
 dir "%userprofile%\Desktop\*.*" >> %temp%\download
 tree /F >> %temp%\download
-
-ls -recurse
-get-childitem -recurse
-gci -recurse
-
 ls -a >> /tmp/T1083.txt
 if [ -d /Library/Preferences/ ]; then ls -la /Library/Preferences/ > /tmp/T1083.txt; fi;
 file */* *>> /tmp/T1083.txt
@@ -49,23 +47,18 @@ find . -type f
 ls -R | grep ":$" | sed -e 's/:$//' -e 's/[^-][^\/]*\//--/g' -e 's/^/ /' -e 's/-/|/'
 locate *
 which sh
-
 cd $HOME && find . -print | sed -e 's;[^/]*/;|__;g;s;__|; |;g' > /tmp/T1083.txt
 if [ -f /etc/mtab ]; then cat /etc/mtab >> /tmp/T1083.txt; fi;
 find . -type f -iname *.pdf >> /tmp/T1083.txt
 cat /tmp/T1083.txt
 find . -type f -name ".*"
-
-{'windows': {'psh': {'command': 'Get-ChildItem -Path #{host.system.path}\n'}}}
-{'darwin': {'sh': {'command': 'ls\n'}}, 'linux': {'sh': {'command': 'ls\n'}}, 'windows': {'psh': {'command': 'dir\n'}}}
-{'darwin': {'sh': {'command': 'pwd\n'}}, 'linux': {'sh': {'command': 'pwd\n'}}, 'windows': {'psh': {'command': 'pwd\n'}}}
-powershell/collection/file_finder
+Get-ChildItem -Path #{host.system.path}
+dir
+ls
+pwd
 powershell/collection/file_finder
 powershell/collection/find_interesting_file
-powershell/collection/find_interesting_file
 powershell/collection/get_indexed_item
-powershell/collection/get_indexed_item
-powershell/situational_awareness/network/powerview/get_fileserver
 powershell/situational_awareness/network/powerview/get_fileserver
 ```
 
@@ -106,18 +99,25 @@ powershell/situational_awareness/network/powerview/get_fileserver
              'find . -type f -name ".*"\n',
   'name': None,
   'source': 'atomics/T1083/T1083.yaml'},
- {'command': {'windows': {'psh': {'command': 'Get-ChildItem -Path '
-                                             '#{host.system.path}\n'}}},
+ {'command': 'Get-ChildItem -Path #{host.system.path}\n',
   'name': 'Find or discover files on the file system',
   'source': 'data/abilities/discovery/1c353eb4-29ab-4dfe-88ed-f34f5a60848e.yml'},
- {'command': {'darwin': {'sh': {'command': 'ls\n'}},
-              'linux': {'sh': {'command': 'ls\n'}},
-              'windows': {'psh': {'command': 'dir\n'}}},
+ {'command': 'ls\n',
   'name': 'List contents of current directory',
   'source': 'data/abilities/discovery/52177cc1-b9ab-4411-ac21-2eadc4b5d3b8.yml'},
- {'command': {'darwin': {'sh': {'command': 'pwd\n'}},
-              'linux': {'sh': {'command': 'pwd\n'}},
-              'windows': {'psh': {'command': 'pwd\n'}}},
+ {'command': 'ls\n',
+  'name': 'List contents of current directory',
+  'source': 'data/abilities/discovery/52177cc1-b9ab-4411-ac21-2eadc4b5d3b8.yml'},
+ {'command': 'dir\n',
+  'name': 'List contents of current directory',
+  'source': 'data/abilities/discovery/52177cc1-b9ab-4411-ac21-2eadc4b5d3b8.yml'},
+ {'command': 'pwd\n',
+  'name': 'Print the current working directory on the system',
+  'source': 'data/abilities/discovery/6e1a53c0-7352-4899-be35-fa7f364d5722.yml'},
+ {'command': 'pwd\n',
+  'name': 'Print the current working directory on the system',
+  'source': 'data/abilities/discovery/6e1a53c0-7352-4899-be35-fa7f364d5722.yml'},
+ {'command': 'pwd\n',
   'name': 'Print the current working directory on the system',
   'source': 'data/abilities/discovery/6e1a53c0-7352-4899-be35-fa7f364d5722.yml'},
  {'command': 'powershell/collection/file_finder',
@@ -160,7 +160,28 @@ powershell/situational_awareness/network/powerview/get_fileserver
 ## Potential Queries
 
 ```json
-
+[{'name': 'Yml',
+  'product': 'https://raw.githubusercontent.com/12306Bro/Threathunting-book/master/{}',
+  'query': 'Yml\n'
+           'title: In the windows files and directories found\n'
+           'description: windows server 2016\n'
+           'tags: T1083\n'
+           'status: experimental\n'
+           'author: 12306Bro\n'
+           'logsource:\n'
+           '    product: windows\n'
+           '    service: security\n'
+           'detection:\n'
+           '    selection:\n'
+           '        EventID: 4688 # have created a new process.\n'
+           "        Newprocessname: 'C: \\ windows \\ system32 \\ tree.com' # "
+           'process information> Process Name\n'
+           "        Creatorprocessname: 'C: \\ windows \\ system32 \\ cmd.exe' "
+           '# Process Information> Creator Process Name\n'
+           '        Processcommandline: tree # Process information> process '
+           'command line\n'
+           '    condition: selection\n'
+           'level: medium'}]
 ```
 
 ## Raw Dataset

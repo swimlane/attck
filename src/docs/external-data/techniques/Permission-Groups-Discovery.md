@@ -27,20 +27,16 @@
 ## Potential Commands
 
 ```
-net localgroup "Administrators"
 shell net localgroup "Administrators"
+net localgroup "Administrators"
 post/windows/gather/local_admin_search_enum
-net group ["Domain Admins"] /domain[:DOMAIN] 
 net group ["Domain Admins"] /domain
+net group ["Domain Admins"] /domain[:DOMAIN]
 domain_list_gen.rb
 post/windows/gather/enum_domain_group_users
 powershell/situational_awareness/host/get_pathacl
-powershell/situational_awareness/host/get_pathacl
-powershell/situational_awareness/network/powerview/get_object_acl
 powershell/situational_awareness/network/powerview/get_object_acl
 powershell/situational_awareness/network/powerview/map_domain_trust
-powershell/situational_awareness/network/powerview/map_domain_trust
-powershell/situational_awareness/host/get_uaclevel
 powershell/situational_awareness/host/get_uaclevel
 ```
 
@@ -152,7 +148,89 @@ powershell/situational_awareness/host/get_uaclevel
            'process_command_line contains "*net* localgroup*"or '
            'process_command_line contains "*get-localgroup*"or '
            'process_command_line contains '
-           '"*get-ADPrinicipalGroupMembership*")'}]
+           '"*get-ADPrinicipalGroupMembership*")'},
+ {'name': 'Yml',
+  'product': 'https://raw.githubusercontent.com/12306Bro/Threathunting-book/master/{}',
+  'query': 'Yml\n'
+           'title: detection of a local user group enumeration behavior\n'
+           'description: windows server 2016\n'
+           'references:\n'
+           'tags: T1069-001\n'
+           'status: experimental\n'
+           'author: 12306Bro\n'
+           'logsource:\n'
+           '    product: windows\n'
+           '    service: security\n'
+           'detection:\n'
+           '    selection:\n'
+           '        EventID:\n'
+           '          --4798 # of enumeration local group membership of users. '
+           'Test command: net user\n'
+           '          --4799 # enumeration has enabled local group membership '
+           'security mechanisms. Test command: net localgroup administrators\n'
+           "        Processname: 'C: \\ Windows \\ System32 \\ net1.exe' # "
+           'Process information: Process Name\n'
+           '    condition: selection\n'
+           'level: medium'},
+ {'name': 'Yml',
+  'product': 'https://raw.githubusercontent.com/12306Bro/Threathunting-book/master/{}',
+  'query': 'Yml\n'
+           'title: local attacker to collect information, and execute the '
+           'whoami command net user command\n'
+           'description: windows server 2012\n'
+           'status: experimental\n'
+           'logsource:\n'
+           '    product: windows\n'
+           '    service: security\n'
+           'detection:\n'
+           '    selection1:\n'
+           "        EventID: 4688 #'ve created a new process\n"
+           "        Newprocessname: '* \\ whoami.exe' # new process name\n"
+           '        Processcommandline: whoami # process command line\n'
+           '    selection2:\n'
+           "        EventID: 4688 #'ve created a new process\n"
+           "        Newprocessname: '* \\ net.exe' # new process name\n"
+           '        Processcommandline: net user # process command line\n'
+           '    selection3:\n'
+           "        EventID: 4688 #'ve created a new process\n"
+           "        Newprocessname: '* \\ net1.exe' # new process name\n"
+           "        Processcommandline: '* \\ net1 user' # command-line "
+           'process\n'
+           '    condition: selection1 or (selection2 and selection3)\n'
+           'level: medium'},
+ {'name': 'Yml',
+  'product': 'https://raw.githubusercontent.com/12306Bro/Threathunting-book/master/{}',
+  'query': 'Yml\n'
+           'title: AD domain authority and the user group enumeration\n'
+           'description: win7 test, windows service 2008 (the domain '
+           'controller)\n'
+           'references: http://www.polaris-lab.com/index.php/archives/42/\n'
+           'tags: T1069-002\n'
+           'status: experimental\n'
+           'author: 12306Bro\n'
+           'logsource:\n'
+           '    product: windows\n'
+           '    service: security\n'
+           'detection:\n'
+           '    selection:\n'
+           '        EventID: 4661 # has been requested to handle objects\n'
+           '        Objecttype: # Object> Object Type\n'
+           '             - SAM_USER\n'
+           '             - SAM_GROUP\n'
+           '        Objectname: # Object> object name\n'
+           "             - 'S-1-5-21 - * - * - * - 502'\n"
+           "             - 'S-1-5-21 - * - * - * - 512'\n"
+           "             - 'S-1-5-21 - * - * - * - 500'\n"
+           "             - 'S-1-5-21 - * - * - * - 505'\n"
+           "             - 'S-1-5-21 - * - * - * - 519'\n"
+           "             - 'S-1-5-21 - * - * - * - 520'\n"
+           "             - 'S-1-5-21 - * - * - * - 544'\n"
+           "             - 'S-1-5-21 - * - * - * - 551'\n"
+           "             - 'S-1-5-21 - * - * - * - 555'\n"
+           "        Processname: 'C: \\ Windows \\ System32 \\ lsass.exe' # "
+           'process information> Process Name\n'
+           '    condition: selection\n'
+           'level: medium'}]
 ```
 
 ## Raw Dataset

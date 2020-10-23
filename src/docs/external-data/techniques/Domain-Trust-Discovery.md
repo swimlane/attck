@@ -27,17 +27,15 @@
 ## Potential Commands
 
 ```
-dsquery * -filter "(objectClass=trustedDomain)" -attr *
-
 nltest /domain_trusts
-
+dsquery * -filter "(objectClass=trustedDomain)" -attr *
 Import-Module "$env:TEMP\PowerView.ps1"
 Get-NetDomainTrust
 Get-NetForestTrust
 Get-ADDomain
 Get-ADGroupMember Administrators -Recursive
-
-{'windows': {'psh': {'command': 'Import-Module .\\powerview.ps1 -Force;\nGet-NetDomain | ConvertTo-Json -Depth 1\n', 'parsers': {'plugins.stockpile.app.parsers.json': [{'source': 'domain.ad.forest', 'custom_parser_vals': {'json_key': 'Forest', 'json_type': 'str'}}, {'source': 'domain.ad.name', 'custom_parser_vals': {'json_key': 'Name', 'json_type': 'str'}}]}, 'payloads': ['powerview.ps1']}}}
+Import-Module .\powerview.ps1 -Force;
+Get-NetDomain | ConvertTo-Json -Depth 1
 ```
 
 ## Commands Dataset
@@ -56,17 +54,8 @@ Get-ADGroupMember Administrators -Recursive
              'Get-ADGroupMember Administrators -Recursive\n',
   'name': None,
   'source': 'atomics/T1482/T1482.yaml'},
- {'command': {'windows': {'psh': {'command': 'Import-Module .\\powerview.ps1 '
-                                             '-Force;\n'
-                                             'Get-NetDomain | ConvertTo-Json '
-                                             '-Depth 1\n',
-                                  'parsers': {'plugins.stockpile.app.parsers.json': [{'custom_parser_vals': {'json_key': 'Forest',
-                                                                                                             'json_type': 'str'},
-                                                                                      'source': 'domain.ad.forest'},
-                                                                                     {'custom_parser_vals': {'json_key': 'Name',
-                                                                                                             'json_type': 'str'},
-                                                                                      'source': 'domain.ad.name'}]},
-                                  'payloads': ['powerview.ps1']}}},
+ {'command': 'Import-Module .\\powerview.ps1 -Force;\n'
+             'Get-NetDomain | ConvertTo-Json -Depth 1\n',
   'name': 'Determine the Windows Domain of a computer',
   'source': 'data/abilities/discovery/6131397e-7765-424e-a594-3d7fb2d93a6a.yml'}]
 ```

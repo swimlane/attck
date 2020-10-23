@@ -30,8 +30,6 @@ Malware or scripts may be used to interact with the devices through an available
 
 ```
 powershell.exe -Command WindowsAudioDevice-Powershell-Cmdlet
-
-python/collection/osx/osx_mic_record
 python/collection/osx/osx_mic_record
 ```
 

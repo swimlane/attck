@@ -29,10 +29,10 @@ The Registry contains a significant amount of information about the operating sy
 ## Potential Commands
 
 ```
-reg query "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Terminal Server" /v fDenyTSConnections 
-shell reg query "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Terminal Server" /v fDenyTSConnections
 reg queryval -k "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Terminal Server" -v fDenyTSConnections
 post/windows/gather/enum_termserv
+reg query "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Terminal Server" /v fDenyTSConnections
+shell reg query "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Terminal Server" /v fDenyTSConnections
 reg query "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Windows"
 reg query HKLM\Software\Microsoft\Windows\CurrentVersion\RunServicesOnce
 reg query HKCU\Software\Microsoft\Windows\CurrentVersion\RunServicesOnce
@@ -52,13 +52,11 @@ reg query HKLM\Software\Microsoft\Windows\CurrentVersion\Policies\Explorer\Run
 reg query HKCU\Software\Microsoft\Windows\CurrentVersion\Policies\Explorer\Run
 reg query HKLM\system\currentcontrolset\services /s | findstr ImagePath 2>nul | findstr /Ri ".*\.sys$"
 reg query HKLM\Software\Microsoft\Windows\CurrentVersion\Run
-
-{'windows': {'psh': {'command': 'Get-ItemProperty -Path HKLM:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\n'}}}
+Get-ItemProperty -Path HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion
 cmd.exe reg (query|add)
 HKLM\Software\Microsoft\Windows NT\CurrentVersion\Windows
 cmd.exe reg (query|add)
 HKLM\Software\Microsoft\Windows\CurrentVersion\RunServicesOnce
-cmd.exe reg (query|add)
 HKCU\Software\Microsoft\Windows\CurrentVersion\RunServicesOnce
 cmd.exe reg (query|add)
 HKLM\Software\Microsoft\Windows\CurrentVersion\RunServices
@@ -69,9 +67,10 @@ HKLM\Software\Microsoft\Windows NT\CurrentVersion\Winlogon\Notify
 cmd.exe reg (query|add)
 HKLM\Software\Microsoft\Windows NT\CurrentVersion\Winlogon\Userinit
 cmd.exe reg (query|add)
-HKCU\Software\Microsoft\Windows NT\CurrentVersion\Winlogon\\Shell
 cmd.exe reg (query|add)
+HKCU\Software\Microsoft\Windows NT\CurrentVersion\Winlogon\\Shell
 HKLM\Software\Microsoft\Windows NT\CurrentVersion\Winlogon\\Shell
+cmd.exe reg (query|add)
 cmd.exe reg (query|add)
 HKLM\Software\Microsoft\Windows\CurrentVersion\ShellServiceObjectDelayLoad
 cmd.exe reg (query|add)
@@ -80,16 +79,18 @@ cmd.exe reg (query|add)
 HKLM\Software\Microsoft\Windows\CurrentVersion\RunOnceEx
 cmd.exe reg (query|add)
 HKLM\Software\Microsoft\Windows\CurrentVersion\Run
-cmd.exe reg (query|add)
 HKCU\Software\Microsoft\Windows\CurrentVersion\Run
+cmd.exe reg (query|add)
 cmd.exe reg (query|add)
 HKCU\Software\Microsoft\Windows\CurrentVersion\RunOnce
 cmd.exe reg (query|add)
 HKLM\Software\Microsoft\Windows\CurrentVersion\Policies\Explorer\Run
-cmd.exe reg (query|add)
 HKCU\Software\Microsoft\Windows\CurrentVersion\Policies\Explorer\Run
+cmd.exe reg (query|add)
 powershell/situational_awareness/network/powerview/get_cached_rdpconnection
-powershell/situational_awareness/network/powerview/get_cached_rdpconnection
+Dos
+C: \ Users \ Administrator> reg query "HKEY_CURRENT_USER \ Software \ Microsoft \ Terminal Server Client \ Default" / ve
+Error: The system can not find the specified registry key or value.
 ```
 
 ## Commands Dataset
@@ -151,8 +152,8 @@ powershell/situational_awareness/network/powerview/get_cached_rdpconnection
              'HKLM\\Software\\Microsoft\\Windows\\CurrentVersion\\Run\n',
   'name': None,
   'source': 'atomics/T1012/T1012.yaml'},
- {'command': {'windows': {'psh': {'command': 'Get-ItemProperty -Path '
-                                             'HKLM:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\n'}}},
+ {'command': 'Get-ItemProperty -Path '
+             'HKLM:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\n',
   'name': 'Query Registry using PowerShell Get-ItemProperty',
   'source': 'data/abilities/discovery/2488245e-bcbd-405d-920e-2de27db882b3.yml'},
  {'command': 'cmd.exe reg (query|add)',
@@ -266,7 +267,15 @@ powershell/situational_awareness/network/powerview/get_cached_rdpconnection
   'source': 'https://github.com/dstepanic/attck_empire/blob/master/Empire_modules.xlsx?raw=true'},
  {'command': 'powershell/situational_awareness/network/powerview/get_cached_rdpconnection',
   'name': 'Empire Module Command',
-  'source': 'https://github.com/dstepanic/attck_empire/blob/master/Empire_modules.xlsx?raw=true'}]
+  'source': 'https://github.com/dstepanic/attck_empire/blob/master/Empire_modules.xlsx?raw=true'},
+ {'command': 'Dos\n'
+             'C: \\ Users \\ Administrator> reg query "HKEY_CURRENT_USER \\ '
+             'Software \\ Microsoft \\ Terminal Server Client \\ Default" / '
+             've\n'
+             'Error: The system can not find the specified registry key or '
+             'value.',
+  'name': 'Dos',
+  'source': 'https://raw.githubusercontent.com/12306Bro/Threathunting-book/master/{}'}]
 ```
 
 ## Potential Detections
@@ -290,7 +299,32 @@ powershell/situational_awareness/network/powerview/get_cached_rdpconnection
  {'name': 'Query Registry Process',
   'product': 'Azure Sentinel',
   'query': 'Sysmon| where EventID == 1 and process_path contains "reg.exe" and '
-           'process_command_line contains "reg query"'}]
+           'process_command_line contains "reg query"'},
+ {'name': 'Yml',
+  'product': 'https://raw.githubusercontent.com/12306Bro/Threathunting-book/master/{}',
+  'query': 'Yml\n'
+           'title: windows executed locally reg query HKEY_CURRENT_USER \\ '
+           'Software \\ Microsoft \\ Terminal Server Client \\ Default\n'
+           'description: windows server 2016\n'
+           'references: No\n'
+           'tags: T1012\n'
+           'status: experimental\n'
+           'author: 12306Bro\n'
+           'logsource:\n'
+           '    product: windows\n'
+           '    service: security\n'
+           'detection:\n'
+           '    selection:\n'
+           '        EventID: 4688 # Process Creation\n'
+           "        Newprocessname: 'C: \\ Windows \\ System32 \\ reg.exe' # "
+           'process information> new process name\n'
+           "        Creatorprocessname: 'C: \\ Windows \\ System32 \\ cmd.exe' "
+           '# Process Information> Creator Process Name\n'
+           '        Processcommandline: reg query * / ve # Process '
+           'Information> process command line, practice, you can detect any '
+           'registry query behavior\n'
+           '    condition: selection\n'
+           'level: low'}]
 ```
 
 ## Raw Dataset

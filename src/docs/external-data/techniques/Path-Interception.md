@@ -46,50 +46,19 @@ Search order hijacking is also a common practice for hijacking DLL loads and is 
 ## Potential Commands
 
 ```
-Check for common privilege escalation methods:
-*upload PowerUp.ps1 to victim disk*
-powershell.exe -epbypass PowerUp.ps1
-Invoke-AllChecks
-powershell-import /path/to/PowerUp.ps1
-powershell Invoke-AllChecks
-exploit/windows/local/trusted_service_path
-powershell/privesc/powerup/allchecks
-powershell/privesc/powerup/allchecks
+
 ```
 
 ## Commands Dataset
 
 ```
-[{'command': 'Check for common privilege escalation methods:\n'
-             '*upload PowerUp.ps1 to victim disk*\n'
-             'powershell.exe -epbypass PowerUp.ps1\n'
-             'Invoke-AllChecks',
-  'name': 'Built-in Windows Command',
-  'source': 'https://attack.mitre.org/docs/APT3_Adversary_Emulation_Field_Manual.xlsx'},
- {'command': 'powershell-import /path/to/PowerUp.ps1\n'
-             'powershell Invoke-AllChecks',
-  'name': 'Cobalt Strike',
-  'source': 'https://attack.mitre.org/docs/APT3_Adversary_Emulation_Field_Manual.xlsx'},
- {'command': 'exploit/windows/local/trusted_service_path',
-  'name': 'Metasploit',
-  'source': 'https://attack.mitre.org/docs/APT3_Adversary_Emulation_Field_Manual.xlsx'},
- {'command': 'powershell/privesc/powerup/allchecks',
-  'name': 'Empire Module Command',
-  'source': 'https://github.com/dstepanic/attck_empire/blob/master/Empire_modules.xlsx?raw=true'},
- {'command': 'powershell/privesc/powerup/allchecks',
-  'name': 'Empire Module Command',
-  'source': 'https://github.com/dstepanic/attck_empire/blob/master/Empire_modules.xlsx?raw=true'}]
+
 ```
 
 ## Potential Detections
 
 ```json
-[{'data_source': ['4688', 'Process Execution']},
- {'data_source': ['4663', 'File monitoring']},
- {'data_source': ['8000-8027', ' 866', 'Whitelist Failures']},
- {'data_source': ['4688', 'Process Execution']},
- {'data_source': ['4663', 'File monitoring']},
- {'data_source': ['IDs ???', 'Whitelist Failures']}]
+
 ```
 
 ## Potential Queries
@@ -101,71 +70,7 @@ powershell/privesc/powerup/allchecks
 ## Raw Dataset
 
 ```json
-[{'Mitre APT3 Adversary Emulation Field Manual': {'Built-in Windows Command': 'Check '
-                                                                              'for '
-                                                                              'common '
-                                                                              'privilege '
-                                                                              'escalation '
-                                                                              'methods:\n'
-                                                                              '*upload '
-                                                                              'PowerUp.ps1 '
-                                                                              'to '
-                                                                              'victim '
-                                                                              'disk*\n'
-                                                                              'powershell.exe '
-                                                                              '-epbypass '
-                                                                              'PowerUp.ps1\n'
-                                                                              'Invoke-AllChecks',
-                                                  'Category': 'T1034',
-                                                  'Cobalt Strike': 'powershell-import '
-                                                                   '/path/to/PowerUp.ps1\n'
-                                                                   'powershell '
-                                                                   'Invoke-AllChecks',
-                                                  'Description': 'PowerUp.ps1 '
-                                                                 'is a '
-                                                                 'powershell '
-                                                                 'script from '
-                                                                 'the '
-                                                                 'PowerSploit '
-                                                                 'project on '
-                                                                 'github by '
-                                                                 'PowershellMafia. '
-                                                                 'The '
-                                                                 'Invoke-AllChecks '
-                                                                 'commandlet '
-                                                                 'checks for '
-                                                                 'many common '
-                                                                 'privilege '
-                                                                 'escalation '
-                                                                 'options such '
-                                                                 'as unquoted '
-                                                                 'service '
-                                                                 'paths, '
-                                                                 'writeable '
-                                                                 'service '
-                                                                 'directories, '
-                                                                 'service '
-                                                                 'information '
-                                                                 'manipulation, '
-                                                                 'always '
-                                                                 'install '
-                                                                 'elevated, '
-                                                                 'etc. Each '
-                                                                 'specific '
-                                                                 'kind of '
-                                                                 'escalation '
-                                                                 'technique '
-                                                                 'supplies its '
-                                                                 'own method '
-                                                                 'of abusing '
-                                                                 'it.',
-                                                  'Metasploit': 'exploit/windows/local/trusted_service_path'}},
- {'Empire Module XLSX Sheet by dstepanic': {'ATT&CK Technique #1': 'T1034',
-                                            'ATT&CK Technique #2': 'T1044',
-                                            'Concatenate for Python Dictionary': '"powershell/privesc/powerup/allchecks":  '
-                                                                                 '["T1034","T1044"],',
-                                            'Empire Module': 'powershell/privesc/powerup/allchecks',
-                                            'Technique': 'Path Interception'}}]
+
 ```
 
 # Tactics

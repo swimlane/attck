@@ -29,18 +29,18 @@ Adversaries may use task scheduling to execute programs at system startup or on 
 ## Potential Commands
 
 ```
-schtasks [/s HOSTNAME]
 shell schtasks
-Creating a scheduled task:
-schtasks [/S HOSTNAME] /create /tn "acachesrv" /tr C:\file\path\here.exe /sc ONLOGON /ru "System" [/rp password]
-Requirements for running scheduled tasks:
-net start schedule
-sc config schedule start= auto
+schtasks [/s HOSTNAME]
 Creating a scheduled task:
 shell schtasks [/S HOSTNAME] /create /tn "acachesrv" /tr C:\file\path\here.exe /sc ONLOGON /ru "System" [/rp password]
 Requirements for running scheduled tasks:
 shell net start schedule
 shell sc config schedule start= auto
+Creating a scheduled task:
+schtasks [/S HOSTNAME] /create /tn "acachesrv" /tr C:\file\path\here.exe /sc ONLOGON /ru "System" [/rp password]
+Requirements for running scheduled tasks:
+net start schedule
+sc config schedule start= auto
 schtask.exe /Create /SC ONCE /TN spawn /TR C:\windows\system32\cmd.exe /ST 20:10
 schtask.exe /create /tn "mysc" /tr C:\windows\system32\cmd.exe /sc ONLOGON /ru "System"
 at.exe ##:## /interactive cmd
@@ -48,13 +48,10 @@ at.exe \\[computername|IP] ##:## c:\temp\evil.bat
 net.exe use \\[computername|IP] /user:DOMAIN\username password
 net.exe time \\[computername|IP]
 schtasks.exe /create * appdata
-\\Windows\\.+\\at.exe
 \\Windows\\.+\\schtasks.exe/Create
-powershell/lateral_movement/new_gpo_immediate_task
+\\Windows\\.+\\at.exe
 powershell/lateral_movement/new_gpo_immediate_task
 powershell/persistence/elevated/schtasks
-powershell/persistence/elevated/schtasks
-powershell/persistence/userland/schtasks
 powershell/persistence/userland/schtasks
 ```
 
@@ -332,7 +329,42 @@ powershell/persistence/userland/schtasks
            '"taskeng.exe"or process_path contains "schtasks.exe"or '
            '(process_path contains "svchost.exe"and '
            'process_parent_command_line != '
-           '"C:\\\\Windows\\\\System32\\\\services.exe"))'}]
+           '"C:\\\\Windows\\\\System32\\\\services.exe"))'},
+ {'name': 'Yml',
+  'product': 'https://raw.githubusercontent.com/12306Bro/Threathunting-book/master/{}',
+  'query': 'Yml\n'
+           'title: persistent and large-scale implementation of scheduled '
+           'tasks through GPO\n'
+           'description: Use GPO scheduled task to detect lateral movement, '
+           'typically used for large-scale deployment of ransomware\n'
+           'author: 12306Br0 (translation + test)\n'
+           'date: 2020/06/07\n'
+           'references:\n'
+           '    - https://twitter.com/menasec1/status/1106899890377052160\n'
+           '    - '
+           'https://www.secureworks.com/blog/ransomware-as-a-distraction\n'
+           'tags:\n'
+           '    - attack.persistence\n'
+           '    - attack.lateral_movement\n'
+           '    - attack.t1053-002\n'
+           'logsource:\n'
+           '    product: windows\n'
+           '    service: security\n'
+           "    description: 'must be a success / failure configure advanced "
+           'audit policy settings "Object Access> Review detailed '
+           "file-sharing'\n"
+           'detection:\n'
+           '    selection:\n'
+           '        EventID: 5145\n'
+           '        ShareName: \\\\ * \\ SYSVOL\n'
+           "        RelativeTargetName: '* ScheduledTasks.xml'\n"
+           "        Accesses: '* WriteData *'\n"
+           '    condition: selection\n'
+           'falsepositives:\n'
+           '    - If the source IP is not localhost, then it is very '
+           'suspicious, preferably at the same time local and remote '
+           'monitoring of scheduled tasks GPO changes\n'
+           'level: high'}]
 ```
 
 ## Raw Dataset
